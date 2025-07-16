@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Mantra Japa Counter</string>
+    <string name="count_button">Count</string>
+    <string name="reset_button">Reset</string>
+    <string name="history_button">History</string>
+    <string name="mode_manual">Manual</string>
+    <string name="mode_auto">Auto</string>
+    <string name="mode_voice">Voice</string>
+    <string name="malas_label">Malas</string>
+    <string name="chants_label">Chants</string>
+    <string name="time_label">Time</string>
+    <string name="total_count">Total Count</string>
+    <string name="duration">Duration</string>
+    <string name="clear_history">Clear History</string>
+    <string name="back">Back</string>
+    <string name="no_sessions">No sessions recorded yet</string>
+</resources>

@@ -1,0 +1,70 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Background circle -->
+    <path
+        android:fillColor="#1E3A8A"
+        android:pathData="M54,54m-54,0a54,54 0,1 1,108 0a54,54 0,1 1,-108 0"/>
+    
+    <!-- Mala beads around the circle (converted from circles to paths) -->
+    <!-- Top bead -->
+    <path
+        android:fillColor="#FF9933"
+        android:pathData="M54,11a4,4 0,1 1,0 8a4,4 0,1 1,0 -8"/>
+    
+    <!-- Top-right bead -->
+    <path
+        android:fillColor="#E67E00"
+        android:pathData="M75,21a4,4 0,1 1,0 8a4,4 0,1 1,0 -8"/>
+    
+    <!-- Right bead -->
+    <path
+        android:fillColor="#FF9933"
+        android:pathData="M89,50a4,4 0,1 1,0 8a4,4 0,1 1,0 -8"/>
+    
+    <!-- Bottom-right bead -->
+    <path
+        android:fillColor="#E67E00"
+        android:pathData="M75,79a4,4 0,1 1,0 8a4,4 0,1 1,0 -8"/>
+    
+    <!-- Bottom bead -->
+    <path
+        android:fillColor="#FF9933"
+        android:pathData="M54,89a4,4 0,1 1,0 8a4,4 0,1 1,0 -8"/>
+    
+    <!-- Bottom-left bead -->
+    <path
+        android:fillColor="#E67E00"
+        android:pathData="M33,79a4,4 0,1 1,0 8a4,4 0,1 1,0 -8"/>
+    
+    <!-- Left bead -->
+    <path
+        android:fillColor="#FF9933"
+        android:pathData="M19,50a4,4 0,1 1,0 8a4,4 0,1 1,0 -8"/>
+    
+    <!-- Top-left bead -->
+    <path
+        android:fillColor="#E67E00"
+        android:pathData="M33,21a4,4 0,1 1,0 8a4,4 0,1 1,0 -8"/>
+    
+    <!-- Inner circle background for center -->
+    <path
+        android:fillColor="#FFFEF7"
+        android:pathData="M54,29a25,25 0,1 1,0 50a25,25 0,1 1,0 -50"/>
+    
+    <!-- Simplified "108" text instead of complex Om symbol -->
+    <path
+        android:fillColor="#1E3A8A"
+        android:pathData="M44,48 L44,60 L46,60 L46,50 L48,50 L48,48 Z"/>
+    
+    <path
+        android:fillColor="#1E3A8A"
+        android:pathData="M50,48 Q50,46 52,46 Q56,46 56,50 Q56,54 52,54 Q50,54 50,52 Q50,50 52,50 Q54,50 54,52 Q54,54 52,54 Q48,54 48,50 Q48,46 52,46 Q58,46 58,50 Q58,58 52,58 Q50,58 50,56 L50,60 L52,60 Q58,60 58,54 Q58,48 52,48 Q50,48 50,50 Z"/>
+    
+    <path
+        android:fillColor="#1E3A8A"
+        android:pathData="M60,48 Q60,46 64,46 Q66,46 66,48 Q66,50 64,50 Q62,50 62,52 Q62,54 64,54 Q66,54 66,56 Q66,58 64,58 Q60,58 60,56 Q60,54 62,54 Q64,54 64,52 Q64,50 62,50 Q60,50 60,52 Q60,58 64,58 Q68,58 68,54 Q68,48 64,48 Q60,48 60,50 Z"/>
+</vector>
