@@ -119,7 +119,7 @@ fun CountingScreen(
                                     modifier = Modifier.size(20.dp)
                                 )
                                 Text(
-                                    text = "LIFETIME GOAL ACHIEVED!",
+                                    text = "LIFETIME GOAL ACHIEVED! - ${formatTime(elapsedTime)}",
                                     color = Color(0xFFFFD700),
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Bold
@@ -138,7 +138,7 @@ fun CountingScreen(
                                     modifier = Modifier.size(20.dp)
                                 )
                                 Text(
-                                    text = "DAILY GOAL ACHIEVED!",
+                                    text = "DAILY GOAL ACHIEVED! - ${formatTime(elapsedTime)}",
                                     color = Color(0xFF00FF7F),
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Bold
@@ -565,7 +565,7 @@ fun GoalProgressCard(
             Spacer(modifier = Modifier.height(8.dp))
 
             LinearProgressIndicator(
-                progress = progress,
+                progress = { progress },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(if (isComplete) 8.dp else 4.dp),
