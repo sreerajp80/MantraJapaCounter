@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -17,7 +16,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
@@ -32,8 +30,11 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.text.style.TextDecoration
 import com.sreerajp.mantrajapacounter.data.Counter
+import com.sreerajp.mantrajapacounter.data.CounterStatus
+import com.sreerajp.mantrajapacounter.data.formatDate
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -41,24 +42,26 @@ fun CounterListScreen(
     counters: List<Counter>,
     getTotalCount: (Counter) -> Int,
     getTotalMalas: (Counter) -> Int,
-    getTodayCount: (Counter) -> Int, // New parameter for today's count
+    getTodayCount: (Counter) -> Int,
     onSelectCounter: (Counter) -> Unit,
-    onAddCounter: (String, Int, Int, Int, Int) -> Unit, // Added dailyGoal parameter
-    onEditCounter: (Counter, String, Int, Int, Int, Int) -> Unit, // Added dailyGoal parameter
+    onAddCounter: (String, Int, Int, Int, Int) -> Unit,
+    onEditCounter: (Counter, String, Int, Int, Int, Int) -> Unit,
     onDeleteCounter: (Counter) -> Unit,
+    onDisableCounter: (Counter, CounterStatus, String?) -> Unit, // New parameter
     onShowHistory: (String?) -> Unit,
     onShowAbout: () -> Unit,
-    onShowImportExport: () -> Unit // New parameter for import/export
+    onShowImportExport: () -> Unit
 ) {
     var showAddDialog by remember { mutableStateOf(false) }
     var showEditDialog by remember { mutableStateOf<Counter?>(null) }
+    var showDisableDialog by remember { mutableStateOf<Counter?>(null) }
     var selectedCounter by remember { mutableStateOf<Counter?>(null) }
     var showMenu by remember { mutableStateOf(false) }
     var newCounterName by remember { mutableStateOf("") }
     var newInitialCount by remember { mutableStateOf("0") }
     var newIncrementStep by remember { mutableStateOf("1") }
     var newGoal by remember { mutableStateOf("0") }
-    var newDailyGoal by remember { mutableStateOf("0") } // New state for daily goal
+    var newDailyGoal by remember { mutableStateOf("0") }
 
     // Get screen configuration for responsive design
     val configuration = LocalConfiguration.current
@@ -72,6 +75,16 @@ fun CounterListScreen(
     val cardPadding = if (isTablet) 24.dp else 16.dp
     val itemSpacing = if (isTablet) 16.dp else 12.dp
     val containerPadding = if (isTablet) 24.dp else 16.dp
+
+    // Sort counters to show active ones first
+    val sortedCounters = remember(counters) {
+        counters.sortedWith(
+            compareBy(
+                { it.status != CounterStatus.ACTIVE }, // Active counters first
+                { -it.createdAt } // Then by creation date
+            )
+        )
+    }
 
     // Reset dialog fields when dialogs are closed
     LaunchedEffect(showAddDialog, showEditDialog) {
@@ -194,25 +207,62 @@ fun CounterListScreen(
 
                         HorizontalDivider()
 
+                        // Edit Counter - only for active counters
                         DropdownMenuItem(
                             text = {
                                 Text(
                                     "Edit Counter",
+                                    color = if (selectedCounter != null && selectedCounter?.status == CounterStatus.ACTIVE)
+                                        Color.Unspecified else Color.Gray
+                                )
+                            },
+                            onClick = {
+                                showMenu = false
+                                selectedCounter?.let { counter ->
+                                    if (counter.status == CounterStatus.ACTIVE) {
+                                        showEditDialog = counter
+                                    }
+                                }
+                            },
+                            enabled = selectedCounter != null && selectedCounter?.status == CounterStatus.ACTIVE,
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Edit,
+                                    contentDescription = null,
+                                    tint = if (selectedCounter != null && selectedCounter?.status == CounterStatus.ACTIVE)
+                                        Color.Unspecified else Color.Gray
+                                )
+                            }
+                        )
+
+                        // Disable/Enable Counter
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    if (selectedCounter?.status == CounterStatus.ACTIVE) "Disable Counter" else "Enable Counter",
                                     color = if (selectedCounter != null) Color.Unspecified else Color.Gray
                                 )
                             },
                             onClick = {
                                 showMenu = false
                                 selectedCounter?.let { counter ->
-                                    showEditDialog = counter
+                                    if (counter.status == CounterStatus.ACTIVE) {
+                                        showDisableDialog = counter
+                                    } else {
+                                        // Re-enable counter
+                                        onDisableCounter(counter, CounterStatus.ACTIVE, null)
+                                    }
                                 }
                             },
                             enabled = selectedCounter != null,
                             leadingIcon = {
                                 Icon(
-                                    imageVector = Icons.Default.Edit,
+                                    imageVector = if (selectedCounter?.status == CounterStatus.ACTIVE)
+                                        Icons.Default.Block else Icons.Default.CheckCircle,
                                     contentDescription = null,
-                                    tint = if (selectedCounter != null) Color.Unspecified else Color.Gray
+                                    tint = if (selectedCounter != null)
+                                        (if (selectedCounter?.status == CounterStatus.ACTIVE) Color.Red else Color.Green)
+                                    else Color.Gray
                                 )
                             }
                         )
@@ -259,14 +309,18 @@ fun CounterListScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(bottom = itemSpacing)
             ) {
-                items(counters) { counter ->
+                items(sortedCounters) { counter ->
                     CounterListItem(
                         counter = counter,
                         totalCount = getTotalCount(counter),
                         totalMalas = getTotalMalas(counter),
                         todayCount = getTodayCount(counter),
                         isSelected = selectedCounter == counter,
-                        onTap = { onSelectCounter(counter) },
+                        onTap = {
+                            if (counter.status == CounterStatus.ACTIVE) {
+                                onSelectCounter(counter)
+                            }
+                        },
                         onLongPress = {
                             selectedCounter = if (selectedCounter == counter) null else counter
                         },
@@ -284,14 +338,18 @@ fun CounterListScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(bottom = itemSpacing)
             ) {
-                items(counters) { counter ->
+                items(sortedCounters) { counter ->
                     CounterListItem(
                         counter = counter,
                         totalCount = getTotalCount(counter),
                         totalMalas = getTotalMalas(counter),
                         todayCount = getTodayCount(counter),
                         isSelected = selectedCounter == counter,
-                        onTap = { onSelectCounter(counter) },
+                        onTap = {
+                            if (counter.status == CounterStatus.ACTIVE) {
+                                onSelectCounter(counter)
+                            }
+                        },
                         onLongPress = {
                             selectedCounter = if (selectedCounter == counter) null else counter
                         },
@@ -307,14 +365,18 @@ fun CounterListScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(bottom = itemSpacing)
             ) {
-                items(counters) { counter ->
+                items(sortedCounters) { counter ->
                     CounterListItem(
                         counter = counter,
                         totalCount = getTotalCount(counter),
                         totalMalas = getTotalMalas(counter),
                         todayCount = getTodayCount(counter),
                         isSelected = selectedCounter == counter,
-                        onTap = { onSelectCounter(counter) },
+                        onTap = {
+                            if (counter.status == CounterStatus.ACTIVE) {
+                                onSelectCounter(counter)
+                            }
+                        },
                         onLongPress = {
                             selectedCounter = if (selectedCounter == counter) null else counter
                         },
@@ -388,6 +450,20 @@ fun CounterListScreen(
             isTablet = isTablet
         )
     }
+
+    // Disable Counter Dialog
+    showDisableDialog?.let { counter ->
+        DisableCounterDialog(
+            counter = counter,
+            totalCount = getTotalCount(counter),
+            onConfirm = { status, reason ->
+                onDisableCounter(counter, status, reason)
+                showDisableDialog = null
+                selectedCounter = null
+            },
+            onDismiss = { showDisableDialog = null }
+        )
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -396,7 +472,7 @@ fun CounterListItem(
     counter: Counter,
     totalCount: Int,
     totalMalas: Int,
-    todayCount: Int, // New parameter
+    todayCount: Int,
     isSelected: Boolean,
     onTap: () -> Unit,
     onLongPress: () -> Unit,
@@ -407,6 +483,10 @@ fun CounterListItem(
     val countFontSize = if (isTablet) 16.sp else 14.sp
     val detailFontSize = if (isTablet) 14.sp else 12.sp
 
+    val isDisabled = counter.status != CounterStatus.ACTIVE
+    val isSuccess = counter.status == CounterStatus.DISABLED_SUCCESS
+    val isFailure = counter.status == CounterStatus.DISABLED_FAILURE
+
     // Check goal achievements
     val isLifetimeGoalAchieved = counter.goal > 0 && totalCount >= counter.goal
     val isDailyGoalAchieved = counter.dailyGoal > 0 && todayCount >= counter.dailyGoal
@@ -414,14 +494,17 @@ fun CounterListItem(
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .alpha(if (isDisabled) 0.6f else 1f)
             .combinedClickable(
                 onClick = onTap,
                 onLongClick = onLongPress
             ),
         colors = CardDefaults.cardColors(
             containerColor = when {
+                isDisabled && isSuccess -> Color(0xFF4CAF50).copy(alpha = 0.3f)
+                isDisabled && isFailure -> Color(0xFFF44336).copy(alpha = 0.3f)
                 isSelected -> Color(0xFFFFD54F)
-                isLifetimeGoalAchieved && isDailyGoalAchieved -> Color(0xFFA6D3F8) // Light green for both goals
+                isLifetimeGoalAchieved && isDailyGoalAchieved -> Color(0xFFA6D3F8)
                 isLifetimeGoalAchieved -> Color(0xFF86BDF5)
                 isDailyGoalAchieved -> Color(0xFFCCF2FD)
                 else -> Color(0xFFCCF2FD)
@@ -436,7 +519,7 @@ fun CounterListItem(
                 .fillMaxWidth()
                 .padding(cardPadding)
         ) {
-            // Header row with title, achievements icons, and checkbox
+            // Header row with title, achievements icons, status, and checkbox
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -446,40 +529,86 @@ fun CounterListItem(
                     modifier = Modifier.weight(1f),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = counter.name,
-                        fontSize = titleFontSize,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black,
-                        style = TextStyle(
-                            shadow = Shadow(
-                                color = Color.Black.copy(alpha = 0.9f),
-                                offset = Offset(2f, 2f),
-                                blurRadius = 4f
+                    Column(modifier = Modifier.weight(1f)) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = counter.name,
+                                fontSize = titleFontSize,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black,
+                                style = TextStyle(
+                                    shadow = Shadow(
+                                        color = Color.Black.copy(alpha = 0.9f),
+                                        offset = Offset(2f, 2f),
+                                        blurRadius = 4f
+                                    ),
+                                    textDecoration = if (isDisabled) TextDecoration.LineThrough else null
+                                )
                             )
-                        ),
-                        modifier = Modifier.weight(1f)
-                    )
 
-                    // Achievement icons
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        if (isDailyGoalAchieved) {
-                            Icon(
-                                imageVector = Icons.Default.Today,
-                                contentDescription = "Daily Goal Achieved",
-                                tint = Color(0xFF063A62),
-                                modifier = Modifier.size(16.dp)
-                            )
+                            // Achievement icons
+                            if (!isDisabled) {
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                    modifier = Modifier.padding(start = 8.dp)
+                                ) {
+                                    if (isDailyGoalAchieved) {
+                                        Icon(
+                                            imageVector = Icons.Default.Today,
+                                            contentDescription = "Daily Goal Achieved",
+                                            tint = Color(0xFF063A62),
+                                            modifier = Modifier.size(16.dp)
+                                        )
+                                    }
+                                    if (isLifetimeGoalAchieved) {
+                                        Icon(
+                                            imageVector = Icons.Default.EmojiEvents,
+                                            contentDescription = "Lifetime Goal Achieved",
+                                            tint = Color(0xFFFFD700),
+                                            modifier = Modifier.size(16.dp)
+                                        )
+                                    }
+                                }
+                            }
                         }
-                        if (isLifetimeGoalAchieved) {
-                            Icon(
-                                imageVector = Icons.Default.EmojiEvents,
-                                contentDescription = "Lifetime Goal Achieved",
-                                tint = Color(0xFFFFD700),
-                                modifier = Modifier.size(16.dp)
-                            )
+
+                        // Status text for disabled counters
+                        if (isDisabled) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.padding(top = 4.dp)
+                            ) {
+                                Icon(
+                                    imageVector = if (isSuccess) Icons.Default.CheckCircle else Icons.Default.Cancel,
+                                    contentDescription = null,
+                                    tint = if (isSuccess) Color(0xFF4CAF50) else Color(0xFFF44336),
+                                    modifier = Modifier.size(14.dp)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = if (isSuccess) "COMPLETED" else "ABANDONED",
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = if (isSuccess) Color(0xFF4CAF50) else Color(0xFFF44336)
+                                )
+                                counter.disabledAt?.let {
+                                    Text(
+                                        text = " • ${formatDate(it)}",
+                                        fontSize = 10.sp,
+                                        color = Color.Gray
+                                    )
+                                }
+                            }
+                            counter.disabledReason?.let { reason ->
+                                Text(
+                                    text = reason,
+                                    fontSize = 10.sp,
+                                    color = Color.Gray,
+                                    modifier = Modifier.padding(top = 2.dp)
+                                )
+                            }
                         }
                     }
                 }
@@ -511,75 +640,204 @@ fun CounterListItem(
                 text = countsText,
                 fontSize = countFontSize,
                 fontWeight = FontWeight.Bold,
-                color = Color.Red,
+                color = if (isDisabled) Color.Gray else Color.Red,
                 lineHeight = (countFontSize.value * 1.2).sp,
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(if (isTablet) 6.dp else 2.dp))
+            if (!isDisabled) {
+                Spacer(modifier = Modifier.height(if (isTablet) 6.dp else 2.dp))
 
-            // Today's count information
-            Text(
-                text = "Today: $todayCount (c) • ${todayCount / 108} (m)",
-                fontSize = detailFontSize,
-                color = Color(0xFFB66711),
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(if (isTablet) 6.dp else 2.dp))
-
-            // Daily goal progress
-            if (counter.dailyGoal > 0) {
-                val dailyProgress = (todayCount.toFloat() / counter.dailyGoal.toFloat()) * 100
-                val dailyGoalText = buildString {
-                    append("Daily Goal: ${counter.dailyGoal} (c)")
-                    append(" • Progress: ${"%.1f".format(dailyProgress)}%")
-                    if (isDailyGoalAchieved) {
-                        append(" ✓")
-                    }
-                }
-
+                // Today's count information
                 Text(
-                    text = dailyGoalText,
+                    text = "Today: $todayCount (c) • ${todayCount / 108} (m)",
                     fontSize = detailFontSize,
-                    color = if (isDailyGoalAchieved) Color(0xFF064D09) else Color(0xFF083D65),
-                    fontWeight = FontWeight.Bold,
-                    lineHeight = (detailFontSize.value * 1.2).sp,
+                    color = Color(0xFFB66711),
+                    fontWeight = FontWeight.Medium,
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                Spacer(modifier = Modifier.height(if (isTablet) 4.dp else 2.dp))
-            }
+                Spacer(modifier = Modifier.height(if (isTablet) 6.dp else 2.dp))
 
-            // Lifetime goal progress
-            if (counter.goal > 0) {
-                val lifetimeProgress = (totalCount.toFloat() / counter.goal.toFloat()) * 100
-                val goalText = buildString {
-                    append("Lifetime Goal: ${counter.goal} (c)")
-                    append(" • Progress: ${"%.1f".format(lifetimeProgress)}%")
-                    if (isLifetimeGoalAchieved) {
-                        append(" ✓")
+                // Daily goal progress
+                if (counter.dailyGoal > 0) {
+                    val dailyProgress = (todayCount.toFloat() / counter.dailyGoal.toFloat()) * 100
+                    val dailyGoalText = buildString {
+                        append("Daily Goal: ${counter.dailyGoal} (c)")
+                        append(" • Progress: ${"%.1f".format(dailyProgress)}%")
+                        if (isDailyGoalAchieved) {
+                            append(" ✓")
+                        }
                     }
+
+                    Text(
+                        text = dailyGoalText,
+                        fontSize = detailFontSize,
+                        color = if (isDailyGoalAchieved) Color(0xFF064D09) else Color(0xFF083D65),
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = (detailFontSize.value * 1.2).sp,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(modifier = Modifier.height(if (isTablet) 4.dp else 2.dp))
                 }
 
-                Text(
-                    text = goalText,
-                    fontSize = detailFontSize,
-                    color = if (isLifetimeGoalAchieved) Color(0xFF1E6B23) else Color(0xFF2196F3),
-                    fontWeight = FontWeight.Bold,
-                    lineHeight = (detailFontSize.value * 1.2).sp,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            } else if (counter.dailyGoal == 0) {
-                Text(
-                    text = "No goals set",
-                    fontSize = detailFontSize,
-                    color = Color.Gray
-                )
+                // Lifetime goal progress
+                if (counter.goal > 0) {
+                    val lifetimeProgress = (totalCount.toFloat() / counter.goal.toFloat()) * 100
+                    val goalText = buildString {
+                        append("Lifetime Goal: ${counter.goal} (c)")
+                        append(" • Progress: ${"%.1f".format(lifetimeProgress)}%")
+                        if (isLifetimeGoalAchieved) {
+                            append(" ✓")
+                        }
+                    }
+
+                    Text(
+                        text = goalText,
+                        fontSize = detailFontSize,
+                        color = if (isLifetimeGoalAchieved) Color(0xFF1E6B23) else Color(0xFF2196F3),
+                        fontWeight = FontWeight.Bold,
+                        lineHeight = (detailFontSize.value * 1.2).sp,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                } else if (counter.dailyGoal == 0) {
+                    Text(
+                        text = "No goals set",
+                        fontSize = detailFontSize,
+                        color = Color.Gray
+                    )
+                }
             }
         }
     }
+}
+
+@Composable
+fun DisableCounterDialog(
+    counter: Counter,
+    totalCount: Int,
+    onConfirm: (CounterStatus, String?) -> Unit,
+    onDismiss: () -> Unit
+) {
+    var selectedStatus by remember { mutableStateOf(CounterStatus.DISABLED_SUCCESS) }
+    var reason by remember { mutableStateOf("") }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Disable Counter") },
+        text = {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Text("Choose the status for disabling '${counter.name}':")
+
+                Column {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                    ) {
+                        RadioButton(
+                            selected = selectedStatus == CounterStatus.DISABLED_SUCCESS,
+                            onClick = { selectedStatus = CounterStatus.DISABLED_SUCCESS }
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Column {
+                            Text(
+                                text = "Success",
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFF4CAF50)
+                            )
+                            Text(
+                                text = "Goal achieved or completed successfully",
+                                fontSize = 12.sp,
+                                color = Color.Gray
+                            )
+                        }
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                    ) {
+                        RadioButton(
+                            selected = selectedStatus == CounterStatus.DISABLED_FAILURE,
+                            onClick = { selectedStatus = CounterStatus.DISABLED_FAILURE }
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Column {
+                            Text(
+                                text = "Failure",
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFFF44336)
+                            )
+                            Text(
+                                text = "Abandoned or failed to complete",
+                                fontSize = 12.sp,
+                                color = Color.Gray
+                            )
+                        }
+                    }
+                }
+
+                OutlinedTextField(
+                    value = reason,
+                    onValueChange = { reason = it },
+                    label = { Text("Reason (optional)") },
+                    modifier = Modifier.fillMaxWidth(),
+                    maxLines = 3
+                )
+
+                // Show current progress
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                    )
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp)
+                    ) {
+                        Text(
+                            text = "Current Progress",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = "Total Count: $totalCount",
+                            fontSize = 12.sp
+                        )
+                        if (counter.goal > 0) {
+                            val progress = (totalCount.toFloat() / counter.goal.toFloat() * 100).toInt()
+                            Text(
+                                text = "Lifetime Goal: $totalCount / ${counter.goal} ($progress%)",
+                                fontSize = 12.sp
+                            )
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    onConfirm(selectedStatus, reason.takeIf { it.isNotBlank() })
+                }
+            ) {
+                Text("Disable")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    )
 }
 
 @Composable

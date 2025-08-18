@@ -27,7 +27,6 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import com.sreerajp.mantrajapacounter.data.Counter
 import com.sreerajp.mantrajapacounter.data.*
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
 @Composable
@@ -49,8 +48,8 @@ fun CountingScreen(
     var showMenu by remember { mutableStateOf(false) }
 
     // Use extension functions for goal calculations
-    val isLifetimeGoalReached = counter?.isLifetimeGoalAchieved(lifetimeTotal) ?: false
-    val isDailyGoalReached = counter?.isDailyGoalAchieved(todayTotal) ?: false
+    val isLifetimeGoalReached = counter?.isLifetimeGoalAchieved(lifetimeTotal) == true
+    val isDailyGoalReached = counter?.isDailyGoalAchieved(todayTotal) == true
     val lifetimeProgress = counter?.getLifetimeProgress(lifetimeTotal) ?: 0f
     val dailyProgress = counter?.getDailyProgress(todayTotal) ?: 0f
 
@@ -342,7 +341,7 @@ fun CountingScreen(
                         colors = CardDefaults.cardColors(
                             containerColor = when {
                                 isLifetimeGoalReached -> Color(0xFFFFF8DC).copy(alpha = 0.95f) // Light golden
-                                isDailyGoalReached -> Color(0xF0FFF0).copy(alpha = 0.95f) // Honeydew
+                                isDailyGoalReached -> Color(0xFFF0FFF0).copy(alpha = 0.95f) // Honeydew
                                 else -> Color(0xFFFFE5B4).copy(alpha = 0.95f)
                             }
                         )

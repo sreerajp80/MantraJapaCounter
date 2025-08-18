@@ -8,24 +8,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.edit
 import com.sreerajp.mantrajapacounter.ui.theme.MantraJapaCounterTheme
 import com.sreerajp.mantrajapacounter.screens.CounterListScreen
 import com.sreerajp.mantrajapacounter.screens.CountingScreen
@@ -35,9 +30,7 @@ import com.sreerajp.mantrajapacounter.data.*
 import com.sreerajp.mantrajapacounter.database.*
 import com.sreerajp.mantrajapacounter.utils.FileUtils
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.*
 
 enum class Screen {
@@ -163,10 +156,10 @@ fun MantraCounterApp() {
     var currentScreen by remember { mutableStateOf(Screen.COUNTER_LIST) }
     var previousScreen by remember { mutableStateOf(Screen.COUNTER_LIST) }
     var selectedCounter by remember { mutableStateOf<Counter?>(null) }
-    var currentTapCount by remember { mutableStateOf(0) }
-    var sessionTotalTaps by remember { mutableStateOf(0) }
-    var startTime by remember { mutableStateOf(0L) }
-    var elapsedTime by remember { mutableStateOf(0L) }
+    var currentTapCount by remember { mutableIntStateOf(0) }
+    var sessionTotalTaps by remember { mutableIntStateOf(0) }
+    var startTime by remember { mutableLongStateOf(0L) }
+    var elapsedTime by remember { mutableLongStateOf(0L) }
     var currentSessionId by remember { mutableStateOf<String?>(null) }
 
     // Collect data from database
@@ -427,6 +420,25 @@ fun MantraCounterApp() {
                         }
                     }
                 },
+                onDisableCounter = { counter, status, reason ->
+                    val updatedCounter = counter.copy(
+                        status = status,
+                        disabledAt = if (status != CounterStatus.ACTIVE) System.currentTimeMillis() else null,
+                        disabledReason = reason
+                    )
+                    coroutineScope.launch {
+                        repository.updateCounter(updatedCounter)
+                    }
+                    // Clear active session if disabling active counter
+                    if (status != CounterStatus.ACTIVE) {
+                        loadActiveSession(prefs)?.let { activeSession ->
+                            if (activeSession.counterId == counter.id) {
+                                clearActiveSession(prefs)
+                                currentScreen = Screen.COUNTER_LIST
+                            }
+                        }
+                    }
+                },
                 onShowHistory = { counterId ->
                     selectedCounter = if (counterId != null) {
                         counters.find { it.id == counterId }
@@ -516,6 +528,7 @@ fun MantraCounterApp() {
         Screen.HISTORY -> {
             HistoryScreen(
                 sessions = sessions,
+                counters = counters,
                 selectedCounterId = selectedCounter?.id,
                 onBack = {
                     currentScreen = previousScreen
@@ -530,7 +543,6 @@ fun MantraCounterApp() {
                                 repository.deleteSession(session)
                             }
                         } else {
-                            val currentSession = sessions.find { it.id == currentSessionId }
                             sessions.forEach { session ->
                                 if (session.id != currentSessionId) {
                                     repository.deleteSession(session)
@@ -539,9 +551,7 @@ fun MantraCounterApp() {
                         }
                     }
                 },
-                onDeleteSession = { session ->
-                    deleteSession(session)
-                }
+                onDeleteSession = { session -> deleteSession(session) }
             )
         }
         Screen.ABOUT -> {
@@ -661,7 +671,9 @@ fun MantraCounterApp() {
 fun saveActiveSession(prefs: SharedPreferences, activeSession: ActiveSession) {
     val gson = Gson()
     val json = gson.toJson(activeSession)
-    prefs.edit().putString("active_session", json).apply()
+    prefs.edit {
+        putString("active_session", json)
+    }
 }
 
 fun loadActiveSession(prefs: SharedPreferences): ActiveSession? {
@@ -670,7 +682,7 @@ fun loadActiveSession(prefs: SharedPreferences): ActiveSession? {
     return if (json != null) {
         try {
             gson.fromJson(json, ActiveSession::class.java)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     } else {
@@ -679,10 +691,12 @@ fun loadActiveSession(prefs: SharedPreferences): ActiveSession? {
 }
 
 fun clearActiveSession(prefs: SharedPreferences) {
-    prefs.edit().remove("active_session").apply()
+    prefs.edit {
+        remove("active_session")
+    }
 }
 
-// Utility functions
+// Utility functions used in History Screen
 fun formatTime(milliseconds: Long): String {
     val totalSeconds = milliseconds / 1000
     val hours = totalSeconds / 3600
@@ -690,19 +704,7 @@ fun formatTime(milliseconds: Long): String {
     val seconds = totalSeconds % 60
 
     return when {
-        hours > 0 -> String.format("%02d:%02d:%02d", hours, minutes, seconds)
-        else -> String.format("%02d:%02d", minutes, seconds)
-    }
-}
-
-fun formatTimeShort(milliseconds: Long): String {
-    val totalMinutes = milliseconds / (1000 * 60)
-    val hours = totalMinutes / 60
-    val minutes = totalMinutes % 60
-
-    return when {
-        hours > 0 -> "${hours}h ${minutes}m"
-        minutes > 0 -> "${minutes}m"
-        else -> "<1m"
+        hours > 0 -> String.format(Locale.US, "%02d:%02d:%02d", hours, minutes, seconds)
+        else -> String.format(Locale.US, "%02d:%02d", minutes, seconds)
     }
 }

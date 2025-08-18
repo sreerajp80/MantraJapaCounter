@@ -2,6 +2,12 @@ package com.sreerajp.mantrajapacounter.data
 
 import java.util.*
 
+enum class CounterStatus {
+    ACTIVE,
+    DISABLED_SUCCESS,
+    DISABLED_FAILURE
+}
+
 data class Counter(
     val id: String = UUID.randomUUID().toString(),
     val name: String,
@@ -12,12 +18,18 @@ data class Counter(
     val incrementStep: Int = 1,
     val goal: Int = 0, // Lifetime goal (0 means no goal set)
     val dailyGoal: Int = 0, // Daily goal (0 means no daily goal set)
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+    val status: CounterStatus = CounterStatus.ACTIVE,
+    val disabledAt: Long? = null,
+    val disabledReason: String? = null
 )
 
 // Extension functions for goal calculations
 fun Counter.hasLifetimeGoal(): Boolean = goal > 0
 fun Counter.hasDailyGoal(): Boolean = dailyGoal > 0
+fun Counter.isActive(): Boolean = status == CounterStatus.ACTIVE
+fun Counter.isDisabledSuccess(): Boolean = status == CounterStatus.DISABLED_SUCCESS
+fun Counter.isDisabledFailure(): Boolean = status == CounterStatus.DISABLED_FAILURE
 
 fun Counter.getLifetimeProgress(totalCount: Int): Float {
     return if (hasLifetimeGoal()) {

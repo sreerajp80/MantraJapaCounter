@@ -1,7 +1,10 @@
 package com.sreerajp.mantrajapacounter.database
 
 import android.content.Context
-import com.sreerajp.mantrajapacounter.data.*
+import com.sreerajp.mantrajapacounter.data.Counter
+import com.sreerajp.mantrajapacounter.data.JapaSession
+import com.sreerajp.mantrajapacounter.data.ExportData
+import com.sreerajp.mantrajapacounter.data.CounterStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -95,9 +98,14 @@ class JapaCounterRepository(context: Context) {
         sessionDao.deleteAllSessions()
         counterDao.deleteAllCounters()
 
-        // Import new data
-        counterDao.insertCounters(exportData.counters.map { it.toEntity() })
-        sessionDao.insertSessions(exportData.sessions.map { it.toEntity() })
+        // Import new data - use individual inserts since bulk methods don't exist
+        exportData.counters.forEach { counter ->
+            counterDao.insertCounter(counter.toEntity())
+        }
+
+        exportData.sessions.forEach { session ->
+            sessionDao.insertSession(session.toEntity())
+        }
     }
 }
 
@@ -113,7 +121,10 @@ fun CounterEntity.toCounter(): Counter {
         incrementStep = incrementStep,
         goal = goal,
         dailyGoal = dailyGoal,
-        createdAt = createdAt
+        createdAt = createdAt,
+        status = status,
+        disabledAt = disabledAt,
+        disabledReason = disabledReason
     )
 }
 
@@ -125,7 +136,10 @@ fun Counter.toEntity(): CounterEntity {
         incrementStep = incrementStep,
         goal = goal,
         dailyGoal = dailyGoal,
-        createdAt = createdAt
+        createdAt = createdAt,
+        status = status,
+        disabledAt = disabledAt,
+        disabledReason = disabledReason
     )
 }
 

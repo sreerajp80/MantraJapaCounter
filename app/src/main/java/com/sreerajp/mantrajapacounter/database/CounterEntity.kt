@@ -2,6 +2,7 @@ package com.sreerajp.mantrajapacounter.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.sreerajp.mantrajapacounter.data.CounterStatus
 
 @Entity(tableName = "counters")
 data class CounterEntity(
@@ -12,5 +13,8 @@ data class CounterEntity(
     val incrementStep: Int = 1,
     val goal: Int = 0,
     val dailyGoal: Int = 0,
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+    val status: CounterStatus = CounterStatus.ACTIVE,
+    val disabledAt: Long? = null,
+    val disabledReason: String? = null
 )

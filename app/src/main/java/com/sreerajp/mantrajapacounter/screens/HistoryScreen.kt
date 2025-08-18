@@ -21,30 +21,61 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.clickable
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
 import com.sreerajp.mantrajapacounter.data.JapaSession
+import com.sreerajp.mantrajapacounter.data.Counter
 import com.sreerajp.mantrajapacounter.data.formatDateTime
 import com.sreerajp.mantrajapacounter.data.formatTime
 import java.text.SimpleDateFormat
 import java.util.*
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
-// Data class to represent a day's summary
+// Enhanced session data to include goal achievements
+data class SessionWithGoalStatus(
+    val session: JapaSession,
+    val achievedDailyGoal: Boolean = false,
+    val achievedLifetimeGoal: Boolean = false,
+    val cumulativeCount: Int = 0,
+    val dailyCountBeforeSession: Int = 0,
+    val totalCountBeforeSession: Int = 0
+)
+
+// Enhanced data class to include both daily and lifetime goal status
 data class DaySessionGroup(
-    val date: String, // Formatted date string (e.g., "Today", "Yesterday", "Dec 15, 2024")
-    val timestamp: Long, // For sorting
-    val sessions: List<JapaSession>,
+    val date: String,
+    val timestamp: Long,
+    val sessions: List<SessionWithGoalStatus>,
     val totalCount: Int,
     val totalMalas: Int,
     val totalDuration: Long,
-    val sessionCount: Int
+    val sessionCount: Int,
+    val dailyGoalAchieved: Boolean = false,
+    val dailyGoalProgress: Float = 0f,
+    val dailyGoalTarget: Int = 0,
+    // New fields for lifetime goal
+    val lifetimeGoalTarget: Int = 0,
+    val cumulativeCountUpToDay: Int = 0,
+    val lifetimeGoalProgress: Float = 0f,
+    val lifetimeGoalAchieved: Boolean = false
+)
+
+// Data class to hold counter information with goals
+data class CounterGoalInfo(
+    val counter: Counter,
+    val totalCount: Int,
+    val lifetimeGoalAchieved: Boolean,
+    val lifetimeGoalProgress: Float,
+    val lifetimeGoalAchievedInSession: String? = null // Session ID where goal was achieved
 )
 
 @Composable
 fun HistoryScreen(
     sessions: List<JapaSession>,
-    selectedCounterId: String? = null, // Filter by counter ID if provided
+    counters: List<Counter>,
+    selectedCounterId: String? = null,
     onBack: () -> Unit,
-    onClearHistory: (String?) -> Unit, // Pass counter ID to clear specific counter's history
+    onClearHistory: (String?) -> Unit,
     onDeleteSession: (JapaSession) -> Unit
 ) {
     var showClearDialog by remember { mutableStateOf(false) }
@@ -60,18 +91,46 @@ fun HistoryScreen(
         }
     }
 
-    // Group sessions by day
-    val dayGroups = remember(filteredSessions) {
-        groupSessionsByDay(filteredSessions)
+    // Get counter information for goals
+    val counterGoalInfo = remember(counters, filteredSessions, selectedCounterId) {
+        if (selectedCounterId != null) {
+            val counter = counters.find { it.id == selectedCounterId }
+            if (counter != null) {
+                val totalCount = filteredSessions.sumOf { it.count }
+
+                // Find which session achieved the lifetime goal
+                var lifetimeGoalSessionId: String? = null
+                if (counter.goal > 0) {
+                    var runningTotal = 0
+                    // Sort sessions by timestamp to find when goal was first achieved
+                    val sortedSessions = filteredSessions.sortedBy { it.timestamp }
+                    for (session in sortedSessions) {
+                        runningTotal += session.count
+                        if (runningTotal >= counter.goal) {
+                            lifetimeGoalSessionId = session.id
+                            break
+                        }
+                    }
+                }
+
+                CounterGoalInfo(
+                    counter = counter,
+                    totalCount = totalCount,
+                    lifetimeGoalAchieved = counter.goal > 0 && totalCount >= counter.goal,
+                    lifetimeGoalProgress = if (counter.goal > 0) (totalCount.toFloat() / counter.goal.toFloat()).coerceAtMost(1f) else 0f,
+                    lifetimeGoalAchievedInSession = lifetimeGoalSessionId
+                )
+            } else null
+        } else null
     }
 
-    // Get counter name for title from filtered sessions
-    val counterName = remember(filteredSessions) {
-        filteredSessions.firstOrNull()?.counterName
+    // Group sessions by day with goal information
+    val dayGroups = remember(filteredSessions, counterGoalInfo) {
+        groupSessionsByDayWithGoals(filteredSessions, counterGoalInfo?.counter, counterGoalInfo?.lifetimeGoalAchievedInSession)
     }
 
-    val screenTitle = if (selectedCounterId != null && counterName != null) {
-        "$counterName History"
+    val screenTitle = if (selectedCounterId != null && counterGoalInfo != null) {
+        "${counterGoalInfo.counter.name} History"
     } else {
         "Session History"
     }
@@ -126,6 +185,12 @@ fun HistoryScreen(
         }
 
         Spacer(modifier = Modifier.height(16.dp))
+
+        // Show lifetime goal status for specific counter
+        if (counterGoalInfo != null && counterGoalInfo.counter.goal > 0) {
+            LifetimeGoalCard(counterGoalInfo = counterGoalInfo)
+            Spacer(modifier = Modifier.height(12.dp))
+        }
 
         if (dayGroups.isEmpty()) {
             Box(
@@ -228,6 +293,89 @@ fun HistoryScreen(
 }
 
 @Composable
+fun LifetimeGoalCard(counterGoalInfo: CounterGoalInfo) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = if (counterGoalInfo.lifetimeGoalAchieved)
+                Color(0xFF4CAF50).copy(alpha = 0.9f)
+            else
+                Color.White.copy(alpha = 0.95f)
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Lifetime Goal",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = if (counterGoalInfo.lifetimeGoalAchieved) Color.White else Color.Black
+                )
+
+                if (counterGoalInfo.lifetimeGoalAchieved) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.CheckCircle,
+                            contentDescription = "Goal Achieved",
+                            tint = Color.White,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = "Achieved!",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.White
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = "${counterGoalInfo.totalCount} / ${counterGoalInfo.counter.goal} chants",
+                fontSize = 14.sp,
+                color = if (counterGoalInfo.lifetimeGoalAchieved) Color.White.copy(alpha = 0.9f) else Color.Black
+            )
+
+            if (!counterGoalInfo.lifetimeGoalAchieved) {
+                Spacer(modifier = Modifier.height(8.dp))
+
+                LinearProgressIndicator(
+                    progress = { counterGoalInfo.lifetimeGoalProgress },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(8.dp)
+                        .clip(RoundedCornerShape(4.dp)),
+                    color = Color(0xFF4CAF50),
+                    trackColor = Color.Gray.copy(alpha = 0.3f)
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = "${(counterGoalInfo.lifetimeGoalProgress * 100).toInt()}% complete",
+                    fontSize = 12.sp,
+                    color = Color.Gray
+                )
+            }
+        }
+    }
+}
+
+@Composable
 fun DayGroupCard(
     dayGroup: DaySessionGroup,
     isExpanded: Boolean,
@@ -257,17 +405,67 @@ fun DayGroupCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = dayGroup.date,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = dayGroup.date,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black
+                        )
+
+                        // Goal achievement indicators
+                        if (dayGroup.lifetimeGoalTarget > 0 || dayGroup.dailyGoalTarget > 0) {
+                            Spacer(modifier = Modifier.width(8.dp))
+
+                            if (dayGroup.lifetimeGoalAchieved) {
+                                Icon(
+                                    imageVector = Icons.Default.EmojiEvents,
+                                    contentDescription = "Lifetime Goal Achieved",
+                                    tint = Color(0xFFFF9800),
+                                    modifier = Modifier.size(16.dp)
+                                )
+                            }
+
+                            if (dayGroup.dailyGoalAchieved) {
+                                Icon(
+                                    imageVector = Icons.Default.CheckCircle,
+                                    contentDescription = "Daily Goal Achieved",
+                                    tint = Color(0xFF4CAF50),
+                                    modifier = Modifier.size(16.dp)
+                                )
+                            }
+                        }
+                    }
+
                     Text(
                         text = "${dayGroup.sessionCount} session${if (dayGroup.sessionCount != 1) "s" else ""}",
                         fontSize = 12.sp,
                         color = Color.Gray
                     )
+
+                    // Daily goal progress text
+                    if (dayGroup.dailyGoalTarget > 0) {
+                        Text(
+                            text = "Daily goal: ${dayGroup.totalCount}/${dayGroup.dailyGoalTarget} " +
+                                    if (dayGroup.dailyGoalAchieved) "✓" else "(${(dayGroup.dailyGoalProgress * 100).toInt()}%)",
+                            fontSize = 11.sp,
+                            color = if (dayGroup.dailyGoalAchieved) Color(0xFF4CAF50) else Color.Gray,
+                            fontWeight = if (dayGroup.dailyGoalAchieved) FontWeight.Medium else FontWeight.Normal
+                        )
+                    }
+
+                    // Lifetime goal progress text
+                    if (dayGroup.lifetimeGoalTarget > 0) {
+                        Text(
+                            text = "Lifetime goal: ${dayGroup.cumulativeCountUpToDay}/${dayGroup.lifetimeGoalTarget} " +
+                                    if (dayGroup.lifetimeGoalAchieved) "✓" else "(${(dayGroup.lifetimeGoalProgress * 100).toInt()}%)",
+                            fontSize = 11.sp,
+                            color = if (dayGroup.lifetimeGoalAchieved) Color(0xFFFF9800) else Color.Gray,
+                            fontWeight = if (dayGroup.lifetimeGoalAchieved) FontWeight.Medium else FontWeight.Normal
+                        )
+                    }
                 }
 
                 Icon(
@@ -317,9 +515,9 @@ fun DayGroupCard(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 // Individual sessions
-                dayGroup.sessions.forEachIndexed { index, session ->
+                dayGroup.sessions.forEachIndexed { index, sessionWithStatus ->
                     SessionRow(
-                        session = session,
+                        sessionWithStatus = sessionWithStatus,
                         showCounterName = showCounterName,
                         onDeleteSession = onDeleteSession
                     )
@@ -335,24 +533,75 @@ fun DayGroupCard(
 
 @Composable
 fun SessionRow(
-    session: JapaSession,
+    sessionWithStatus: SessionWithGoalStatus,
     showCounterName: Boolean = true,
     onDeleteSession: (JapaSession) -> Unit
 ) {
+    val session = sessionWithStatus.session
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(modifier = Modifier.weight(1f)) {
-            if (showCounterName) {
-                Text(
-                    text = session.counterName,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.Black
-                )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (showCounterName) {
+                    Text(
+                        text = session.counterName,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.Black
+                    )
+                }
+
+                // Show goal achievement badges
+                if (sessionWithStatus.achievedDailyGoal || sessionWithStatus.achievedLifetimeGoal) {
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        if (sessionWithStatus.achievedDailyGoal) {
+                            Card(
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color(0xFF4CAF50)
+                                ),
+                                shape = RoundedCornerShape(4.dp),
+                                modifier = Modifier.padding(vertical = 2.dp)
+                            ) {
+                                Text(
+                                    text = "Daily Goal ✓",
+                                    fontSize = 10.sp,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Medium,
+                                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                )
+                            }
+                        }
+
+                        if (sessionWithStatus.achievedLifetimeGoal) {
+                            Card(
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color(0xFFFF9800)
+                                ),
+                                shape = RoundedCornerShape(4.dp),
+                                modifier = Modifier.padding(vertical = 2.dp)
+                            ) {
+                                Text(
+                                    text = "Lifetime Goal ✓",
+                                    fontSize = 10.sp,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Medium,
+                                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                )
+                            }
+                        }
+                    }
+                }
             }
+
             Text(
                 text = formatDateTime(session.timestamp).split(" ").drop(1).joinToString(" "), // Remove date part, keep time
                 fontSize = 12.sp,
@@ -396,21 +645,45 @@ fun SessionRow(
     }
 }
 
-// Helper function to group sessions by day
-fun groupSessionsByDay(sessions: List<JapaSession>): List<DaySessionGroup> {
+// Enhanced helper function to group sessions by day with goal information
+fun groupSessionsByDayWithGoals(
+    sessions: List<JapaSession>,
+    counter: Counter?,
+    lifetimeGoalAchievedInSession: String?
+): List<DaySessionGroup> {
     val calendar = Calendar.getInstance()
     val today = Calendar.getInstance()
     val yesterday = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -1) }
 
     val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
 
+    // Calculate cumulative counts
+    var totalCumulativeCount = 0
+    val sortedSessions = sessions.sortedBy { it.timestamp }
+    val sessionWithCumulativeCounts = mutableMapOf<String, Pair<Int, Int>>() // sessionId to (totalBefore, dailyBefore)
+
+    // Group by day to calculate daily cumulative counts
+    val dailyCounts = mutableMapOf<String, Int>()
+    val cumulativeCountsByDay = mutableMapOf<String, Int>()
+
+    sortedSessions.forEach { session ->
+        calendar.timeInMillis = session.timestamp
+        val dayKey = "${calendar.get(Calendar.YEAR)}-${calendar.get(Calendar.MONTH)}-${calendar.get(Calendar.DAY_OF_MONTH)}"
+
+        val dailyCountBefore = dailyCounts[dayKey] ?: 0
+        sessionWithCumulativeCounts[session.id] = Pair(totalCumulativeCount, dailyCountBefore)
+
+        totalCumulativeCount += session.count
+        dailyCounts[dayKey] = dailyCountBefore + session.count
+        cumulativeCountsByDay[dayKey] = totalCumulativeCount
+    }
+
     return sessions
         .groupBy { session ->
             calendar.timeInMillis = session.timestamp
-            // Create a key based on year, month, and day
             "${calendar.get(Calendar.YEAR)}-${calendar.get(Calendar.MONTH)}-${calendar.get(Calendar.DAY_OF_MONTH)}"
         }
-        .map { (_, sessionsInDay) ->
+        .map { (dayKey, sessionsInDay) ->
             val firstSession = sessionsInDay.first()
             calendar.timeInMillis = firstSession.timestamp
 
@@ -420,17 +693,50 @@ fun groupSessionsByDay(sessions: List<JapaSession>): List<DaySessionGroup> {
                 else -> dateFormat.format(Date(firstSession.timestamp))
             }
 
+            val dailyGoal = counter?.dailyGoal ?: 0
+            val lifetimeGoal = counter?.goal ?: 0
+            val cumulativeCount = cumulativeCountsByDay[dayKey] ?: 0
+
+            // Process sessions for this day to determine goal achievements
+            val sessionsWithStatus = sessionsInDay.sortedBy { it.timestamp }.map { session ->
+                val (totalBefore, dailyBefore) = sessionWithCumulativeCounts[session.id] ?: Pair(0, 0)
+
+                val achievedDailyGoal = dailyGoal > 0 &&
+                        dailyBefore < dailyGoal &&
+                        (dailyBefore + session.count) >= dailyGoal
+
+                val achievedLifetimeGoal = session.id == lifetimeGoalAchievedInSession
+
+                SessionWithGoalStatus(
+                    session = session,
+                    achievedDailyGoal = achievedDailyGoal,
+                    achievedLifetimeGoal = achievedLifetimeGoal,
+                    cumulativeCount = totalBefore + session.count,
+                    dailyCountBeforeSession = dailyBefore,
+                    totalCountBeforeSession = totalBefore
+                )
+            }.sortedByDescending { it.session.timestamp } // Show most recent first within day
+
+            val totalCount = sessionsInDay.sumOf { it.count }
+
             DaySessionGroup(
                 date = dateString,
                 timestamp = firstSession.timestamp,
-                sessions = sessionsInDay.sortedByDescending { it.timestamp }, // Most recent first within the day
-                totalCount = sessionsInDay.sumOf { it.count },
+                sessions = sessionsWithStatus,
+                totalCount = totalCount,
                 totalMalas = sessionsInDay.sumOf { it.malas },
                 totalDuration = sessionsInDay.sumOf { it.duration },
-                sessionCount = sessionsInDay.size
+                sessionCount = sessionsInDay.size,
+                dailyGoalAchieved = dailyGoal > 0 && totalCount >= dailyGoal,
+                dailyGoalProgress = if (dailyGoal > 0) (totalCount.toFloat() / dailyGoal.toFloat()).coerceAtMost(1f) else 0f,
+                dailyGoalTarget = dailyGoal,
+                lifetimeGoalTarget = lifetimeGoal,
+                cumulativeCountUpToDay = cumulativeCount,
+                lifetimeGoalProgress = if (lifetimeGoal > 0) (cumulativeCount.toFloat() / lifetimeGoal.toFloat()).coerceAtMost(1f) else 0f,
+                lifetimeGoalAchieved = lifetimeGoal > 0 && cumulativeCount >= lifetimeGoal
             )
         }
-        .sortedByDescending { it.timestamp } // Most recent days first
+        .sortedByDescending { it.timestamp }
 }
 
 // Helper function to check if two calendars represent the same day

@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.systemBars
 import com.sreerajp.mantrajapacounter.BuildConfig
+import androidx.compose.ui.graphics.vector.ImageVector
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -183,7 +184,7 @@ fun AboutScreen(
 
 @Composable
 fun InfoCard(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    icon: ImageVector,
     title: String,
     value: String
 ) {
