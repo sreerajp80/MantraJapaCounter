@@ -27,6 +27,7 @@ import com.sreerajp.mantrajapacounter.data.JapaSession
 import com.sreerajp.mantrajapacounter.data.Counter
 import com.sreerajp.mantrajapacounter.data.formatDateTime
 import com.sreerajp.mantrajapacounter.data.formatTime
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -388,7 +389,7 @@ fun DayGroupCard(
             .fillMaxWidth()
             .animateContentSize(animationSpec = tween(300)),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White.copy(alpha = 0.95f)
+            containerColor = Color(0xFFFDCDC2).copy(alpha = 0.95f)
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
@@ -442,17 +443,20 @@ fun DayGroupCard(
                     Text(
                         text = "${dayGroup.sessionCount} session${if (dayGroup.sessionCount != 1) "s" else ""}",
                         fontSize = 12.sp,
-                        color = Color.Gray
+                        color = Color.DarkGray
                     )
 
                     // Daily goal progress text
+                    val df = DecimalFormat("#.##")
                     if (dayGroup.dailyGoalTarget > 0) {
                         Text(
                             text = "Daily goal: ${dayGroup.totalCount}/${dayGroup.dailyGoalTarget} " +
-                                    if (dayGroup.dailyGoalAchieved) "✓" else "(${(dayGroup.dailyGoalProgress * 100).toInt()}%)",
+                                    if (dayGroup.dailyGoalAchieved) "✓" else "(${df.format(dayGroup.dailyGoalProgress * 100)}%)",
                             fontSize = 11.sp,
-                            color = if (dayGroup.dailyGoalAchieved) Color(0xFF4CAF50) else Color.Gray,
-                            fontWeight = if (dayGroup.dailyGoalAchieved) FontWeight.Medium else FontWeight.Normal
+                            color = if (dayGroup.dailyGoalAchieved) Color(0xFF4CAF50) else Color(
+                                0xFF2C6CEA
+                                ),
+                            fontWeight = if (dayGroup.dailyGoalAchieved) FontWeight.Medium else FontWeight.Bold
                         )
                     }
 
@@ -460,10 +464,12 @@ fun DayGroupCard(
                     if (dayGroup.lifetimeGoalTarget > 0) {
                         Text(
                             text = "Lifetime goal: ${dayGroup.cumulativeCountUpToDay}/${dayGroup.lifetimeGoalTarget} " +
-                                    if (dayGroup.lifetimeGoalAchieved) "✓" else "(${(dayGroup.lifetimeGoalProgress * 100).toInt()}%)",
+                                    if (dayGroup.lifetimeGoalAchieved) "✓" else "(${df.format(dayGroup.lifetimeGoalProgress * 100)}%)",
                             fontSize = 11.sp,
-                            color = if (dayGroup.lifetimeGoalAchieved) Color(0xFFFF9800) else Color.Gray,
-                            fontWeight = if (dayGroup.lifetimeGoalAchieved) FontWeight.Medium else FontWeight.Normal
+                            color = if (dayGroup.lifetimeGoalAchieved) Color(0xFFFF9800) else Color(
+                                0xFF2C6CEA
+                            ),
+                            fontWeight = if (dayGroup.lifetimeGoalAchieved) FontWeight.Medium else FontWeight.Bold
                         )
                     }
                 }
