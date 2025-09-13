@@ -8,6 +8,7 @@ import com.sreerajp.mantrajapacounter.data.Counter
 import com.sreerajp.mantrajapacounter.data.JapaSession
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import androidx.core.content.edit
 
 class DatabaseMigrationHelper(
     private val context: Context,
@@ -48,7 +49,7 @@ class DatabaseMigrationHelper(
             }
 
             // Mark as migrated
-            prefs.edit().putBoolean("migrated_to_sqlite", true).apply()
+            prefs.edit { putBoolean("migrated_to_sqlite", true) }
 
             true
         } catch (e: Exception) {

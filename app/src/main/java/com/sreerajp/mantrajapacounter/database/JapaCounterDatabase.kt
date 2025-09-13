@@ -21,11 +21,11 @@ abstract class JapaCounterDatabase : RoomDatabase() {
         private var INSTANCE: JapaCounterDatabase? = null
 
         private val MIGRATION_1_2 = object : Migration(1, 2) {
-            override fun migrate(database: SupportSQLiteDatabase) {
+            override fun migrate(db: SupportSQLiteDatabase) {
                 // Add new columns with default values
-                database.execSQL("ALTER TABLE counters ADD COLUMN status TEXT NOT NULL DEFAULT 'ACTIVE'")
-                database.execSQL("ALTER TABLE counters ADD COLUMN disabledAt INTEGER DEFAULT NULL")
-                database.execSQL("ALTER TABLE counters ADD COLUMN disabledReason TEXT DEFAULT NULL")
+                db.execSQL("ALTER TABLE counters ADD COLUMN status TEXT NOT NULL DEFAULT 'ACTIVE'")
+                db.execSQL("ALTER TABLE counters ADD COLUMN disabledAt INTEGER DEFAULT NULL")
+                db.execSQL("ALTER TABLE counters ADD COLUMN disabledReason TEXT DEFAULT NULL")
             }
         }
 
@@ -56,7 +56,7 @@ class Converters {
     fun toCounterStatus(status: String): CounterStatus {
         return try {
             CounterStatus.valueOf(status)
-        } catch (e: IllegalArgumentException) {
+        } catch (_: IllegalArgumentException) {
             CounterStatus.ACTIVE
         }
     }

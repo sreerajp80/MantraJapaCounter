@@ -271,24 +271,24 @@ fun CounterListScreen(
                             text = {
                                 Text(
                                     "Delete Counter",
-                                    color = if (selectedCounter != null && counters.size > 1) Color.Red else Color.Gray
+                                    color = if (selectedCounter != null ) Color.Red else Color.Gray //&& counters.size > 1
                                 )
                             },
                             onClick = {
                                 showMenu = false
                                 selectedCounter?.let { counter ->
-                                    if (counters.size > 1) {
+                                    //if (counters.size > 1) {
                                         onDeleteCounter(counter)
                                         selectedCounter = null
-                                    }
+                                    //}
                                 }
                             },
-                            enabled = selectedCounter != null && counters.size > 1,
+                            enabled = selectedCounter != null, //&& counters.size > 1,
                             leadingIcon = {
                                 Icon(
                                     imageVector = Icons.Default.Delete,
                                     contentDescription = null,
-                                    tint = if (selectedCounter != null && counters.size > 1) Color.Red else Color.Gray
+                                    tint = if (selectedCounter != null) Color.Red else Color.Gray //&& counters.size > 1
                                 )
                             }
                         )
@@ -324,7 +324,7 @@ fun CounterListScreen(
                         onLongPress = {
                             selectedCounter = if (selectedCounter == counter) null else counter
                         },
-                        isTablet = isTablet,
+                        isTablet = true,
                         cardPadding = cardPadding
                     )
                 }
@@ -353,7 +353,7 @@ fun CounterListScreen(
                         onLongPress = {
                             selectedCounter = if (selectedCounter == counter) null else counter
                         },
-                        isTablet = isTablet,
+                        isTablet = true,
                         cardPadding = cardPadding
                     )
                 }
@@ -380,7 +380,7 @@ fun CounterListScreen(
                         onLongPress = {
                             selectedCounter = if (selectedCounter == counter) null else counter
                         },
-                        isTablet = isTablet,
+                        isTablet = false,
                         cardPadding = cardPadding
                     )
                 }
@@ -937,7 +937,7 @@ fun CounterDialog(
                     singleLine = true,
                     textStyle = LocalTextStyle.current.copy(fontSize = if (isTablet) 16.sp else 14.sp),
                     isError = isDailyGoalInvalid,
-                    supportingText = if (isDailyGoalInvalid && lifetimeGoalValue > 0) {
+                    supportingText = if (isDailyGoalInvalid ) { //&& lifetimeGoalValue > 0
                         {
                             Text(
                                 text = "Lifetime goal must be greater than daily goal",

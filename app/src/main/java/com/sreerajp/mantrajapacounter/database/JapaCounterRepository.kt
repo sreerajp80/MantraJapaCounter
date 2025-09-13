@@ -4,7 +4,7 @@ import android.content.Context
 import com.sreerajp.mantrajapacounter.data.Counter
 import com.sreerajp.mantrajapacounter.data.JapaSession
 import com.sreerajp.mantrajapacounter.data.ExportData
-import com.sreerajp.mantrajapacounter.data.CounterStatus
+//import com.sreerajp.mantrajapacounter.data.CounterStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -45,11 +45,11 @@ class JapaCounterRepository(context: Context) {
         }
     }
 
-    fun getSessionsByCounterId(counterId: String): Flow<List<JapaSession>> {
+    /*fun getSessionsByCounterId(counterId: String): Flow<List<JapaSession>> {
         return sessionDao.getSessionsByCounterId(counterId).map { entities ->
             entities.map { it.toJapaSession() }
         }
-    }
+    }*/
 
     suspend fun getTodayCountForCounter(counterId: String): Int {
         val calendar = Calendar.getInstance()

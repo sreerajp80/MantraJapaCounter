@@ -697,7 +697,7 @@ fun clearActiveSession(prefs: SharedPreferences) {
 }
 
 // Utility functions used in History Screen
-fun formatTime(milliseconds: Long): String {
+/*fun formatTime(milliseconds: Long): String {
     val totalSeconds = milliseconds / 1000
     val hours = totalSeconds / 3600
     val minutes = (totalSeconds % 3600) / 60
@@ -707,4 +707,4 @@ fun formatTime(milliseconds: Long): String {
         hours > 0 -> String.format(Locale.US, "%02d:%02d:%02d", hours, minutes, seconds)
         else -> String.format(Locale.US, "%02d:%02d", minutes, seconds)
     }
-}
+}*/
