@@ -32,7 +32,11 @@ class DatabaseMigrationHelper(
 
                 // Insert counters into database
                 counters.forEach { counter ->
-                    repository.insertCounter(counter)
+                    val fixedCounter = if (counter.startDate == 0L) {
+                        counter.copy(startDate = if (counter.createdAt > 0L) counter.createdAt else System.currentTimeMillis())
+                    } else counter
+                    repository.insertCounter(fixedCounter)
+
                 }
             }
 

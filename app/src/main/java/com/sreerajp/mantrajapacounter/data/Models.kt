@@ -18,6 +18,7 @@ data class Counter(
     val incrementStep: Int = 1,
     val goal: Int = 0, // Lifetime goal (0 means no goal set)
     val dailyGoal: Int = 0, // Daily goal (0 means no daily goal set)
+    val startDate: Long = System.currentTimeMillis(),
     val createdAt: Long = System.currentTimeMillis(),
     val status: CounterStatus = CounterStatus.ACTIVE,
     val disabledAt: Long? = null,

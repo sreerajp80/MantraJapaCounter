@@ -8,7 +8,13 @@
 
     <!-- Wake lock permission to keep screen on during japa -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+
+    <!-- Vibration permission for daily goal notification -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Audio permissions for notification tone selection (Android 13+) -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 
     <application
         android:allowBackup="true"

@@ -13,6 +13,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,13 +47,15 @@ fun CounterListScreen(
     getTotalMalas: (Counter) -> Int,
     getTodayCount: (Counter) -> Int,
     onSelectCounter: (Counter) -> Unit,
-    onAddCounter: (String, Int, Int, Int, Int) -> Unit,
-    onEditCounter: (Counter, String, Int, Int, Int, Int) -> Unit,
+    onAddCounter: (String, Long, Int, Int, Int, Int) -> Unit,
+    onEditCounter: (Counter, String, Long, Int, Int, Int, Int) -> Unit,
+    onShowAboutCounter: (Counter) -> Unit,
     onDeleteCounter: (Counter) -> Unit,
     onDisableCounter: (Counter, CounterStatus, String?) -> Unit, // New parameter
     onShowHistory: (String?) -> Unit,
     onShowAbout: () -> Unit,
-    onShowImportExport: () -> Unit
+    onShowImportExport: () -> Unit,
+    onShowSettings: () -> Unit
 ) {
     var showAddDialog by remember { mutableStateOf(false) }
     var showEditDialog by remember { mutableStateOf<Counter?>(null) }
@@ -60,6 +65,7 @@ fun CounterListScreen(
     var newCounterName by remember { mutableStateOf("") }
     var newInitialCount by remember { mutableStateOf("0") }
     var newIncrementStep by remember { mutableStateOf("1") }
+    var newStartDateMillis by remember { mutableLongStateOf(System.currentTimeMillis()) }
     var newGoal by remember { mutableStateOf("0") }
     var newDailyGoal by remember { mutableStateOf("0") }
 
@@ -92,6 +98,7 @@ fun CounterListScreen(
             newCounterName = ""
             newInitialCount = "0"
             newIncrementStep = "1"
+            newStartDateMillis = System.currentTimeMillis()
             newGoal = "0"
             newDailyGoal = "0"
         }
@@ -103,6 +110,7 @@ fun CounterListScreen(
             newCounterName = counter.name
             newInitialCount = counter.initialCount.toString()
             newIncrementStep = counter.incrementStep.toString()
+            newStartDateMillis = if (counter.startDate > 0L) counter.startDate else counter.createdAt
             newGoal = counter.goal.toString()
             newDailyGoal = counter.dailyGoal.toString()
         }
@@ -189,6 +197,20 @@ fun CounterListScreen(
                             }
                         )
 
+                        DropdownMenuItem(
+                            text = { Text("Settings") },
+                            onClick = {
+                                showMenu = false
+                                onShowSettings()
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Settings,
+                                    contentDescription = null
+                                )
+                            }
+                        )
+
                         HorizontalDivider()
 
                         DropdownMenuItem(
@@ -234,6 +256,23 @@ fun CounterListScreen(
                                 )
                             }
                         )
+
+                        DropdownMenuItem(
+                            text = { Text("About Counter", color = if (selectedCounter != null) Color.Unspecified else Color.Gray) },
+                            onClick = {
+                                showMenu = false
+                                selectedCounter?.let { onShowAboutCounter(it) }
+                            },
+                            enabled = selectedCounter != null,
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Info,
+                                    contentDescription = null,
+                                    tint = if (selectedCounter != null) Color.Unspecified else Color.Gray
+                                )
+                            }
+                        )
+
 
                         // Disable/Enable Counter
                         DropdownMenuItem(
@@ -397,15 +436,18 @@ fun CounterListScreen(
             incrementStep = newIncrementStep,
             goal = newGoal,
             dailyGoal = newDailyGoal,
+            startDateMillis = newStartDateMillis,
             onNameChange = { newCounterName = it },
             onInitialCountChange = { newInitialCount = it },
             onIncrementStepChange = { newIncrementStep = it },
             onGoalChange = { newGoal = it },
             onDailyGoalChange = { newDailyGoal = it },
+            onStartDateChange = { newStartDateMillis = it },
             onConfirm = {
                 if (newCounterName.isNotBlank()) {
                     onAddCounter(
                         newCounterName.trim(),
+                        newStartDateMillis,
                         newInitialCount.toIntOrNull() ?: 0,
                         maxOf(1, newIncrementStep.toIntOrNull() ?: 1),
                         maxOf(0, newGoal.toIntOrNull() ?: 0),
@@ -428,16 +470,19 @@ fun CounterListScreen(
             incrementStep = newIncrementStep,
             goal = newGoal,
             dailyGoal = newDailyGoal,
+            startDateMillis = newStartDateMillis,
             onNameChange = { newCounterName = it },
             onInitialCountChange = { newInitialCount = it },
             onIncrementStepChange = { newIncrementStep = it },
             onGoalChange = { newGoal = it },
             onDailyGoalChange = { newDailyGoal = it },
+            onStartDateChange = { newStartDateMillis = it },
             onConfirm = {
                 if (newCounterName.isNotBlank()) {
                     onEditCounter(
                         counter,
                         newCounterName.trim(),
+                        newStartDateMillis,
                         newInitialCount.toIntOrNull() ?: counter.initialCount,
                         maxOf(1, newIncrementStep.toIntOrNull() ?: counter.incrementStep),
                         maxOf(0, newGoal.toIntOrNull() ?: counter.goal),
@@ -840,6 +885,7 @@ fun DisableCounterDialog(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CounterDialog(
     title: String,
@@ -847,12 +893,14 @@ fun CounterDialog(
     initialCount: String,
     incrementStep: String,
     goal: String,
+    startDateMillis: Long,
     dailyGoal: String,
     onNameChange: (String) -> Unit,
     onInitialCountChange: (String) -> Unit,
     onIncrementStepChange: (String) -> Unit,
     onGoalChange: (String) -> Unit,
     onDailyGoalChange: (String) -> Unit,
+    onStartDateChange: (Long) -> Unit,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
     isTablet: Boolean
@@ -866,6 +914,26 @@ fun CounterDialog(
 
     // Check if form is valid
     val isFormValid = name.isNotBlank() && !isDailyGoalInvalid
+
+    var showDatePicker by remember { mutableStateOf(false) }
+    if (showDatePicker) {
+        val pickerState = rememberDatePickerState(initialSelectedDateMillis = startDateMillis)
+        DatePickerDialog(
+            onDismissRequest = { showDatePicker = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    val selected = pickerState.selectedDateMillis ?: startDateMillis
+                    onStartDateChange(selected)
+                    showDatePicker = false
+                }) { Text("OK") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDatePicker = false }) { Text("Cancel") }
+            }
+        ) {
+            DatePicker(state = pickerState)
+        }
+    }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -885,7 +953,7 @@ fun CounterDialog(
                     label = { Text("Counter Name") },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
-                    textStyle = LocalTextStyle.current.copy(fontSize = if (isTablet) 16.sp else 14.sp)
+                    textStyle = TextStyle(fontSize = if (isTablet) 16.sp else 14.sp)
                 )
 
                 OutlinedTextField(
@@ -895,7 +963,7 @@ fun CounterDialog(
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     singleLine = true,
-                    textStyle = LocalTextStyle.current.copy(fontSize = if (isTablet) 16.sp else 14.sp)
+                    textStyle = TextStyle(fontSize = if (isTablet) 16.sp else 14.sp)
                 )
 
                 OutlinedTextField(
@@ -905,7 +973,21 @@ fun CounterDialog(
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     singleLine = true,
-                    textStyle = LocalTextStyle.current.copy(fontSize = if (isTablet) 16.sp else 14.sp)
+                    textStyle = TextStyle(fontSize = if (isTablet) 16.sp else 14.sp)
+                )
+
+                OutlinedTextField(
+                    value = formatDate(startDateMillis),
+                    onValueChange = { },
+                    label = { Text("Start Date") },
+                    readOnly = true,
+                    modifier = Modifier.fillMaxWidth(),
+                    trailingIcon = {
+                        IconButton(onClick = { showDatePicker = true }) {
+                            Icon(Icons.Default.DateRange, contentDescription = "Select start date")
+                        }
+                    },
+                    textStyle = TextStyle(fontSize = if (isTablet) 16.sp else 14.sp)
                 )
 
                 OutlinedTextField(
@@ -915,7 +997,7 @@ fun CounterDialog(
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     singleLine = true,
-                    textStyle = LocalTextStyle.current.copy(fontSize = if (isTablet) 16.sp else 14.sp),
+                    textStyle = TextStyle(fontSize = if (isTablet) 16.sp else 14.sp),
                     isError = isDailyGoalInvalid,
                     supportingText = if (isDailyGoalInvalid) {
                         {
@@ -935,7 +1017,7 @@ fun CounterDialog(
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     singleLine = true,
-                    textStyle = LocalTextStyle.current.copy(fontSize = if (isTablet) 16.sp else 14.sp),
+                    textStyle = TextStyle(fontSize = if (isTablet) 16.sp else 14.sp),
                     isError = isDailyGoalInvalid,
                     supportingText = if (isDailyGoalInvalid ) { //&& lifetimeGoalValue > 0
                         {

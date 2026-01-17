@@ -58,7 +58,8 @@ data class DaySessionGroup(
     val lifetimeGoalTarget: Int = 0,
     val cumulativeCountUpToDay: Int = 0,
     val lifetimeGoalProgress: Float = 0f,
-    val lifetimeGoalAchieved: Boolean = false
+    val lifetimeGoalAchieved: Boolean = false,
+    val dayNumber: Int = 0 // Day number representing how many days the counter has been active
 )
 
 // Data class to hold counter information with goals
@@ -97,12 +98,14 @@ fun HistoryScreen(
         if (selectedCounterId != null) {
             val counter = counters.find { it.id == selectedCounterId }
             if (counter != null) {
-                val totalCount = filteredSessions.sumOf { it.count }
+                // Include initialCount in total count for lifetime goal progress
+                val sessionCount = filteredSessions.sumOf { it.count }
+                val totalCount = sessionCount + counter.initialCount
 
                 // Find which session achieved the lifetime goal
                 var lifetimeGoalSessionId: String? = null
                 if (counter.goal > 0) {
-                    var runningTotal = 0
+                    var runningTotal = counter.initialCount // Start with initial count
                     // Sort sessions by timestamp to find when goal was first achieved
                     val sortedSessions = filteredSessions.sortedBy { it.timestamp }
                     for (session in sortedSessions) {
@@ -663,8 +666,8 @@ fun groupSessionsByDayWithGoals(
 
     val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
 
-    // Calculate cumulative counts
-    var totalCumulativeCount = 0
+    // Calculate cumulative counts (start with initialCount)
+    var totalCumulativeCount = counter?.initialCount ?: 0
     val sortedSessions = sessions.sortedBy { it.timestamp }
     val sessionWithCumulativeCounts = mutableMapOf<String, Pair<Int, Int>>() // sessionId to (totalBefore, dailyBefore)
 
@@ -684,6 +687,33 @@ fun groupSessionsByDayWithGoals(
         cumulativeCountsByDay[dayKey] = totalCumulativeCount
     }
 
+    // Get counter start date for calculating day numbers
+    val startDate = counter?.startDate ?: (counter?.createdAt ?: System.currentTimeMillis())
+    val startCalendar = Calendar.getInstance().apply { timeInMillis = startDate }
+    startCalendar.set(Calendar.HOUR_OF_DAY, 0)
+    startCalendar.set(Calendar.MINUTE, 0)
+    startCalendar.set(Calendar.SECOND, 0)
+    startCalendar.set(Calendar.MILLISECOND, 0)
+
+    // Get unique days sorted by timestamp (normalized to start of day)
+    val uniqueDays = sessions
+        .map { session ->
+            calendar.timeInMillis = session.timestamp
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+            calendar.timeInMillis
+        }
+        .distinct()
+        .sorted()
+
+    // Create a map of day timestamp to day number (1-based, representing consecutive days with sessions)
+    val dayNumberMap = mutableMapOf<Long, Int>()
+    uniqueDays.forEachIndexed { index, dayMillis ->
+        dayNumberMap[dayMillis] = index + 1
+    }
+
     return sessions
         .groupBy { session ->
             calendar.timeInMillis = session.timestamp
@@ -692,11 +722,18 @@ fun groupSessionsByDayWithGoals(
         .map { (dayKey, sessionsInDay) ->
             val firstSession = sessionsInDay.first()
             calendar.timeInMillis = firstSession.timestamp
+            calendar.set(Calendar.HOUR_OF_DAY, 0)
+            calendar.set(Calendar.MINUTE, 0)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+            val dayTimestamp = calendar.timeInMillis
+
+            val dayNumber = dayNumberMap[dayTimestamp] ?: 1
 
             val dateString = when {
-                isSameDay(calendar, today) -> "Today"
-                isSameDay(calendar, yesterday) -> "Yesterday"
-                else -> dateFormat.format(Date(firstSession.timestamp))
+                isSameDay(calendar, today) -> "Today (Day $dayNumber)"
+                isSameDay(calendar, yesterday) -> "Yesterday (Day $dayNumber)"
+                else -> "${dateFormat.format(Date(firstSession.timestamp))} (Day $dayNumber)"
             }
 
             val dailyGoal = counter?.dailyGoal ?: 0
@@ -739,7 +776,8 @@ fun groupSessionsByDayWithGoals(
                 lifetimeGoalTarget = lifetimeGoal,
                 cumulativeCountUpToDay = cumulativeCount,
                 lifetimeGoalProgress = if (lifetimeGoal > 0) (cumulativeCount.toFloat() / lifetimeGoal.toFloat()).coerceAtMost(1f) else 0f,
-                lifetimeGoalAchieved = lifetimeGoal > 0 && cumulativeCount >= lifetimeGoal
+                lifetimeGoalAchieved = lifetimeGoal > 0 && cumulativeCount >= lifetimeGoal,
+                dayNumber = dayNumber
             )
         }
         .sortedByDescending { it.timestamp }

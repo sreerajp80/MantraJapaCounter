@@ -138,7 +138,7 @@ fun AboutScreen(
             InfoCard(
                 icon = Icons.Default.SmartToy,
                 title = "AI Agent",
-                value = "Claude Sonnet 4"
+                value = "Used Various Agents"
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -183,7 +183,7 @@ fun AboutScreen(
 }
 
 @Composable
-fun InfoCard(
+private fun InfoCard(
     icon: ImageVector,
     title: String,
     value: String

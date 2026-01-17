@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import java.util.*
+import java.util.Calendar
 
 class JapaCounterRepository(context: Context) {
     private val database = JapaCounterDatabase.getDatabase(context)
@@ -66,6 +67,29 @@ class JapaCounterRepository(context: Context) {
         return sessionDao.getTotalCountForCounter(counterId) ?: 0
     }
 
+    suspend fun getAverageDailyCountForCounter(counterId: String, startDate: Long): Double {
+        val sessions = sessionDao.getSessionsByCounterId(counterId).first()
+            .filter { it.timestamp >= startDate }
+            .map { it.toJapaSession() }
+
+        if (sessions.isEmpty()) return 0.0
+
+        // Group sessions by date
+        val calendar = Calendar.getInstance()
+        val dailyCounts = mutableMapOf<String, Int>()
+
+        sessions.forEach { session ->
+            calendar.timeInMillis = session.timestamp
+            val dayKey = "${calendar.get(Calendar.YEAR)}-${calendar.get(Calendar.MONTH)}-${calendar.get(Calendar.DAY_OF_MONTH)}"
+            dailyCounts[dayKey] = (dailyCounts[dayKey] ?: 0) + session.count
+        }
+
+        val totalCount = dailyCounts.values.sum()
+        val numberOfDays = dailyCounts.size
+
+        return if (numberOfDays > 0) totalCount.toDouble() / numberOfDays else 0.0
+    }
+
     suspend fun insertSession(session: JapaSession) {
         sessionDao.insertSession(session.toEntity())
     }
@@ -100,7 +124,10 @@ class JapaCounterRepository(context: Context) {
 
         // Import new data - use individual inserts since bulk methods don't exist
         exportData.counters.forEach { counter ->
-            counterDao.insertCounter(counter.toEntity())
+            val fixedCounter = if (counter.startDate == 0L) {
+                counter.copy(startDate = if (counter.createdAt > 0L) counter.createdAt else System.currentTimeMillis())
+            } else counter
+            counterDao.insertCounter(fixedCounter.toEntity())
         }
 
         exportData.sessions.forEach { session ->
@@ -121,6 +148,7 @@ fun CounterEntity.toCounter(): Counter {
         incrementStep = incrementStep,
         goal = goal,
         dailyGoal = dailyGoal,
+        startDate = startDate,
         createdAt = createdAt,
         status = status,
         disabledAt = disabledAt,
@@ -136,6 +164,7 @@ fun Counter.toEntity(): CounterEntity {
         incrementStep = incrementStep,
         goal = goal,
         dailyGoal = dailyGoal,
+        startDate = startDate,
         createdAt = createdAt,
         status = status,
         disabledAt = disabledAt,

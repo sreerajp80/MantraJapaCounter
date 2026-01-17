@@ -8,7 +8,7 @@ import com.sreerajp.mantrajapacounter.data.CounterStatus
 
 @Database(
     entities = [CounterEntity::class, JapaSessionEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = true
 )
 @TypeConverters(Converters::class)
@@ -29,6 +29,14 @@ abstract class JapaCounterDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE counters ADD COLUMN startDate INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("UPDATE counters SET startDate = createdAt WHERE startDate = 0")
+            }
+        }
+
+
         fun getDatabase(context: Context): JapaCounterDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -36,7 +44,7 @@ abstract class JapaCounterDatabase : RoomDatabase() {
                     JapaCounterDatabase::class.java,
                     "japa_counter_database"
                 )
-                    .addMigrations(MIGRATION_1_2)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                     .build()
                 INSTANCE = instance
                 instance

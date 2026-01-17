@@ -1,9 +1,11 @@
 package com.sreerajp.mantrajapacounter
 
+import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.speech.tts.TextToSpeech
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -20,21 +22,26 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
-import com.sreerajp.mantrajapacounter.ui.theme.MantraJapaCounterTheme
+import com.google.gson.Gson
+import com.sreerajp.mantrajapacounter.data.*
+import com.sreerajp.mantrajapacounter.database.*
+import com.sreerajp.mantrajapacounter.screens.AboutCounterScreen
+import com.sreerajp.mantrajapacounter.screens.AboutScreen
 import com.sreerajp.mantrajapacounter.screens.CounterListScreen
 import com.sreerajp.mantrajapacounter.screens.CountingScreen
 import com.sreerajp.mantrajapacounter.screens.HistoryScreen
-import com.sreerajp.mantrajapacounter.screens.AboutScreen
-import com.sreerajp.mantrajapacounter.data.*
-import com.sreerajp.mantrajapacounter.database.*
+import com.sreerajp.mantrajapacounter.screens.SettingsScreen
+import com.sreerajp.mantrajapacounter.ui.theme.MantraJapaCounterTheme
+import com.sreerajp.mantrajapacounter.utils.DailyGoalNotificationHelper
 import com.sreerajp.mantrajapacounter.utils.FileUtils
-import com.google.gson.Gson
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 
 enum class Screen {
-    COUNTER_LIST, COUNTING, HISTORY, ABOUT
+    COUNTER_LIST, COUNTING, HISTORY, ABOUT, ABOUT_COUNTER, SETTINGS
 }
 
 data class ActiveSession(
@@ -43,16 +50,14 @@ data class ActiveSession(
     val currentTapCount: Int,
     val sessionTotalTaps: Int,
     val startTime: Long,
-    val sessionId: String = UUID.randomUUID().toString()
+    val sessionId: String = UUID.randomUUID().toString(),
+    val date: String = ""
 )
 
-class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
-    private lateinit var textToSpeech: TextToSpeech
-    private var ttsInitialized = false
+class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        textToSpeech = TextToSpeech(this, this)
 
         setContent {
             MantraJapaCounterTheme {
@@ -61,15 +66,7 @@ class MainActivity : ComponentActivity(), TextToSpeech.OnInitListener {
         }
     }
 
-    override fun onInit(status: Int) {
-        if (status == TextToSpeech.SUCCESS) {
-            ttsInitialized = true
-            textToSpeech.language = Locale.getDefault()
-        }
-    }
-
     override fun onDestroy() {
-        textToSpeech.shutdown()
         super.onDestroy()
     }
 }
@@ -152,15 +149,23 @@ fun MantraCounterApp() {
     val repository = remember { JapaCounterRepository(context) }
     val prefs = remember { context.getSharedPreferences("japa_counter", Context.MODE_PRIVATE) }
     val coroutineScope = rememberCoroutineScope()
+    
+    // Notification helper for daily goal alerts
+    val notificationHelper = remember { DailyGoalNotificationHelper(context) }
 
     var currentScreen by remember { mutableStateOf(Screen.COUNTER_LIST) }
     var previousScreen by remember { mutableStateOf(Screen.COUNTER_LIST) }
     var selectedCounter by remember { mutableStateOf<Counter?>(null) }
+    var aboutCounter by remember { mutableStateOf<Counter?>(null) }
+    var averageDailyCount by remember { mutableStateOf(0.0) }
     var currentTapCount by remember { mutableIntStateOf(0) }
     var sessionTotalTaps by remember { mutableIntStateOf(0) }
     var startTime by remember { mutableLongStateOf(0L) }
     var elapsedTime by remember { mutableLongStateOf(0L) }
     var currentSessionId by remember { mutableStateOf<String?>(null) }
+    
+    // Track if daily goal notification has been played for current session
+    var dailyGoalNotificationPlayed by remember { mutableStateOf(false) }
 
     // Collect data from database
     val counters by repository.getAllCounters().collectAsState(initial = emptyList())
@@ -173,6 +178,27 @@ fun MantraCounterApp() {
     // Import/Export dialog and message states
     var showImportExportDialog by remember { mutableStateOf(false) }
     var importExportMessage by remember { mutableStateOf<String?>(null) }
+    
+    // Permission dialog state
+    var showPermissionDialog by remember { mutableStateOf(false) }
+    var permissionsRequested by remember { mutableStateOf(false) }
+    
+    // Permission launcher
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        // Permissions granted or denied - just proceed, user can change later in settings
+        permissionsRequested = true
+        prefs.edit { putBoolean("permissions_requested", true) }
+    }
+    
+    // Check if we need to request permissions on first launch
+    LaunchedEffect(Unit) {
+        val alreadyRequested = prefs.getBoolean("permissions_requested", false)
+        if (!alreadyRequested) {
+            showPermissionDialog = true
+        }
+    }
 
     // Create import/export handlers
     val (startExport, startImport) = rememberImportExportHandlers(
@@ -260,15 +286,24 @@ fun MantraCounterApp() {
     }
 
     // Save active session whenever important state changes
-    LaunchedEffect(selectedCounter, currentTapCount, sessionTotalTaps, startTime, currentSessionId) {
+    LaunchedEffect(
+        selectedCounter,
+        currentTapCount,
+        sessionTotalTaps,
+        startTime,
+        currentSessionId
+    ) {
         if (selectedCounter != null && currentSessionId != null) {
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val currentDate = sdf.format(Date())
             val activeSession = ActiveSession(
                 counterId = selectedCounter!!.id,
                 counterName = selectedCounter!!.name,
                 currentTapCount = currentTapCount,
                 sessionTotalTaps = sessionTotalTaps,
                 startTime = startTime,
-                sessionId = currentSessionId!!
+                sessionId = currentSessionId!!,
+                date = currentDate
             )
             saveActiveSession(prefs, activeSession)
         }
@@ -382,28 +417,30 @@ fun MantraCounterApp() {
                     startTime = System.currentTimeMillis()
                     elapsedTime = 0L
                     currentSessionId = UUID.randomUUID().toString()
-                    previousScreen = Screen.COUNTER_LIST
+                    dailyGoalNotificationPlayed = false // Reset notification state for new session
                     currentScreen = Screen.COUNTING
                 },
-                onAddCounter = { name, initialCount, incrementStep, goal, dailyGoal ->
+                onAddCounter = { name, startDate, initialCount, incrementStep, goal, dailyGoal ->
                     val newCounter = Counter(
                         name = name,
                         initialCount = initialCount,
                         incrementStep = maxOf(1, incrementStep),
                         goal = goal,
-                        dailyGoal = dailyGoal
+                        dailyGoal = dailyGoal,
+                        startDate = startDate
                     )
                     coroutineScope.launch {
                         repository.insertCounter(newCounter)
                     }
                 },
-                onEditCounter = { counter, name, initialCount, incrementStep, goal, dailyGoal ->
+                onEditCounter = { counter, name, startDate, initialCount, incrementStep, goal, dailyGoal ->
                     val updatedCounter = counter.copy(
                         name = name,
                         initialCount = initialCount,
                         incrementStep = maxOf(1, incrementStep),
                         goal = goal,
-                        dailyGoal = dailyGoal
+                        dailyGoal = dailyGoal,
+                        startDate = startDate
                     )
                     coroutineScope.launch {
                         repository.updateCounter(updatedCounter)
@@ -452,8 +489,21 @@ fun MantraCounterApp() {
                     previousScreen = Screen.COUNTER_LIST
                     currentScreen = Screen.ABOUT
                 },
+                onShowAboutCounter = { counter ->
+                    aboutCounter = counter
+                    previousScreen = Screen.COUNTER_LIST
+                    currentScreen = Screen.ABOUT_COUNTER
+                    coroutineScope.launch {
+                        val startDate = if (counter.startDate > 0L) counter.startDate else counter.createdAt
+                        averageDailyCount = repository.getAverageDailyCountForCounter(counter.id, startDate)
+                    }
+                },
                 onShowImportExport = {
                     showImportExportDialog = true
+                },
+                onShowSettings = {
+                    previousScreen = Screen.COUNTER_LIST
+                    currentScreen = Screen.SETTINGS
                 }
             )
         }
@@ -468,18 +518,41 @@ fun MantraCounterApp() {
                 onCountClick = {
                     val step = maxOf(1, selectedCounter?.incrementStep ?: 1)
                     val wasZero = sessionTotalTaps == 0
+                    
+                    // Track currentTapCount before increment for mala completion check
+                    val tapCountBefore = currentTapCount
+                    
+                    // Check if daily goal was NOT achieved before this increment
+                    val todayCountBefore = selectedCounter?.let { getTodayCountForCounter(it) } ?: 0
+                    val wasDailyGoalAchievedBefore = selectedCounter?.isDailyGoalAchieved(todayCountBefore) == true
 
                     currentTapCount += step
                     sessionTotalTaps += step
 
+                    // Check if a mala was completed (crossed 108)
+                    val malaCompleted = currentTapCount >= 108
+                    
                     if (currentTapCount >= 108) {
-                        currentTapCount = currentTapCount % 108
+                        currentTapCount %= 108
                     }
 
                     if (wasZero) {
                         createSessionInDatabase()
                     } else {
                         updateCurrentSessionInDatabase()
+                    }
+                    
+                    // Check if daily goal is NOW achieved after this increment
+                    val todayCountAfter = todayCountBefore + step
+                    val isDailyGoalAchievedNow = selectedCounter?.isDailyGoalAchieved(todayCountAfter) == true
+                    
+                    // Play notification only when crossing the threshold (not already achieved before)
+                    if (isDailyGoalAchievedNow && !wasDailyGoalAchievedBefore && !dailyGoalNotificationPlayed) {
+                        dailyGoalNotificationPlayed = true
+                        notificationHelper.playDailyGoalNotification()
+                    } else if (malaCompleted) {
+                        // Play mala completion sound only if it's not also the daily goal
+                        notificationHelper.playMalaCompletionNotification()
                     }
                 },
                 onDecrementClick = {
@@ -504,12 +577,12 @@ fun MantraCounterApp() {
                     selectedCounter = null
                     currentScreen = Screen.COUNTER_LIST
                 },
-                onShowHistory = { counterId ->
-                    previousScreen = Screen.COUNTING
+                onShowHistory = { _ ->
+                    previousScreen = Screen.COUNTER_LIST
                     currentScreen = Screen.HISTORY
                 },
                 onShowAbout = {
-                    previousScreen = Screen.COUNTING
+                    previousScreen = Screen.COUNTER_LIST
                     currentScreen = Screen.ABOUT
                 },
                 onReset = {
@@ -556,6 +629,28 @@ fun MantraCounterApp() {
         }
         Screen.ABOUT -> {
             AboutScreen(
+                onBack = {
+                    currentScreen = previousScreen
+                }
+            )
+        }
+        Screen.ABOUT_COUNTER -> {
+            aboutCounter?.let { counter ->
+                val totalCount = getTotalCountForCounter(counter)
+                AboutCounterScreen(
+                    counter = counter,
+                    totalCount = totalCount,
+                    averageDailyCount = averageDailyCount,
+                    onBack = {
+                        currentScreen = previousScreen
+                        aboutCounter = null
+                    }
+                )
+            }
+        }
+        Screen.SETTINGS -> {
+            SettingsScreen(
+                notificationHelper = notificationHelper,
                 onBack = {
                     currentScreen = previousScreen
                 }
@@ -665,6 +760,125 @@ fun MantraCounterApp() {
             }
         )
     }
+    
+    // Permission request dialog
+    if (showPermissionDialog) {
+        AlertDialog(
+            onDismissRequest = { 
+                showPermissionDialog = false
+                prefs.edit { putBoolean("permissions_requested", true) }
+            },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Notifications,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(48.dp)
+                )
+            },
+            title = { 
+                Text(
+                    "Permissions Required",
+                    fontWeight = FontWeight.Bold
+                ) 
+            },
+            text = {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Text(
+                        "Mantra Japa Counter needs the following permissions for the best experience:"
+                    )
+                    
+                    Card(
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceVariant
+                        ),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(12.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Vibration,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                                Text(
+                                    "Vibration - Alert when daily goal is reached",
+                                    fontSize = 14.sp
+                                )
+                            }
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.MusicNote,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                                Text(
+                                    "Audio - Select custom notification tones",
+                                    fontSize = 14.sp
+                                )
+                            }
+                        }
+                    }
+                    
+                    Text(
+                        "You can change these settings later in the app Settings.",
+                        fontSize = 13.sp,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showPermissionDialog = false
+                        
+                        // Request permissions
+                        val permissionsToRequest = mutableListOf<String>()
+                        
+                        // Check and request audio permission for Android 13+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            if (ContextCompat.checkSelfPermission(
+                                    context,
+                                    Manifest.permission.READ_MEDIA_AUDIO
+                                ) != PackageManager.PERMISSION_GRANTED
+                            ) {
+                                permissionsToRequest.add(Manifest.permission.READ_MEDIA_AUDIO)
+                            }
+                        }
+                        
+                        if (permissionsToRequest.isNotEmpty()) {
+                            permissionLauncher.launch(permissionsToRequest.toTypedArray())
+                        } else {
+                            prefs.edit { putBoolean("permissions_requested", true) }
+                        }
+                    }
+                ) {
+                    Text("Grant Permissions")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { 
+                        showPermissionDialog = false
+                        prefs.edit { putBoolean("permissions_requested", true) }
+                    }
+                ) {
+                    Text("Skip")
+                }
+            }
+        )
+    }
 }
 
 // Active session persistence functions
@@ -679,15 +893,26 @@ fun saveActiveSession(prefs: SharedPreferences, activeSession: ActiveSession) {
 fun loadActiveSession(prefs: SharedPreferences): ActiveSession? {
     val gson = Gson()
     val json = prefs.getString("active_session", null)
-    return if (json != null) {
+    if (json != null) {
         try {
-            gson.fromJson(json, ActiveSession::class.java)
-        } catch (_: Exception) {
-            null
+            val session = gson.fromJson(json, ActiveSession::class.java)
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val currentDate = sdf.format(Date())
+            // Check if session is from today
+            return if (session.date == currentDate) {
+                session
+            } else {
+                // It's a new day, clear the old session
+                clearActiveSession(prefs)
+                null
+            }
+        } catch (e: Exception) {
+            // In case of parsing error (e.g., old ActiveSession format without date)
+            clearActiveSession(prefs)
+            return null
         }
-    } else {
-        null
     }
+    return null
 }
 
 fun clearActiveSession(prefs: SharedPreferences) {
@@ -695,16 +920,3 @@ fun clearActiveSession(prefs: SharedPreferences) {
         remove("active_session")
     }
 }
-
-// Utility functions used in History Screen
-/*fun formatTime(milliseconds: Long): String {
-    val totalSeconds = milliseconds / 1000
-    val hours = totalSeconds / 3600
-    val minutes = (totalSeconds % 3600) / 60
-    val seconds = totalSeconds % 60
-
-    return when {
-        hours > 0 -> String.format(Locale.US, "%02d:%02d:%02d", hours, minutes, seconds)
-        else -> String.format(Locale.US, "%02d:%02d", minutes, seconds)
-    }
-}*/

@@ -13,6 +13,7 @@ data class CounterEntity(
     val incrementStep: Int = 1,
     val goal: Int = 0,
     val dailyGoal: Int = 0,
+    val startDate: Long = System.currentTimeMillis(),
     val createdAt: Long = System.currentTimeMillis(),
     val status: CounterStatus = CounterStatus.ACTIVE,
     val disabledAt: Long? = null,
