@@ -28,6 +28,7 @@ import com.sreerajp.mantrajapacounter.data.Counter
 import com.sreerajp.mantrajapacounter.data.*
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import kotlinx.coroutines.delay
 
 @Composable
 fun CountingScreen(
@@ -35,6 +36,7 @@ fun CountingScreen(
     currentTapCount: Int,
     sessionTotalTaps: Int,
     elapsedTime: Long,
+    startTime: Long, // Added for on-demand time calculation
     lifetimeTotal: Int,
     todayTotal: Int,
     onCountClick: () -> Unit,
@@ -47,33 +49,72 @@ fun CountingScreen(
 ) {
     var showMenu by remember { mutableStateOf(false) }
 
-    // Use extension functions for goal calculations
-    val isLifetimeGoalReached = counter?.isLifetimeGoalAchieved(lifetimeTotal) == true
-    val isDailyGoalReached = counter?.isDailyGoalAchieved(todayTotal) == true
-    val lifetimeProgress = counter?.getLifetimeProgress(lifetimeTotal) ?: 0f
-    val dailyProgress = counter?.getDailyProgress(todayTotal) ?: 0f
+    // POWER OPTIMIZATION: Use derivedStateOf to memoize expensive calculations
+    // These only recompute when their dependencies actually change
+    val isLifetimeGoalReached by remember(counter, lifetimeTotal) {
+        derivedStateOf { counter?.isLifetimeGoalAchieved(lifetimeTotal) == true }
+    }
+    val isDailyGoalReached by remember(counter, todayTotal) {
+        derivedStateOf { counter?.isDailyGoalAchieved(todayTotal) == true }
+    }
+    val lifetimeProgress by remember(counter, lifetimeTotal) {
+        derivedStateOf { counter?.getLifetimeProgress(lifetimeTotal) ?: 0f }
+    }
+    val dailyProgress by remember(counter, todayTotal) {
+        derivedStateOf { counter?.getDailyProgress(todayTotal) ?: 0f }
+    }
+    
+    // POWER OPTIMIZATION: Memoize gradient brushes to avoid recalculation on every recomposition
+    val backgroundGradient = remember(isLifetimeGoalReached, isDailyGoalReached) {
+        if (isLifetimeGoalReached || isDailyGoalReached) {
+            Brush.verticalGradient(
+                colors = listOf(
+                    Color(0xFF059669), // Success green
+                    Color(0xFF047857)
+                )
+            )
+        } else {
+            Brush.verticalGradient(
+                colors = listOf(
+                    Color(0xFF1E3A8A),
+                    Color(0xFF0F766E)
+                )
+            )
+        }
+    }
+    
+    val mainAreaGradient = remember(isLifetimeGoalReached, isDailyGoalReached) {
+        Brush.radialGradient(
+            colors = listOf(
+                Color(0xFFFF9933),
+                Color(0xFFE67E00)
+            )
+        )
+    }
+    
+    // Memoize calculated values
+    val sessionMalas = remember(sessionTotalTaps) { sessionTotalTaps / 108 }
+    val todayMalas = remember(todayTotal) { todayTotal / 108 }
+    val totalMalas = remember(lifetimeTotal) { lifetimeTotal / 108 }
+    
+    // POWER OPTIMIZATION: Calculate elapsed time with balanced update frequency
+    // Updates every 2 seconds - smooth enough for display, power-efficient
+    // This is a good balance between UI smoothness and power consumption
+    var displayTime by remember { mutableLongStateOf(elapsedTime) }
+    LaunchedEffect(startTime) {
+        if (startTime > 0) {
+            while (true) {
+                displayTime = System.currentTimeMillis() - startTime
+                delay(2000) // Update every 2 seconds - good balance of smoothness and power
+            }
+        }
+    }
+    val formattedTime = remember(displayTime) { formatTime(displayTime) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                // Change background gradient when any goal is reached
-                if (isLifetimeGoalReached || isDailyGoalReached) {
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFF059669), // Success green
-                            Color(0xFF047857)
-                        )
-                    )
-                } else {
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFF1E3A8A),
-                            Color(0xFF0F766E)
-                        )
-                    )
-                }
-            )
+            .background(backgroundGradient)
             .windowInsetsPadding(WindowInsets.systemBars)
     ) {
         Column(
@@ -118,7 +159,7 @@ fun CountingScreen(
                                     modifier = Modifier.size(20.dp)
                                 )
                                 Text(
-                                    text = "LIFETIME GOAL ACHIEVED! - ${formatTime(elapsedTime)}",
+                                    text = "LIFETIME GOAL ACHIEVED! - $formattedTime",
                                     color = Color(0xFFFFD700),
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Bold
@@ -137,7 +178,7 @@ fun CountingScreen(
                                     modifier = Modifier.size(20.dp)
                                 )
                                 Text(
-                                    text = "DAILY GOAL ACHIEVED! - ${formatTime(elapsedTime)}",
+                                    text = "DAILY GOAL ACHIEVED! - $formattedTime",
                                     color = Color(0xFF00FF7F),
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Bold
@@ -146,7 +187,7 @@ fun CountingScreen(
                         }
                         else -> {
                             Text(
-                                text = formatTime(elapsedTime),
+                                text = formattedTime,
                                 color = Color.White,
                                 fontSize = 18.sp
                             )
@@ -252,30 +293,7 @@ fun CountingScreen(
                     .fillMaxWidth()
                     .weight(1f)
                     .clip(RoundedCornerShape(20.dp))
-                    .background(
-                        if (isLifetimeGoalReached) {
-                            Brush.radialGradient(
-                                colors = listOf(
-                                    Color(0xFFFF9933), // Gold
-                                    Color(0xFFE67E00)  // Dark orange
-                                )
-                            )
-                        } else if (isDailyGoalReached) {
-                            Brush.radialGradient(
-                                colors = listOf(
-                                    Color(0xFFFF9933), // Spring green
-                                    Color(0xFFE67E00)  // Lime green
-                                )
-                            )
-                        } else {
-                            Brush.radialGradient(
-                                colors = listOf(
-                                    Color(0xFFFF9933),
-                                    Color(0xFFE67E00)
-                                )
-                            )
-                        }
-                    )
+                    .background(mainAreaGradient)
                     .clickable { onCountClick() },
                 contentAlignment = Alignment.Center
             ) {
@@ -361,7 +379,7 @@ fun CountingScreen(
                                     fontWeight = FontWeight.ExtraBold
                                 )
                                 Text(
-                                    text = "Session Mala: ${sessionTotalTaps / 108}",
+                                    text = "Session Mala: $sessionMalas",
                                     color = Color.Black,
                                     fontSize = 13.sp,
                                     fontWeight = FontWeight.ExtraBold
@@ -377,7 +395,7 @@ fun CountingScreen(
                                     fontWeight = FontWeight.ExtraBold
                                 )
                                 Text(
-                                    text = "Today's Mala: ${todayTotal / 108}",
+                                    text = "Today's Mala: $todayMalas",
                                     color = Color.Black,
                                     fontSize = 13.sp,
                                     fontWeight = FontWeight.ExtraBold
@@ -402,7 +420,7 @@ fun CountingScreen(
                 ) {
                     StatCard(
                         label = "Total Mala",
-                        value = (lifetimeTotal / 108).toString(),
+                        value = totalMalas.toString(),
                         modifier = Modifier.weight(1f),
                         isHighlighted = isLifetimeGoalReached
                     )

@@ -6,6 +6,8 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
+import androidx.compose.ui.platform.LocalView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -37,6 +39,12 @@ import com.sreerajp.mantrajapacounter.ui.theme.MantraJapaCounterTheme
 import com.sreerajp.mantrajapacounter.utils.DailyGoalNotificationHelper
 import com.sreerajp.mantrajapacounter.utils.FileUtils
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.first
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -51,7 +59,8 @@ data class ActiveSession(
     val sessionTotalTaps: Int,
     val startTime: Long,
     val sessionId: String = UUID.randomUUID().toString(),
-    val date: String = ""
+    val date: String = "",
+    val isWrittenToDatabase: Boolean = false // Track if session has been written to DB
 )
 
 class MainActivity : ComponentActivity() {
@@ -146,12 +155,17 @@ fun rememberImportExportHandlers(
 @Composable
 fun MantraCounterApp() {
     val context = LocalContext.current
+    val view = LocalView.current
     val repository = remember { JapaCounterRepository(context) }
     val prefs = remember { context.getSharedPreferences("japa_counter", Context.MODE_PRIVATE) }
     val coroutineScope = rememberCoroutineScope()
     
     // Notification helper for daily goal alerts
     val notificationHelper = remember { DailyGoalNotificationHelper(context) }
+    
+    // Power optimization: Screen brightness control
+    var originalBrightness by remember { mutableStateOf(-1f) }
+    var isBrightnessReduced by remember { mutableStateOf(false) }
 
     var currentScreen by remember { mutableStateOf(Screen.COUNTER_LIST) }
     var previousScreen by remember { mutableStateOf(Screen.COUNTER_LIST) }
@@ -166,10 +180,67 @@ fun MantraCounterApp() {
     
     // Track if daily goal notification has been played for current session
     var dailyGoalNotificationPlayed by remember { mutableStateOf(false) }
+    
+    // Power optimization: Track pending database writes and tap count for batching
+    var pendingDatabaseWrite by remember { mutableStateOf(false) }
+    var tapCountSinceLastDbWrite by remember { mutableIntStateOf(0) }
+    var lastDatabaseWriteTime by remember { mutableLongStateOf(0L) }
+    var databaseWriteJob by remember { mutableStateOf<Job?>(null) }
+    
+    // Power optimization: Track pending SharedPreferences write
+    var pendingPrefsWrite by remember { mutableStateOf(false) }
+    var prefsWriteJob by remember { mutableStateOf<Job?>(null) }
+    var tapCountSinceLastPrefsWrite by remember { mutableIntStateOf(0) }
+    var lastPrefsWriteTime by remember { mutableLongStateOf(0L) }
+    
+    // Power optimization: Manage screen brightness
+    fun applyBrightness(reduce: Boolean) {
+        val activity = view.context as? ComponentActivity
+        val window = activity?.window
+        if (window != null) {
+            val layoutParams = window.attributes
+            if (reduce && notificationHelper.isReduceBrightnessEnabled()) {
+                // Save original brightness if not already saved
+                if (originalBrightness < 0) {
+                    originalBrightness = layoutParams.screenBrightness
+                }
+                // Apply reduced brightness
+                layoutParams.screenBrightness = notificationHelper.getBrightnessLevel()
+                isBrightnessReduced = true
+            } else {
+                // Restore original brightness
+                if (originalBrightness >= 0) {
+                    layoutParams.screenBrightness = originalBrightness
+                    originalBrightness = -1f
+                }
+                isBrightnessReduced = false
+            }
+            window.attributes = layoutParams
+        }
+    }
+    
+    // Apply brightness when entering/exiting counting screen
+    LaunchedEffect(currentScreen) {
+        when (currentScreen) {
+            Screen.COUNTING -> {
+                applyBrightness(reduce = true)
+            }
+            else -> {
+                if (isBrightnessReduced) {
+                    applyBrightness(reduce = false)
+                }
+            }
+        }
+    }
 
-    // Collect data from database
-    val counters by repository.getAllCounters().collectAsState(initial = emptyList())
-    val sessions by repository.getAllSessions().collectAsState(initial = emptyList())
+    // Collect data from database with optimization
+    // Use distinctUntilChanged to prevent unnecessary recompositions
+    val counters by repository.getAllCounters()
+        .distinctUntilChanged()
+        .collectAsState(initial = emptyList())
+    val sessions by repository.getAllSessions()
+        .distinctUntilChanged()
+        .collectAsState(initial = emptyList())
 
     // State for tracking today's counts and total counts
     var todayCountsMap by remember { mutableStateOf<Map<String, Int>>(emptyMap()) }
@@ -229,12 +300,49 @@ fun MantraCounterApp() {
 
         // Load active session if exists
         loadActiveSession(prefs)?.let { activeSession ->
-            selectedCounter = repository.getCounterById(activeSession.counterId)
-            if (selectedCounter != null) {
+            val counter = repository.getCounterById(activeSession.counterId)
+            selectedCounter = counter
+            if (counter != null) {
                 currentTapCount = activeSession.currentTapCount
                 sessionTotalTaps = activeSession.sessionTotalTaps
                 startTime = activeSession.startTime
                 currentSessionId = activeSession.sessionId
+                
+                // DATA SAFETY: Check if session exists in database
+                // If not, write it immediately to prevent data loss
+                val allSessions = repository.getAllSessions().first()
+                val existingSession = allSessions.find { 
+                    it.id == activeSession.sessionId 
+                }
+                
+                if (existingSession == null && activeSession.sessionTotalTaps > 0) {
+                    // Session not in DB - write it immediately for data safety
+                    val elapsedTime = System.currentTimeMillis() - activeSession.startTime
+                    val session = JapaSession(
+                        id = activeSession.sessionId,
+                        counterId = activeSession.counterId,
+                        counterName = activeSession.counterName,
+                        count = activeSession.sessionTotalTaps,
+                        malas = activeSession.sessionTotalTaps / 108,
+                        chants = activeSession.sessionTotalTaps,
+                        duration = elapsedTime,
+                        timestamp = activeSession.startTime
+                    )
+                    repository.insertSession(session)
+                    
+                    // Update flag to indicate it's now in DB
+                    val updatedSession = activeSession.copy(isWrittenToDatabase = true)
+                    saveActiveSession(prefs, updatedSession)
+                    
+                    // Update tracking variables
+                    lastDatabaseWriteTime = System.currentTimeMillis()
+                    tapCountSinceLastDbWrite = 0
+                } else if (existingSession != null) {
+                    // Session exists in DB - update flag
+                    val updatedSession = activeSession.copy(isWrittenToDatabase = true)
+                    saveActiveSession(prefs, updatedSession)
+                }
+                
                 currentScreen = Screen.COUNTING
             } else {
                 clearActiveSession(prefs)
@@ -258,26 +366,38 @@ fun MantraCounterApp() {
         }
     }
 
-    // Timer effect for elapsed time
+    // Timer effect for elapsed time - OPTIMIZED: Calculate on-demand for display
+    // UI will calculate elapsed time from current time, so it's always accurate
+    // We only update the state variable every 5 seconds for power optimization
     LaunchedEffect(currentScreen, startTime) {
         if (currentScreen == Screen.COUNTING && startTime > 0) {
             while (currentScreen == Screen.COUNTING) {
-                kotlinx.coroutines.delay(1000)
+                // Update elapsed time state every 5 seconds (for power optimization)
+                // But UI can calculate it on-demand for accurate display
                 elapsedTime = System.currentTimeMillis() - startTime
-
-                // Update session in database every 10 seconds if it exists
+                delay(5000)
+                
+                // Batch database update every 30 seconds (instead of 10 seconds)
+                // This reduces I/O operations while still maintaining data safety
+                val currentTime = System.currentTimeMillis()
                 if (currentSessionId != null && sessionTotalTaps > 0) {
-                    val existingSession = sessions.find { it.id == currentSessionId }
-                    if (existingSession != null) {
-                        coroutineScope.launch {
-                            repository.updateSession(
-                                existingSession.copy(
-                                    count = sessionTotalTaps,
-                                    malas = sessionTotalTaps / 108,
-                                    chants = sessionTotalTaps,
-                                    duration = elapsedTime
+                    val timeSinceLastWrite = currentTime - lastDatabaseWriteTime
+                    if (timeSinceLastWrite >= 30000) { // 30 seconds
+                        val existingSession = sessions.find { it.id == currentSessionId }
+                        if (existingSession != null) {
+                            coroutineScope.launch {
+                                repository.updateSession(
+                                    existingSession.copy(
+                                        count = sessionTotalTaps,
+                                        malas = sessionTotalTaps / 108,
+                                        chants = sessionTotalTaps,
+                                        duration = elapsedTime
+                                    )
                                 )
-                            )
+                                lastDatabaseWriteTime = currentTime
+                                tapCountSinceLastDbWrite = 0
+                                pendingDatabaseWrite = false
+                            }
                         }
                     }
                 }
@@ -285,17 +405,78 @@ fun MantraCounterApp() {
         }
     }
 
-    // Save active session whenever important state changes
-    LaunchedEffect(
-        selectedCounter,
-        currentTapCount,
-        sessionTotalTaps,
-        startTime,
-        currentSessionId
-    ) {
+    // Save active session with batching for power optimization
+    // OPTIMIZED: Batches SharedPreferences writes (every 5 taps OR 5 seconds) to reduce I/O
+    // This is more efficient than writing on every tap while maintaining data safety
+    fun saveActiveSessionBatched() {
         if (selectedCounter != null && currentSessionId != null) {
+            tapCountSinceLastPrefsWrite++
+            val currentTime = System.currentTimeMillis()
+            val timeSinceLastWrite = if (lastPrefsWriteTime > 0) currentTime - lastPrefsWriteTime else Long.MAX_VALUE
+            
+            // Batch writes: save if 5 seconds passed OR 5 taps occurred (whichever comes first)
+            val shouldWriteNow = timeSinceLastWrite >= 5000 || tapCountSinceLastPrefsWrite >= 5
+            
+            if (shouldWriteNow) {
+                // Write immediately
+                val isInDb = sessions.any { it.id == currentSessionId }
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val currentDate = sdf.format(Date())
+                val activeSession = ActiveSession(
+                    counterId = selectedCounter!!.id,
+                    counterName = selectedCounter!!.name,
+                    currentTapCount = currentTapCount,
+                    sessionTotalTaps = sessionTotalTaps,
+                    startTime = startTime,
+                    sessionId = currentSessionId!!,
+                    date = currentDate,
+                    isWrittenToDatabase = isInDb
+                )
+                saveActiveSession(prefs, activeSession)
+                lastPrefsWriteTime = currentTime
+                tapCountSinceLastPrefsWrite = 0
+                pendingPrefsWrite = false
+                prefsWriteJob?.cancel()
+            } else {
+                // Schedule a debounced write
+                pendingPrefsWrite = true
+                prefsWriteJob?.cancel()
+                prefsWriteJob = coroutineScope.launch {
+                    delay(5000 - timeSinceLastWrite) // Wait until 5 seconds total
+                    if (pendingPrefsWrite && selectedCounter != null && currentSessionId != null) {
+                        val isInDb = sessions.any { it.id == currentSessionId }
+                        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                        val currentDate = sdf.format(Date())
+                        val activeSession = ActiveSession(
+                            counterId = selectedCounter!!.id,
+                            counterName = selectedCounter!!.name,
+                            currentTapCount = currentTapCount,
+                            sessionTotalTaps = sessionTotalTaps,
+                            startTime = startTime,
+                            sessionId = currentSessionId!!,
+                            date = currentDate,
+                            isWrittenToDatabase = isInDb
+                        )
+                        saveActiveSession(prefs, activeSession)
+                        lastPrefsWriteTime = System.currentTimeMillis()
+                        tapCountSinceLastPrefsWrite = 0
+                        pendingPrefsWrite = false
+                    }
+                }
+            }
+        }
+    }
+    
+    // Helper function to force immediate save (for critical moments like leaving screen)
+    fun saveActiveSessionImmediately() {
+        if (selectedCounter != null && currentSessionId != null) {
+            prefsWriteJob?.cancel()
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val currentDate = sdf.format(Date())
+            
+            // Check if session is already in database
+            val isInDb = sessions.any { it.id == currentSessionId }
+            
             val activeSession = ActiveSession(
                 counterId = selectedCounter!!.id,
                 counterName = selectedCounter!!.name,
@@ -303,23 +484,56 @@ fun MantraCounterApp() {
                 sessionTotalTaps = sessionTotalTaps,
                 startTime = startTime,
                 sessionId = currentSessionId!!,
-                date = currentDate
+                date = currentDate,
+                isWrittenToDatabase = isInDb
             )
             saveActiveSession(prefs, activeSession)
+            lastPrefsWriteTime = System.currentTimeMillis()
+            tapCountSinceLastPrefsWrite = 0
+            pendingPrefsWrite = false
         }
     }
 
     // Calculate total counts for display
+    // IMPORTANT: Include current session's taps immediately for real-time UI updates
     fun getTotalCountForCounter(counter: Counter): Int {
         val historicalTotal = totalCountsMap[counter.id] ?: 0
-        return counter.initialCount + historicalTotal
+        val baseTotal = counter.initialCount + historicalTotal
+        
+        // Include current session's taps if this is the active counter
+        // This ensures UI updates immediately, not waiting for database writes
+        val currentSessionTaps = if (selectedCounter?.id == counter.id && currentSessionId != null) {
+            sessionTotalTaps
+        } else {
+            0
+        }
+        
+        return baseTotal + currentSessionTaps
     }
 
     fun getTodayCountForCounter(counter: Counter): Int {
-        return todayCountsMap[counter.id] ?: 0
+        val todayFromDb = todayCountsMap[counter.id] ?: 0
+        
+        // Include current session's taps if this is the active counter and session started today
+        // This ensures UI updates immediately, not waiting for database writes
+        val currentSessionTaps = if (selectedCounter?.id == counter.id && currentSessionId != null) {
+            // Check if session started today
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val today = sdf.format(Date())
+            val sessionDate = sdf.format(Date(startTime))
+            if (sessionDate == today) {
+                sessionTotalTaps
+            } else {
+                0
+            }
+        } else {
+            0
+        }
+        
+        return todayFromDb + currentSessionTaps
     }
 
-    // Function to create session in database
+    // Function to create session in database - OPTIMIZED with batching
     fun createSessionInDatabase() {
         if (selectedCounter != null && currentSessionId != null) {
             val session = JapaSession(
@@ -333,14 +547,128 @@ fun MantraCounterApp() {
                 timestamp = startTime
             )
 
+            // First session creation - save immediately for data safety
             coroutineScope.launch {
                 repository.insertSession(session)
+                lastDatabaseWriteTime = System.currentTimeMillis()
+                tapCountSinceLastDbWrite = 0
+                
+                // Update flag in SharedPreferences to indicate session is in DB
+                // Use immediate save for first session creation
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val currentDate = sdf.format(Date())
+                val activeSession = ActiveSession(
+                    counterId = selectedCounter!!.id,
+                    counterName = selectedCounter!!.name,
+                    currentTapCount = currentTapCount,
+                    sessionTotalTaps = sessionTotalTaps,
+                    startTime = startTime,
+                    sessionId = currentSessionId!!,
+                    date = currentDate,
+                    isWrittenToDatabase = true
+                )
+                saveActiveSession(prefs, activeSession)
+                lastPrefsWriteTime = System.currentTimeMillis()
+                tapCountSinceLastPrefsWrite = 0
             }
         }
     }
 
-    // Function to update existing session
+    // Function to update existing session - OPTIMIZED with batching
+    // Batches writes: every 30 seconds OR every 20 taps (whichever comes first)
     fun updateCurrentSessionInDatabase() {
+        if (currentSessionId != null && sessionTotalTaps > 0) {
+            val existingSession = sessions.find { it.id == currentSessionId }
+            if (existingSession != null) {
+                tapCountSinceLastDbWrite++
+                val currentTime = System.currentTimeMillis()
+                val timeSinceLastWrite = currentTime - lastDatabaseWriteTime
+                
+                // Cancel any pending write job
+                databaseWriteJob?.cancel()
+                
+                // Batch writes: save if 30 seconds passed OR 20 taps occurred
+                val shouldWriteNow = timeSinceLastWrite >= 30000 || tapCountSinceLastDbWrite >= 20
+                
+                if (shouldWriteNow) {
+                    // Write immediately
+                    coroutineScope.launch {
+                        repository.updateSession(
+                            existingSession.copy(
+                                count = sessionTotalTaps,
+                                malas = sessionTotalTaps / 108,
+                                chants = sessionTotalTaps,
+                                duration = elapsedTime
+                            )
+                        )
+                        lastDatabaseWriteTime = currentTime
+                        tapCountSinceLastDbWrite = 0
+                        pendingDatabaseWrite = false
+                        
+                        // Update flag in SharedPreferences to indicate session is in DB
+                        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                        val currentDate = sdf.format(Date())
+                        val activeSession = ActiveSession(
+                            counterId = selectedCounter!!.id,
+                            counterName = selectedCounter!!.name,
+                            currentTapCount = currentTapCount,
+                            sessionTotalTaps = sessionTotalTaps,
+                            startTime = startTime,
+                            sessionId = currentSessionId!!,
+                            date = currentDate,
+                            isWrittenToDatabase = true
+                        )
+                        saveActiveSession(prefs, activeSession)
+                    }
+                } else {
+                    // Schedule a debounced write
+                    pendingDatabaseWrite = true
+                    databaseWriteJob = coroutineScope.launch {
+                        delay(30000 - timeSinceLastWrite) // Wait until 30 seconds total
+                        if (pendingDatabaseWrite && currentSessionId != null && selectedCounter != null) {
+                            val session = sessions.find { it.id == currentSessionId }
+                            if (session != null) {
+                                repository.updateSession(
+                                    session.copy(
+                                        count = sessionTotalTaps,
+                                        malas = sessionTotalTaps / 108,
+                                        chants = sessionTotalTaps,
+                                        duration = elapsedTime
+                                    )
+                                )
+                                lastDatabaseWriteTime = System.currentTimeMillis()
+                                tapCountSinceLastDbWrite = 0
+                                pendingDatabaseWrite = false
+                                
+                                // Update flag in SharedPreferences to indicate session is in DB
+                                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                                val currentDate = sdf.format(Date())
+                                val activeSession = ActiveSession(
+                                    counterId = selectedCounter!!.id,
+                                    counterName = selectedCounter!!.name,
+                                    currentTapCount = currentTapCount,
+                                    sessionTotalTaps = sessionTotalTaps,
+                                    startTime = startTime,
+                                    sessionId = currentSessionId!!,
+                                    date = currentDate,
+                                    isWrittenToDatabase = true
+                                )
+                                saveActiveSession(prefs, activeSession)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Function to finalize session - ensure all pending writes complete
+    fun finalizeSession() {
+        // Cancel any pending debounced writes and force immediate save
+        databaseWriteJob?.cancel()
+        prefsWriteJob?.cancel()
+        
+        // Force immediate database write to ensure data is saved
         if (currentSessionId != null && sessionTotalTaps > 0) {
             val existingSession = sessions.find { it.id == currentSessionId }
             if (existingSession != null) {
@@ -356,13 +684,14 @@ fun MantraCounterApp() {
                 }
             }
         }
-    }
-
-    // Function to finalize session
-    fun finalizeSession() {
-        updateCurrentSessionInDatabase()
+        
+        // Save active session one last time
+        saveActiveSessionImmediately()
+        
         clearActiveSession(prefs)
         currentSessionId = null
+        pendingDatabaseWrite = false
+        pendingPrefsWrite = false
     }
 
     // Function to cancel/reset session
@@ -418,6 +747,11 @@ fun MantraCounterApp() {
                     elapsedTime = 0L
                     currentSessionId = UUID.randomUUID().toString()
                     dailyGoalNotificationPlayed = false // Reset notification state for new session
+                    // Reset batching counters for new session
+                    lastPrefsWriteTime = 0L
+                    tapCountSinceLastPrefsWrite = 0
+                    lastDatabaseWriteTime = 0L
+                    tapCountSinceLastDbWrite = 0
                     currentScreen = Screen.COUNTING
                 },
                 onAddCounter = { name, startDate, initialCount, incrementStep, goal, dailyGoal ->
@@ -513,6 +847,7 @@ fun MantraCounterApp() {
                 currentTapCount = currentTapCount,
                 sessionTotalTaps = sessionTotalTaps,
                 elapsedTime = elapsedTime,
+                startTime = startTime, // Pass startTime for on-demand calculation
                 lifetimeTotal = selectedCounter?.let { getTotalCountForCounter(it) } ?: 0,
                 todayTotal = selectedCounter?.let { getTodayCountForCounter(it) } ?: 0,
                 onCountClick = {
@@ -538,8 +873,13 @@ fun MantraCounterApp() {
 
                     if (wasZero) {
                         createSessionInDatabase()
+                        // First tap - save immediately to SharedPreferences for data safety
+                        saveActiveSessionImmediately()
                     } else {
                         updateCurrentSessionInDatabase()
+                        // Batched SharedPreferences write (every 5 taps or 5 seconds)
+                        // More efficient than writing on every tap
+                        saveActiveSessionBatched()
                     }
                     
                     // Check if daily goal is NOW achieved after this increment
@@ -567,6 +907,8 @@ fun MantraCounterApp() {
 
                         if (sessionTotalTaps > 0) {
                             updateCurrentSessionInDatabase()
+                            // Batched SharedPreferences write
+                            saveActiveSessionBatched()
                         } else {
                             cancelSession()
                         }

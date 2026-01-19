@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Brightness6
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -53,6 +54,8 @@ fun SettingsScreen(
     var soundEnabled by remember { mutableStateOf(notificationHelper.isSoundEnabled()) }
     var toneName by remember { mutableStateOf(notificationHelper.getNotificationToneName()) }
     var malaSoundEnabled by remember { mutableStateOf(notificationHelper.isMalaSoundEnabled()) }
+    var reduceBrightnessEnabled by remember { mutableStateOf(notificationHelper.isReduceBrightnessEnabled()) }
+    var brightnessLevel by remember { mutableStateOf(notificationHelper.getBrightnessLevel()) }
     
     // State for ringtone picker dialog
     var showRingtoneDialog by remember { mutableStateOf(false) }
@@ -276,6 +279,62 @@ fun SettingsScreen(
                     }
                 }
 
+                // Power Optimization Section
+                SettingsSection(title = "Power Optimization") {
+                    SettingsToggleItem(
+                        icon = Icons.Default.Brightness6,
+                        title = "Reduce Screen Brightness",
+                        subtitle = "Lower screen brightness during counting to save battery",
+                        checked = reduceBrightnessEnabled,
+                        onCheckedChange = { enabled ->
+                            reduceBrightnessEnabled = enabled
+                            notificationHelper.setReduceBrightnessEnabled(enabled)
+                        }
+                    )
+                    
+                    if (reduceBrightnessEnabled) {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        
+                        Text(
+                            text = "Brightness Level: ${(brightnessLevel * 100).toInt()}%",
+                            color = Color.White,
+                            fontSize = 14.sp,
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        )
+                        
+                        Slider(
+                            value = brightnessLevel,
+                            onValueChange = { newValue ->
+                                brightnessLevel = newValue
+                                notificationHelper.setBrightnessLevel(newValue)
+                            },
+                            valueRange = 0.1f..1.0f,
+                            steps = 8, // 9 steps: 10%, 20%, ..., 90%, 100%
+                            colors = SliderDefaults.colors(
+                                thumbColor = Color.White,
+                                activeTrackColor = Color(0xFF10B981),
+                                inactiveTrackColor = Color.White.copy(alpha = 0.3f)
+                            )
+                        )
+                        
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "10%",
+                                color = Color.White.copy(alpha = 0.6f),
+                                fontSize = 12.sp
+                            )
+                            Text(
+                                text = "100%",
+                                color = Color.White.copy(alpha = 0.6f),
+                                fontSize = 12.sp
+                            )
+                        }
+                    }
+                }
+                
                 // Information card
                 Card(
                     modifier = Modifier.fillMaxWidth(),

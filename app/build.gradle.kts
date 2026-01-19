@@ -15,8 +15,8 @@ android {
         applicationId = "com.sreerajp.mantrajapacounter"
         minSdk = 29
         targetSdk = 35
-        versionCode = 7
-        versionName = "4.20"
+        versionCode = 9
+        versionName = "4.31"
 
         buildConfigField("long", "BUILD_TIME", System.currentTimeMillis().toString())
 

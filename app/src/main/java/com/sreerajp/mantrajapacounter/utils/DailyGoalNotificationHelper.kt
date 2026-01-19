@@ -29,6 +29,8 @@ class DailyGoalNotificationHelper(private val context: Context) {
         const val PREF_NOTIFICATION_TONE_URI = "daily_goal_notification_tone_uri"
         const val PREF_NOTIFICATION_TONE_NAME = "daily_goal_notification_tone_name"
         const val PREF_MALA_SOUND_ENABLED = "mala_completion_sound_enabled"
+        const val PREF_REDUCE_BRIGHTNESS_ENABLED = "reduce_brightness_enabled"
+        const val PREF_BRIGHTNESS_LEVEL = "brightness_level" // 0.0 to 1.0, default 0.3
 
         // Short double vibration pattern: wait 0ms, vibrate 100ms, pause 80ms, vibrate 100ms
         private val VIBRATION_PATTERN = longArrayOf(0, 100, 80, 100)
@@ -313,6 +315,36 @@ class DailyGoalNotificationHelper(private val context: Context) {
         
         vibrateMala()
         playMalaCompletionSound()
+    }
+    
+    // ==================== Screen Brightness Control ====================
+    
+    /**
+     * Check if brightness reduction is enabled
+     */
+    fun isReduceBrightnessEnabled(): Boolean {
+        return prefs.getBoolean(PREF_REDUCE_BRIGHTNESS_ENABLED, false)
+    }
+    
+    /**
+     * Set brightness reduction enabled/disabled
+     */
+    fun setReduceBrightnessEnabled(enabled: Boolean) {
+        prefs.edit { putBoolean(PREF_REDUCE_BRIGHTNESS_ENABLED, enabled) }
+    }
+    
+    /**
+     * Get the brightness level (0.0 to 1.0)
+     */
+    fun getBrightnessLevel(): Float {
+        return prefs.getFloat(PREF_BRIGHTNESS_LEVEL, 0.3f).coerceIn(0.1f, 1.0f)
+    }
+    
+    /**
+     * Set the brightness level (0.0 to 1.0)
+     */
+    fun setBrightnessLevel(level: Float) {
+        prefs.edit { putFloat(PREF_BRIGHTNESS_LEVEL, level.coerceIn(0.1f, 1.0f)) }
     }
 }
 
