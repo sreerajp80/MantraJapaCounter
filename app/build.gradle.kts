@@ -15,8 +15,8 @@ android {
         applicationId = "com.sreerajp.mantrajapacounter"
         minSdk = 29
         targetSdk = 35
-        versionCode = 9
-        versionName = "4.31"
+        versionCode = 11
+        versionName = "4.33"
 
         buildConfigField("long", "BUILD_TIME", System.currentTimeMillis().toString())
 
@@ -28,7 +28,11 @@ android {
 
     buildTypes {
         release {
+            // SECURITY NOTE: Consider enabling minification for production builds
+            // This provides code obfuscation and smaller APK size
+            // Set to true and test thoroughly before release
             isMinifyEnabled = false
+            isShrinkResources = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

@@ -2,12 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Permissions for Text-to-Speech -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- Wake lock permission to keep screen on during japa -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- Storage permission for importing custom notification sounds (Android 12 and below) -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
 
     <!-- Vibration permission for daily goal notification -->
