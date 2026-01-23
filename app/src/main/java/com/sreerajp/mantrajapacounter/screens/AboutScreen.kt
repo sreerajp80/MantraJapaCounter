@@ -24,11 +24,18 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Composable screen for displaying app information and metadata
+ * Shows app name, version, build date, author, and other app details
+ *
+ * @param onBack Callback to return to main screen
+ */
 @Composable
 fun AboutScreen(
     onBack: () -> Unit
 ) {
-    // Get actual build date from BuildConfig
+    // ===== BUILD DATE FORMATTING =====
+    // Format build date from BuildConfig for display
     val buildDate = remember {
         val sdf = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
         sdf.format(Date(BuildConfig.BUILD_TIME))

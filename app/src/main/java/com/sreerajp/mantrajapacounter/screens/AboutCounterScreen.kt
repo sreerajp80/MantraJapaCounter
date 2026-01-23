@@ -25,6 +25,15 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.sreerajp.mantrajapacounter.data.Counter
 import com.sreerajp.mantrajapacounter.data.formatDate
 
+/**
+ * Composable screen for displaying detailed statistics about a specific counter
+ * Shows lifetime totals, daily averages, goal progress, and other counter-specific metrics
+ *
+ * @param counter The counter to display statistics for
+ * @param totalCount Lifetime total count for the counter
+ * @param averageDailyCount Average daily count since counter creation
+ * @param onBack Callback to return to main screen
+ */
 @Composable
 fun AboutCounterScreen(
     counter: Counter,
@@ -220,4 +229,3 @@ private fun InfoCard(
         }
     }
 }
-

@@ -6,7 +6,15 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// Set of Material typography styles to start with
+/**
+ * Material 3 Typography configuration for MantraJapaCounter app
+ * Defines text styles for body, title, and label text elements throughout the app
+ *
+ * Includes:
+ * - bodyLarge: Default body text (16sp)
+ * - titleLarge: Headings and titles (22sp)
+ * - labelSmall: Button labels and small text (11sp)
+ */
 val AppTypography = Typography(
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,

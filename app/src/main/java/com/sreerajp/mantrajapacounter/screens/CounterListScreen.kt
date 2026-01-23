@@ -39,6 +39,26 @@ import com.sreerajp.mantrajapacounter.data.Counter
 import com.sreerajp.mantrajapacounter.data.CounterStatus
 import com.sreerajp.mantrajapacounter.data.formatDate
 
+/**
+ * Composable screen for displaying and managing all counters
+ * Main entry point for the app showing all created counters with options to add, edit, delete, or start counting
+ * Supports responsive design for phones and tablets, portrait and landscape modes
+ *
+ * @param counters List of all counters to display
+ * @param getTotalCount Callback to get lifetime total count for a counter
+ * @param getTotalMalas Callback to get total malas (count / 108) for a counter
+ * @param getTodayCount Callback to get today's count for a counter
+ * @param onSelectCounter Callback when user selects a counter to start counting
+ * @param onAddCounter Callback to create a new counter with parameters (name, startDate, initialCount, incrementStep, goal, dailyGoal)
+ * @param onEditCounter Callback to update an existing counter
+ * @param onShowAboutCounter Callback to view detailed statistics for a counter
+ * @param onDeleteCounter Callback to delete a counter
+ * @param onDisableCounter Callback to disable a counter (success/failure)
+ * @param onShowHistory Callback to view session history (filtered by counter ID if provided)
+ * @param onShowAbout Callback to view app information
+ * @param onShowImportExport Callback to show import/export dialog
+ * @param onShowSettings Callback to show app settings
+ */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun CounterListScreen(
@@ -57,11 +77,16 @@ fun CounterListScreen(
     onShowImportExport: () -> Unit,
     onShowSettings: () -> Unit
 ) {
+    // ===== DIALOG AND STATE MANAGEMENT =====
+    // Track which dialogs are open and what data they contain
     var showAddDialog by remember { mutableStateOf(false) }
     var showEditDialog by remember { mutableStateOf<Counter?>(null) }
     var showDisableDialog by remember { mutableStateOf<Counter?>(null) }
     var selectedCounter by remember { mutableStateOf<Counter?>(null) }
     var showMenu by remember { mutableStateOf(false) }
+
+    // ===== FORM FIELD STATE =====
+    // State for add/edit counter dialog fields
     var newCounterName by remember { mutableStateOf("") }
     var newInitialCount by remember { mutableStateOf("0") }
     var newIncrementStep by remember { mutableStateOf("1") }
@@ -69,30 +94,34 @@ fun CounterListScreen(
     var newGoal by remember { mutableStateOf("0") }
     var newDailyGoal by remember { mutableStateOf("0") }
 
-    // Get screen configuration for responsive design
+    // ===== RESPONSIVE DESIGN CONFIGURATION =====
+    // Detect screen size and orientation to adjust UI layout and font sizes
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val screenHeight = configuration.screenHeightDp.dp
     val isTablet = screenWidth >= 600.dp
     val isLandscape = screenWidth > screenHeight
 
-    // Responsive values
+    // ===== RESPONSIVE VALUES =====
+    // Dynamically adjust spacing and font sizes based on screen size
     val headerFontSize = if (isTablet) 32.sp else 24.sp
     val cardPadding = if (isTablet) 24.dp else 16.dp
     val itemSpacing = if (isTablet) 16.dp else 12.dp
     val containerPadding = if (isTablet) 24.dp else 16.dp
 
-    // Sort counters to show active ones first
+    // ===== SORTED COUNTERS =====
+    // Sort counters with active ones first, then by creation date (newest first)
     val sortedCounters = remember(counters) {
         counters.sortedWith(
             compareBy(
                 { it.status != CounterStatus.ACTIVE }, // Active counters first
-                { -it.createdAt } // Then by creation date
+                { -it.createdAt } // Then by creation date (newest first)
             )
         )
     }
 
-    // Reset dialog fields when dialogs are closed
+    // ===== FORM RESET EFFECT =====
+    // Clear all form fields when add/edit dialogs are closed
     LaunchedEffect(showAddDialog, showEditDialog) {
         if (!showAddDialog && showEditDialog == null) {
             newCounterName = ""
@@ -104,7 +133,8 @@ fun CounterListScreen(
         }
     }
 
-    // Set fields when editing
+    // ===== FORM POPULATION EFFECT =====
+    // Populate form fields when editing an existing counter
     LaunchedEffect(showEditDialog) {
         showEditDialog?.let { counter ->
             newCounterName = counter.name

@@ -32,7 +32,17 @@ import java.text.SimpleDateFormat
 import java.util.*
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
-// Enhanced session data to include goal achievements
+/**
+ * Data class for a session with goal achievement status information
+ * Enriches a JapaSession with metadata about whether daily/lifetime goals were achieved
+ *
+ * @param session The underlying JapaSession
+ * @param achievedDailyGoal Whether this session helped achieve the daily goal
+ * @param achievedLifetimeGoal Whether this session helped achieve the lifetime goal
+ * @param cumulativeCount Total count up to and including this session
+ * @param dailyCountBeforeSession Count before this session on the same day
+ * @param totalCountBeforeSession Total count before this session (across all time)
+ */
 data class SessionWithGoalStatus(
     val session: JapaSession,
     val achievedDailyGoal: Boolean = false,
@@ -42,7 +52,25 @@ data class SessionWithGoalStatus(
     val totalCountBeforeSession: Int = 0
 )
 
-// Enhanced data class to include both daily and lifetime goal status
+/**
+ * Data class grouping all sessions from a single day with daily and lifetime goal tracking
+ *
+ * @param date Formatted date string (e.g., "Jan 23, 2025")
+ * @param timestamp Milliseconds since epoch for the start of this day
+ * @param sessions List of all sessions with goal status for this day
+ * @param totalCount Total count for the day
+ * @param totalMalas Number of completed malas for the day (totalCount / 108)
+ * @param totalDuration Total duration of all sessions combined for the day
+ * @param sessionCount Number of sessions on this day
+ * @param dailyGoalAchieved Whether the daily goal was achieved on this day
+ * @param dailyGoalProgress Progress towards daily goal (0.0 to 1.0)
+ * @param dailyGoalTarget The daily goal value for this counter
+ * @param lifetimeGoalTarget The lifetime goal value for this counter
+ * @param cumulativeCountUpToDay Total count up to the end of this day
+ * @param lifetimeGoalProgress Progress towards lifetime goal (0.0 to 1.0)
+ * @param lifetimeGoalAchieved Whether the lifetime goal was achieved by the end of this day
+ * @param dayNumber How many days the counter has been active (for tracking progress)
+ */
 data class DaySessionGroup(
     val date: String,
     val timestamp: Long,
@@ -62,7 +90,15 @@ data class DaySessionGroup(
     val dayNumber: Int = 0 // Day number representing how many days the counter has been active
 )
 
-// Data class to hold counter information with goals
+/**
+ * Data class to hold counter information with goal achievement tracking
+ *
+ * @param counter The counter entity
+ * @param totalCount Total count for the counter including initial count
+ * @param lifetimeGoalAchieved Whether the lifetime goal has been achieved
+ * @param lifetimeGoalProgress Progress towards lifetime goal (0.0 to 1.0)
+ * @param lifetimeGoalAchievedInSession ID of the session where goal was achieved (if any)
+ */
 data class CounterGoalInfo(
     val counter: Counter,
     val totalCount: Int,
@@ -71,6 +107,18 @@ data class CounterGoalInfo(
     val lifetimeGoalAchievedInSession: String? = null // Session ID where goal was achieved
 )
 
+/**
+ * Composable screen for viewing session history and statistics
+ * Displays all sessions grouped by day with progress towards daily and lifetime goals
+ * Can filter by specific counter if selectedCounterId is provided
+ *
+ * @param sessions List of all sessions to display
+ * @param counters List of all counters (for goal information)
+ * @param selectedCounterId ID of counter to filter by (null = show all counters)
+ * @param onBack Callback to return to main screen
+ * @param onClearHistory Callback to clear all history (or specific counter's history)
+ * @param onDeleteSession Callback to delete a specific session
+ */
 @Composable
 fun HistoryScreen(
     sessions: List<JapaSession>,
@@ -84,7 +132,8 @@ fun HistoryScreen(
     var sessionToDelete by remember { mutableStateOf<JapaSession?>(null) }
     var expandedDays by remember { mutableStateOf(setOf<String>()) }
 
-    // Filter sessions based on selected counter
+    // ===== SESSION FILTERING =====
+    // Filter sessions based on selected counter, or show all if no filter
     val filteredSessions = remember(sessions.size, selectedCounterId) {
         if (selectedCounterId != null) {
             sessions.filter { it.counterId == selectedCounterId }
@@ -93,7 +142,9 @@ fun HistoryScreen(
         }
     }
 
-    // Get counter information for goals
+    // ===== GOAL TRACKING CALCULATION =====
+    // Calculate goal achievement status and progress for the selected counter
+    // Includes finding which session achieved the lifetime goal
     val counterGoalInfo = remember(counters, filteredSessions, selectedCounterId) {
         if (selectedCounterId != null) {
             val counter = counters.find { it.id == selectedCounterId }
@@ -102,7 +153,7 @@ fun HistoryScreen(
                 val sessionCount = filteredSessions.sumOf { it.count }
                 val totalCount = sessionCount + counter.initialCount
 
-                // Find which session achieved the lifetime goal
+                // Find which session achieved the lifetime goal (if any)
                 var lifetimeGoalSessionId: String? = null
                 if (counter.goal > 0) {
                     var runningTotal = counter.initialCount // Start with initial count
@@ -128,11 +179,14 @@ fun HistoryScreen(
         } else null
     }
 
-    // Group sessions by day with goal information
+    // ===== DATA AGGREGATION =====
+    // Group sessions by day with goal achievement information
     val dayGroups = remember(filteredSessions, counterGoalInfo) {
         groupSessionsByDayWithGoals(filteredSessions, counterGoalInfo?.counter, counterGoalInfo?.lifetimeGoalAchievedInSession)
     }
 
+    // ===== SCREEN TITLE =====
+    // Show counter-specific title if filtered, otherwise show generic history title
     val screenTitle = if (selectedCounterId != null && counterGoalInfo != null) {
         "${counterGoalInfo.counter.name} History"
     } else {

@@ -33,12 +33,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sreerajp.mantrajapacounter.utils.DailyGoalNotificationHelper
 
-// Data class to hold ringtone info
+/**
+ * Data class representing a ringtone item with name and URI
+ * Used to store ringtone information for selection in settings
+ *
+ * @param name Display name of the ringtone
+ * @param uri URI to the ringtone file (null for system sounds)
+ */
 private data class RingtoneItem(
     val name: String,
     val uri: Uri?
 )
 
+/**
+ * Composable screen for app settings and preferences
+ * Allows users to configure notifications, sounds, vibration, and display options
+ *
+ * @param notificationHelper Helper class for managing notification preferences
+ * @param onBack Callback to return to main screen
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
@@ -48,7 +61,8 @@ fun SettingsScreen(
     val context = LocalContext.current
     val scrollState = rememberScrollState()
 
-    // State for settings
+    // ===== NOTIFICATION SETTINGS STATE =====
+    // Local state for all notification and display preferences
     var notificationEnabled by remember { mutableStateOf(notificationHelper.isNotificationEnabled()) }
     var vibrationEnabled by remember { mutableStateOf(notificationHelper.isVibrationEnabled()) }
     var soundEnabled by remember { mutableStateOf(notificationHelper.isSoundEnabled()) }
@@ -56,27 +70,28 @@ fun SettingsScreen(
     var malaSoundEnabled by remember { mutableStateOf(notificationHelper.isMalaSoundEnabled()) }
     var reduceBrightnessEnabled by remember { mutableStateOf(notificationHelper.isReduceBrightnessEnabled()) }
     var brightnessLevel by remember { mutableStateOf(notificationHelper.getBrightnessLevel()) }
-    
-    // State for ringtone picker dialog
+
+    // ===== RINGTONE PICKER STATE =====
+    // State for managing ringtone selection dialog
     var showRingtoneDialog by remember { mutableStateOf(false) }
     var availableRingtones by remember { mutableStateOf<List<RingtoneItem>>(emptyList()) }
-    
+
     // Load available ringtones when dialog is shown
     LaunchedEffect(showRingtoneDialog) {
         if (showRingtoneDialog && availableRingtones.isEmpty()) {
             val ringtones = mutableListOf<RingtoneItem>()
-            
+
             // Add default notification sound
             RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)?.let { defaultUri ->
                 val defaultRingtone = RingtoneManager.getRingtone(context, defaultUri)
                 ringtones.add(RingtoneItem("Default notification sound", defaultUri))
             }
-            
+
             // Get all notification tones
             val manager = RingtoneManager(context)
             manager.setType(RingtoneManager.TYPE_NOTIFICATION)
             val cursor = manager.cursor
-            
+
             while (cursor.moveToNext()) {
                 val title = cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX)
                 val uri = manager.getRingtoneUri(cursor.position)
@@ -84,7 +99,7 @@ fun SettingsScreen(
                     ringtones.add(RingtoneItem(title, uri))
                 }
             }
-            
+
             availableRingtones = ringtones.distinctBy { it.uri?.toString() }
         }
     }
@@ -103,7 +118,7 @@ fun SettingsScreen(
             } catch (e: Exception) {
                 // Permission might not be grantable for all URIs
             }
-            
+
             // Get the file name
             val cursor = context.contentResolver.query(uri, null, null, null, null)
             val name = cursor?.use {
@@ -112,7 +127,7 @@ fun SettingsScreen(
                     if (nameIndex >= 0) it.getString(nameIndex) else "Custom Audio"
                 } else "Custom Audio"
             } ?: "Custom Audio"
-            
+
             notificationHelper.setNotificationTone(uri, name)
             toneName = name
         }
@@ -250,7 +265,7 @@ fun SettingsScreen(
                         }
                     }
                 }
-                
+
                 // Mala Completion Sound Section
                 SettingsSection(title = "Mala Completion Sound") {
                     SettingsToggleItem(
@@ -263,10 +278,10 @@ fun SettingsScreen(
                             notificationHelper.setMalaSoundEnabled(enabled)
                         }
                     )
-                    
+
                     if (malaSoundEnabled) {
                         Spacer(modifier = Modifier.height(8.dp))
-                        
+
                         // Preview mala sound
                         SettingsClickableItem(
                             icon = Icons.Default.PlayArrow,
@@ -291,17 +306,17 @@ fun SettingsScreen(
                             notificationHelper.setReduceBrightnessEnabled(enabled)
                         }
                     )
-                    
+
                     if (reduceBrightnessEnabled) {
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         Text(
                             text = "Brightness Level: ${(brightnessLevel * 100).toInt()}%",
                             color = Color.White,
                             fontSize = 14.sp,
                             modifier = Modifier.padding(vertical = 8.dp)
                         )
-                        
+
                         Slider(
                             value = brightnessLevel,
                             onValueChange = { newValue ->
@@ -316,7 +331,7 @@ fun SettingsScreen(
                                 inactiveTrackColor = Color.White.copy(alpha = 0.3f)
                             )
                         )
-                        
+
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
@@ -334,7 +349,7 @@ fun SettingsScreen(
                         }
                     }
                 }
-                
+
                 // Information card
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -364,7 +379,7 @@ fun SettingsScreen(
                 Spacer(modifier = Modifier.height(32.dp))
             }
         }
-        
+
         // Ringtone picker dialog
         if (showRingtoneDialog) {
             AlertDialog(
@@ -392,7 +407,7 @@ fun SettingsScreen(
                                 .heightIn(max = 400.dp)
                         ) {
                             items(availableRingtones) { ringtoneItem ->
-                                val isSelected = ringtoneItem.uri?.toString() == 
+                                val isSelected = ringtoneItem.uri?.toString() ==
                                     notificationHelper.getNotificationToneUri()?.toString()
                                 Row(
                                     modifier = Modifier
@@ -557,4 +572,3 @@ private fun SettingsClickableItem(
         )
     }
 }
-

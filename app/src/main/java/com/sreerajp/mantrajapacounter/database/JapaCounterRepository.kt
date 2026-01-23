@@ -11,35 +11,71 @@ import kotlinx.coroutines.flow.map
 import java.util.*
 import java.util.Calendar
 
+/**
+ * Repository for managing counter and session data from Room database
+ * Provides a clean API layer between UI/business logic and the database DAOs
+ * Handles entity-to-model conversions and complex queries
+ *
+ * @param context Android application context for database initialization
+ */
 class JapaCounterRepository(context: Context) {
+    // ===== DATABASE INITIALIZATION =====
     private val database = JapaCounterDatabase.getDatabase(context)
     private val counterDao = database.counterDao()
     private val sessionDao = database.sessionDao()
 
-    // Counter operations
+    // ===== COUNTER OPERATIONS =====
+
+    /**
+     * Retrieves all counters from the database as a Flow
+     * @return Flow of list of all counters
+     */
     fun getAllCounters(): Flow<List<Counter>> {
         return counterDao.getAllCounters().map { entities ->
             entities.map { it.toCounter() }
         }
     }
 
+    /**
+     * Retrieves a specific counter by ID
+     * @param counterId The counter ID to look up
+     * @return Counter if found, null otherwise
+     */
     suspend fun getCounterById(counterId: String): Counter? {
         return counterDao.getCounterById(counterId)?.toCounter()
     }
 
+    /**
+     * Inserts a new counter into the database
+     * @param counter The counter to insert
+     */
     suspend fun insertCounter(counter: Counter) {
         counterDao.insertCounter(counter.toEntity())
     }
 
+    /**
+     * Updates an existing counter in the database
+     * @param counter The counter with updated values
+     */
     suspend fun updateCounter(counter: Counter) {
         counterDao.updateCounter(counter.toEntity())
     }
 
+    /**
+     * Deletes a counter from the database
+     * Associated sessions are deleted due to foreign key cascade
+     * @param counter The counter to delete
+     */
     suspend fun deleteCounter(counter: Counter) {
         counterDao.deleteCounter(counter.toEntity())
     }
 
-    // Session operations
+    // ===== SESSION OPERATIONS =====
+
+    /**
+     * Retrieves all sessions from the database as a Flow
+     * @return Flow of list of all sessions
+     */
     fun getAllSessions(): Flow<List<JapaSession>> {
         return sessionDao.getAllSessions().map { entities ->
             entities.map { it.toJapaSession() }
@@ -52,6 +88,11 @@ class JapaCounterRepository(context: Context) {
         }
     }*/
 
+    /**
+     * Calculates the total count for a specific counter since the start of today
+     * @param counterId The counter ID to calculate for
+     * @return Total count for today, or 0 if no sessions today
+     */
     suspend fun getTodayCountForCounter(counterId: String): Int {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, 0)
@@ -63,10 +104,22 @@ class JapaCounterRepository(context: Context) {
         return sessionDao.getCountForCounterSince(counterId, todayStart) ?: 0
     }
 
+    /**
+     * Calculates the total count for a specific counter across all time
+     * @param counterId The counter ID to calculate for
+     * @return Total count, or 0 if no sessions exist
+     */
     suspend fun getTotalCountForCounter(counterId: String): Int {
         return sessionDao.getTotalCountForCounter(counterId) ?: 0
     }
 
+    /**
+     * Calculates the average daily count for a counter since a specific date
+     * Groups sessions by date and averages the daily totals
+     * @param counterId The counter ID to calculate for
+     * @param startDate Start date in milliseconds since epoch
+     * @return Average count per day, or 0.0 if no sessions
+     */
     suspend fun getAverageDailyCountForCounter(counterId: String, startDate: Long): Double {
         val sessions = sessionDao.getSessionsByCounterId(counterId).first()
             .filter { it.timestamp >= startDate }
@@ -90,23 +143,44 @@ class JapaCounterRepository(context: Context) {
         return if (numberOfDays > 0) totalCount.toDouble() / numberOfDays else 0.0
     }
 
+    /**
+     * Inserts a new session into the database
+     * @param session The session to insert
+     */
     suspend fun insertSession(session: JapaSession) {
         sessionDao.insertSession(session.toEntity())
     }
 
+    /**
+     * Updates an existing session in the database
+     * @param session The session with updated values
+     */
     suspend fun updateSession(session: JapaSession) {
         sessionDao.updateSession(session.toEntity())
     }
 
+    /**
+     * Deletes a session from the database
+     * @param session The session to delete
+     */
     suspend fun deleteSession(session: JapaSession) {
         sessionDao.deleteSession(session.toEntity())
     }
 
+    /**
+     * Deletes all sessions for a specific counter
+     * @param counterId The counter ID whose sessions should be deleted
+     */
     suspend fun deleteSessionsByCounterId(counterId: String) {
         sessionDao.deleteSessionsByCounterId(counterId)
     }
 
-    // Import/Export operations
+    // ===== IMPORT/EXPORT OPERATIONS =====
+
+    /**
+     * Exports all counters and sessions to an ExportData object
+     * @return ExportData containing all counters and sessions
+     */
     suspend fun exportData(): ExportData {
         val counters = counterDao.getAllCounters().first().map { it.toCounter() }
         val sessions = sessionDao.getAllSessions().first().map { it.toJapaSession() }
@@ -117,6 +191,12 @@ class JapaCounterRepository(context: Context) {
         )
     }
 
+    /**
+     * Imports counters and sessions from an ExportData object
+     * Clears existing data before importing to ensure clean import
+     * Fixes invalid data (e.g., zero timestamps) during import
+     * @param exportData The export data to import
+     */
     suspend fun importData(exportData: ExportData) {
         // Clear existing data
         sessionDao.deleteAllSessions()
@@ -136,7 +216,12 @@ class JapaCounterRepository(context: Context) {
     }
 }
 
-// Extension functions to convert between entities and data models
+// ===== EXTENSION FUNCTIONS FOR ENTITY-TO-MODEL CONVERSION =====
+
+/**
+ * Converts a CounterEntity database object to a Counter data model
+ * @return Counter data model with all fields populated
+ */
 fun CounterEntity.toCounter(): Counter {
     return Counter(
         id = id,
@@ -156,6 +241,10 @@ fun CounterEntity.toCounter(): Counter {
     )
 }
 
+/**
+ * Converts a Counter data model to a CounterEntity database object
+ * @return CounterEntity ready for database operations
+ */
 fun Counter.toEntity(): CounterEntity {
     return CounterEntity(
         id = id,
@@ -172,6 +261,10 @@ fun Counter.toEntity(): CounterEntity {
     )
 }
 
+/**
+ * Converts a JapaSessionEntity database object to a JapaSession data model
+ * @return JapaSession data model with all fields populated
+ */
 fun JapaSessionEntity.toJapaSession(): JapaSession {
     return JapaSession(
         id = id,
@@ -185,6 +278,10 @@ fun JapaSessionEntity.toJapaSession(): JapaSession {
     )
 }
 
+/**
+ * Converts a JapaSession data model to a JapaSessionEntity database object
+ * @return JapaSessionEntity ready for database operations
+ */
 fun JapaSession.toEntity(): JapaSessionEntity {
     return JapaSessionEntity(
         id = id,

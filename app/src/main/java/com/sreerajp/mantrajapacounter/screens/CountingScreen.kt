@@ -30,6 +30,26 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import kotlinx.coroutines.delay
 
+/**
+ * Composable screen for active counting sessions
+ * Displays a large tap-able area for incrementing counts, progress towards goals,
+ * and statistics like elapsed time, lifetime totals, and today's counts
+ *
+ * @param counter The counter being used for this session
+ * @param currentTapCount Current count in the active session (session total taps)
+ * @param sessionTotalTaps Total taps recorded in the current session
+ * @param elapsedTime Time elapsed since session start (milliseconds)
+ * @param startTime Session start timestamp for on-demand time calculation
+ * @param lifetimeTotal Lifetime total count for this counter
+ * @param todayTotal Today's count for this counter
+ * @param onCountClick Callback when user taps the main counting area
+ * @param onDecrementClick Callback to decrement count
+ * @param onBack Callback to return to counter list
+ * @param onShowHistory Callback to view session history
+ * @param onShowAbout Callback to view counter details
+ * @param onReset Callback to reset current session
+ * @param onResetCounter Callback to reset entire counter
+ */
 @Composable
 fun CountingScreen(
     counter: Counter?,
@@ -49,8 +69,10 @@ fun CountingScreen(
 ) {
     var showMenu by remember { mutableStateOf(false) }
 
-    // POWER OPTIMIZATION: Use derivedStateOf to memoize expensive calculations
-    // These only recompute when their dependencies actually change
+    // ===== PERFORMANCE OPTIMIZATION: Memoized state calculations =====
+    // Use derivedStateOf to cache expensive goal achievement calculations
+    // These only recompute when their dependencies (counter or count totals) actually change
+    // Prevents unnecessary recomposition of child composables
     val isLifetimeGoalReached by remember(counter, lifetimeTotal) {
         derivedStateOf { counter?.isLifetimeGoalAchieved(lifetimeTotal) == true }
     }
@@ -63,43 +85,47 @@ fun CountingScreen(
     val dailyProgress by remember(counter, todayTotal) {
         derivedStateOf { counter?.getDailyProgress(todayTotal) ?: 0f }
     }
-    
-    // POWER OPTIMIZATION: Memoize gradient brushes to avoid recalculation on every recomposition
+
+    // ===== PERFORMANCE OPTIMIZATION: Memoized gradients =====
+    // Cache gradient brushes to avoid recalculation on every recomposition
+    // Changes color scheme when goals are achieved (success indicator)
     val backgroundGradient = remember(isLifetimeGoalReached, isDailyGoalReached) {
         if (isLifetimeGoalReached || isDailyGoalReached) {
             Brush.verticalGradient(
                 colors = listOf(
-                    Color(0xFF059669), // Success green
+                    Color(0xFF059669), // Success green - indicates goal achievement
                     Color(0xFF047857)
                 )
             )
         } else {
             Brush.verticalGradient(
                 colors = listOf(
-                    Color(0xFF1E3A8A),
+                    Color(0xFF1E3A8A), // Default blue
                     Color(0xFF0F766E)
                 )
             )
         }
     }
-    
+
     val mainAreaGradient = remember(isLifetimeGoalReached, isDailyGoalReached) {
         Brush.radialGradient(
             colors = listOf(
-                Color(0xFFFF9933),
+                Color(0xFFFF9933), // Warm orange for main tap area
                 Color(0xFFE67E00)
             )
         )
     }
-    
-    // Memoize calculated values
+
+    // ===== PERFORMANCE OPTIMIZATION: Pre-calculate mala counts =====
+    // Memoize calculated values to avoid recalculating on every recomposition
     val sessionMalas = remember(sessionTotalTaps) { sessionTotalTaps / 108 }
     val todayMalas = remember(todayTotal) { todayTotal / 108 }
     val totalMalas = remember(lifetimeTotal) { lifetimeTotal / 108 }
-    
-    // POWER OPTIMIZATION: Calculate elapsed time with balanced update frequency
+
+    // ===== POWER OPTIMIZATION: Calculate elapsed time with balanced frequency =====
     // Updates every 2 seconds - smooth enough for display, power-efficient
-    // This is a good balance between UI smoothness and power consumption
+    // This balance prevents battery drain while maintaining visible time updates
+    // Only runs if session has actually started (startTime > 0)
     var displayTime by remember { mutableLongStateOf(elapsedTime) }
     LaunchedEffect(startTime) {
         if (startTime > 0) {
