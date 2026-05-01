@@ -1,0 +1,19 @@
+# OS / IDE
+.DS_Store
+/.idea/
+*.iml
+
+# Local config
+local.properties
+
+# Signing keys — NEVER commit
+keystore/
+*.jks
+*.keystore
+key.properties
+signing.properties
+keystore.properties
+
+# Release artifacts
+*.apk
+*.aab
