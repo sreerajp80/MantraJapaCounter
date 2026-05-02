@@ -6,6 +6,7 @@ import '../models/daily_summary.dart';
 import '../models/japa_session.dart';
 import '../providers/app_providers.dart';
 import '../providers/history_provider.dart';
+import '../utils/mala.dart';
 import '../widgets/temple_decorations.dart';
 
 /// Full session history grouped by date — Temple variation.
@@ -368,7 +369,7 @@ class _DayGroup extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dayMalas = summary.totalCount ~/ 108;
+    final dayMalas = malaForCount(summary.totalCount);
     final goalProgress = counterGoal > 0
         ? (lifetimeTotal / counterGoal * 100).clamp(0.0, 100.0)
         : null;

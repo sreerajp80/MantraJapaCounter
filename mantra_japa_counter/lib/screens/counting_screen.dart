@@ -8,6 +8,7 @@ import '../config/theme.dart';
 import '../providers/counting_provider.dart';
 import '../providers/app_providers.dart';
 import '../providers/settings_provider.dart';
+import '../utils/mala.dart';
 import '../widgets/temple_decorations.dart';
 import '../widgets/temple_mala_circle.dart';
 
@@ -458,8 +459,8 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
                 ? '$lifetimeTotal/$counterGoal'
                 : '$lifetimeTotal',
             malas: counterGoal > 0
-                ? '${lifetimeTotal ~/ 108}/${counterGoal ~/ 108}'
-                : '${lifetimeTotal ~/ 108}',
+                ? '${malaForCount(lifetimeTotal)}/${malaForCount(counterGoal)}'
+                : '${malaForCount(lifetimeTotal)}',
           ),
           const SizedBox(height: 6),
           _FooterStat(
@@ -468,8 +469,8 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
                 ? '$todayTotal/$dailyGoal'
                 : '$todayTotal',
             malas: dailyGoal > 0
-                ? '${todayTotal ~/ 108}/${dailyGoal ~/ 108}'
-                : '${todayTotal ~/ 108}',
+                ? '${malaForCount(todayTotal)}/${malaForCount(dailyGoal)}'
+                : '${malaForCount(todayTotal)}',
             color: isDailyGoalReached
                 ? TempleColors.tulsi
                 : TempleColors.ink,
@@ -478,7 +479,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
           _FooterStat(
             label: 'Session',
             chants: '$sessionTotal',
-            malas: '${sessionTotal ~/ 108}',
+            malas: '${malaForCount(sessionTotal)}',
           ),
         ],
       ),

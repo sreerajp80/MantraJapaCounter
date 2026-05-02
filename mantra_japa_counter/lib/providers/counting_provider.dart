@@ -399,6 +399,10 @@ class CountingNotifier extends StateNotifier<CountingState> {
   /// If the session has counts but is mid-mala (`tapCount % 108 != 0`),
   /// pause it so the next visit to this counter resumes the same session.
   /// Otherwise finalize and clear crash-recovery prefs.
+  ///
+  /// Special case: when the user has a sub-mala daily goal (e.g. 50 chants)
+  /// and has already met it today, finishing mid-mala is the natural stop
+  /// point — don't pause, just finalize.
   Future<JapaSession?> completeSession() async {
     final session = state.session;
     if (session == null || state.isCompleting) return null;
@@ -406,8 +410,12 @@ class CountingNotifier extends StateNotifier<CountingState> {
     state = state.copyWith(isCompleting: true);
     _stopTimers();
 
-    final shouldPause =
-        session.tapCount > 0 && session.tapCount % 108 != 0;
+    final subMalaDailyGoalMet = _dailyGoal > 0 &&
+        _dailyGoal < 108 &&
+        state.liveTodayTotal >= _dailyGoal;
+    final shouldPause = session.tapCount > 0 &&
+        session.tapCount % 108 != 0 &&
+        !subMalaDailyGoalMet;
 
     if (shouldPause) {
       // Freeze the active segment into accumulatedMs and persist as paused.

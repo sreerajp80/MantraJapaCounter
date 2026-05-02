@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../utils/mala.dart';
 import 'app_providers.dart';
 import 'counters_provider.dart';
 
@@ -37,8 +38,8 @@ final counterStatsProvider =
   return CounterStats(
     totalCount: total,
     todayCount: today,
-    totalMalas: total ~/ 108,
-    todayMalas: today ~/ 108,
+    totalMalas: malaForCount(total),
+    todayMalas: malaForCount(today),
     averageDaily: 0, // computed separately for the about screen
   );
 });
@@ -78,7 +79,7 @@ final todayAggregateProvider =
   }
   return TodayAggregate(
     chants: totalChants,
-    malas: totalChants ~/ 108,
+    malas: malaForCount(totalChants),
     counters: usedToday,
   );
 });

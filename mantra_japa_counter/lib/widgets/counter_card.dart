@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../config/theme.dart';
 import '../models/counter.dart';
 import '../models/counter_status.dart';
+import '../utils/mala.dart';
 import 'temple_decorations.dart';
 
 /// Counter card on the list screen — Temple variation.
@@ -35,7 +36,7 @@ class CounterCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDisabled = !counter.isActive;
     final accent = TempleColors.accentForId(counter.id);
-    final malas = totalCount ~/ 108;
+    final malas = malaForCount(totalCount);
     final dailyProgress = counter.hasDailyGoal
         ? (todayCount / counter.dailyGoal).clamp(0.0, double.infinity)
         : 0.0;
@@ -239,11 +240,13 @@ class CounterCard extends StatelessWidget {
     final percentColor =
         dailyComplete ? TempleColors.tulsi : TempleColors.vermillion;
 
-    final todayMalas = todayCount ~/ 108;
-    final todayChants = todayCount % 108;
+    final todayMalas = malaForCount(todayCount);
     final todayLabel = counter.hasDailyGoal
         ? 'TODAY · ${_format(todayCount)} / ${_format(counter.dailyGoal)}'
-        : 'TODAY · ${todayChants}c · ${todayMalas}m';
+        : 'TODAY · ${_format(todayCount)} chants';
+    final todayMalaLabel = counter.hasDailyGoal
+        ? '$todayMalas / ${malaForCount(counter.dailyGoal)} mala'
+        : '$todayMalas mala';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -269,6 +272,15 @@ class CounterCard extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 2),
+        Text(
+          todayMalaLabel,
+          style: AppTheme.serif(
+            fontSize: 11,
+            color: TempleColors.ink3,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         const SizedBox(height: 6),
         _BeadStrip(progress: dailyProgress.clamp(0.0, 1.0), accent: accent),
       ],
@@ -281,6 +293,7 @@ class CounterCard extends StatelessWidget {
         complete ? 'lifetime · $percentText% ✓' : 'lifetime · $percentText%';
     final textColor = complete ? TempleColors.vermillionDeep : TempleColors.ink;
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
@@ -291,14 +304,28 @@ class CounterCard extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        Text(
-          '${_format(totalCount)} / ${_format(counter.goal)}',
-          style: AppTheme.serif(
-            fontSize: 12,
-            color: textColor,
-            fontStyle: FontStyle.normal,
-            fontWeight: FontWeight.w600,
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              '${_format(totalCount)} / ${_format(counter.goal)}',
+              style: AppTheme.serif(
+                fontSize: 12,
+                color: textColor,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              '${malaForCount(totalCount)} / ${malaForCount(counter.goal)} mala',
+              style: AppTheme.serif(
+                fontSize: 11,
+                color: TempleColors.ink3,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
       ],
     );

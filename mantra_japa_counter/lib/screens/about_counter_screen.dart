@@ -5,6 +5,7 @@ import '../providers/app_providers.dart';
 import '../providers/counter_stats_provider.dart';
 import '../models/counter.dart';
 import '../models/counter_status.dart';
+import '../utils/mala.dart';
 import '../widgets/circular_progress_widget.dart';
 
 /// Statistics and details screen for a single counter.
@@ -68,7 +69,8 @@ class _CounterDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     final total = stats?.totalCount ?? 0;
     final today = stats?.todayCount ?? 0;
-    final totalMalas = total ~/ 108;
+    final totalMalas = malaForCount(total);
+    final goalMalas = malaForCount(counter.goal);
 
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -131,9 +133,7 @@ class _CounterDetail extends StatelessWidget {
               color: Colors.orange,
             ),
             CircularProgressWidget(
-              progress: (totalMalas / (counter.goal > 0
-                      ? (counter.goal / 108)
-                      : 1))
+              progress: (totalMalas / (goalMalas > 0 ? goalMalas : 1))
                   .clamp(0.0, 1.0),
               centerText: '$totalMalas',
               bottomLabel: 'Malas',
