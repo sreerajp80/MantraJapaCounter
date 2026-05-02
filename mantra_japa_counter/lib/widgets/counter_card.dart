@@ -241,9 +241,9 @@ class CounterCard extends StatelessWidget {
         dailyComplete ? TempleColors.tulsi : TempleColors.vermillion;
 
     final todayMalas = malaForCount(todayCount);
-    final todayLabel = counter.hasDailyGoal
-        ? 'TODAY · ${_format(todayCount)} / ${_format(counter.dailyGoal)}'
-        : 'TODAY · ${_format(todayCount)} chants';
+    final todayCountLabel = counter.hasDailyGoal
+        ? '${_format(todayCount)} / ${_format(counter.dailyGoal)}'
+        : '${_format(todayCount)} chants';
     final todayMalaLabel = counter.hasDailyGoal
         ? '$todayMalas / ${malaForCount(counter.dailyGoal)} mala'
         : '$todayMalas mala';
@@ -252,34 +252,56 @@ class CounterCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              todayLabel,
-              style: AppTheme.eyebrow(
-                fontSize: 11,
-                color: TempleColors.ink2,
-                fontWeight: FontWeight.w700,
+            Flexible(
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'TODAY · ',
+                      style: AppTheme.eyebrow(
+                        fontSize: 11,
+                        color: TempleColors.ink2,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    TextSpan(
+                      text: percentLabel,
+                      style: AppTheme.sans(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: percentColor,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Text(
-              percentLabel,
-              style: AppTheme.sans(
-                fontSize: 11,
-                fontWeight: FontWeight.w600,
-                color: percentColor,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  todayCountLabel,
+                  style: AppTheme.eyebrow(
+                    fontSize: 11,
+                    color: TempleColors.ink2,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  todayMalaLabel,
+                  style: AppTheme.serif(
+                    fontSize: 11,
+                    color: TempleColors.ink2,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
             ),
           ],
-        ),
-        const SizedBox(height: 2),
-        Text(
-          todayMalaLabel,
-          style: AppTheme.serif(
-            fontSize: 11,
-            color: TempleColors.ink3,
-            fontWeight: FontWeight.w500,
-          ),
         ),
         const SizedBox(height: 6),
         _BeadStrip(progress: dailyProgress.clamp(0.0, 1.0), accent: accent),
@@ -321,8 +343,8 @@ class CounterCard extends StatelessWidget {
               '${malaForCount(totalCount)} / ${malaForCount(counter.goal)} mala',
               style: AppTheme.serif(
                 fontSize: 11,
-                color: TempleColors.ink3,
-                fontWeight: FontWeight.w500,
+                color: TempleColors.ink2,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ],
