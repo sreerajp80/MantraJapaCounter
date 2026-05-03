@@ -40,6 +40,7 @@ class HistoryScreen extends ConsumerWidget {
                   summaries: summaries,
                   counterName: counterAsync?.value?.name,
                   counterGoal: counterAsync?.value?.goal ?? 0,
+                  counterDailyGoal: counterAsync?.value?.dailyGoal ?? 0,
                   counterInitialCount:
                       counterAsync?.value?.initialCount ?? 0,
                   showCounterNames: filterCounterId == null,
@@ -78,6 +79,7 @@ class HistoryScreen extends ConsumerWidget {
     required List<DailySummary> summaries,
     String? counterName,
     int counterGoal = 0,
+    int counterDailyGoal = 0,
     int counterInitialCount = 0,
     bool showCounterNames = false,
   }) {
@@ -94,7 +96,7 @@ class HistoryScreen extends ConsumerWidget {
               Text('No sessions recorded yet.',
                   style: AppTheme.serif(
                     fontSize: 14,
-                    color: TempleColors.ink3,
+                    color: TempleColors.ink2,
                     fontWeight: FontWeight.w400,
                   )),
             ],
@@ -106,6 +108,16 @@ class HistoryScreen extends ConsumerWidget {
     // Match the Kotlin formula: initialCount + SUM(session.count).
     final lifetimeTotal = counterInitialCount +
         summaries.fold<int>(0, (sum, d) => sum + d.totalCount);
+
+    // Running lifetime total at the END of each day. summaries are sorted
+    // newest-first, so cumulativeByIndex[0] == lifetimeTotal and each later
+    // entry steps backwards by that day's contribution.
+    final cumulativeByIndex = List<int>.filled(summaries.length, 0);
+    var running = lifetimeTotal;
+    for (var i = 0; i < summaries.length; i++) {
+      cumulativeByIndex[i] = running;
+      running -= summaries[i].totalCount;
+    }
 
     return CustomScrollView(
       slivers: [
@@ -127,7 +139,9 @@ class HistoryScreen extends ConsumerWidget {
                   padding: const EdgeInsets.only(top: 4, bottom: 12),
                   child: Text('RECENT OFFERINGS',
                       style: AppTheme.eyebrow(
-                          fontSize: 10, letterSpacing: 3)),
+                          fontSize: 10,
+                          letterSpacing: 3,
+                          color: TempleColors.ink2)),
                 );
               }
               final s = summaries[i - 1];
@@ -137,8 +151,9 @@ class HistoryScreen extends ConsumerWidget {
                 dayLabel: 'Day ${summaries.length - (i - 1)}',
                 isToday: i == 1,
                 isLast: isLast,
-                lifetimeTotal: lifetimeTotal,
+                dayCumulativeTotal: cumulativeByIndex[i - 1],
                 counterGoal: counterGoal,
+                counterDailyGoal: counterDailyGoal,
                 showCounterNames: showCounterNames,
                 filterCounterId: filterCounterId,
               );
@@ -231,7 +246,7 @@ class _Hero extends StatelessWidget {
                   'a record of devotion',
                   style: AppTheme.serif(
                     fontSize: 13,
-                    color: TempleColors.ink3,
+                    color: TempleColors.ink2,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -265,7 +280,7 @@ class _Hero extends StatelessWidget {
                       '/ $counterGoal',
                       style: AppTheme.serif(
                         fontSize: 16,
-                        color: TempleColors.ink3,
+                        color: TempleColors.ink2,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -280,6 +295,7 @@ class _Hero extends StatelessWidget {
                 style: AppTheme.eyebrow(
                   fontSize: 10,
                   letterSpacing: 2,
+                  color: TempleColors.ink2,
                 ),
               ),
               if (pct != null) ...[
@@ -346,13 +362,14 @@ class _DiyaProgress extends StatelessWidget {
 
 // ─── Day group ───────────────────────────────────────────────────────────────
 
-class _DayGroup extends ConsumerWidget {
+class _DayGroup extends ConsumerStatefulWidget {
   final DailySummary summary;
   final String dayLabel;
   final bool isToday;
   final bool isLast;
-  final int lifetimeTotal;
+  final int dayCumulativeTotal;
   final int counterGoal;
+  final int counterDailyGoal;
   final bool showCounterNames;
   final String? filterCounterId;
 
@@ -361,25 +378,38 @@ class _DayGroup extends ConsumerWidget {
     required this.dayLabel,
     required this.isToday,
     required this.isLast,
-    required this.lifetimeTotal,
+    required this.dayCumulativeTotal,
     required this.counterGoal,
+    required this.counterDailyGoal,
     required this.showCounterNames,
     required this.filterCounterId,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_DayGroup> createState() => _DayGroupState();
+}
+
+class _DayGroupState extends ConsumerState<_DayGroup> {
+  bool _expanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final summary = widget.summary;
     final dayMalas = malaForCount(summary.totalCount);
-    final goalProgress = counterGoal > 0
-        ? (lifetimeTotal / counterGoal * 100).clamp(0.0, 100.0)
+    final goalProgress = widget.counterGoal > 0
+        ? (widget.dayCumulativeTotal / widget.counterGoal * 100)
+            .clamp(0.0, 100.0)
         : null;
+    final isDailyComplete = widget.counterDailyGoal > 0 &&
+        summary.totalCount >= widget.counterDailyGoal;
+    final isLifetimeComplete = widget.counterGoal > 0 &&
+        widget.dayCumulativeTotal >= widget.counterGoal;
     final sessionCount = summary.sessions.length;
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 14),
       decoration: BoxDecoration(
         border: Border(
-          bottom: isLast
+          bottom: widget.isLast
               ? BorderSide.none
               : const BorderSide(color: TempleColors.line),
         ),
@@ -387,105 +417,157 @@ class _DayGroup extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 44,
-                height: 44,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color:
-                      isToday ? TempleColors.vermillion : TempleColors.cardSoft,
-                  border: Border.all(
-                    color: isToday
-                        ? TempleColors.vermillionDeep
-                        : TempleColors.line,
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    _dayNumber(dayLabel),
-                    style: AppTheme.serif(
-                      fontSize: 18,
-                      color: isToday ? Colors.white : TempleColors.vermillion,
-                      fontWeight: FontWeight.w500,
-                      height: 1,
+          InkWell(
+            onTap: () => setState(() => _expanded = !_expanded),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: widget.isToday
+                          ? TempleColors.vermillion
+                          : TempleColors.cardSoft,
+                      border: Border.all(
+                        color: widget.isToday
+                            ? TempleColors.vermillionDeep
+                            : TempleColors.line,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        _dayNumber(widget.dayLabel),
+                        style: AppTheme.serif(
+                          fontSize: 18,
+                          color: widget.isToday
+                              ? Colors.white
+                              : TempleColors.vermillion,
+                          fontWeight: FontWeight.w500,
+                          height: 1,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          isToday ? 'Today' : summary.date,
-                          style: AppTheme.sans(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: TempleColors.ink,
-                          ),
-                        ),
-                        Text(
-                          '$sessionCount session${sessionCount == 1 ? '' : 's'}',
-                          style: AppTheme.serif(
-                            fontSize: 12,
-                            color: TempleColors.ink3,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    Row(
-                      children: [
-                        _Pair(
-                          label: 'chants',
-                          value: summary.totalCount.toString(),
-                        ),
-                        const SizedBox(width: 14),
-                        _Pair(label: 'mala', value: dayMalas.toString()),
-                        const SizedBox(width: 14),
-                        if (goalProgress != null)
-                          Flexible(
-                            child: Text(
-                              '$lifetimeTotal · ${goalProgress.toStringAsFixed(goalProgress >= 10 ? 0 : 2)}%',
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      widget.isToday ? 'Today' : summary.date,
+                                      style: AppTheme.sans(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: TempleColors.ink,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  if (isDailyComplete) ...[
+                                    const SizedBox(width: 6),
+                                    const Icon(
+                                      Icons.check_circle,
+                                      size: 16,
+                                      color: TempleColors.tulsi,
+                                    ),
+                                  ],
+                                ],
+                              ),
+                            ),
+                            Text(
+                              '$sessionCount session${sessionCount == 1 ? '' : 's'}',
                               style: AppTheme.serif(
                                 fontSize: 12,
-                                color: TempleColors.vermillion,
+                                color: TempleColors.ink2,
                                 fontWeight: FontWeight.w400,
                               ),
-                              overflow: TextOverflow.ellipsis,
                             ),
-                          )
-                        else
-                          Text(
-                            _formatDuration(summary.totalDuration),
-                            style: AppTheme.serif(
-                              fontSize: 12,
-                              color: TempleColors.ink3,
-                              fontWeight: FontWeight.w400,
+                            const SizedBox(width: 6),
+                            AnimatedRotation(
+                              turns: _expanded ? 0.5 : 0,
+                              duration: const Duration(milliseconds: 180),
+                              child: const Icon(
+                                Icons.keyboard_arrow_down,
+                                size: 18,
+                                color: TempleColors.ink2,
+                              ),
                             ),
-                          ),
+                          ],
+                        ),
+                        const SizedBox(height: 6),
+                        Row(
+                          children: [
+                            _Pair(
+                              label: 'chants',
+                              value: summary.totalCount.toString(),
+                            ),
+                            const SizedBox(width: 14),
+                            _Pair(label: 'mala', value: dayMalas.toString()),
+                            const SizedBox(width: 14),
+                            if (goalProgress != null)
+                              Flexible(
+                                child: Text(
+                                  '${widget.dayCumulativeTotal} / ${widget.counterGoal} · ${goalProgress.toStringAsFixed(goalProgress >= 10 ? 0 : 2)}%',
+                                  style: AppTheme.serif(
+                                    fontSize: 12,
+                                    color: isLifetimeComplete
+                                        ? TempleColors.tulsi
+                                        : TempleColors.vermillion,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              )
+                            else
+                              Text(
+                                _formatDuration(summary.totalDuration),
+                                style: AppTheme.serif(
+                                  fontSize: 12,
+                                  color: TempleColors.ink2,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                          ],
+                        ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          ...summary.sessions.map(
-            (s) => _SessionRow(
-              session: s,
-              showCounterName: showCounterNames,
-              onDelete: () => _confirmDelete(context, ref, s),
             ),
+          ),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 180),
+            curve: Curves.easeOut,
+            alignment: Alignment.topCenter,
+            child: _expanded
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: summary.sessions
+                          .map(
+                            (s) => _SessionRow(
+                              session: s,
+                              showCounterName: widget.showCounterNames,
+                              onDelete: () => _confirmDelete(context, ref, s),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  )
+                : const SizedBox.shrink(),
           ),
         ],
       ),
@@ -521,7 +603,7 @@ class _DayGroup extends ConsumerWidget {
     );
     if (confirmed != true) return;
     await ref.read(japaCounterRepositoryProvider).deleteSession(session.id);
-    ref.invalidate(historySummariesProvider(filterCounterId));
+    ref.invalidate(historySummariesProvider(widget.filterCounterId));
   }
 
   String _dayNumber(String dayLabel) {
@@ -604,7 +686,7 @@ class _SessionRow extends StatelessWidget {
                       session.counterName,
                       style: AppTheme.sans(
                         fontSize: 11,
-                        color: TempleColors.ink3,
+                        color: TempleColors.ink2,
                         fontWeight: FontWeight.w400,
                       ),
                       overflow: TextOverflow.ellipsis,
@@ -618,7 +700,7 @@ class _SessionRow extends StatelessWidget {
             icon: const Icon(
               Icons.delete_outline,
               size: 18,
-              color: TempleColors.ink3,
+              color: TempleColors.ink2,
             ),
             visualDensity: VisualDensity.compact,
             padding: EdgeInsets.zero,
