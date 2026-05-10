@@ -171,12 +171,17 @@ class _CounterDetail extends StatelessWidget {
           SizedBox(
             width: 140,
             child: Text(label,
-                style: const TextStyle(color: Colors.grey, fontSize: 14)),
+                style: TextStyle(
+                    color: Colors.grey[800],
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14)),
           ),
           Expanded(
             child: Text(value,
                 style: const TextStyle(
-                    fontWeight: FontWeight.w500, fontSize: 14)),
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14)),
           ),
         ],
       ),

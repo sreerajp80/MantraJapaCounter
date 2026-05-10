@@ -40,7 +40,10 @@ class CircularProgressWidget extends StatelessWidget {
             ),
           ),
           Text(bottomLabel,
-              style: const TextStyle(fontSize: 10, color: Colors.grey)),
+              style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.grey[800],
+                  fontWeight: FontWeight.w500)),
         ],
       ),
     );

@@ -528,6 +528,7 @@ class _CounterDialogState extends State<_CounterDialog> {
   late final TextEditingController _daily;
   late int _startDate;
   String? _dailyError;
+  String? _stepError;
 
   @override
   void initState() {
@@ -574,9 +575,16 @@ class _CounterDialogState extends State<_CounterDialog> {
             ),
             TextField(
               controller: _step,
-              decoration:
-                  const InputDecoration(labelText: 'Increment step (default 1)'),
+              decoration: InputDecoration(
+                labelText: 'Increment step (default 1)',
+                errorText: _stepError,
+              ),
               keyboardType: TextInputType.number,
+              onChanged: (_) {
+                if (_stepError != null) {
+                  setState(() => _stepError = null);
+                }
+              },
             ),
             TextField(
               controller: _goal,
@@ -592,8 +600,11 @@ class _CounterDialogState extends State<_CounterDialog> {
               ),
               keyboardType: TextInputType.number,
               onChanged: (_) {
-                if (_dailyError != null) {
-                  setState(() => _dailyError = null);
+                if (_dailyError != null || _stepError != null) {
+                  setState(() {
+                    _dailyError = null;
+                    _stepError = null;
+                  });
                 }
               },
             ),
@@ -634,9 +645,16 @@ class _CounterDialogState extends State<_CounterDialog> {
             if (name.isEmpty) return;
             final goal = int.tryParse(_goal.text) ?? 0;
             final daily = int.tryParse(_daily.text) ?? 0;
+            final step = int.tryParse(_step.text) ?? 1;
             if (goal > 0 && daily > goal) {
               setState(() {
                 _dailyError = 'Daily goal cannot exceed lifetime goal';
+              });
+              return;
+            }
+            if (daily > 0 && step >= daily) {
+              setState(() {
+                _stepError = 'Increment step must be less than daily goal';
               });
               return;
             }
@@ -645,7 +663,7 @@ class _CounterDialogState extends State<_CounterDialog> {
               name,
               _startDate,
               int.tryParse(_init.text) ?? 0,
-              int.tryParse(_step.text) ?? 1,
+              step,
               goal,
               daily,
             );
