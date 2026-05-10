@@ -167,13 +167,16 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
                               ),
                               TempleMedallion(
                                 size: medallion,
-                                color: TempleColors.vermillion,
-                                opacity: 0.28,
+                                color: isDailyGoalReached
+                                    ? TempleColors.vermillionDeep
+                                    : TempleColors.vermillion,
+                                opacity: isDailyGoalReached ? 0.45 : 0.28,
                               ),
                               TempleMalaCircle(
                                 count: sessionInMala,
                                 goal: 108,
                                 diameter: medallion,
+                                goalReached: isDailyGoalReached,
                                 child: _centerNumber(
                                   sessionInMala: sessionInMala,
                                   sessionMalas: sessionMalas,
@@ -342,16 +345,6 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          'SESSION',
-          style: AppTheme.sans(
-            fontSize: 10,
-            fontWeight: FontWeight.w700,
-            color: TempleColors.vermillion,
-            letterSpacing: 3,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
           sessionInMala.toString(),
           style: AppTheme.serif(
             fontSize: 96,
@@ -366,7 +359,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
           'of one hundred eight',
           style: AppTheme.serif(
             fontSize: 14,
-            color: TempleColors.ink2,
+            color: TempleColors.ink,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -377,9 +370,11 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
             Container(
               width: 6,
               height: 6,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: TempleColors.tulsi,
+                color: (isLifetimeGoalReached || isDailyGoalReached)
+                    ? TempleColors.vermillion
+                    : TempleColors.tulsi,
               ),
             ),
             const SizedBox(width: 6),
@@ -392,7 +387,9 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
               style: AppTheme.sans(
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
-                color: TempleColors.tulsi,
+                color: (isLifetimeGoalReached || isDailyGoalReached)
+                    ? TempleColors.vermillionDeep
+                    : TempleColors.ink,
                 letterSpacing: 1,
               ),
             ),
@@ -471,9 +468,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
             malas: dailyGoal > 0
                 ? '${malaForCount(todayTotal)}/${malaForCount(dailyGoal)}'
                 : '${malaForCount(todayTotal)}',
-            color: isDailyGoalReached
-                ? TempleColors.tulsi
-                : TempleColors.ink,
+            highlighted: isDailyGoalReached,
           ),
           const SizedBox(height: 6),
           _FooterStat(
@@ -582,33 +577,43 @@ class _FooterStat extends StatelessWidget {
   final String label;
   final String chants;
   final String malas;
-  final Color color;
+  final bool highlighted;
 
   const _FooterStat({
     required this.label,
     required this.chants,
     required this.malas,
-    this.color = TempleColors.ink,
+    this.highlighted = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final cardColor =
+        highlighted ? TempleColors.vermillion : TempleColors.card;
+    final borderColor = highlighted
+        ? TempleColors.vermillionDeep
+        : TempleColors.sandal.withValues(alpha: 0.45);
+    final shadowColor = highlighted
+        ? TempleColors.vermillionDeep
+        : TempleColors.sandal;
+    final textColor = highlighted ? TempleColors.bg : TempleColors.ink;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: TempleColors.card,
+        color: cardColor,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: TempleColors.sandal.withValues(alpha: 0.45)),
+        border: Border.all(color: borderColor),
         boxShadow: [
           BoxShadow(
-            color: TempleColors.sandal.withValues(alpha: 0.35),
+            color: shadowColor.withValues(alpha: 0.35),
             blurRadius: 12,
             spreadRadius: 0,
             offset: const Offset(0, 5),
           ),
           BoxShadow(
-            color: TempleColors.sandal.withValues(alpha: 0.18),
+            color: shadowColor.withValues(alpha: 0.18),
             blurRadius: 4,
             spreadRadius: 0,
             offset: const Offset(0, 1),
@@ -620,7 +625,12 @@ class _FooterStat extends StatelessWidget {
         children: [
           Text(
             label.toUpperCase(),
-            style: AppTheme.eyebrow(fontSize: 9, letterSpacing: 1.5),
+            style: AppTheme.eyebrow(
+              fontSize: 9,
+              letterSpacing: 1.5,
+              color: textColor,
+              fontWeight: FontWeight.w700,
+            ),
           ),
           const SizedBox(height: 6),
           Row(
@@ -634,7 +644,8 @@ class _FooterStat extends StatelessWidget {
                     chants,
                     'c',
                     fontSize: 18,
-                    valueColor: color,
+                    valueColor: textColor,
+                    suffixColor: textColor,
                   ),
                 ),
               ),
@@ -645,7 +656,8 @@ class _FooterStat extends StatelessWidget {
                     malas,
                     'm',
                     fontSize: 14,
-                    valueColor: TempleColors.ink2,
+                    valueColor: textColor,
+                    suffixColor: textColor,
                   ),
                 ),
               ),
@@ -661,6 +673,7 @@ class _FooterStat extends StatelessWidget {
     String suffix, {
     required double fontSize,
     required Color valueColor,
+    required Color suffixColor,
   }) {
     return Text.rich(
       TextSpan(
@@ -670,7 +683,7 @@ class _FooterStat extends StatelessWidget {
             style: AppTheme.serif(
               fontSize: fontSize,
               color: valueColor,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               height: 1,
             ),
           ),
@@ -682,8 +695,8 @@ class _FooterStat extends StatelessWidget {
             text: suffix,
             style: AppTheme.serif(
               fontSize: fontSize * 0.78,
-              color: TempleColors.ink,
-              fontWeight: FontWeight.w500,
+              color: suffixColor,
+              fontWeight: FontWeight.w600,
               height: 1,
             ),
           ),

@@ -9,7 +9,7 @@ import 'temple_decorations.dart';
 ///
 /// Layout:
 ///   • soft lotus medallion as a top-right watermark in the card's [accent] tone
-///   • lotus avatar circle + mantra name + "OFFERING NN" eyebrow
+///   • lotus avatar circle + mantra name
 ///   • large EB Garamond italic count + "chants · N mala" caption
 ///   • 27-segment prayer-bead daily-progress strip (mirrors a 108-bead mala
 ///     scaled down by 4×)
@@ -18,7 +18,6 @@ class CounterCard extends StatelessWidget {
   final Counter counter;
   final int totalCount;
   final int todayCount;
-  final int index;
   final VoidCallback onTap;
   final VoidCallback onLongPress;
 
@@ -27,7 +26,6 @@ class CounterCard extends StatelessWidget {
     required this.counter,
     required this.totalCount,
     required this.todayCount,
-    required this.index,
     required this.onTap,
     required this.onLongPress,
   });
@@ -145,11 +143,6 @@ class CounterCard extends StatelessWidget {
                 ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 2),
-              Text(
-                'OFFERING ${(index + 1).toString().padLeft(2, '0')}',
-                style: AppTheme.eyebrow(fontSize: 11, letterSpacing: 1),
               ),
             ],
           ),

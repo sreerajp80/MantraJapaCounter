@@ -47,7 +47,6 @@ class CounterListScreen extends ConsumerWidget {
                   itemCount: counters.length,
                   itemBuilder: (context, i) => _CounterCardWrapper(
                     counter: counters[i],
-                    index: i,
                   ),
                 ),
               const SliverToBoxAdapter(child: SizedBox(height: 28)),
@@ -305,8 +304,7 @@ class _EmptyState extends StatelessWidget {
 
 class _CounterCardWrapper extends ConsumerWidget {
   final Counter counter;
-  final int index;
-  const _CounterCardWrapper({required this.counter, required this.index});
+  const _CounterCardWrapper({required this.counter});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -317,7 +315,6 @@ class _CounterCardWrapper extends ConsumerWidget {
         counter: counter,
         totalCount: 0,
         todayCount: 0,
-        index: index,
         onTap: () => context.push('/counting/${counter.id}'),
         onLongPress: () => _showOptions(context, ref),
       ),
@@ -326,7 +323,6 @@ class _CounterCardWrapper extends ConsumerWidget {
         counter: counter,
         totalCount: stats.totalCount,
         todayCount: stats.todayCount,
-        index: index,
         onTap: () => context.push('/counting/${counter.id}'),
         onLongPress: () => _showOptions(context, ref),
       ),
@@ -531,6 +527,7 @@ class _CounterDialogState extends State<_CounterDialog> {
   late final TextEditingController _goal;
   late final TextEditingController _daily;
   late int _startDate;
+  String? _dailyError;
 
   @override
   void initState() {
@@ -589,9 +586,16 @@ class _CounterDialogState extends State<_CounterDialog> {
             ),
             TextField(
               controller: _daily,
-              decoration:
-                  const InputDecoration(labelText: 'Daily goal (0 = none)'),
+              decoration: InputDecoration(
+                labelText: 'Daily goal (0 = none)',
+                errorText: _dailyError,
+              ),
               keyboardType: TextInputType.number,
+              onChanged: (_) {
+                if (_dailyError != null) {
+                  setState(() => _dailyError = null);
+                }
+              },
             ),
             const SizedBox(height: 12),
             Row(
@@ -628,14 +632,22 @@ class _CounterDialogState extends State<_CounterDialog> {
           onPressed: () {
             final name = _name.text.trim();
             if (name.isEmpty) return;
+            final goal = int.tryParse(_goal.text) ?? 0;
+            final daily = int.tryParse(_daily.text) ?? 0;
+            if (goal > 0 && daily > goal) {
+              setState(() {
+                _dailyError = 'Daily goal cannot exceed lifetime goal';
+              });
+              return;
+            }
             Navigator.pop(context);
             widget.onSave(
               name,
               _startDate,
               int.tryParse(_init.text) ?? 0,
               int.tryParse(_step.text) ?? 1,
-              int.tryParse(_goal.text) ?? 0,
-              int.tryParse(_daily.text) ?? 0,
+              goal,
+              daily,
             );
           },
           child: Text(isEdit ? 'Save' : 'Create'),

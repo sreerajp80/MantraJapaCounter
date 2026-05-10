@@ -14,6 +14,7 @@ class TempleMalaCircle extends StatelessWidget {
   final int goal;
   final int beadSegments;
   final double diameter;
+  final bool goalReached;
   final Widget child;
 
   const TempleMalaCircle({
@@ -23,6 +24,7 @@ class TempleMalaCircle extends StatelessWidget {
     required this.child,
     this.beadSegments = 108,
     this.diameter = 280,
+    this.goalReached = false,
   });
 
   @override
@@ -38,6 +40,7 @@ class TempleMalaCircle extends StatelessWidget {
         painter: _MalaPainter(
           beadSegments: beadSegments,
           filled: filled,
+          goalReached: goalReached,
         ),
         child: Center(child: child),
       ),
@@ -48,8 +51,13 @@ class TempleMalaCircle extends StatelessWidget {
 class _MalaPainter extends CustomPainter {
   final int beadSegments;
   final int filled;
+  final bool goalReached;
 
-  _MalaPainter({required this.beadSegments, required this.filled});
+  _MalaPainter({
+    required this.beadSegments,
+    required this.filled,
+    required this.goalReached,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -63,6 +71,13 @@ class _MalaPainter extends CustomPainter {
     const guruDiameter = 12.0;
     final radius = size.width / 2 - guruDiameter / 2;
 
+    final filledBeadColor =
+        goalReached ? TempleColors.vermillion : TempleColors.sandal;
+    final activeBeadColor =
+        goalReached ? TempleColors.vermillionDeep : TempleColors.vermillion;
+    final unfilledBeadBase =
+        goalReached ? TempleColors.vermillion : TempleColors.sandal;
+
     for (var i = 0; i < beadSegments; i++) {
       final angle = (i * (360 / beadSegments) - 90) * math.pi / 180;
       final x = cx + math.cos(angle) * radius;
@@ -72,13 +87,13 @@ class _MalaPainter extends CustomPainter {
 
       final beadSize = isLast ? 8.0 : (isFilled ? 5.0 : 4.0);
       final color = isFilled
-          ? (isLast ? TempleColors.vermillion : TempleColors.sandal)
-          : TempleColors.sandal.withValues(alpha: 0.45);
+          ? (isLast ? activeBeadColor : filledBeadColor)
+          : unfilledBeadBase.withValues(alpha: 0.45);
 
       // Soft shadow for the active "last filled" bead.
       if (isLast) {
         final glow = Paint()
-          ..color = TempleColors.vermillion.withValues(alpha: 0.45)
+          ..color = activeBeadColor.withValues(alpha: 0.45)
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
         canvas.drawCircle(Offset(x, y), beadSize / 2 + 3, glow);
       }
@@ -115,5 +130,6 @@ class _MalaPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant _MalaPainter oldDelegate) =>
       oldDelegate.filled != filled ||
-      oldDelegate.beadSegments != beadSegments;
+      oldDelegate.beadSegments != beadSegments ||
+      oldDelegate.goalReached != goalReached;
 }

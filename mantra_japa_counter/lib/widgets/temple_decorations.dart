@@ -75,8 +75,9 @@ class _ArchPainter extends CustomPainter {
       oldDelegate.color != color;
 }
 
-/// Lotus medallion — concentric rings with eight petal-like ellipses.
-/// Used as a soft watermark on cards and behind the active counter.
+/// Lotus medallion — an outer ring framing a sixteen-petal lotus bloom
+/// (two layered rows of eight teardrop petals around a seed pod). Used as
+/// a soft watermark on cards and behind the active counter.
 class TempleMedallion extends StatelessWidget {
   final double size;
   final Color color;
@@ -108,40 +109,78 @@ class _MedallionPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final scale = size.width / 100.0;
-    final cx = 50.0 * scale;
-    final cy = 50.0 * scale;
+
+    // Operate entirely in design-space (100 × 100, centred at origin).
+    // canvas.scale multiplies all stroke widths by `scale` for on-screen
+    // rendering, so stroke widths below stay in design units.
+    canvas.save();
+    canvas.translate(size.width / 2, size.height / 2);
+    canvas.scale(scale);
 
     final stroke = Paint()
       ..color = color
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.8 * scale;
+      ..strokeWidth = 0.8;
+    final strokeFine = Paint()
+      ..color = color.withValues(alpha: 0.70)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.5;
+    final fillBack = Paint()..color = color.withValues(alpha: 0.08);
+    final fillFront = Paint()..color = color.withValues(alpha: 0.18);
 
-    // Outer ring — must coincide with TempleMalaCircle's bead ring so the
-    // dotted ring and the outer circle share centre, radius, and diameter.
-    // Keep this formula in sync with _MalaPainter.paint() in
-    // temple_mala_circle.dart.
+    // Two framing circles. The outer one must coincide with
+    // TempleMalaCircle's bead ring so the dotted ring and the outer circle
+    // share centre, radius, and diameter — keep in sync with _MalaPainter
+    // in temple_mala_circle.dart.
     const guruDiameter = 12.0;
-    final outerRingRadius = size.width / 2 - guruDiameter / 2;
-    canvas.drawCircle(Offset(cx, cy), outerRingRadius, stroke);
-    canvas.drawCircle(Offset(cx, cy), 32 * scale, stroke);
+    final outerRingRadius = (size.width / 2 - guruDiameter / 2) / scale;
+    canvas.drawCircle(Offset.zero, outerRingRadius, stroke);
+    canvas.drawCircle(Offset.zero, 38, stroke);
 
+    // Pointed-tip leaf petal: widest in the lower-third, narrowing sharply
+    // to a soft point at the tip. control1 sits at full width near the
+    // base; control2 converges toward the axis approaching the tip.
+    Path petal({required double base, required double tip, required double width}) {
+      final span = tip - base;
+      return Path()
+        ..moveTo(0, -base)
+        ..cubicTo(-width, -(base + span * 0.30),
+                  -width * 0.30, -(tip - span * 0.05),
+                  0, -tip)
+        ..cubicTo(width * 0.30, -(tip - span * 0.05),
+                  width, -(base + span * 0.30),
+                  0, -base)
+        ..close();
+    }
+
+    // Back row — 8 slimmer petals offset by 22.5° so their pointed tips
+    // peek between the front petals.
+    final backPetal = petal(base: 5, tip: 35, width: 9);
     for (var i = 0; i < 8; i++) {
-      final angle = (i * 45 - 90) * math.pi / 180;
-      final x = cx + math.cos(angle) * 24 * scale;
-      final y = cy + math.sin(angle) * 24 * scale;
       canvas.save();
-      canvas.translate(x, y);
-      canvas.rotate(i * 45 * math.pi / 180);
-      final rect = Rect.fromCenter(
-        center: Offset.zero,
-        width: 12 * scale,
-        height: 28 * scale,
-      );
-      canvas.drawOval(rect, stroke);
+      canvas.rotate(i * math.pi / 4 + math.pi / 8);
+      canvas.drawPath(backPetal, fillBack);
+      canvas.drawPath(backPetal, stroke);
       canvas.restore();
     }
 
-    canvas.drawCircle(Offset(cx, cy), 6 * scale, Paint()..color = color);
+    // Front row — 8 dominant petals on the cardinal/intercardinal axes,
+    // each containing an inner echo outline for the layered mandala detail.
+    final frontPetal = petal(base: 4, tip: 30, width: 14);
+    final frontPetalEcho = petal(base: 7, tip: 26, width: 8);
+    for (var i = 0; i < 8; i++) {
+      canvas.save();
+      canvas.rotate(i * math.pi / 4);
+      canvas.drawPath(frontPetal, fillFront);
+      canvas.drawPath(frontPetal, stroke);
+      canvas.drawPath(frontPetalEcho, strokeFine);
+      canvas.restore();
+    }
+
+    // Seed pod at the centre of the bloom.
+    canvas.drawCircle(Offset.zero, 5, Paint()..color = color);
+
+    canvas.restore();
   }
 
   @override
