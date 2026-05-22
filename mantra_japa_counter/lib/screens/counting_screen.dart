@@ -683,7 +683,8 @@ class _FooterStat extends StatelessWidget {
             style: AppTheme.serif(
               fontSize: fontSize,
               color: valueColor,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
+              fontStyle: FontStyle.normal,
               height: 1,
             ),
           ),
@@ -696,7 +697,8 @@ class _FooterStat extends StatelessWidget {
             style: AppTheme.serif(
               fontSize: fontSize * 0.78,
               color: suffixColor,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
+              fontStyle: FontStyle.normal,
               height: 1,
             ),
           ),
