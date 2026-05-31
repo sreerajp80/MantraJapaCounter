@@ -119,6 +119,8 @@ class HistoryScreen extends ConsumerWidget {
       running -= summaries[i].totalCount;
     }
 
+    final todayLabel = _formatDate(DateTime.now());
+
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
@@ -149,7 +151,7 @@ class HistoryScreen extends ConsumerWidget {
               return _DayGroup(
                 summary: s,
                 dayLabel: 'Day ${summaries.length - (i - 1)}',
-                isToday: i == 1,
+                isToday: s.date == todayLabel,
                 isLast: isLast,
                 dayCumulativeTotal: cumulativeByIndex[i - 1],
                 counterGoal: counterGoal,
@@ -162,6 +164,16 @@ class HistoryScreen extends ConsumerWidget {
         ),
       ],
     );
+  }
+
+  // Must match the format produced by JapaCounterRepository._formatDate.
+  static String _formatDate(DateTime dt) {
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+    ];
+    final day = dt.day.toString().padLeft(2, '0');
+    return '${months[dt.month - 1]} $day, ${dt.year}';
   }
 
   void _confirmClear(BuildContext context, WidgetRef ref) {

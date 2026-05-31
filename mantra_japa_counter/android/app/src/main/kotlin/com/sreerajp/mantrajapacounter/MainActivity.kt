@@ -27,7 +27,18 @@ class MainActivity : FlutterActivity() {
     private val dailyGoalPattern = longArrayOf(0, 220, 90, 220, 90, 220)
     private val malaVibrationMs = 250L
 
+    // How long after the last boost we hold the alarm volume at max before
+    // restoring. Covers the longest expected user-picked ringtone tail; rapid
+    // successive completions extend the window so we never restore mid-tone.
+    private val alarmVolumeRestoreDelayMs = 6000L
+
     private var previewRingtone: Ringtone? = null
+
+    // Saved STREAM_ALARM volume captured on the first boost call. Null when
+    // nothing is currently boosted. Restored by [scheduleAlarmVolumeRestore].
+    private var savedAlarmVolume: Int? = null
+    private val volumeHandler = Handler(Looper.getMainLooper())
+    private val restoreAlarmVolumeRunnable = Runnable { restoreAlarmVolumeNow() }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -68,20 +79,44 @@ class MainActivity : FlutterActivity() {
                     stopPreviewTone()
                     result.success(null)
                 }
+                "boostAlarmVolume" -> {
+                    // Used by the Dart audioplayers path before playing a
+                    // user-picked file source so the file is audible in DND /
+                    // silent / low-volume modes. Caller pairs this with
+                    // `restoreAlarmVolume` (or relies on the auto-restore
+                    // timer if playback length is unknown).
+                    boostAlarmVolume()
+                    result.success(null)
+                }
+                "restoreAlarmVolume" -> {
+                    restoreAlarmVolumeNow()
+                    result.success(null)
+                }
                 else -> result.notImplemented()
             }
         }
     }
 
+    override fun onPause() {
+        // Don't leave the user's alarm volume cranked if the app goes to the
+        // background mid-boost. Restore immediately on pause; the next play
+        // call will re-boost.
+        restoreAlarmVolumeNow()
+        super.onPause()
+    }
+
     override fun onDestroy() {
+        volumeHandler.removeCallbacks(restoreAlarmVolumeRunnable)
+        restoreAlarmVolumeNow()
         stopPreviewTone()
         super.onDestroy()
     }
 
     /**
-     * Plays the system default notification ringtone for the Settings preview.
-     * Uses RingtoneManager because audioplayers/ExoPlayer can't resolve the
-     * `content://settings/system/notification_sound` alias URI directly.
+     * Plays the system default notification ringtone for the Settings preview
+     * and for daily-goal completion. Forces USAGE_ALARM audio attributes so it
+     * bypasses silent / DND / ringer-muted modes, and boosts STREAM_ALARM
+     * volume so it remains audible when the user's alarm volume is low or 0.
      */
     private fun previewDefaultNotificationTone() {
         try {
@@ -89,9 +124,7 @@ class MainActivity : FlutterActivity() {
             val uri: Uri = RingtoneManager.getActualDefaultRingtoneUri(
                 this, RingtoneManager.TYPE_NOTIFICATION,
             ) ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-            val rt = RingtoneManager.getRingtone(this, uri) ?: return
-            previewRingtone = rt
-            rt.play()
+            playRingtoneAsAlarm(uri)
         } catch (_: Exception) {
             // best-effort — preview must never break the screen
         }
@@ -106,19 +139,29 @@ class MainActivity : FlutterActivity() {
 
     /**
      * Plays a ringtone from a content:// URI (typically returned by
-     * [listNotificationRingtones]). RingtoneManager handles `content://media/...`
-     * URIs that ExoPlayer/audioplayers can't open directly.
+     * [listNotificationRingtones]) with USAGE_ALARM attributes and a temporary
+     * STREAM_ALARM volume boost so it plays loudly even with the phone in
+     * silent / DND / very-low-volume modes.
      */
     private fun playRingtoneUri(uriString: String) {
         try {
             stopPreviewTone()
-            val uri = Uri.parse(uriString)
-            val rt = RingtoneManager.getRingtone(this, uri) ?: return
-            previewRingtone = rt
-            rt.play()
+            playRingtoneAsAlarm(Uri.parse(uriString))
         } catch (_: Exception) {
             // best-effort
         }
+    }
+
+    private fun playRingtoneAsAlarm(uri: Uri) {
+        val rt = RingtoneManager.getRingtone(this, uri) ?: return
+        val attrs = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_ALARM)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
+        rt.audioAttributes = attrs
+        boostAlarmVolume()
+        previewRingtone = rt
+        rt.play()
     }
 
     /**
@@ -143,13 +186,17 @@ class MainActivity : FlutterActivity() {
     }
 
     /**
-     * Built-in mala-completion beep — a 100ms DTMF tone on the notification
-     * stream at max volume, generated by ToneGenerator. No audio asset shipped.
+     * Built-in mala-completion beep — a 100ms DTMF tone on the alarm stream
+     * at max volume, generated by ToneGenerator. Routed through STREAM_ALARM
+     * (not STREAM_NOTIFICATION) so it bypasses silent / DND / notifications-
+     * muted modes, with a temporary alarm-volume boost so it stays audible
+     * when the user's alarm volume is low or 0.
      */
     private fun playMalaTone() {
         try {
+            boostAlarmVolume()
             val tg = ToneGenerator(
-                AudioManager.STREAM_NOTIFICATION,
+                AudioManager.STREAM_ALARM,
                 ToneGenerator.MAX_VOLUME,
             )
             tg.startTone(ToneGenerator.TONE_PROP_BEEP, 100)
@@ -158,6 +205,49 @@ class MainActivity : FlutterActivity() {
             }, 150)
         } catch (_: Exception) {
             // best-effort — must never break a counting session
+        }
+    }
+
+    /**
+     * Saves the current STREAM_ALARM volume on first call, then sets it to
+     * max. A later call to [restoreAlarmVolumeNow] (or the auto-restore
+     * runnable scheduled here) puts it back to the saved value. Repeated
+     * boosts during the window extend the restore deadline so we never
+     * restore mid-tone, and only the original pre-boost volume is saved.
+     *
+     * Note: setting STREAM_ALARM volume is allowed during DND without the
+     * notification-policy-access permission — alarms are an explicit DND
+     * exemption stream.
+     */
+    private fun boostAlarmVolume() {
+        try {
+            val am = getSystemService(Context.AUDIO_SERVICE) as? AudioManager ?: return
+            val max = am.getStreamMaxVolume(AudioManager.STREAM_ALARM)
+            if (savedAlarmVolume == null) {
+                savedAlarmVolume = am.getStreamVolume(AudioManager.STREAM_ALARM)
+            }
+            am.setStreamVolume(AudioManager.STREAM_ALARM, max, 0)
+            volumeHandler.removeCallbacks(restoreAlarmVolumeRunnable)
+            volumeHandler.postDelayed(restoreAlarmVolumeRunnable, alarmVolumeRestoreDelayMs)
+        } catch (_: SecurityException) {
+            // Some OEMs surface a SecurityException when DND blocks volume
+            // changes for non-alarm streams; we only touch STREAM_ALARM, but
+            // swallow to stay best-effort.
+        } catch (_: Exception) {
+            // best-effort
+        }
+    }
+
+    private fun restoreAlarmVolumeNow() {
+        volumeHandler.removeCallbacks(restoreAlarmVolumeRunnable)
+        val saved = savedAlarmVolume ?: return
+        savedAlarmVolume = null
+        try {
+            val am = getSystemService(Context.AUDIO_SERVICE) as? AudioManager ?: return
+            am.setStreamVolume(AudioManager.STREAM_ALARM, saved, 0)
+        } catch (_: Exception) {
+            // best-effort — if restore fails the next boost still captures
+            // a fresh saved value because we cleared it above.
         }
     }
 

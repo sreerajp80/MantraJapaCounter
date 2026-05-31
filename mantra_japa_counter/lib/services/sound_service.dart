@@ -14,14 +14,18 @@ class RingtoneOption {
 /// inside a notification channel at creation time, so a single channel can't
 /// adapt to user-picked tones. Playing audio directly side-steps that.
 ///
-/// Three playback paths:
+/// All paths route through `USAGE_ALARM` / `STREAM_ALARM` and ask the native
+/// side to temporarily boost the alarm volume so completion tones remain
+/// audible in silent / DND / very-low-volume modes:
 ///   * `null` URI → native `RingtoneManager` plays the system default
 ///     notification tone (the alias `content://settings/system/notification_sound`
-///     does not resolve through ExoPlayer).
+///     does not resolve through ExoPlayer); native side applies USAGE_ALARM
+///     attrs and the volume boost.
 ///   * `content://...` URI (a device ringtone picked from the system list) →
-///     native `RingtoneManager.getRingtone(uri)`.
+///     same native `RingtoneManager` path with the same boost.
 ///   * Anything else (a real file path picked via `file_picker`) →
-///     `audioplayers` `DeviceFileSource`.
+///     `audioplayers` `DeviceFileSource` configured with alarm usage, with a
+///     paired native boost call so the file is loud enough to hear.
 class SoundService {
   static const _channel =
       MethodChannel('com.sreerajp.mantrajapacounter/haptic');
@@ -34,8 +38,8 @@ class SoundService {
       AudioContext(
         android: const AudioContextAndroid(
           contentType: AndroidContentType.sonification,
-          usageType: AndroidUsageType.notification,
-          audioFocus: AndroidAudioFocus.none,
+          usageType: AndroidUsageType.alarm,
+          audioFocus: AndroidAudioFocus.gainTransient,
         ),
         iOS: AudioContextIOS(),
       ),
@@ -52,6 +56,13 @@ class SoundService {
       } else if (uri.startsWith('content://')) {
         await _channel.invokeMethod<void>('playRingtoneUri', {'uri': uri});
       } else {
+        // Native side boosts STREAM_ALARM volume; the audioplayers context
+        // above routes the file through USAGE_ALARM so the boost applies.
+        // Boost has a built-in auto-restore timer so we don't need to pair
+        // it with an explicit restore for arbitrary-length user files.
+        try {
+          await _channel.invokeMethod<void>('boostAlarmVolume');
+        } catch (_) {}
         await _player.play(DeviceFileSource(uri));
       }
     } catch (_) {
@@ -81,6 +92,9 @@ class SoundService {
   Future<void> dispose() async {
     try {
       await _channel.invokeMethod<void>('stopPreviewTone');
+    } catch (_) {}
+    try {
+      await _channel.invokeMethod<void>('restoreAlarmVolume');
     } catch (_) {}
     await _player.dispose();
   }
