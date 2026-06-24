@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../config/theme.dart';
+import '../l10n/app_localizations.dart';
 import '../models/daily_summary.dart';
 import '../models/japa_session.dart';
 import '../providers/app_providers.dart';
@@ -19,6 +20,7 @@ class HistoryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context);
     final summariesAsync =
         ref.watch(historySummariesProvider(filterCounterId));
     final counterAsync = filterCounterId == null
@@ -35,8 +37,9 @@ class HistoryScreen extends ConsumerWidget {
               child: summariesAsync.when(
                 loading: () =>
                     const Center(child: CircularProgressIndicator()),
-                error: (e, _) => Center(child: Text('Error: $e')),
+                error: (e, _) => Center(child: Text(l.errorWithMessage('$e'))),
                 data: (summaries) => _body(
+                  l: l,
                   summaries: summaries,
                   counterName: counterAsync?.value?.name,
                   counterGoal: counterAsync?.value?.goal ?? 0,
@@ -76,6 +79,7 @@ class HistoryScreen extends ConsumerWidget {
   }
 
   Widget _body({
+    required AppLocalizations l,
     required List<DailySummary> summaries,
     String? counterName,
     int counterGoal = 0,
@@ -93,7 +97,7 @@ class HistoryScreen extends ConsumerWidget {
               const TempleLotusIcon(
                   size: 48, color: TempleColors.vermillion),
               const SizedBox(height: 16),
-              Text('No sessions recorded yet.',
+              Text(l.noSessionsRecorded,
                   style: AppTheme.serif(
                     fontSize: 14,
                     color: TempleColors.ink2,
@@ -125,6 +129,7 @@ class HistoryScreen extends ConsumerWidget {
       slivers: [
         SliverToBoxAdapter(
           child: _Hero(
+            l: l,
             mantraName: counterName,
             lifetimeTotal: lifetimeTotal,
             counterGoal: counterGoal,
@@ -139,7 +144,7 @@ class HistoryScreen extends ConsumerWidget {
               if (i == 0) {
                 return Padding(
                   padding: const EdgeInsets.only(top: 4, bottom: 12),
-                  child: Text('RECENT OFFERINGS',
+                  child: Text(l.recentOfferings,
                       style: AppTheme.eyebrow(
                           fontSize: 10,
                           letterSpacing: 3,
@@ -149,6 +154,7 @@ class HistoryScreen extends ConsumerWidget {
               final s = summaries[i - 1];
               final isLast = i == summaries.length;
               return _DayGroup(
+                l: l,
                 summary: s,
                 dayLabel: 'Day ${summaries.length - (i - 1)}',
                 isToday: s.date == todayLabel,
@@ -177,17 +183,18 @@ class HistoryScreen extends ConsumerWidget {
   }
 
   void _confirmClear(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
         title: Text(filterCounterId == null
-            ? 'Clear all history?'
-            : 'Clear this counter\'s history?'),
-        content: const Text('Sessions will be permanently deleted.'),
+            ? l.clearAllHistoryTitle
+            : l.clearCounterHistoryTitle),
+        content: Text(l.clearHistoryMessage),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel')),
+              child: Text(l.cancel)),
           TextButton(
             onPressed: () async {
               Navigator.pop(context);
@@ -199,8 +206,8 @@ class HistoryScreen extends ConsumerWidget {
               }
               ref.invalidate(historySummariesProvider(filterCounterId));
             },
-            child: const Text('Clear',
-                style: TextStyle(color: TempleColors.vermillionDeep)),
+            child: Text(l.clear,
+                style: const TextStyle(color: TempleColors.vermillionDeep)),
           ),
         ],
       ),
@@ -211,12 +218,14 @@ class HistoryScreen extends ConsumerWidget {
 // ─── Hero ────────────────────────────────────────────────────────────────────
 
 class _Hero extends StatelessWidget {
+  final AppLocalizations l;
   final String? mantraName;
   final int lifetimeTotal;
   final int counterGoal;
   final int dayCount;
 
   const _Hero({
+    required this.l,
     required this.mantraName,
     required this.lifetimeTotal,
     required this.counterGoal,
@@ -255,7 +264,7 @@ class _Hero extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'a record of devotion',
+                  l.recordOfDevotion,
                   style: AppTheme.serif(
                     fontSize: 13,
                     color: TempleColors.ink2,
@@ -264,7 +273,7 @@ class _Hero extends StatelessWidget {
                 ),
               ] else
                 Text(
-                  'All counters',
+                  l.allCounters,
                   style: AppTheme.serif(
                     fontSize: 22,
                     color: TempleColors.ink,
@@ -302,8 +311,9 @@ class _Hero extends StatelessWidget {
               const SizedBox(height: 6),
               Text(
                 pct == null
-                    ? 'CHANTS OFFERED · $dayCount DAY${dayCount == 1 ? '' : 'S'}'
-                    : 'CHANTS OFFERED · ${pct.toStringAsFixed(pct >= 10 ? 0 : 2)}% OF VOW',
+                    ? l.chantsOfferedDays(dayCount)
+                    : l.chantsOfferedPercent(
+                        pct.toStringAsFixed(pct >= 10 ? 0 : 2)),
                 style: AppTheme.eyebrow(
                   fontSize: 10,
                   letterSpacing: 2,
@@ -375,6 +385,7 @@ class _DiyaProgress extends StatelessWidget {
 // ─── Day group ───────────────────────────────────────────────────────────────
 
 class _DayGroup extends ConsumerStatefulWidget {
+  final AppLocalizations l;
   final DailySummary summary;
   final String dayLabel;
   final bool isToday;
@@ -386,6 +397,7 @@ class _DayGroup extends ConsumerStatefulWidget {
   final String? filterCounterId;
 
   const _DayGroup({
+    required this.l,
     required this.summary,
     required this.dayLabel,
     required this.isToday,
@@ -477,7 +489,9 @@ class _DayGroupState extends ConsumerState<_DayGroup> {
                                 children: [
                                   Flexible(
                                     child: Text(
-                                      widget.isToday ? 'Today' : summary.date,
+                                      widget.isToday
+                                          ? widget.l.today
+                                          : summary.date,
                                       style: AppTheme.sans(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
@@ -498,7 +512,7 @@ class _DayGroupState extends ConsumerState<_DayGroup> {
                               ),
                             ),
                             Text(
-                              '$sessionCount session${sessionCount == 1 ? '' : 's'}',
+                              widget.l.sessionCount(sessionCount),
                               style: AppTheme.serif(
                                 fontSize: 12,
                                 color: TempleColors.ink2,
@@ -521,11 +535,13 @@ class _DayGroupState extends ConsumerState<_DayGroup> {
                         Row(
                           children: [
                             _Pair(
-                              label: 'chants',
+                              label: widget.l.labelChants,
                               value: summary.totalCount.toString(),
                             ),
                             const SizedBox(width: 14),
-                            _Pair(label: 'mala', value: dayMalas.toString()),
+                            _Pair(
+                                label: widget.l.labelMala,
+                                value: dayMalas.toString()),
                             const SizedBox(width: 14),
                             if (goalProgress != null)
                               Flexible(
@@ -571,6 +587,7 @@ class _DayGroupState extends ConsumerState<_DayGroup> {
                       children: summary.sessions
                           .map(
                             (s) => _SessionRow(
+                              l: widget.l,
                               session: s,
                               showCounterName: widget.showCounterNames,
                               onDelete: () => _confirmDelete(context, ref, s),
@@ -591,23 +608,22 @@ class _DayGroupState extends ConsumerState<_DayGroup> {
     WidgetRef ref,
     JapaSession session,
   ) async {
+    final l = widget.l;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Delete session?'),
-        content: Text(
-          'This session of ${session.count} chant${session.count == 1 ? '' : 's'} will be permanently removed.',
-        ),
+        title: Text(l.deleteSessionTitle),
+        content: Text(l.deleteSessionMessage(session.count)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: Text(l.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text(
-              'Delete',
-              style: TextStyle(color: TempleColors.vermillionDeep),
+            child: Text(
+              l.delete,
+              style: const TextStyle(color: TempleColors.vermillionDeep),
             ),
           ),
         ],
@@ -634,11 +650,13 @@ class _DayGroupState extends ConsumerState<_DayGroup> {
 // ─── Individual session row ──────────────────────────────────────────────────
 
 class _SessionRow extends StatelessWidget {
+  final AppLocalizations l;
   final JapaSession session;
   final bool showCounterName;
   final VoidCallback onDelete;
 
   const _SessionRow({
+    required this.l,
     required this.session,
     required this.showCounterName,
     required this.onDelete,
@@ -717,7 +735,7 @@ class _SessionRow extends StatelessWidget {
             visualDensity: VisualDensity.compact,
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-            tooltip: 'Delete session',
+            tooltip: l.deleteSessionTooltip,
           ),
         ],
       ),
@@ -725,9 +743,9 @@ class _SessionRow extends StatelessWidget {
   }
 
   String _detailLine() {
-    final parts = <String>['${session.count} chants'];
+    final parts = <String>[l.chantsCount(session.count.toString())];
     if (session.malas > 0) {
-      parts.add('${session.malas} mala');
+      parts.add(l.malaCount(session.malas));
     }
     if (session.duration > 0) {
       parts.add(_formatDuration(session.duration));

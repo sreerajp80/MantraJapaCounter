@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../config/theme.dart';
+import '../l10n/app_localizations.dart';
 import '../widgets/temple_decorations.dart';
 
 /// Brief practice guide. Reached via Settings -> Practice guide -> How it works,
@@ -10,50 +11,37 @@ class HelpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: TempleColors.bg,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _topBar(context),
+            _topBar(context, l),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(18, 8, 18, 28),
-                children: const [
+                children: [
                   _HelpSection(
                     iconData: Icons.touch_app_outlined,
-                    title: 'Counting',
-                    body:
-                        'Tap anywhere on the bead circle to count one chant. '
-                        'Each 108 chants completes one mala — the ring fills as '
-                        'the beads pass.',
+                    title: l.helpCountingTitle,
+                    body: l.helpCountingBody,
                   ),
                   _HelpSection(
                     iconData: Icons.swipe_outlined,
-                    title: 'Undoing a tap',
-                    body:
-                        'Place two fingers on the bead circle and swipe — left '
-                        'or right — to undo your last chant. The session ends '
-                        'gracefully if the count returns to zero.',
+                    title: l.helpUndoTitle,
+                    body: l.helpUndoBody,
                   ),
                   _HelpSection(
                     iconData: Icons.timer_outlined,
-                    title: 'Timer & status',
-                    body:
-                        'The pill at the top shows the time spent in this '
-                        'session. The green marker below the count tells you '
-                        'how many beads remain in the current mala, or that '
-                        'the daily offering is complete.',
+                    title: l.helpTimerTitle,
+                    body: l.helpTimerBody,
                   ),
                   _HelpSection(
                     iconData: Icons.refresh_outlined,
-                    title: 'Resetting',
-                    body:
-                        'Open the menu (the three dots, top right of the '
-                        'counting screen) for Reset session and Reset '
-                        'counter. Reset session discards the current sitting; '
-                        'Reset counter clears all history for that mantra.',
+                    title: l.helpResetTitle,
+                    body: l.helpResetBody,
                   ),
                 ],
               ),
@@ -64,7 +52,7 @@ class HelpScreen extends StatelessWidget {
     );
   }
 
-  Widget _topBar(BuildContext context) {
+  Widget _topBar(BuildContext context, AppLocalizations l) {
     return Container(
       padding: const EdgeInsets.fromLTRB(18, 18, 18, 14),
       decoration: const BoxDecoration(
@@ -83,7 +71,7 @@ class HelpScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'PRACTICE',
+                  l.practiceEyebrow,
                   style: AppTheme.eyebrow(
                     fontSize: 10,
                     letterSpacing: 3,
@@ -92,7 +80,7 @@ class HelpScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'Help',
+                  l.helpTitle,
                   style: AppTheme.serif(
                     fontSize: 28,
                     fontWeight: FontWeight.w500,

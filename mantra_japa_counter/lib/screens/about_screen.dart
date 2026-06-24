@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import '../l10n/app_localizations.dart';
 
 /// App info and credits screen.
 class AboutScreen extends StatelessWidget {
@@ -7,8 +8,9 @@ class AboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('About')),
+      appBar: AppBar(title: Text(l.aboutTitle)),
       body: ListView(
         padding: const EdgeInsets.all(24),
         children: [
@@ -17,10 +19,10 @@ class AboutScreen extends StatelessWidget {
                 size: 72, color: Theme.of(context).colorScheme.primary),
           ),
           const SizedBox(height: 16),
-          const Center(
-            child: Text('Mantra Japa Counter',
-                style:
-                    TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+          Center(
+            child: Text(l.appTitle,
+                style: const TextStyle(
+                    fontSize: 22, fontWeight: FontWeight.bold)),
           ),
           Center(
             child: FutureBuilder<PackageInfo>(
@@ -28,32 +30,40 @@ class AboutScreen extends StatelessWidget {
               builder: (context, snapshot) {
                 final version = snapshot.data?.version ?? '';
                 return Text(
-                  version.isEmpty ? '' : 'Version $version',
+                  version.isEmpty ? '' : l.versionLabel(version),
                   style: const TextStyle(color: Colors.grey),
                 );
               },
             ),
           ),
           const SizedBox(height: 32),
-          _infoRow(Icons.info_outline, 'Purpose',
-              'Track your mantra recitation practice with mala (108-bead round) counting, '
-                  'daily and lifetime goals, and full session history.'),
+          _infoRow(Icons.info_outline, l.aboutPurposeTitle, l.aboutPurposeBody),
           const SizedBox(height: 16),
-          _infoRow(Icons.wifi_off, 'Fully offline',
-              'No network access. All data stored only on your device.'),
+          _infoRow(Icons.wifi_off, l.aboutOfflineTitle, l.aboutOfflineBody),
           const SizedBox(height: 16),
-          _infoRow(Icons.lock_outline, 'Privacy',
-              'No analytics, no tracking, no data shared with anyone.'),
+          _infoRow(Icons.lock_outline, l.aboutPrivacyTitle, l.aboutPrivacyBody),
           const SizedBox(height: 16),
-          _infoRow(Icons.backup, 'Backup',
-              'Use Import / Export to back up your data to a JSON file.'),
+          _infoRow(Icons.backup, l.aboutBackupTitle, l.aboutBackupBody),
           const SizedBox(height: 32),
-          const Center(
-            child: Text('Om Namah Shivaya',
-                style: TextStyle(
+          Center(
+            child: Text(l.aboutMantraQuote,
+                style: const TextStyle(
                     fontSize: 16,
                     fontStyle: FontStyle.italic,
                     color: Colors.grey)),
+          ),
+          const SizedBox(height: 24),
+          Center(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(l.aboutMadeWithPrefix,
+                    style: const TextStyle(fontSize: 14, color: Colors.grey)),
+                const Icon(Icons.favorite, color: Colors.red, size: 16),
+                Text(l.aboutMadeWithSuffix,
+                    style: const TextStyle(fontSize: 14, color: Colors.grey)),
+              ],
+            ),
           ),
         ],
       ),

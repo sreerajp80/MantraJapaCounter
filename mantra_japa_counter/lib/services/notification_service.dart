@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../config/app_constants.dart';
+import '../config/locale_config.dart';
 
 /// Notification service: visible status-bar entry for daily goal completion.
 ///
@@ -48,10 +49,11 @@ class NotificationService {
   }
 
   Future<void> notifyDailyGoalReached() async {
+    final l10n = LocaleConfig.strings();
     await _plugin.show(
       id: 1,
-      title: 'Daily Goal Achieved',
-      body: 'You have reached your daily mantra count goal!',
+      title: l10n.notifDailyGoalTitle,
+      body: l10n.notifDailyGoalBody,
       notificationDetails: const NotificationDetails(
         android: AndroidNotificationDetails(
           AppConstants.dailyGoalChannelId,

@@ -6,8 +6,10 @@ import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'config/flavor_config.dart';
+import 'config/locale_config.dart';
 import 'config/router.dart';
 import 'config/theme.dart';
+import 'l10n/app_localizations.dart';
 import 'providers/app_providers.dart';
 import 'repositories/japa_counter_repository.dart';
 import 'repositories/settings_repository.dart';
@@ -73,6 +75,9 @@ class MantraJapaCounterApp extends ConsumerWidget {
       title: AppFlavorConfig.appName,
       theme: AppTheme.light(),
       themeMode: ThemeMode.light,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localeResolutionCallback: LocaleConfig.localeResolution,
       routerConfig: appRouter,
       debugShowCheckedModeBanner: AppFlavorConfig.isDev,
     );

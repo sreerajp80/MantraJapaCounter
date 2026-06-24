@@ -1,7 +1,7 @@
 name: mantra_japa_counter
 description: Mantra Japa Counter — track your mantra recitation practice.
 publish_to: 'none'
-version: 6.8.12+1
+version: 6.9.0+1
 
 environment:
   sdk: ^3.11.5
@@ -9,6 +9,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # Localization (English + Malayalam)
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
   # State management
   flutter_riverpod: ^3.3.1
@@ -55,6 +60,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
 
   fonts:
     - family: EBGaramond

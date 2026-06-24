@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../config/theme.dart';
+import '../l10n/app_localizations.dart';
 import '../providers/app_providers.dart';
 import '../providers/counters_provider.dart';
 import '../providers/settings_provider.dart';
@@ -15,6 +16,7 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context);
     final settings = ref.watch(settingsNotifierProvider);
     final notifier = ref.read(settingsNotifierProvider.notifier);
 
@@ -24,22 +26,22 @@ class SettingsScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _topBar(context),
+            _topBar(context, l),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(18, 8, 18, 28),
                 children: [
                   _Section(
-                    title: 'Daily goal',
-                    sub: 'When the offering is complete',
+                    title: l.sectionDailyGoal,
+                    sub: l.sectionDailyGoalSub,
                     iconBuilder: (s, c) =>
                         TempleDiyaIcon(size: s, color: c),
                     children: [
                       _SettingsRow(
                         leading: const Icon(Icons.notifications_outlined,
                             size: 15, color: TempleColors.ink2),
-                        title: 'Enable notification',
-                        sub: 'Vibrate and sound on completion',
+                        title: l.enableNotification,
+                        sub: l.enableNotificationSub,
                         toggle: settings.dailyGoalNotificationsEnabled,
                         onToggle:
                             notifier.setDailyGoalNotificationsEnabled,
@@ -47,25 +49,25 @@ class SettingsScreen extends ConsumerWidget {
                       _SettingsRow(
                         leading: const Icon(Icons.vibration,
                             size: 15, color: TempleColors.ink2),
-                        title: 'Vibration',
-                        sub: 'A gentle hum on completion',
+                        title: l.vibration,
+                        sub: l.vibrationSub,
                         toggle: settings.vibrationEnabled,
                         onToggle: notifier.setVibrationEnabled,
                       ),
                       _SettingsRow(
                         leading: const Icon(Icons.volume_up_outlined,
                             size: 15, color: TempleColors.ink2),
-                        title: 'Notification sound',
-                        sub: _notificationSoundSubtitle(settings),
+                        title: l.notificationSound,
+                        sub: _notificationSoundSubtitle(l, settings),
                         onTap: () => _showNotificationSoundPicker(
                             context, ref, settings, notifier),
                       ),
                       _SettingsRow(
                         leading: const Icon(Icons.play_arrow_outlined,
                             size: 15, color: TempleColors.ink2),
-                        title: 'Preview tone',
-                        sub: 'Hear what plays on completion',
-                        right: 'Play',
+                        title: l.previewTone,
+                        sub: l.previewToneSub,
+                        right: l.play,
                         onTap: () => ref
                             .read(soundServiceProvider)
                             .playTone(settings.notificationSoundUri),
@@ -73,24 +75,24 @@ class SettingsScreen extends ConsumerWidget {
                     ],
                   ),
                   _Section(
-                    title: 'Mala completion',
-                    sub: 'The closing of every 108 beads',
+                    title: l.sectionMala,
+                    sub: l.sectionMalaSub,
                     iconBuilder: (s, c) =>
                         TempleLotusIcon(size: s, color: c),
                     children: [
                       _SettingsRow(
                         leading: const Icon(Icons.access_time,
                             size: 15, color: TempleColors.ink2),
-                        title: 'Enable mala sound',
-                        sub: 'A soft tick on each full mala',
+                        title: l.enableMalaSound,
+                        sub: l.enableMalaSoundSub,
                         toggle: settings.malaNotificationsEnabled,
                         onToggle: notifier.setMalaNotificationsEnabled,
                       ),
                     ],
                   ),
                   _Section(
-                    title: 'Stillness',
-                    sub: 'For longer sessions',
+                    title: l.sectionStillness,
+                    sub: l.sectionStillnessSub,
                     iconBuilder: (s, c) => Icon(
                       Icons.brightness_5_outlined,
                       size: s,
@@ -108,8 +110,8 @@ class SettingsScreen extends ConsumerWidget {
                     ],
                   ),
                   _Section(
-                    title: 'Practice guide',
-                    sub: 'Gestures and rhythms of use',
+                    title: l.sectionPracticeGuide,
+                    sub: l.sectionPracticeGuideSub,
                     iconBuilder: (s, c) => Icon(
                       Icons.menu_book_outlined,
                       size: s,
@@ -119,8 +121,8 @@ class SettingsScreen extends ConsumerWidget {
                       _SettingsRow(
                         leading: const Icon(Icons.swipe_outlined,
                             size: 15, color: TempleColors.ink2),
-                        title: 'How it works',
-                        sub: 'Counting, undo, and the menu — explained',
+                        title: l.howItWorks,
+                        sub: l.howItWorksSub,
                         onTap: () => context.push('/help'),
                       ),
                     ],
@@ -140,7 +142,7 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _topBar(BuildContext context) {
+  Widget _topBar(BuildContext context, AppLocalizations l) {
     return Container(
       padding: const EdgeInsets.fromLTRB(18, 18, 18, 14),
       decoration: const BoxDecoration(
@@ -159,7 +161,7 @@ class SettingsScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'PRACTICE',
+                  l.practiceEyebrow,
                   style: AppTheme.eyebrow(
                     fontSize: 10,
                     letterSpacing: 3,
@@ -168,7 +170,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'Settings',
+                  l.settingsTitle,
                   style: AppTheme.serif(
                     fontSize: 28,
                     fontWeight: FontWeight.w500,
@@ -185,15 +187,15 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  String _notificationSoundSubtitle(AppSettings s) {
+  String _notificationSoundSubtitle(AppLocalizations l, AppSettings s) {
     if (s.notificationSoundUri == null) {
-      return 'System default — tap to change';
+      return l.soundSystemDefaultTapToChange;
     }
     final name = s.notificationSoundName;
     if (name != null && name.isNotEmpty) {
-      return '$name — tap to change';
+      return l.soundNamedTapToChange(name);
     }
-    return 'Custom audio — tap to change';
+    return l.soundCustomTapToChange;
   }
 
   Future<void> _showNotificationSoundPicker(
@@ -202,6 +204,7 @@ class SettingsScreen extends ConsumerWidget {
     AppSettings settings,
     SettingsNotifier notifier,
   ) async {
+    final l = AppLocalizations.of(context);
     final soundService = ref.read(soundServiceProvider);
     final ringtones = await soundService.listNotificationRingtones();
     if (!context.mounted) return;
@@ -225,7 +228,7 @@ class SettingsScreen extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
                   child: Text(
-                    'Notification sound',
+                    l.notificationSound,
                     style: AppTheme.serif(
                       fontSize: 20,
                       color: TempleColors.ink,
@@ -238,7 +241,7 @@ class SettingsScreen extends ConsumerWidget {
                     padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
                     children: [
                       _RingtoneTile(
-                        title: 'System default',
+                        title: l.soundSystemDefault,
                         selected: selectedUri == null,
                         onTap: () async {
                           await notifier.setNotificationSound(null, null);
@@ -264,7 +267,7 @@ class SettingsScreen extends ConsumerWidget {
                       const Divider(
                           height: 16, color: TempleColors.line),
                       _RingtoneTile(
-                        title: 'Browse audio file…',
+                        title: l.browseAudioFile,
                         leading: const Icon(
                           Icons.folder_open_outlined,
                           size: 20,
@@ -296,16 +299,16 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   void _confirmClearAll(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Clear all data?'),
-        content: const Text(
-            'This will permanently delete all counters and all session history. This cannot be undone.'),
+        title: Text(l.clearAllDataTitle),
+        content: Text(l.clearAllDataMessage),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel')),
+              child: Text(l.cancel)),
           TextButton(
             onPressed: () async {
               Navigator.pop(context);
@@ -315,12 +318,12 @@ class SettingsScreen extends ConsumerWidget {
               ref.invalidate(countersNotifierProvider);
               if (context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('All data cleared')),
+                  SnackBar(content: Text(l.allDataCleared)),
                 );
               }
             },
-            child: const Text('Clear all',
-                style: TextStyle(color: TempleColors.vermillionDeep)),
+            child: Text(l.clearAllButton,
+                style: const TextStyle(color: TempleColors.vermillionDeep)),
           ),
         ],
       ),
@@ -572,7 +575,7 @@ class _BrightnessRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Brightness level',
+                      AppLocalizations.of(context).brightnessLevel,
                       style: AppTheme.sans(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -581,7 +584,9 @@ class _BrightnessRow extends StatelessWidget {
                     ),
                     const SizedBox(height: 3),
                     Text(
-                      usingSystem ? 'Following system' : 'Override active',
+                      usingSystem
+                          ? AppLocalizations.of(context).followingSystem
+                          : AppLocalizations.of(context).overrideActive,
                       style: AppTheme.sans(
                         fontSize: 13,
                         color: TempleColors.ink2,
@@ -623,7 +628,7 @@ class _BrightnessRow extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('still',
+                Text(AppLocalizations.of(context).brightnessStill,
                     style: AppTheme.serif(
                       fontSize: 10,
                       color: TempleColors.ink3,
@@ -638,7 +643,7 @@ class _BrightnessRow extends StatelessWidget {
                     minimumSize: Size.zero,
                   ),
                   child: Text(
-                    'use system',
+                    AppLocalizations.of(context).brightnessUseSystem,
                     style: AppTheme.sans(
                       fontSize: 11,
                       color: TempleColors.vermillion,
@@ -646,7 +651,7 @@ class _BrightnessRow extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text('full',
+                Text(AppLocalizations.of(context).brightnessFull,
                     style: AppTheme.serif(
                       fontSize: 10,
                       color: TempleColors.ink3,
@@ -680,9 +685,7 @@ class _GuidanceCard extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              'The daily-goal sound plays when your goal is reached. '
-              'The mala sound rings softly after every 108 chants — except '
-              'when that count also completes the daily offering.',
+              AppLocalizations.of(context).settingsGuidanceBody,
               style: AppTheme.sans(
                 fontSize: 13.5,
                 color: TempleColors.ink,
@@ -724,7 +727,7 @@ class _DangerCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Clear all data',
+                      AppLocalizations.of(context).clearAllData,
                       style: AppTheme.sans(
                         fontSize: 15,
                         color: TempleColors.vermillionDeep,
@@ -733,7 +736,7 @@ class _DangerCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 3),
                     Text(
-                      'Delete all counters and session history permanently',
+                      AppLocalizations.of(context).clearAllDataSub,
                       style: AppTheme.sans(
                         fontSize: 13,
                         color: TempleColors.ink2,

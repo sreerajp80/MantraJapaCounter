@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart' show SharePlus, ShareParams, XFile;
+import '../config/locale_config.dart';
 import '../models/export_data.dart';
 import '../repositories/japa_counter_repository.dart';
 
@@ -39,7 +40,7 @@ class ExportService {
     await SharePlus.instance.share(
       ShareParams(
         files: [XFile(file.path, mimeType: 'application/json')],
-        subject: 'Mantra Japa Counter Backup',
+        subject: LocaleConfig.strings().backupShareSubject,
       ),
     );
   }

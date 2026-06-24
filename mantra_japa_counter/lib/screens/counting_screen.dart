@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../config/theme.dart';
+import '../l10n/app_localizations.dart';
 import '../providers/counting_provider.dart';
 import '../providers/app_providers.dart';
 import '../providers/settings_provider.dart';
@@ -216,17 +217,31 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
     required int durationMs,
     required bool isPaused,
   }) {
+    final l = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 18, 18, 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TempleIconButton(
-            onTap: () => _saveAndExit(context),
-            child: const Icon(
-              Icons.arrow_back,
-              size: 18,
-              color: TempleColors.ink,
+          Material(
+            color: TempleColors.card,
+            shape: const StadiumBorder(
+              side: BorderSide(color: TempleColors.line),
+            ),
+            child: InkWell(
+              customBorder: const StadiumBorder(),
+              onTap: () => _saveAndExit(context),
+              child: const SizedBox(
+                width: 64,
+                height: 44,
+                child: Center(
+                  child: Icon(
+                    Icons.arrow_back,
+                    size: 22,
+                    color: TempleColors.ink,
+                  ),
+                ),
+              ),
             ),
           ),
           Container(
@@ -255,7 +270,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
                 const SizedBox(width: 6),
                 Text(
                   isPaused
-                      ? 'PAUSED · ${_formatTime(durationMs)}'
+                      ? l.pausedWithTime(_formatTime(durationMs))
                       : _formatTime(durationMs),
                   style: AppTheme.sans(
                     fontSize: 10,
@@ -268,7 +283,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
             ),
           ),
           PopupMenuButton<String>(
-            tooltip: 'More',
+            tooltip: l.more,
             onSelected: (v) => _onMenu(context, v),
             offset: const Offset(0, 44),
             child: Container(
@@ -285,16 +300,16 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
                 child: Icon(Icons.more_vert, size: 18, color: TempleColors.ink),
               ),
             ),
-            itemBuilder: (_) => const [
-              PopupMenuItem(value: 'history', child: Text('History')),
-              PopupMenuItem(value: 'about', child: Text('About')),
+            itemBuilder: (_) => [
+              PopupMenuItem(value: 'history', child: Text(l.history)),
+              PopupMenuItem(value: 'about', child: Text(l.menuAbout)),
               PopupMenuItem(
                 value: 'reset_session',
-                child: Text('Reset session'),
+                child: Text(l.resetSession),
               ),
               PopupMenuItem(
                 value: 'reset_counter',
-                child: Text('Reset counter'),
+                child: Text(l.resetCounter),
               ),
             ],
           ),
@@ -341,6 +356,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
     required bool isLifetimeGoalReached,
     required bool isDailyGoalReached,
   }) {
+    final l = AppLocalizations.of(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -356,7 +372,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
         ),
         const SizedBox(height: 6),
         Text(
-          'of one hundred eight',
+          l.ofOneHundredEight,
           style: AppTheme.serif(
             fontSize: 14,
             color: TempleColors.ink,
@@ -380,10 +396,10 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
             const SizedBox(width: 6),
             Text(
               isLifetimeGoalReached
-                  ? 'LIFETIME GOAL'
+                  ? l.lifetimeGoalCaps
                   : isDailyGoalReached
-                  ? 'DAILY GOAL'
-                  : '$beadsRemaining BEADS REMAIN',
+                  ? l.dailyGoalCaps
+                  : l.beadsRemainCaps(beadsRemaining),
               style: AppTheme.sans(
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
@@ -398,7 +414,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
         if (sessionMalas > 0) ...[
           const SizedBox(height: 6),
           Text(
-            '+$sessionMalas mala this session',
+            l.malaThisSession(sessionMalas),
             style: AppTheme.serif(
               fontSize: 11,
               color: TempleColors.sandal,
@@ -446,12 +462,13 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
     required int dailyGoal,
     required bool isDailyGoalReached,
   }) {
+    final l = AppLocalizations.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 0, 18, 16),
       child: Column(
         children: [
           _FooterStat(
-            label: 'Lifetime',
+            label: l.footerLifetime,
             chants: counterGoal > 0
                 ? '$lifetimeTotal/$counterGoal'
                 : '$lifetimeTotal',
@@ -461,7 +478,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
           ),
           const SizedBox(height: 6),
           _FooterStat(
-            label: 'Daily',
+            label: l.footerDaily,
             chants: dailyGoal > 0
                 ? '$todayTotal/$dailyGoal'
                 : '$todayTotal',
@@ -472,7 +489,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
           ),
           const SizedBox(height: 6),
           _FooterStat(
-            label: 'Session',
+            label: l.footerSession,
             chants: '$sessionTotal',
             malas: '${malaForCount(sessionTotal)}',
           ),
@@ -503,17 +520,16 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
   }
 
   void _confirmResetSession(BuildContext context) {
+    final l = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Reset session?'),
-        content: const Text(
-          'Current session will be discarded and the counter reset to 0.',
-        ),
+        title: Text(l.resetSessionTitle),
+        content: Text(l.resetSessionMessage),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(l.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -522,9 +538,9 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
                   .read(countingNotifierProvider(widget.counterId).notifier)
                   .resetSession();
             },
-            child: const Text(
-              'Reset',
-              style: TextStyle(color: TempleColors.vermillionDeep),
+            child: Text(
+              l.reset,
+              style: const TextStyle(color: TempleColors.vermillionDeep),
             ),
           ),
         ],
@@ -533,17 +549,16 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
   }
 
   void _confirmResetCounter(BuildContext context) {
+    final l = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Reset counter?'),
-        content: const Text(
-          'All history for this counter will be deleted. This cannot be undone.',
-        ),
+        title: Text(l.resetCounterTitle),
+        content: Text(l.resetCounterMessage),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(l.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -552,9 +567,9 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
                   .read(countingNotifierProvider(widget.counterId).notifier)
                   .resetCounter();
             },
-            child: const Text(
-              'Reset all',
-              style: TextStyle(color: TempleColors.vermillionDeep),
+            child: Text(
+              l.resetAll,
+              style: const TextStyle(color: TempleColors.vermillionDeep),
             ),
           ),
         ],

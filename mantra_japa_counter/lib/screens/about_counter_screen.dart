@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../l10n/app_localizations.dart';
 import '../providers/app_providers.dart';
 import '../providers/counter_stats_provider.dart';
 import '../models/counter.dart';
@@ -15,6 +16,7 @@ class AboutCounterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context);
     final counterAsync = ref.watch(_counterDetailProvider(counterId));
     final statsAsync = ref.watch(counterStatsProvider(counterId));
     final averageAsync = ref.watch(
@@ -28,7 +30,7 @@ class AboutCounterScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(counterAsync.value?.name ?? 'Counter Details'),
+        title: Text(counterAsync.value?.name ?? l.counterDetailsTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.history),
@@ -38,15 +40,16 @@ class AboutCounterScreen extends ConsumerWidget {
       ),
       body: counterAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(child: Text(l.errorWithMessage('$e'))),
         data: (counter) {
           if (counter == null) {
-            return const Center(child: Text('Counter not found'));
+            return Center(child: Text(l.counterNotFound));
           }
           return _CounterDetail(
             counter: counter,
             stats: statsAsync.value,
             averageDaily: averageAsync.value ?? 0.0,
+            l: l,
           );
         },
       ),
@@ -58,11 +61,13 @@ class _CounterDetail extends StatelessWidget {
   final Counter counter;
   final CounterStats? stats;
   final double averageDaily;
+  final AppLocalizations l;
 
   const _CounterDetail({
     required this.counter,
     required this.stats,
     required this.averageDaily,
+    required this.l,
   });
 
   @override
@@ -100,8 +105,8 @@ class _CounterDetail extends StatelessWidget {
                       children: [
                         Text(
                           counter.status == CounterStatus.disabledSuccess
-                              ? 'Completed successfully'
-                              : 'Disabled',
+                              ? l.completedSuccessfully
+                              : l.statusDisabled,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         if (counter.disabledReason != null)
@@ -123,20 +128,20 @@ class _CounterDetail extends StatelessWidget {
             CircularProgressWidget(
               progress: counter.lifetimeProgress(total),
               centerText: '$total',
-              bottomLabel: 'Total',
+              bottomLabel: l.labelTotal,
               color: Colors.blue,
             ),
             CircularProgressWidget(
               progress: counter.dailyProgress(today),
               centerText: '$today',
-              bottomLabel: 'Today',
+              bottomLabel: l.labelTodayCap,
               color: Colors.orange,
             ),
             CircularProgressWidget(
               progress: (totalMalas / (goalMalas > 0 ? goalMalas : 1))
                   .clamp(0.0, 1.0),
               centerText: '$totalMalas',
-              bottomLabel: 'Malas',
+              bottomLabel: l.labelMalas,
               color: Colors.purple,
             ),
           ],
@@ -145,19 +150,19 @@ class _CounterDetail extends StatelessWidget {
         const SizedBox(height: 24),
 
         // ── Details table ────────────────────────────────────────────────────
-        _infoRow('Name', counter.name),
-        _infoRow('Status', _statusText(counter.status)),
-        _infoRow('Increment step', '+${counter.incrementStep}'),
-        _infoRow('Initial count', '${counter.initialCount}'),
-        _infoRow('Lifetime goal',
-            counter.goal > 0 ? '${counter.goal}' : 'Not set'),
-        _infoRow('Daily goal',
-            counter.dailyGoal > 0 ? '${counter.dailyGoal}' : 'Not set'),
-        _infoRow('Started', _formatDate(counter.startDate)),
-        _infoRow('Created', _formatDate(counter.createdAt)),
-        _infoRow('Avg daily count', averageDaily.toStringAsFixed(1)),
+        _infoRow(l.infoName, counter.name),
+        _infoRow(l.infoStatus, _statusText(counter.status)),
+        _infoRow(l.infoIncrementStep, '+${counter.incrementStep}'),
+        _infoRow(l.infoInitialCount, '${counter.initialCount}'),
+        _infoRow(l.infoLifetimeGoal,
+            counter.goal > 0 ? '${counter.goal}' : l.notSet),
+        _infoRow(l.infoDailyGoal,
+            counter.dailyGoal > 0 ? '${counter.dailyGoal}' : l.notSet),
+        _infoRow(l.infoStarted, _formatDate(counter.startDate)),
+        _infoRow(l.infoCreated, _formatDate(counter.createdAt)),
+        _infoRow(l.infoAvgDaily, averageDaily.toStringAsFixed(1)),
         if (counter.disabledAt != null)
-          _infoRow('Disabled', _formatDate(counter.disabledAt!)),
+          _infoRow(l.infoDisabled, _formatDate(counter.disabledAt!)),
       ],
     );
   }
@@ -191,11 +196,11 @@ class _CounterDetail extends StatelessWidget {
   String _statusText(CounterStatus s) {
     switch (s) {
       case CounterStatus.active:
-        return 'Active';
+        return l.statusActive;
       case CounterStatus.disabledSuccess:
-        return 'Completed';
+        return l.statusCompleted;
       case CounterStatus.disabledFailure:
-        return 'Disabled';
+        return l.statusDisabled;
     }
   }
 

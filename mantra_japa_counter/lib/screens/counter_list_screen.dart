@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../config/theme.dart';
+import '../l10n/app_localizations.dart';
 import '../models/counter.dart';
 import '../models/counter_status.dart';
 import '../providers/counters_provider.dart';
@@ -27,7 +28,8 @@ class CounterListScreen extends ConsumerWidget {
       body: SafeArea(
         child: countersAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (e, _) => Center(child: Text('Error: $e')),
+          error: (e, _) =>
+              Center(child: Text(AppLocalizations.of(context).errorWithMessage('$e'))),
           data: (counters) => CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
@@ -132,7 +134,7 @@ class _Header extends StatelessWidget {
           Transform.translate(
             offset: const Offset(0, -4),
             child: Text(
-              'Mantra Counters',
+              AppLocalizations.of(context).mantraCounters,
               style: AppTheme.serif(
                 fontSize: 32,
                 fontWeight: FontWeight.w500,
@@ -160,9 +162,10 @@ class _HeaderMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     return PopupMenuButton<String>(
       onSelected: onMenu,
-      tooltip: 'More',
+      tooltip: l.more,
       offset: const Offset(0, 44),
       child: Container(
         width: 38,
@@ -176,10 +179,10 @@ class _HeaderMenu extends StatelessWidget {
           child: Icon(Icons.more_vert, size: 18, color: TempleColors.ink),
         ),
       ),
-      itemBuilder: (_) => const [
-        PopupMenuItem(value: 'export', child: Text('Import / Export')),
-        PopupMenuItem(value: 'settings', child: Text('Settings')),
-        PopupMenuItem(value: 'about', child: Text('About')),
+      itemBuilder: (_) => [
+        PopupMenuItem(value: 'export', child: Text(l.menuImportExport)),
+        PopupMenuItem(value: 'settings', child: Text(l.menuSettings)),
+        PopupMenuItem(value: 'about', child: Text(l.menuAbout)),
       ],
     );
   }
@@ -191,6 +194,7 @@ class _TodaySummaryPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
       decoration: BoxDecoration(
@@ -203,19 +207,19 @@ class _TodaySummaryPill extends StatelessWidget {
         children: [
           _PillStat(
             value: today.chants.toString(),
-            label: 'chants',
+            label: l.todayChants,
             color: TempleColors.vermillion,
           ),
           const _PillDivider(),
           _PillStat(
             value: today.malas.toString(),
-            label: 'malas',
+            label: l.todayMalas,
             color: TempleColors.sandal,
           ),
           const _PillDivider(),
           _PillStat(
             value: today.counters.toString(),
-            label: 'active',
+            label: l.todayActive,
             color: TempleColors.tulsi,
           ),
         ],
@@ -281,12 +285,12 @@ class _EmptyState extends StatelessWidget {
           const TempleLotusIcon(size: 64, color: TempleColors.vermillion),
           const SizedBox(height: 16),
           Text(
-            'No counters yet',
+            AppLocalizations.of(context).noCountersYet,
             style: AppTheme.serif(fontSize: 22, color: TempleColors.ink),
           ),
           const SizedBox(height: 8),
           Text(
-            'Tap the + above to begin your first offering',
+            AppLocalizations.of(context).noCountersSubtitle,
             style: AppTheme.serif(
               fontSize: 13,
               color: TempleColors.ink3,
@@ -351,6 +355,7 @@ class _CounterOptionsSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -368,7 +373,7 @@ class _CounterOptionsSheet extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.info_outline,
                 color: TempleColors.vermillion),
-            title: const Text('About counter'),
+            title: Text(l.aboutCounter),
             onTap: () {
               Navigator.pop(context);
               context.push('/counter/${counter.id}');
@@ -377,7 +382,7 @@ class _CounterOptionsSheet extends StatelessWidget {
           ListTile(
             leading:
                 const Icon(Icons.history, color: TempleColors.vermillion),
-            title: const Text('History'),
+            title: Text(l.history),
             onTap: () {
               Navigator.pop(context);
               context.push('/history?counterId=${counter.id}');
@@ -386,7 +391,7 @@ class _CounterOptionsSheet extends StatelessWidget {
           ListTile(
             leading:
                 const Icon(Icons.edit, color: TempleColors.vermillion),
-            title: const Text('Edit'),
+            title: Text(l.edit),
             onTap: () {
               Navigator.pop(context);
               showDialog(
@@ -413,7 +418,7 @@ class _CounterOptionsSheet extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.check_circle,
                   color: TempleColors.tulsi),
-              title: const Text('Disable (success)'),
+              title: Text(l.disableSuccess),
               onTap: () {
                 Navigator.pop(context);
                 _confirmDisable(context, CounterStatus.disabledSuccess);
@@ -421,7 +426,7 @@ class _CounterOptionsSheet extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.cancel, color: TempleColors.sandal),
-              title: const Text('Disable (not completed)'),
+              title: Text(l.disableFailure),
               onTap: () {
                 Navigator.pop(context);
                 _confirmDisable(context, CounterStatus.disabledFailure);
@@ -431,8 +436,8 @@ class _CounterOptionsSheet extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.delete,
                 color: TempleColors.vermillionDeep),
-            title: const Text('Delete',
-                style: TextStyle(color: TempleColors.vermillionDeep)),
+            title: Text(l.delete,
+                style: const TextStyle(color: TempleColors.vermillionDeep)),
             onTap: () {
               Navigator.pop(context);
               _confirmDelete(context);
@@ -445,23 +450,23 @@ class _CounterOptionsSheet extends StatelessWidget {
   }
 
   void _confirmDelete(BuildContext context) {
+    final l = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Delete counter?'),
-        content: Text(
-            'Delete "${counter.name}" and all its history? This cannot be undone.'),
+        title: Text(l.deleteCounterTitle),
+        content: Text(l.deleteCounterMessage(counter.name)),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel')),
+              child: Text(l.cancel)),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               ref.read(countersNotifierProvider.notifier).deleteCounter(counter.id);
             },
-            child: const Text('Delete',
-                style: TextStyle(color: TempleColors.vermillionDeep)),
+            child: Text(l.delete,
+                style: const TextStyle(color: TempleColors.vermillionDeep)),
           ),
         ],
       ),
@@ -469,24 +474,25 @@ class _CounterOptionsSheet extends StatelessWidget {
   }
 
   void _confirmDisable(BuildContext context, CounterStatus status) {
+    final l = AppLocalizations.of(context);
     final reasonController = TextEditingController();
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
         title: Text(status == CounterStatus.disabledSuccess
-            ? 'Disable as completed?'
-            : 'Disable counter?'),
+            ? l.disableAsCompletedTitle
+            : l.disableCounterTitle),
         content: TextField(
           controller: reasonController,
-          decoration: const InputDecoration(
-            labelText: 'Reason (optional)',
-            hintText: 'e.g. Completed 1 lakh',
+          decoration: InputDecoration(
+            labelText: l.reasonOptional,
+            hintText: l.reasonHint,
           ),
         ),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel')),
+              child: Text(l.cancel)),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
@@ -498,7 +504,7 @@ class _CounterOptionsSheet extends StatelessWidget {
                         : reasonController.text.trim(),
                   );
             },
-            child: const Text('Confirm'),
+            child: Text(l.confirm),
           ),
         ],
       ),
@@ -554,29 +560,30 @@ class _CounterDialogState extends State<_CounterDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final isEdit = widget.existing != null;
     return AlertDialog(
-      title: Text(isEdit ? 'Edit Counter' : 'New Counter'),
+      title: Text(isEdit ? l.editCounterTitle : l.newCounterTitle),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: _name,
-              decoration: const InputDecoration(labelText: 'Counter name *'),
+              decoration: InputDecoration(labelText: l.counterNameLabel),
               textCapitalization: TextCapitalization.words,
             ),
             const SizedBox(height: 8),
             TextField(
               controller: _init,
               decoration:
-                  const InputDecoration(labelText: 'Initial count (default 0)'),
+                  InputDecoration(labelText: l.initialCountLabel),
               keyboardType: TextInputType.number,
             ),
             TextField(
               controller: _step,
               decoration: InputDecoration(
-                labelText: 'Increment step (default 1)',
+                labelText: l.incrementStepLabel,
                 errorText: _stepError,
               ),
               keyboardType: TextInputType.number,
@@ -589,13 +596,13 @@ class _CounterDialogState extends State<_CounterDialog> {
             TextField(
               controller: _goal,
               decoration:
-                  const InputDecoration(labelText: 'Lifetime goal (0 = none)'),
+                  InputDecoration(labelText: l.lifetimeGoalFieldLabel),
               keyboardType: TextInputType.number,
             ),
             TextField(
               controller: _daily,
               decoration: InputDecoration(
-                labelText: 'Daily goal (0 = none)',
+                labelText: l.dailyGoalFieldLabel,
                 errorText: _dailyError,
               ),
               keyboardType: TextInputType.number,
@@ -611,7 +618,7 @@ class _CounterDialogState extends State<_CounterDialog> {
             const SizedBox(height: 12),
             Row(
               children: [
-                const Text('Start date: '),
+                Text(l.startDateLabel),
                 TextButton(
                   onPressed: () async {
                     final picked = await showDatePicker(
@@ -638,7 +645,7 @@ class _CounterDialogState extends State<_CounterDialog> {
       actions: [
         TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel')),
+            child: Text(l.cancel)),
         TextButton(
           onPressed: () {
             final name = _name.text.trim();
@@ -648,13 +655,13 @@ class _CounterDialogState extends State<_CounterDialog> {
             final step = int.tryParse(_step.text) ?? 1;
             if (goal > 0 && daily > goal) {
               setState(() {
-                _dailyError = 'Daily goal cannot exceed lifetime goal';
+                _dailyError = l.dailyExceedsLifetime;
               });
               return;
             }
             if (daily > 0 && step >= daily) {
               setState(() {
-                _stepError = 'Increment step must be less than daily goal';
+                _stepError = l.stepExceedsDaily;
               });
               return;
             }
@@ -668,7 +675,7 @@ class _CounterDialogState extends State<_CounterDialog> {
               daily,
             );
           },
-          child: Text(isEdit ? 'Save' : 'Create'),
+          child: Text(isEdit ? l.save : l.create),
         ),
       ],
     );
@@ -699,8 +706,9 @@ class _ImportExportDialogState extends State<_ImportExportDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     return AlertDialog(
-      title: const Text('Import / Export'),
+      title: Text(l.menuImportExport),
       content: _busy
           ? const SizedBox(
               height: 60,
@@ -716,9 +724,7 @@ class _ImportExportDialogState extends State<_ImportExportDialog> {
                         style:
                             const TextStyle(color: TempleColors.vermillionDeep)),
                   ),
-                const Text(
-                    'Export backs up all counters and sessions to a JSON file.\n\n'
-                    'Import replaces ALL current data with the selected file.'),
+                Text(l.importExportBody),
               ],
             ),
       actions: _busy
@@ -726,20 +732,21 @@ class _ImportExportDialogState extends State<_ImportExportDialog> {
           : [
               TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel')),
+                  child: Text(l.cancel)),
               TextButton(
                 onPressed: _doExport,
-                child: const Text('Export'),
+                child: Text(l.export),
               ),
               TextButton(
                 onPressed: _doImport,
-                child: const Text('Import'),
+                child: Text(l.import),
               ),
             ],
     );
   }
 
   Future<void> _doExport() async {
+    final l = AppLocalizations.of(context);
     setState(() {
       _busy = true;
       _error = null;
@@ -750,12 +757,13 @@ class _ImportExportDialogState extends State<_ImportExportDialog> {
     } catch (e) {
       setState(() {
         _busy = false;
-        _error = 'Export failed: $e';
+        _error = l.exportFailed('$e');
       });
     }
   }
 
   Future<void> _doImport() async {
+    final l = AppLocalizations.of(context);
     final result = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['json'],
@@ -774,13 +782,13 @@ class _ImportExportDialogState extends State<_ImportExportDialog> {
       if (mounted) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Import successful')),
+          SnackBar(content: Text(l.importSuccessful)),
         );
       }
     } catch (e) {
       setState(() {
         _busy = false;
-        _error = 'Import failed: $e';
+        _error = l.importFailed('$e');
       });
     }
   }

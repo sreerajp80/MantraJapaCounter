@@ -50,6 +50,11 @@ class AppTheme {
   static const String _sansFamily = 'Inter';
   static const String _malFamily = 'NotoSansMalayalam';
 
+  /// Fallback chain so localized UI text (e.g. Malayalam) renders with the
+  /// bundled Noto Sans Malayalam glyphs when the primary family (Inter /
+  /// EB Garamond) has none. Used by every base text style below.
+  static const List<String> _uiFallback = [_malFamily];
+
   /// EB Garamond (italic-friendly) — used for numerals and quiet captions.
   static TextStyle serif({
     double? fontSize,
@@ -61,6 +66,7 @@ class AppTheme {
   }) =>
       TextStyle(
         fontFamily: _serifFamily,
+        fontFamilyFallback: _uiFallback,
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: color,
@@ -79,6 +85,7 @@ class AppTheme {
   }) =>
       TextStyle(
         fontFamily: _sansFamily,
+        fontFamilyFallback: _uiFallback,
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: color,
@@ -112,6 +119,7 @@ class AppTheme {
   }) =>
       TextStyle(
         fontFamily: _sansFamily,
+        fontFamilyFallback: _uiFallback,
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: color,
@@ -151,6 +159,7 @@ class AppTheme {
 
     final textTheme = ThemeData.light().textTheme.apply(
           fontFamily: _sansFamily,
+          fontFamilyFallback: _uiFallback,
           bodyColor: TempleColors.ink,
           displayColor: TempleColors.ink,
         );

@@ -1,0 +1,260 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Mantra Japa Counter",
+  "@appTitle": {},
+
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "save": "Save",
+  "create": "Create",
+  "confirm": "Confirm",
+  "clear": "Clear",
+  "reset": "Reset",
+  "resetAll": "Reset all",
+  "export": "Export",
+  "import": "Import",
+  "play": "Play",
+  "more": "More",
+  "notSet": "Not set",
+  "errorWithMessage": "Error: {message}",
+  "@errorWithMessage": {
+    "placeholders": { "message": { "type": "String" } }
+  },
+
+  "mantraCounters": "Mantra Counters",
+  "menuImportExport": "Import / Export",
+  "menuSettings": "Settings",
+  "menuAbout": "About",
+  "todayChants": "chants",
+  "todayMalas": "malas",
+  "todayActive": "active",
+  "noCountersYet": "No counters yet",
+  "noCountersSubtitle": "Tap the + above to begin your first offering",
+  "aboutCounter": "About counter",
+  "history": "History",
+  "edit": "Edit",
+  "disableSuccess": "Disable (success)",
+  "disableFailure": "Disable (not completed)",
+  "deleteCounterTitle": "Delete counter?",
+  "deleteCounterMessage": "Delete \"{name}\" and all its history? This cannot be undone.",
+  "@deleteCounterMessage": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "disableAsCompletedTitle": "Disable as completed?",
+  "disableCounterTitle": "Disable counter?",
+  "reasonOptional": "Reason (optional)",
+  "reasonHint": "e.g. Completed 1 lakh",
+  "editCounterTitle": "Edit Counter",
+  "newCounterTitle": "New Counter",
+  "counterNameLabel": "Counter name *",
+  "initialCountLabel": "Initial count (default 0)",
+  "incrementStepLabel": "Increment step (default 1)",
+  "lifetimeGoalFieldLabel": "Lifetime goal (0 = none)",
+  "dailyGoalFieldLabel": "Daily goal (0 = none)",
+  "startDateLabel": "Start date: ",
+  "dailyExceedsLifetime": "Daily goal cannot exceed lifetime goal",
+  "stepExceedsDaily": "Increment step must be less than daily goal",
+  "importExportBody": "Export backs up all counters and sessions to a JSON file.\n\nImport replaces ALL current data with the selected file.",
+  "exportFailed": "Export failed: {message}",
+  "@exportFailed": {
+    "placeholders": { "message": { "type": "String" } }
+  },
+  "importFailed": "Import failed: {message}",
+  "@importFailed": {
+    "placeholders": { "message": { "type": "String" } }
+  },
+  "importSuccessful": "Import successful",
+
+  "pausedWithTime": "PAUSED · {time}",
+  "@pausedWithTime": {
+    "placeholders": { "time": { "type": "String" } }
+  },
+  "resetSession": "Reset session",
+  "resetCounter": "Reset counter",
+  "ofOneHundredEight": "of one hundred eight",
+  "lifetimeGoalCaps": "LIFETIME GOAL",
+  "dailyGoalCaps": "DAILY GOAL",
+  "beadsRemainCaps": "{count} BEADS REMAIN",
+  "@beadsRemainCaps": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "malaThisSession": "+{count} mala this session",
+  "@malaThisSession": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "footerLifetime": "Lifetime",
+  "footerDaily": "Daily",
+  "footerSession": "Session",
+  "resetSessionTitle": "Reset session?",
+  "resetSessionMessage": "Current session will be discarded and the counter reset to 0.",
+  "resetCounterTitle": "Reset counter?",
+  "resetCounterMessage": "All history for this counter will be deleted. This cannot be undone.",
+
+  "noSessionsRecorded": "No sessions recorded yet.",
+  "recentOfferings": "RECENT OFFERINGS",
+  "today": "Today",
+  "sessionCount": "{count, plural, =1{1 session} other{{count} sessions}}",
+  "@sessionCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "labelChants": "chants",
+  "labelMala": "mala",
+  "clearAllHistoryTitle": "Clear all history?",
+  "clearCounterHistoryTitle": "Clear this counter's history?",
+  "clearHistoryMessage": "Sessions will be permanently deleted.",
+  "recordOfDevotion": "a record of devotion",
+  "allCounters": "All counters",
+  "chantsOfferedDays": "CHANTS OFFERED · {count, plural, =1{1 DAY} other{{count} DAYS}}",
+  "@chantsOfferedDays": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "chantsOfferedPercent": "CHANTS OFFERED · {percent}% OF VOW",
+  "@chantsOfferedPercent": {
+    "placeholders": { "percent": { "type": "String" } }
+  },
+  "deleteSessionTitle": "Delete session?",
+  "deleteSessionMessage": "{count, plural, =1{This session of 1 chant will be permanently removed.} other{This session of {count} chants will be permanently removed.}}",
+  "@deleteSessionMessage": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "deleteSessionTooltip": "Delete session",
+  "chantsCount": "{count} chants",
+  "@chantsCount": {
+    "placeholders": { "count": { "type": "String" } }
+  },
+  "malaCount": "{count} mala",
+  "@malaCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+
+  "counterDetailsTitle": "Counter Details",
+  "counterNotFound": "Counter not found",
+  "completedSuccessfully": "Completed successfully",
+  "statusDisabled": "Disabled",
+  "labelTotal": "Total",
+  "labelTodayCap": "Today",
+  "labelMalas": "Malas",
+  "infoName": "Name",
+  "infoStatus": "Status",
+  "infoIncrementStep": "Increment step",
+  "infoInitialCount": "Initial count",
+  "infoLifetimeGoal": "Lifetime goal",
+  "infoDailyGoal": "Daily goal",
+  "infoStarted": "Started",
+  "infoCreated": "Created",
+  "infoAvgDaily": "Avg daily count",
+  "infoDisabled": "Disabled",
+  "statusActive": "Active",
+  "statusCompleted": "Completed",
+
+  "aboutTitle": "About",
+  "versionLabel": "Version {version}",
+  "@versionLabel": {
+    "placeholders": { "version": { "type": "String" } }
+  },
+  "aboutPurposeTitle": "Purpose",
+  "aboutPurposeBody": "Track your mantra recitation practice with mala (108-bead round) counting, daily and lifetime goals, and full session history.",
+  "aboutOfflineTitle": "Fully offline",
+  "aboutOfflineBody": "No network access. All data stored only on your device.",
+  "aboutPrivacyTitle": "Privacy",
+  "aboutPrivacyBody": "No analytics, no tracking, no data shared with anyone.",
+  "aboutBackupTitle": "Backup",
+  "aboutBackupBody": "Use Import / Export to back up your data to a JSON file.",
+  "aboutMantraQuote": "Om Namah Shivaya",
+  "aboutMadeWithPrefix": "Made with ",
+  "aboutMadeWithSuffix": " from India",
+
+  "settingsTitle": "Settings",
+  "practiceEyebrow": "PRACTICE",
+  "sectionDailyGoal": "Daily goal",
+  "sectionDailyGoalSub": "When the offering is complete",
+  "enableNotification": "Enable notification",
+  "enableNotificationSub": "Vibrate and sound on completion",
+  "vibration": "Vibration",
+  "vibrationSub": "A gentle hum on completion",
+  "notificationSound": "Notification sound",
+  "previewTone": "Preview tone",
+  "previewToneSub": "Hear what plays on completion",
+  "sectionMala": "Mala completion",
+  "sectionMalaSub": "The closing of every 108 beads",
+  "enableMalaSound": "Enable mala sound",
+  "enableMalaSoundSub": "A soft tick on each full mala",
+  "sectionStillness": "Stillness",
+  "sectionStillnessSub": "For longer sessions",
+  "brightnessLevel": "Brightness level",
+  "followingSystem": "Following system",
+  "overrideActive": "Override active",
+  "brightnessStill": "still",
+  "brightnessUseSystem": "use system",
+  "brightnessFull": "full",
+  "sectionPracticeGuide": "Practice guide",
+  "sectionPracticeGuideSub": "Gestures and rhythms of use",
+  "howItWorks": "How it works",
+  "howItWorksSub": "Counting, undo, and the menu — explained",
+  "settingsGuidanceBody": "The daily-goal sound plays when your goal is reached. The mala sound rings softly after every 108 chants — except when that count also completes the daily offering.",
+  "clearAllData": "Clear all data",
+  "clearAllDataSub": "Delete all counters and session history permanently",
+  "soundSystemDefaultTapToChange": "System default — tap to change",
+  "soundNamedTapToChange": "{name} — tap to change",
+  "@soundNamedTapToChange": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "soundCustomTapToChange": "Custom audio — tap to change",
+  "soundSystemDefault": "System default",
+  "browseAudioFile": "Browse audio file…",
+  "clearAllDataTitle": "Clear all data?",
+  "clearAllDataMessage": "This will permanently delete all counters and all session history. This cannot be undone.",
+  "clearAllButton": "Clear all",
+  "allDataCleared": "All data cleared",
+
+  "helpTitle": "Help",
+  "helpCountingTitle": "Counting",
+  "helpCountingBody": "Tap anywhere on the bead circle to count one chant. Each 108 chants completes one mala — the ring fills as the beads pass.",
+  "helpUndoTitle": "Undoing a tap",
+  "helpUndoBody": "Place two fingers on the bead circle and swipe — left or right — to undo your last chant. The session ends gracefully if the count returns to zero.",
+  "helpTimerTitle": "Timer & status",
+  "helpTimerBody": "The pill at the top shows the time spent in this session. The green marker below the count tells you how many beads remain in the current mala, or that the daily offering is complete.",
+  "helpResetTitle": "Resetting",
+  "helpResetBody": "Open the menu (the three dots, top right of the counting screen) for Reset session and Reset counter. Reset session discards the current sitting; Reset counter clears all history for that mantra.",
+
+  "cardChantsMala": "chants · {malas} mala",
+  "@cardChantsMala": {
+    "placeholders": { "malas": { "type": "int" } }
+  },
+  "cardComplete": "✓ complete",
+  "cardPercentDaily": "{percent}% daily",
+  "@cardPercentDaily": {
+    "placeholders": { "percent": { "type": "int" } }
+  },
+  "cardNoDaily": "—",
+  "cardTodayPrefix": "TODAY · ",
+  "cardChants": "{count} chants",
+  "@cardChants": {
+    "placeholders": { "count": { "type": "String" } }
+  },
+  "cardMala": "{count} mala",
+  "@cardMala": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "cardMalaProgress": "{current} / {target} mala",
+  "@cardMalaProgress": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "target": { "type": "int" }
+    }
+  },
+  "cardLifetimePercent": "lifetime · {percent}%",
+  "@cardLifetimePercent": {
+    "placeholders": { "percent": { "type": "String" } }
+  },
+  "cardLifetimePercentComplete": "lifetime · {percent}% ✓",
+  "@cardLifetimePercentComplete": {
+    "placeholders": { "percent": { "type": "String" } }
+  },
+
+  "notifDailyGoalTitle": "Daily Goal Achieved",
+  "notifDailyGoalBody": "You have reached your daily mantra count goal!",
+
+  "backupShareSubject": "Mantra Japa Counter Backup"
+}

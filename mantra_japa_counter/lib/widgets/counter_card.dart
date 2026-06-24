@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../config/theme.dart';
+import '../l10n/app_localizations.dart';
 import '../models/counter.dart';
 import '../models/counter_status.dart';
 import '../utils/mala.dart';
@@ -32,6 +33,7 @@ class CounterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final isDisabled = !counter.isActive;
     final accent = TempleColors.accentForId(counter.id);
     final malas = malaForCount(totalCount);
@@ -83,16 +85,17 @@ class CounterCard extends StatelessWidget {
                   children: [
                     _header(accent, dailyComplete, lifetimeComplete, isDisabled),
                     const SizedBox(height: 14),
-                    _bigCount(accent, malas),
+                    _bigCount(l, accent, malas),
                     const SizedBox(height: 14),
                     _progressStrip(
+                      l: l,
                       accent: accent,
                       dailyProgress: dailyProgress,
                       dailyComplete: dailyComplete,
                     ),
                     if (counter.hasLifetimeGoal) ...[
                       const SizedBox(height: 10),
-                      _lifetimeRow(lifetimePercent, lifetimeComplete),
+                      _lifetimeRow(l, lifetimePercent, lifetimeComplete),
                       const SizedBox(height: 5),
                       _LifetimeBar(
                         ratio: lifetimeRatio,
@@ -190,7 +193,7 @@ class CounterCard extends StatelessWidget {
     );
   }
 
-  Widget _bigCount(Color accent, int malas) {
+  Widget _bigCount(AppLocalizations l, Color accent, int malas) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
@@ -208,7 +211,7 @@ class CounterCard extends StatelessWidget {
         const SizedBox(width: 8),
         Flexible(
           child: Text(
-            'chants · $malas mala',
+            l.cardChantsMala(malas),
             style: AppTheme.serif(
               fontSize: 13,
               color: TempleColors.ink,
@@ -221,25 +224,27 @@ class CounterCard extends StatelessWidget {
   }
 
   Widget _progressStrip({
+    required AppLocalizations l,
     required Color accent,
     required double dailyProgress,
     required bool dailyComplete,
   }) {
     final percentLabel = counter.hasDailyGoal
         ? (dailyComplete
-            ? '✓ complete'
-            : '${(dailyProgress * 100).clamp(0, 100).round()}% daily')
-        : '—';
+            ? l.cardComplete
+            : l.cardPercentDaily(
+                (dailyProgress * 100).clamp(0, 100).round()))
+        : l.cardNoDaily;
     final percentColor =
         dailyComplete ? TempleColors.tulsi : TempleColors.vermillion;
 
     final todayMalas = malaForCount(todayCount);
     final todayCountLabel = counter.hasDailyGoal
         ? '${_format(todayCount)} / ${_format(counter.dailyGoal)}'
-        : '${_format(todayCount)} chants';
+        : l.cardChants(_format(todayCount));
     final todayMalaLabel = counter.hasDailyGoal
-        ? '$todayMalas / ${malaForCount(counter.dailyGoal)} mala'
-        : '$todayMalas mala';
+        ? l.cardMalaProgress(todayMalas, malaForCount(counter.dailyGoal))
+        : l.cardMala(todayMalas);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -253,7 +258,7 @@ class CounterCard extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: 'TODAY · ',
+                      text: l.cardTodayPrefix,
                       style: AppTheme.eyebrow(
                         fontSize: 11,
                         color: TempleColors.ink2,
@@ -302,10 +307,11 @@ class CounterCard extends StatelessWidget {
     );
   }
 
-  Widget _lifetimeRow(double percent, bool complete) {
+  Widget _lifetimeRow(AppLocalizations l, double percent, bool complete) {
     final percentText = percent.toStringAsFixed(percent >= 10 ? 0 : 1);
-    final percentLabel =
-        complete ? 'lifetime · $percentText% ✓' : 'lifetime · $percentText%';
+    final percentLabel = complete
+        ? l.cardLifetimePercentComplete(percentText)
+        : l.cardLifetimePercent(percentText);
     final textColor = complete ? TempleColors.vermillionDeep : TempleColors.ink;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
