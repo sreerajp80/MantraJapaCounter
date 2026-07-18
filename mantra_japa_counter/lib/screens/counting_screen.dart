@@ -417,7 +417,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
             l.malaThisSession(sessionMalas),
             style: AppTheme.serif(
               fontSize: 11,
-              color: TempleColors.sandal,
+              color: TempleColors.vermillionDeep,
               fontWeight: FontWeight.w500,
             ),
           ),
