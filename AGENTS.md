@@ -1,6 +1,6 @@
-# CLAUDE.md — Mantra Japa Counter
+# AGENTS.md — Mantra Japa Counter
 
-This file is read by Claude Code at the start of every session in this repository. Read it in full before making any changes. See the docs table below for full detail.
+This file is read by AI agents and LLM coding assistants (Gemini, Antigravity, Cursor, Windsurf, Codex, etc.) at the start of every session in this repository. Read it in full before making any changes. See the docs table below for full detail.
 
 ---
 
@@ -131,8 +131,8 @@ flutter build appbundle --flavor prod --release \
 ## Where things live
 
 ```
-CLAUDE.md            # this file — Claude Code native rules
-AGENTS.md            # AI agent instructions
+AGENTS.md            # this file — AI agent rules
+CLAUDE.md            # Claude Code native project rules
 docs/                # design docs & architectural baseline
 plans/               # change implementation plans
 change_log/          # implementation log records
@@ -159,10 +159,10 @@ Every change follows plan-before-changing and log-after-changing:
 
 ---
 
-## What Claude must always / never do
+## What AI agents must always / never do
 
 **Always:**
-- Read `CLAUDE.md` and relevant `docs/` files before making edits.
+- Read `AGENTS.md` and relevant `docs/` files before making edits.
 - Maintain pure Dart models without Flutter or sqflite dependencies.
 - Run `flutter analyze` and `flutter test` after modifications.
 

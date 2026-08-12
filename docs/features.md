@@ -14,7 +14,7 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 
 | Concern | Details / Package |
 |---|---|
-| **Framework & Engine** | Flutter (`sdk ^3.11.5`), Target SDK 35 (Android 15), Min SDK 29 (Android 10), Java 17 |
+| **Framework & Engine** | Flutter (`sdk ^3.12.2`), Target SDK 35 (Android 15), Min SDK 29 (Android 10), Java 17 |
 | **Desugaring** | `com.android.tools:desugar_jdk_libs:2.1.4` (Core JDK library desugaring for Java 8+ APIs) |
 | **State Management** | `flutter_riverpod` (v3.3.1) with `AsyncNotifier` and `StateNotifier` architecture |
 | **Navigation** | `go_router` (v17.2.2) with declarative routing and parameter passing |
@@ -140,6 +140,11 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 ---
 
 ### 6. Data Backup, Restore & Dual-Tier Persistence
+- **Optical Air-Gap Sync (High-Density Animated QR Stream)**:
+  - **100% Offline Device-to-Device Sync**: Transfer all counters, active sitting progress, and practice history between nearby mobile devices using screen-to-camera animated QR streams (10–15 FPS) without Wi-Fi, Bluetooth, NFC, local sockets, or cloud infrastructure.
+  - **Fountain Code Engine (Luby Transform / LT)**: Encodes full backup payloads into systematic chunks and LT XOR parity frames (`AIRQR|LT1` format) with IEEE 802.3 CRC32 checksum verification.
+  - **Loss-Tolerant Scanning**: Camera frame drops do not block decoding; missing fragments are automatically reconstructed out-of-order via belief propagation / Gaussian elimination over GF(2).
+  - **Interactive Import Preview**: Scanned streams trigger an interactive preview sheet detailing counter and session counts before merging atomically into local SQLite storage.
 - **JSON Import / Export Backup System**:
   - **Export Data**: Backup all counters and session history into a single JSON file (`mantra_japa_counter_backup.json`) and open the native system share sheet (`share_plus`).
   - **Import Data**: Restore data from a JSON backup file. Replaces database contents atomically inside a single SQLite transaction to guarantee zero data corruption on invalid/corrupted files.

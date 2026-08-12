@@ -94,11 +94,13 @@ most common signing incidents happen when the strategy is assumed rather than wr
 #### Step 1 — Create The Keystore
 
 If you do not yet have a release keystore, generate one with `keytool`. Run this once and
-store the output `.jks` file securely outside the project directory.
+place the output `.jks` file directly in the app's `android/` directory, as required by
+`docs/guidelines/guideline.md` §2.1. The filename is your choice per app (here
+`myapp-prod.jks`).
 
 ```bash
 keytool -genkey -v \
-  -keystore ~/keys/myapp-prod.jks \
+  -keystore android/myapp-prod.jks \
   -alias myapp \
   -keyalg RSA \
   -keysize 2048 \
@@ -106,9 +108,11 @@ keytool -genkey -v \
 ```
 
 Keystore rules:
-- Never store the `.jks` file inside the project directory or commit it to source control.
-- Back it up in at least two separate secure locations (cloud storage + physical).
-  Losing it permanently prevents you from publishing updates to Google Play for this app.
+- Keep the `.jks` file in `android/` and never commit it to source control — the gitignore
+  rules in Step 3 keep it out.
+- Back it up in at least two separate secure locations outside the repository
+  (cloud storage + physical). Losing it permanently prevents you from publishing updates
+  to Google Play for this app.
 - Store the passwords in a password manager. They cannot be recovered from the keystore file.
 
 #### Step 2 — Create `android/key.properties` (Strategy A)
@@ -116,14 +120,16 @@ Keystore rules:
 Create the file at `android/key.properties`. This file is gitignored (see Step 3).
 
 ```properties
-storeFile=/absolute/path/to/myapp-prod.jks
+storeFile=../myapp-prod.jks
 storePassword=your-store-password
 keyAlias=myapp
 keyPassword=your-key-password
 ```
 
-Use an absolute path for `storeFile`. Relative paths resolve from the `android/app/` directory,
-which is easy to get wrong. An absolute path is unambiguous across machines and CI environments.
+`storeFile` resolves from the `android/app/` directory, so `../myapp-prod.jks` points at
+`android/myapp-prod.jks`. A repository-relative path keeps the setup portable across
+machines and CI, since the keystore travels with the project layout rather than a
+machine-specific location.
 
 For CI environments, set these values as environment variables and write the file from a
 pre-build step rather than committing it.
@@ -135,8 +141,8 @@ Add to `.gitignore` at the project root:
 ```gitignore
 # Android signing — never commit
 android/key.properties
-*.jks
-*.keystore
+android/*.jks
+android/*.keystore
 ```
 
 Verify the file is not tracked:
@@ -706,7 +712,7 @@ To support this workflow, the native projects typically need:
 - Flavor-specific icons and resource values.
 - ProGuard rules for the Flutter engine and any native plugins that require them.
 - A documented and implemented signing strategy for each flavor × mode combination.
-- `android/key.properties` and `*.jks` / `*.keystore` added to `.gitignore`.
+- `android/key.properties`, `android/*.jks`, and `android/*.keystore` added to `.gitignore`.
 
 **iOS:**
 - Xcode schemes aligned with flavor names.
@@ -742,7 +748,7 @@ This project uses **Strategy A — local file-based signing** (see the signing s
 above). Single developer; no CI pipeline in initial release.
 
 - Signing config file: `android/key.properties` (gitignored)
-- Release keystore: `keystore/keystore.jks` at the repository root (alias: `sreerajp_mantrajapacounter`); keep at least one offline backup in a separate location
+- Release keystore: `android/keystore.jks` (alias: `sreerajp_mantrajapacounter`); keep at least one offline backup in a separate location outside the repository
 
 ### Android `build.gradle.kts` Product Flavors Block
 
@@ -766,14 +772,15 @@ productFlavors {
 ### `android/key.properties` Template
 
 ```properties
-storeFile=/absolute/path/to/keystore.jks
+storeFile=../keystore.jks
 storePassword=<store-password>
 keyAlias=<key-alias>
 keyPassword=<key-password>
 ```
 
-Use an absolute path for `storeFile`. Store passwords in a password manager; they cannot be
-recovered from the keystore file.
+`storeFile` is relative to `android/app/`, which is where Gradle resolves it from, so
+`../keystore.jks` points at `android/keystore.jks`. Store passwords in a password manager;
+they cannot be recovered from the keystore file.
 
 ### Gitignore Entries
 
@@ -782,8 +789,8 @@ Verify these entries exist in `.gitignore` at the project root:
 ```gitignore
 # Android signing — never commit
 android/key.properties
-*.jks
-*.keystore
+android/*.jks
+android/*.keystore
 
 # Debug symbols — archive separately, never commit
 build/symbols/

@@ -131,14 +131,14 @@ Expected output: no lines (attribute absent = false by default). If it appears, 
 
 - Signing strategy: Strategy A — local file-based signing (single developer; see `docs/flutter_build_flavors_guide.md`)
 - Config location: `android/key.properties` — gitignored; never committed
-- Keystore files: stored outside the project directory in a secure location; backed up in two separate locations
+- Keystore files: kept in `android/` and git-ignored; backed up in two separate locations outside the repository
 - Keystore ownership: sreerajp
-- Release keystore: `keystore/keystore.jks` at the repository root; alias `sreerajp_mantrajapacounter`. Keep at least one offline backup in a separate location.
+- Release keystore: `android/keystore.jks`; alias `sreerajp_mantrajapacounter`. Keep at least one offline backup in a separate location.
 - Secret rotation process: generate a new keystore only if the existing key is compromised; note that changing the Play Store upload key requires contacting Google Play support and cannot be done unilaterally
 - Rules:
   - Signing material MUST NOT be committed to source control.
   - `android/key.properties` MUST be listed in `.gitignore`.
-  - Keystore files (`*.jks`) MUST be listed in `.gitignore`.
+  - Keystore files (`android/*.jks`, `android/*.keystore`) MUST be listed in `.gitignore`.
   - The build MUST fail clearly for `prod --release` if `android/key.properties` is absent (enforced via Gradle guard — see `docs/flutter_build_flavors_guide.md`).
 
 ---
