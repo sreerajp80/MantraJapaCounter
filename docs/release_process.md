@@ -1,4 +1,4 @@
-# Release Process
+# Release Process — Mantra Japa Counter
 
 ## 1. Release Scope
 

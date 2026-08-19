@@ -1,4 +1,4 @@
-# Architecture
+# Architecture — Mantra Japa Counter
 
 ## 1. Scope
 

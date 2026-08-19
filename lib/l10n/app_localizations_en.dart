@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Mantra Japa Counter';
+  String get appTitle => 'SreerajP MantraJapa Counter';
 
   @override
   String get cancel => 'Cancel';
@@ -609,5 +609,5 @@ class AppLocalizationsEn extends AppLocalizations {
       'You have reached your daily mantra count goal!';
 
   @override
-  String get backupShareSubject => 'Mantra Japa Counter Backup';
+  String get backupShareSubject => 'SreerajP MantraJapa Counter Backup';
 }

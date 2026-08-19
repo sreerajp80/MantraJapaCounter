@@ -1,4 +1,4 @@
-# Security
+# Security — Mantra Japa Counter
 
 This app stores spiritual practice counting data only. There is no authentication data, financial
 data, health records, or personally identifiable information. The security profile is **low**.

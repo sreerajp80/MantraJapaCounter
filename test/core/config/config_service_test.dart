@@ -6,7 +6,7 @@ import 'package:mantra_japa_counter/core/config/config_service.dart';
 void main() {
   group('AppConfig', () {
     test('fallback contains safe default values', () {
-      expect(AppConfig.fallback.appName, equals('Mantra Japa Counter'));
+      expect(AppConfig.fallback.appName, equals('SreerajP MantraJapa Counter'));
       expect(AppConfig.fallback.version, equals('0.0.0'));
       expect(AppConfig.fallback.build, equals('0'));
       expect(AppConfig.fallback.details, isNotEmpty);

@@ -8,8 +8,8 @@ This file is read by AI agents and LLM coding assistants (Gemini, Antigravity, C
 
 | Field | Value |
 |-------|-------|
-| App name (prod) | `Mantra Japa Counter` |
-| App name (dev) | `Mantra Japa Counter Dev` |
+| App name (prod) | `SreerajP MantraJapa Counter` |
+| App name (dev) | `SreerajP MantraJapa Counter Dev` |
 | Package / org id (prod) | `com.sreerajp.mantrajapacounter` |
 | Package / org id (dev) | `com.sreerajp.mantrajapacounter.dev` |
 | Platform(s) | Android (minSdk 29, targetSdk 35) |
@@ -71,11 +71,11 @@ dart format .                          # format code
 
 # Production release APK (split per ABI)
 flutter build apk --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-v6.9.1/ --split-per-abi
+  --obfuscate --split-debug-info=build/symbols/android-prod-v6.10.0/ --split-per-abi
 
 # Production Play Store bundle
 flutter build appbundle --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-v6.9.1/
+  --obfuscate --split-debug-info=build/symbols/android-prod-v6.10.0/
 ```
 
 ---
@@ -84,8 +84,8 @@ flutter build appbundle --flavor prod --release \
 
 | Flavor | App ID | Display name | Signing |
 |--------|--------|--------------|---------|
-| `dev` | `com.sreerajp.mantrajapacounter.dev` | Mantra Japa Counter Dev | Debug keystore (automatic) |
-| `prod` | `com.sreerajp.mantrajapacounter` | Mantra Japa Counter | Release keystore (`android/key.properties`) |
+| `dev` | `com.sreerajp.mantrajapacounter.dev` | SreerajP MantraJapa Counter Dev | Debug keystore (automatic) |
+| `prod` | `com.sreerajp.mantrajapacounter` | SreerajP MantraJapa Counter | Release keystore (`android/key.properties`) |
 
 > Flutter sets `FLUTTER_APP_FLAVOR` automatically via `--flavor`. Access in Dart via `String.fromEnvironment('FLUTTER_APP_FLAVOR')`.
 
@@ -104,6 +104,15 @@ flutter build appbundle --flavor prod --release \
 - Never log counter names, session counts, user notes, or private fields — even in debug builds.
 - Request minimal permissions only; no `INTERNET` permission in AndroidManifest.
 - Keep `android:allowBackup="false"` in the manifest unless encrypted export is used.
+
+---
+
+## Localization rules
+
+- All user-visible text comes from `lib/l10n/*.arb` via `AppLocalizations` — never a raw string literal in a widget. This applies even though the app ships only `en` and `ml`.
+- `l10n.yaml` (project root) and `lib/l10n/app_<base>.arb` must exist. Run `flutter gen-l10n` after editing any `.arb` file.
+- Every ARB key needs an `@key` description entry.
+- Literals are allowed only for logs, non-UI exception messages, asset paths, route names, and map/JSON keys.
 
 ---
 

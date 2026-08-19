@@ -1,244 +1,713 @@
 {
   "@@locale": "en",
 
-  "appTitle": "Mantra Japa Counter",
-  "@appTitle": {},
+  "appTitle": "SreerajP MantraJapa Counter",
+  "@appTitle": {
+    "description": "Application title displayed across the app"
+  },
 
   "cancel": "Cancel",
+  "@cancel": {
+    "description": "Generic cancel button label"
+  },
   "delete": "Delete",
+  "@delete": {
+    "description": "Generic delete button label"
+  },
   "save": "Save",
+  "@save": {
+    "description": "Generic save button label"
+  },
   "create": "Create",
+  "@create": {
+    "description": "Generic create button label"
+  },
   "confirm": "Confirm",
+  "@confirm": {
+    "description": "Generic confirm button label"
+  },
   "clear": "Clear",
+  "@clear": {
+    "description": "Generic clear button label"
+  },
   "reset": "Reset",
+  "@reset": {
+    "description": "Generic reset button label"
+  },
   "resetAll": "Reset all",
+  "@resetAll": {
+    "description": "Generic reset all button label"
+  },
   "export": "Export",
+  "@export": {
+    "description": "Export action button label"
+  },
   "import": "Import",
+  "@import": {
+    "description": "Import action button label"
+  },
   "play": "Play",
+  "@play": {
+    "description": "Play action button label"
+  },
   "more": "More",
+  "@more": {
+    "description": "More options button or tooltip label"
+  },
   "notSet": "Not set",
+  "@notSet": {
+    "description": "Label indicating a value is not set"
+  },
   "errorWithMessage": "Error: {message}",
   "@errorWithMessage": {
+    "description": "Error message with dynamic error details",
     "placeholders": { "message": { "type": "String" } }
   },
 
   "mantraCounters": "Mantra Counters",
+  "@mantraCounters": {
+    "description": "Title of the home screen showing the list of mantra counters"
+  },
   "menuImportExport": "Import / Export",
+  "@menuImportExport": {
+    "description": "Menu option to navigate to Import / Export screen"
+  },
   "menuSettings": "Settings",
+  "@menuSettings": {
+    "description": "Menu option to navigate to Settings screen"
+  },
   "menuAbout": "About",
+  "@menuAbout": {
+    "description": "Menu option to navigate to About screen"
+  },
   "todayChants": "chants",
+  "@todayChants": {
+    "description": "Summary card label for chants counted today"
+  },
   "todayMalas": "malas",
+  "@todayMalas": {
+    "description": "Summary card label for malas completed today"
+  },
   "todayActive": "active",
+  "@todayActive": {
+    "description": "Summary card label for number of active counters today"
+  },
   "noCountersYet": "No counters yet",
+  "@noCountersYet": {
+    "description": "Empty state title when no counters exist"
+  },
   "noCountersSubtitle": "Tap the + above to begin your first offering",
+  "@noCountersSubtitle": {
+    "description": "Empty state subtitle prompting the user to create a counter"
+  },
   "aboutCounter": "About counter",
+  "@aboutCounter": {
+    "description": "Menu item to open the counter details screen"
+  },
   "history": "History",
+  "@history": {
+    "description": "Menu item to open the counter history screen"
+  },
   "edit": "Edit",
+  "@edit": {
+    "description": "Menu item or button to edit a counter"
+  },
   "disableSuccess": "Disable (success)",
+  "@disableSuccess": {
+    "description": "Action label to disable counter as successfully completed"
+  },
   "disableFailure": "Disable (not completed)",
+  "@disableFailure": {
+    "description": "Action label to disable counter before goal completion"
+  },
   "deleteCounterTitle": "Delete counter?",
+  "@deleteCounterTitle": {
+    "description": "Title for delete counter confirmation dialog"
+  },
   "deleteCounterMessage": "Delete \"{name}\" and all its history? This cannot be undone.",
   "@deleteCounterMessage": {
+    "description": "Message for delete counter confirmation dialog",
     "placeholders": { "name": { "type": "String" } }
   },
   "disableAsCompletedTitle": "Disable as completed?",
+  "@disableAsCompletedTitle": {
+    "description": "Dialog title for marking counter as completed"
+  },
   "disableCounterTitle": "Disable counter?",
+  "@disableCounterTitle": {
+    "description": "Dialog title for disabling a counter"
+  },
   "reasonOptional": "Reason (optional)",
+  "@reasonOptional": {
+    "description": "Label for optional reason text field when disabling counter"
+  },
   "reasonHint": "e.g. Completed 1 lakh",
+  "@reasonHint": {
+    "description": "Hint text for optional reason input field"
+  },
   "editCounterTitle": "Edit Counter",
+  "@editCounterTitle": {
+    "description": "Title of the screen or dialog for editing a counter"
+  },
   "newCounterTitle": "New Counter",
+  "@newCounterTitle": {
+    "description": "Title of the screen or dialog for creating a new counter"
+  },
   "counterNameLabel": "Counter name *",
+  "@counterNameLabel": {
+    "description": "Form label for the counter name field"
+  },
   "initialCountLabel": "Initial count (default 0)",
+  "@initialCountLabel": {
+    "description": "Form label for initial count field"
+  },
   "incrementStepLabel": "Increment step (default 1)",
+  "@incrementStepLabel": {
+    "description": "Form label for increment step field"
+  },
   "lifetimeGoalFieldLabel": "Lifetime goal (0 = none)",
+  "@lifetimeGoalFieldLabel": {
+    "description": "Form label for lifetime goal field"
+  },
   "dailyGoalFieldLabel": "Daily goal (0 = none)",
+  "@dailyGoalFieldLabel": {
+    "description": "Form label for daily goal field"
+  },
   "startDateLabel": "Start date: ",
+  "@startDateLabel": {
+    "description": "Label prefix for the start date field"
+  },
   "dailyExceedsLifetime": "Daily goal cannot exceed lifetime goal",
+  "@dailyExceedsLifetime": {
+    "description": "Validation error when daily goal exceeds lifetime goal"
+  },
   "stepExceedsDaily": "Increment step must be less than daily goal",
+  "@stepExceedsDaily": {
+    "description": "Validation error when step is greater than or equal to daily goal"
+  },
   "importExportBody": "Export backs up all counters and sessions to a JSON file.\n\nImport replaces ALL current data with the selected file.",
+  "@importExportBody": {
+    "description": "Exploratory description on the import/export screen"
+  },
   "exportFailed": "Export failed: {message}",
   "@exportFailed": {
+    "description": "Error notification when export operation fails",
     "placeholders": { "message": { "type": "String" } }
   },
   "importFailed": "Import failed: {message}",
   "@importFailed": {
+    "description": "Error notification when import operation fails",
     "placeholders": { "message": { "type": "String" } }
   },
   "importSuccessful": "Import successful",
+  "@importSuccessful": {
+    "description": "Notification message when data import succeeds"
+  },
 
   "pausedWithTime": "PAUSED · {time}",
   "@pausedWithTime": {
+    "description": "Status banner text showing elapsed time when counting session is paused",
     "placeholders": { "time": { "type": "String" } }
   },
   "resetSession": "Reset session",
+  "@resetSession": {
+    "description": "Menu option to reset current sitting session"
+  },
   "resetCounter": "Reset counter",
+  "@resetCounter": {
+    "description": "Menu option to reset counter and clear its history"
+  },
   "ofOneHundredEight": "of one hundred eight",
+  "@ofOneHundredEight": {
+    "description": "Subtitle on the counting bead circle indicating 108 beads per mala"
+  },
   "lifetimeGoalCaps": "LIFETIME GOAL",
+  "@lifetimeGoalCaps": {
+    "description": "Header title for lifetime goal progress bar"
+  },
   "dailyGoalCaps": "DAILY GOAL",
+  "@dailyGoalCaps": {
+    "description": "Header title for daily goal progress bar"
+  },
   "beadsRemainCaps": "{count} BEADS REMAIN",
   "@beadsRemainCaps": {
+    "description": "Text showing beads remaining in current mala",
     "placeholders": { "count": { "type": "int" } }
   },
   "malaThisSession": "+{count} mala this session",
   "@malaThisSession": {
+    "description": "Indicator of malas completed in current session",
     "placeholders": { "count": { "type": "int" } }
   },
   "footerLifetime": "Lifetime",
+  "@footerLifetime": {
+    "description": "Footer column header for lifetime count"
+  },
   "footerDaily": "Daily",
+  "@footerDaily": {
+    "description": "Footer column header for daily count"
+  },
   "footerSession": "Session",
+  "@footerSession": {
+    "description": "Footer column header for session count"
+  },
   "resetSessionTitle": "Reset session?",
+  "@resetSessionTitle": {
+    "description": "Title for reset session confirmation dialog"
+  },
   "resetSessionMessage": "Current session will be discarded and the counter reset to 0.",
+  "@resetSessionMessage": {
+    "description": "Confirmation message explaining effect of resetting a session"
+  },
   "resetCounterTitle": "Reset counter?",
+  "@resetCounterTitle": {
+    "description": "Title for reset counter confirmation dialog"
+  },
   "resetCounterMessage": "All history for this counter will be deleted. This cannot be undone.",
+  "@resetCounterMessage": {
+    "description": "Confirmation message explaining effect of resetting a counter"
+  },
 
   "noSessionsRecorded": "No sessions recorded yet.",
+  "@noSessionsRecorded": {
+    "description": "Empty state text on history screen when no sessions exist"
+  },
   "recentOfferings": "RECENT OFFERINGS",
+  "@recentOfferings": {
+    "description": "Section header for history session list"
+  },
   "today": "Today",
+  "@today": {
+    "description": "Date label for today's session entries"
+  },
   "sessionCount": "{count, plural, =1{1 session} other{{count} sessions}}",
   "@sessionCount": {
+    "description": "Pluralized count of sessions",
     "placeholders": { "count": { "type": "int" } }
   },
   "labelChants": "chants",
+  "@labelChants": {
+    "description": "Unit label for chants"
+  },
   "labelMala": "mala",
+  "@labelMala": {
+    "description": "Unit label for singular mala"
+  },
   "clearAllHistoryTitle": "Clear all history?",
+  "@clearAllHistoryTitle": {
+    "description": "Dialog title for clearing all history across counters"
+  },
   "clearCounterHistoryTitle": "Clear this counter's history?",
+  "@clearCounterHistoryTitle": {
+    "description": "Dialog title for clearing history of a specific counter"
+  },
   "clearHistoryMessage": "Sessions will be permanently deleted.",
+  "@clearHistoryMessage": {
+    "description": "Confirmation body text warning about permanent deletion of sessions"
+  },
   "recordOfDevotion": "a record of devotion",
+  "@recordOfDevotion": {
+    "description": "Subtitle on the history screen"
+  },
   "allCounters": "All counters",
+  "@allCounters": {
+    "description": "Dropdown or filter option for selecting all counters"
+  },
   "chantsOfferedDays": "CHANTS OFFERED · {count, plural, =1{1 DAY} other{{count} DAYS}}",
   "@chantsOfferedDays": {
+    "description": "Header statistic showing total days chants were offered",
     "placeholders": { "count": { "type": "int" } }
   },
   "chantsOfferedPercent": "CHANTS OFFERED · {percent}% OF VOW",
   "@chantsOfferedPercent": {
+    "description": "Header statistic showing percentage progress of lifetime vow",
     "placeholders": { "percent": { "type": "String" } }
   },
   "deleteSessionTitle": "Delete session?",
+  "@deleteSessionTitle": {
+    "description": "Title for delete individual session dialog"
+  },
   "deleteSessionMessage": "{count, plural, =1{This session of 1 chant will be permanently removed.} other{This session of {count} chants will be permanently removed.}}",
   "@deleteSessionMessage": {
+    "description": "Confirmation message for deleting a single session",
     "placeholders": { "count": { "type": "int" } }
   },
   "deleteSessionTooltip": "Delete session",
+  "@deleteSessionTooltip": {
+    "description": "Tooltip for session delete button"
+  },
   "chantsCount": "{count} chants",
   "@chantsCount": {
+    "description": "Formatted number of chants with unit label",
     "placeholders": { "count": { "type": "String" } }
   },
   "malaCount": "{count} mala",
   "@malaCount": {
+    "description": "Formatted number of malas with unit label",
     "placeholders": { "count": { "type": "int" } }
   },
 
   "counterDetailsTitle": "Counter Details",
+  "@counterDetailsTitle": {
+    "description": "Screen title for Counter Details"
+  },
   "counterNotFound": "Counter not found",
+  "@counterNotFound": {
+    "description": "Error message when requested counter is not found"
+  },
   "completedSuccessfully": "Completed successfully",
+  "@completedSuccessfully": {
+    "description": "Status text for counter that reached its lifetime goal"
+  },
   "statusDisabled": "Disabled",
+  "@statusDisabled": {
+    "description": "Status text for disabled counter"
+  },
   "labelTotal": "Total",
+  "@labelTotal": {
+    "description": "Total count metric label"
+  },
   "labelTodayCap": "Today",
+  "@labelTodayCap": {
+    "description": "Today count metric label"
+  },
   "labelMalas": "Malas",
+  "@labelMalas": {
+    "description": "Malas metric label"
+  },
   "infoName": "Name",
+  "@infoName": {
+    "description": "Details row label for name"
+  },
   "infoStatus": "Status",
+  "@infoStatus": {
+    "description": "Details row label for status"
+  },
   "infoIncrementStep": "Increment step",
+  "@infoIncrementStep": {
+    "description": "Details row label for increment step"
+  },
   "infoInitialCount": "Initial count",
+  "@infoInitialCount": {
+    "description": "Details row label for initial count"
+  },
   "infoLifetimeGoal": "Lifetime goal",
+  "@infoLifetimeGoal": {
+    "description": "Details row label for lifetime goal"
+  },
   "infoDailyGoal": "Daily goal",
+  "@infoDailyGoal": {
+    "description": "Details row label for daily goal"
+  },
   "infoStarted": "Started",
+  "@infoStarted": {
+    "description": "Details row label for started date"
+  },
   "infoCreated": "Created",
+  "@infoCreated": {
+    "description": "Details row label for created date"
+  },
   "infoAvgDaily": "Avg daily count",
+  "@infoAvgDaily": {
+    "description": "Details row label for average daily count"
+  },
   "infoDisabled": "Disabled",
+  "@infoDisabled": {
+    "description": "Details row label for disabled date"
+  },
   "statusActive": "Active",
+  "@statusActive": {
+    "description": "Status text for active counter"
+  },
   "statusCompleted": "Completed",
+  "@statusCompleted": {
+    "description": "Status text for completed counter"
+  },
 
   "aboutTitle": "About",
+  "@aboutTitle": {
+    "description": "Screen title for About screen"
+  },
   "versionLabel": "Version {version}",
   "@versionLabel": {
+    "description": "App version label on the about screen",
     "placeholders": { "version": { "type": "String" } }
   },
   "aboutPurposeTitle": "Purpose",
+  "@aboutPurposeTitle": {
+    "description": "Header for Purpose section in About screen"
+  },
   "aboutPurposeBody": "Track your mantra recitation practice with mala (108-bead round) counting, daily and lifetime goals, and full session history.",
+  "@aboutPurposeBody": {
+    "description": "Description of app purpose in About screen"
+  },
   "aboutOfflineTitle": "Fully offline",
+  "@aboutOfflineTitle": {
+    "description": "Header for Offline section in About screen"
+  },
   "aboutOfflineBody": "No network access. All data stored only on your device.",
+  "@aboutOfflineBody": {
+    "description": "Description of offline storage in About screen"
+  },
   "aboutPrivacyTitle": "Privacy",
+  "@aboutPrivacyTitle": {
+    "description": "Header for Privacy section in About screen"
+  },
   "aboutPrivacyBody": "No analytics, no tracking, no data shared with anyone.",
+  "@aboutPrivacyBody": {
+    "description": "Description of privacy policy in About screen"
+  },
   "aboutBackupTitle": "Backup",
+  "@aboutBackupTitle": {
+    "description": "Header for Backup section in About screen"
+  },
   "aboutBackupBody": "Use Import / Export to back up your data to a JSON file.",
+  "@aboutBackupBody": {
+    "description": "Description of backup functionality in About screen"
+  },
   "aboutMantraQuote": "Om Namah Shivaya",
+  "@aboutMantraQuote": {
+    "description": "Devotional mantra quote shown on About screen"
+  },
   "aboutMadeWithPrefix": "Made with ",
+  "@aboutMadeWithPrefix": {
+    "description": "Prefix for Made with love footer in About screen"
+  },
   "aboutMadeWithSuffix": " from India",
+  "@aboutMadeWithSuffix": {
+    "description": "Suffix for Made with love from India footer in About screen"
+  },
 
   "settingsTitle": "Settings",
+  "@settingsTitle": {
+    "description": "Screen title for Settings screen"
+  },
   "practiceEyebrow": "PRACTICE",
+  "@practiceEyebrow": {
+    "description": "Eyebrow header on settings screen"
+  },
   "sectionDailyGoal": "Daily goal",
+  "@sectionDailyGoal": {
+    "description": "Settings section title for daily goal notification options"
+  },
   "sectionDailyGoalSub": "When the offering is complete",
+  "@sectionDailyGoalSub": {
+    "description": "Subtitle for daily goal settings section"
+  },
   "enableNotification": "Enable notification",
+  "@enableNotification": {
+    "description": "Setting label to toggle daily goal notification"
+  },
   "enableNotificationSub": "Vibrate and sound on completion",
+  "@enableNotificationSub": {
+    "description": "Subtitle describing daily goal notification toggle"
+  },
   "vibration": "Vibration",
+  "@vibration": {
+    "description": "Setting label for daily goal vibration feedback"
+  },
   "vibrationSub": "A gentle hum on completion",
+  "@vibrationSub": {
+    "description": "Subtitle describing vibration behavior on goal completion"
+  },
   "notificationSound": "Notification sound",
+  "@notificationSound": {
+    "description": "Setting label for daily goal completion sound"
+  },
   "previewTone": "Preview tone",
+  "@previewTone": {
+    "description": "Setting button to test and hear the notification tone"
+  },
   "previewToneSub": "Hear what plays on completion",
+  "@previewToneSub": {
+    "description": "Subtitle for preview tone action"
+  },
   "sectionMala": "Mala completion",
+  "@sectionMala": {
+    "description": "Settings section title for mala completion feedback"
+  },
   "sectionMalaSub": "The closing of every 108 beads",
+  "@sectionMalaSub": {
+    "description": "Subtitle for mala completion settings section"
+  },
   "enableMalaSound": "Enable mala sound",
+  "@enableMalaSound": {
+    "description": "Setting label to toggle mala completion sound"
+  },
   "enableMalaSoundSub": "A soft tick on each full mala",
+  "@enableMalaSoundSub": {
+    "description": "Subtitle describing mala completion sound"
+  },
   "sectionStillness": "Stillness",
+  "@sectionStillness": {
+    "description": "Settings section title for screen brightness control"
+  },
   "sectionStillnessSub": "For longer sessions",
+  "@sectionStillnessSub": {
+    "description": "Subtitle for screen stillness settings section"
+  },
   "brightnessLevel": "Brightness level",
+  "@brightnessLevel": {
+    "description": "Setting label for screen brightness adjustment"
+  },
   "followingSystem": "Following system",
+  "@followingSystem": {
+    "description": "Status indicating app uses system brightness"
+  },
   "overrideActive": "Override active",
+  "@overrideActive": {
+    "description": "Status indicating app overrides system brightness"
+  },
   "brightnessStill": "still",
+  "@brightnessStill": {
+    "description": "Label for dimmed/still brightness level"
+  },
   "brightnessUseSystem": "use system",
+  "@brightnessUseSystem": {
+    "description": "Label for default system brightness"
+  },
   "brightnessFull": "full",
+  "@brightnessFull": {
+    "description": "Label for maximum brightness level"
+  },
   "sectionPracticeGuide": "Practice guide",
+  "@sectionPracticeGuide": {
+    "description": "Settings section title for practice guide & help"
+  },
   "sectionPracticeGuideSub": "Gestures and rhythms of use",
+  "@sectionPracticeGuideSub": {
+    "description": "Subtitle for practice guide settings section"
+  },
   "howItWorks": "How it works",
+  "@howItWorks": {
+    "description": "Settings item to view guide on how counting works"
+  },
   "howItWorksSub": "Counting, undo, and the menu — explained",
+  "@howItWorksSub": {
+    "description": "Subtitle for How it works help guide"
+  },
   "settingsGuidanceBody": "The daily-goal sound plays when your goal is reached. The mala sound rings softly after every 108 chants — except when that count also completes the daily offering.",
+  "@settingsGuidanceBody": {
+    "description": "Informational guidance paragraph in sound settings"
+  },
   "clearAllData": "Clear all data",
+  "@clearAllData": {
+    "description": "Setting item title to delete all data"
+  },
   "clearAllDataSub": "Delete all counters and session history permanently",
+  "@clearAllDataSub": {
+    "description": "Subtitle warning for clear all data setting"
+  },
   "soundSystemDefaultTapToChange": "System default — tap to change",
+  "@soundSystemDefaultTapToChange": {
+    "description": "Subtitle when system default sound is active"
+  },
   "soundNamedTapToChange": "{name} — tap to change",
   "@soundNamedTapToChange": {
+    "description": "Subtitle when named custom sound is active",
     "placeholders": { "name": { "type": "String" } }
   },
   "soundCustomTapToChange": "Custom audio — tap to change",
+  "@soundCustomTapToChange": {
+    "description": "Subtitle when generic custom audio is active"
+  },
   "soundSystemDefault": "System default",
+  "@soundSystemDefault": {
+    "description": "Option label for system default notification tone"
+  },
   "browseAudioFile": "Browse audio file…",
+  "@browseAudioFile": {
+    "description": "Option label to choose a custom audio file"
+  },
   "clearAllDataTitle": "Clear all data?",
+  "@clearAllDataTitle": {
+    "description": "Confirmation dialog title for clearing all app data"
+  },
   "clearAllDataMessage": "This will permanently delete all counters and all session history. This cannot be undone.",
+  "@clearAllDataMessage": {
+    "description": "Confirmation dialog message for clearing all app data"
+  },
   "clearAllButton": "Clear all",
+  "@clearAllButton": {
+    "description": "Button label to confirm clearing all data"
+  },
   "allDataCleared": "All data cleared",
+  "@allDataCleared": {
+    "description": "Confirmation snackbar when all app data is cleared"
+  },
 
   "helpTitle": "Help",
+  "@helpTitle": {
+    "description": "Screen title for Help guide"
+  },
   "helpCountingTitle": "Counting",
+  "@helpCountingTitle": {
+    "description": "Section header for counting gestures in Help screen"
+  },
   "helpCountingBody": "Tap anywhere on the bead circle to count one chant. Each 108 chants completes one mala — the ring fills as the beads pass.",
+  "@helpCountingBody": {
+    "description": "Instructions for counting chants in Help screen"
+  },
   "helpUndoTitle": "Undoing a tap",
+  "@helpUndoTitle": {
+    "description": "Section header for undo gesture in Help screen"
+  },
   "helpUndoBody": "Place two fingers on the bead circle and swipe — left or right — to undo your last chant. The session ends gracefully if the count returns to zero.",
+  "@helpUndoBody": {
+    "description": "Instructions for undo gesture in Help screen"
+  },
   "helpTimerTitle": "Timer & status",
+  "@helpTimerTitle": {
+    "description": "Section header for session timer in Help screen"
+  },
   "helpTimerBody": "The pill at the top shows the time spent in this session. The green marker below the count tells you how many beads remain in the current mala, or that the daily offering is complete.",
+  "@helpTimerBody": {
+    "description": "Instructions for timer and status indicators in Help screen"
+  },
   "helpResetTitle": "Resetting",
+  "@helpResetTitle": {
+    "description": "Section header for reset options in Help screen"
+  },
   "helpResetBody": "Open the menu (the three dots, top right of the counting screen) for Reset session and Reset counter. Reset session discards the current sitting; Reset counter clears all history for that mantra.",
+  "@helpResetBody": {
+    "description": "Instructions for resetting sessions and counters in Help screen"
+  },
 
   "cardChantsMala": "chants · {malas} mala",
   "@cardChantsMala": {
+    "description": "Compact card metric format showing chants and malas",
     "placeholders": { "malas": { "type": "int" } }
   },
   "cardComplete": "✓ complete",
+  "@cardComplete": {
+    "description": "Card badge indicating daily goal is complete"
+  },
   "cardPercentDaily": "{percent}% daily",
   "@cardPercentDaily": {
+    "description": "Card badge showing daily progress percentage",
     "placeholders": { "percent": { "type": "int" } }
   },
   "cardNoDaily": "—",
+  "@cardNoDaily": {
+    "description": "Placeholder on counter card when no daily goal is configured"
+  },
   "cardTodayPrefix": "TODAY · ",
+  "@cardTodayPrefix": {
+    "description": "Prefix for today's statistics on counter card"
+  },
   "cardChants": "{count} chants",
   "@cardChants": {
+    "description": "Chant count with label on counter card",
     "placeholders": { "count": { "type": "String" } }
   },
   "cardMala": "{count} mala",
   "@cardMala": {
+    "description": "Mala count with label on counter card",
     "placeholders": { "count": { "type": "int" } }
   },
   "cardMalaProgress": "{current} / {target} mala",
   "@cardMalaProgress": {
+    "description": "Mala progress format showing current vs target malas",
     "placeholders": {
       "current": { "type": "int" },
       "target": { "type": "int" }
@@ -246,15 +715,26 @@
   },
   "cardLifetimePercent": "lifetime · {percent}%",
   "@cardLifetimePercent": {
+    "description": "Lifetime percentage progress on counter card",
     "placeholders": { "percent": { "type": "String" } }
   },
   "cardLifetimePercentComplete": "lifetime · {percent}% ✓",
   "@cardLifetimePercentComplete": {
+    "description": "Completed lifetime percentage progress on counter card",
     "placeholders": { "percent": { "type": "String" } }
   },
 
   "notifDailyGoalTitle": "Daily Goal Achieved",
+  "@notifDailyGoalTitle": {
+    "description": "Notification title fired when daily goal is reached"
+  },
   "notifDailyGoalBody": "You have reached your daily mantra count goal!",
+  "@notifDailyGoalBody": {
+    "description": "Notification body fired when daily goal is reached"
+  },
 
-  "backupShareSubject": "Mantra Japa Counter Backup"
+  "backupShareSubject": "SreerajP MantraJapa Counter Backup",
+  "@backupShareSubject": {
+    "description": "Email/share subject line when sharing exported backup file"
+  }
 }

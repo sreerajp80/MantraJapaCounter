@@ -18,7 +18,7 @@ class AppConfig {
   /// Safe built-in value used when the config file is missing or malformed,
   /// so the app never crashes on a bad config.
   static const AppConfig fallback = AppConfig(
-    appName: 'Mantra Japa Counter',
+    appName: 'SreerajP MantraJapa Counter',
     description:
         'Offline-first application for tracking mantra recitation practice.',
     version: '0.0.0',

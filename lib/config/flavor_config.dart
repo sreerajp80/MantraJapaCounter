@@ -18,7 +18,7 @@ class AppFlavorConfig {
   static bool get enableVerboseLogging => _flavor == AppFlavor.dev;
 
   static String get appName =>
-      _flavor == AppFlavor.dev ? 'Mantra Japa Counter Dev' : 'Mantra Japa Counter';
+      _flavor == AppFlavor.dev ? 'SreerajP MantraJapa Counter Dev' : 'SreerajP MantraJapa Counter';
 
   static String get packageId => _flavor == AppFlavor.dev
       ? 'com.sreerajp.mantrajapacounter.dev'
