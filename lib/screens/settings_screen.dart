@@ -32,6 +32,34 @@ class SettingsScreen extends ConsumerWidget {
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(18, 8, 18, 28),
                 children: [
+                  _SettingsCard(
+                    icon: Icons.palette_outlined,
+                    title: l.settingsAppearanceTitle,
+                    subtitle: l.settingsAppearanceSub,
+                    onTap: () => context.push('/settings/appearance'),
+                  ),
+                  const SizedBox(height: 10),
+                  _SettingsCard(
+                    icon: Icons.stars_outlined,
+                    title: l.settingsFeaturesTitle,
+                    subtitle: l.settingsFeaturesSub,
+                    onTap: () => context.push('/settings/features'),
+                  ),
+                  const SizedBox(height: 10),
+                  _SettingsCard(
+                    icon: Icons.help_outline,
+                    title: l.settingsHelpTitle,
+                    subtitle: l.settingsHelpSub,
+                    onTap: () => context.push('/help'),
+                  ),
+                  const SizedBox(height: 10),
+                  _SettingsCard(
+                    icon: Icons.info_outline,
+                    title: l.aboutTitle,
+                    subtitle: l.settingsAboutSub,
+                    onTap: () => context.push('/about'),
+                  ),
+                  const SizedBox(height: 12),
                   _Section(
                     title: l.sectionDailyGoal,
                     sub: l.sectionDailyGoalSub,
@@ -183,24 +211,6 @@ class SettingsScreen extends ConsumerWidget {
                             }
                           }
                         },
-                      ),
-                    ],
-                  ),
-                  _Section(
-                    title: l.sectionPracticeGuide,
-                    sub: l.sectionPracticeGuideSub,
-                    iconBuilder: (s, c) => Icon(
-                      Icons.menu_book_outlined,
-                      size: s,
-                      color: c,
-                    ),
-                    children: [
-                      _SettingsRow(
-                        leading: const Icon(Icons.swipe_outlined,
-                            size: 15, color: TempleColors.ink2),
-                        title: l.howItWorks,
-                        sub: l.howItWorksSub,
-                        onTap: () => context.push('/help'),
                       ),
                     ],
                   ),
@@ -403,6 +413,82 @@ class SettingsScreen extends ConsumerWidget {
                 style: const TextStyle(color: TempleColors.vermillionDeep)),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ─── Settings card ────────────────────────────────────────────────────────────
+
+class _SettingsCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
+
+  const _SettingsCard({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: TempleColors.card,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: TempleColors.line),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: TempleColors.cardSoft,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: TempleColors.line),
+                ),
+                child: Center(
+                  child: Icon(icon, color: TempleColors.vermillion, size: 22),
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: AppTheme.sans(
+                        fontSize: 15.5,
+                        fontWeight: FontWeight.w600,
+                        color: TempleColors.ink,
+                      ),
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      subtitle,
+                      style: AppTheme.sans(
+                        fontSize: 12.5,
+                        color: TempleColors.ink2,
+                        height: 1.35,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right, color: TempleColors.ink3, size: 18),
+            ],
+          ),
+        ),
       ),
     );
   }

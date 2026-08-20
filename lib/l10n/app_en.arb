@@ -736,5 +736,612 @@
   "backupShareSubject": "SreerajP MantraJapa Counter Backup",
   "@backupShareSubject": {
     "description": "Email/share subject line when sharing exported backup file"
+  },
+
+  "settingsAppearanceTitle": "Appearance",
+  "@settingsAppearanceTitle": {
+    "description": "Title for the Appearance card in settings"
+  },
+  "settingsAppearanceSub": "Screen brightness, stillness mode & temple theme",
+  "@settingsAppearanceSub": {
+    "description": "Subtitle for the Appearance card in settings"
+  },
+  "settingsFeaturesTitle": "Features",
+  "@settingsFeaturesTitle": {
+    "description": "Title for the Features card in settings"
+  },
+  "settingsFeaturesSub": "Explore all features of SreerajP MantraJapa Counter",
+  "@settingsFeaturesSub": {
+    "description": "Subtitle for the Features card in settings"
+  },
+  "settingsHelpTitle": "Help & User Guides",
+  "@settingsHelpTitle": {
+    "description": "Title for the Help card in settings"
+  },
+  "settingsHelpSub": "How features like optical sync, mala counting & backup work",
+  "@settingsHelpSub": {
+    "description": "Subtitle for the Help card in settings"
+  },
+  "settingsAboutSub": "Version, developer details & spiritual purpose",
+  "@settingsAboutSub": {
+    "description": "Subtitle for the About card in settings"
+  },
+
+  "appearanceTitle": "Appearance",
+  "@appearanceTitle": {
+    "description": "Title for Appearance screen"
+  },
+  "appearanceHeaderTitle": "Temple Devotional Theme",
+  "@appearanceHeaderTitle": {
+    "description": "Header title on Appearance screen"
+  },
+  "appearanceHeaderSub": "Custom stillness brightness, sacred South Indian temple palette, and classical typography for distraction-free chanting.",
+  "@appearanceHeaderSub": {
+    "description": "Header subtitle on Appearance screen"
+  },
+  "appearanceBrightnessSection": "Screen Brightness & Stillness",
+  "@appearanceBrightnessSection": {
+    "description": "Brightness section header on Appearance screen"
+  },
+  "appearancePaletteSection": "Sacred Temple Palette",
+  "@appearancePaletteSection": {
+    "description": "Palette section header on Appearance screen"
+  },
+  "appearanceTypographySection": "Typography & Scripts",
+  "@appearanceTypographySection": {
+    "description": "Typography section header on Appearance screen"
+  },
+
+  "paletteVermillionName": "Vermillion (Sindoor)",
+  "@paletteVermillionName": {
+    "description": "Vermillion color name"
+  },
+  "paletteVermillionRole": "Primary sacred accent, lotus motifs, active progress",
+  "@paletteVermillionRole": {
+    "description": "Vermillion color role description"
+  },
+  "paletteTulsiName": "Tulsi Green",
+  "@paletteTulsiName": {
+    "description": "Tulsi color name"
+  },
+  "paletteTulsiRole": "Daily goal completed, auspicious success indicator",
+  "@paletteTulsiRole": {
+    "description": "Tulsi color role description"
+  },
+  "paletteSandalName": "Sandalwood (Chandan)",
+  "@paletteSandalName": {
+    "description": "Sandalwood color name"
+  },
+  "paletteSandalRole": "Peaceful highlights, lifetime milestones, bead markers",
+  "@paletteSandalRole": {
+    "description": "Sandalwood color role description"
+  },
+  "paletteRoseName": "Rose Devotion",
+  "@paletteRoseName": {
+    "description": "Rose color name"
+  },
+  "paletteRoseRole": "Soft devotional accents, multi-counter rotation",
+  "@paletteRoseRole": {
+    "description": "Rose color role description"
+  },
+  "paletteCreamName": "Temple Sanctum Cream",
+  "@paletteCreamName": {
+    "description": "Cream background color name"
+  },
+  "paletteCreamRole": "Warm background reducing eye strain during long sittings",
+  "@paletteCreamRole": {
+    "description": "Cream background color role description"
+  },
+
+  "typographySerifTitle": "EB Garamond (Devotional Serif)",
+  "@typographySerifTitle": {
+    "description": "Serif font title"
+  },
+  "typographySerifSub": "Classical italic numerals, mala totals, and sacred headers",
+  "@typographySerifSub": {
+    "description": "Serif font subtitle"
+  },
+  "typographySansTitle": "Inter (Clean UI Sans)",
+  "@typographySansTitle": {
+    "description": "Sans font title"
+  },
+  "typographySansSub": "Legible labels, practice history, and settings controls",
+  "@typographySansSub": {
+    "description": "Sans font subtitle"
+  },
+  "typographyMalTitle": "Noto Sans Malayalam (Indic Script)",
+  "@typographyMalTitle": {
+    "description": "Malayalam font title"
+  },
+  "typographyMalSub": "Authentic Malayalam mantra titles and stotram rendering",
+  "@typographyMalSub": {
+    "description": "Malayalam font subtitle"
+  },
+
+  "featuresTitle": "Features",
+  "@featuresTitle": {
+    "description": "Title for Features screen"
+  },
+  "featuresHeaderTitle": "SreerajP MantraJapa Counter Features",
+  "@featuresHeaderTitle": {
+    "description": "Header title on Features screen"
+  },
+  "featuresHeaderSub": "Explore every sacred counting tool, air-gap sync safeguard, and temple aesthetic feature designed for your daily sadhana.",
+  "@featuresHeaderSub": {
+    "description": "Header subtitle on Features screen"
+  },
+
+  "helpHeaderTitle": "Help & User Guides",
+  "@helpHeaderTitle": {
+    "description": "Header title on Help hub screen"
+  },
+  "helpHeaderSub": "Comprehensive guides to counting gestures, 108 mala calculations, optical air-gap sync, and privacy safeguards.",
+  "@helpHeaderSub": {
+    "description": "Header subtitle on Help hub screen"
+  },
+
+  "helpCategoryCounting": "Counting & Meditation Practice",
+  "@helpCategoryCounting": {
+    "description": "Counting category header in help"
+  },
+  "helpCategorySync": "Data Sync & Backup",
+  "@helpCategorySync": {
+    "description": "Sync category header in help"
+  },
+  "helpCategoryAudio": "Audio & Feedback",
+  "@helpCategoryAudio": {
+    "description": "Audio category header in help"
+  },
+  "helpCategoryPrivacy": "Privacy & Support",
+  "@helpCategoryPrivacy": {
+    "description": "Privacy category header in help"
+  },
+
+  "helpTopicCountingTitle": "Counting & Gestures Guide",
+  "@helpTopicCountingTitle": {
+    "description": "Counting topic title in help"
+  },
+  "helpTopicCountingSub": "Tap anywhere on the ring, two-finger swipe undo, and session persistence",
+  "@helpTopicCountingSub": {
+    "description": "Counting topic subtitle in help"
+  },
+  "helpTopicMalaTitle": "108 Mala Math & Goals",
+  "@helpTopicMalaTitle": {
+    "description": "Mala topic title in help"
+  },
+  "helpTopicMalaSub": "How 108 bead cycles are calculated, excess counts, and daily goal targets",
+  "@helpTopicMalaSub": {
+    "description": "Mala topic subtitle in help"
+  },
+  "helpTopicOpticalSyncTitle": "Optical Air-Gap Sync",
+  "@helpTopicOpticalSyncTitle": {
+    "description": "Optical sync topic title in help"
+  },
+  "helpTopicOpticalSyncSub": "Offline phone-to-phone data transfer via animated QR camera stream",
+  "@helpTopicOpticalSyncSub": {
+    "description": "Optical sync topic subtitle in help"
+  },
+  "helpTopicBackupTitle": "JSON Backup & Restore",
+  "@helpTopicBackupTitle": {
+    "description": "Backup topic title in help"
+  },
+  "helpTopicBackupSub": "Exporting local backup files, sharing, and safe database restoration",
+  "@helpTopicBackupSub": {
+    "description": "Backup topic subtitle in help"
+  },
+  "helpTopicAudioTitle": "Sound & Vibration Settings",
+  "@helpTopicAudioTitle": {
+    "description": "Audio topic title in help"
+  },
+  "helpTopicAudioSub": "Temple bell tones, mala chimes, custom audio files, and haptic feedback",
+  "@helpTopicAudioSub": {
+    "description": "Audio topic subtitle in help"
+  },
+  "helpTopicPrivacyTitle": "Privacy & Offline-First Core",
+  "@helpTopicPrivacyTitle": {
+    "description": "Privacy topic title in help"
+  },
+  "helpTopicPrivacySub": "Zero internet permissions, local SQLite storage, and zero telemetry",
+  "@helpTopicPrivacySub": {
+    "description": "Privacy topic subtitle in help"
+  },
+  "helpTopicFaqTitle": "FAQs & Troubleshooting",
+  "@helpTopicFaqTitle": {
+    "description": "FAQ topic title in help"
+  },
+  "helpTopicFaqSub": "Frequently asked questions, common issues, and helpful usage tips",
+  "@helpTopicFaqSub": {
+    "description": "FAQ topic subtitle in help"
+  },
+
+  "helpCountingIntro": "The counting screen is intentionally designed for quiet, mindful focus. You do not need to look at the screen while chanting.",
+  "@helpCountingIntro": {
+    "description": "Intro text on Counting Help screen"
+  },
+  "helpCountingTapSection": "How to Count",
+  "@helpCountingTapSection": {
+    "description": "Tap section title on Counting Help screen"
+  },
+  "helpCountingTapBold1": "Tap anywhere:",
+  "@helpCountingTapBold1": {
+    "description": "Bold prefix 1"
+  },
+  "helpCountingTapBullet1": "Tap inside the large circle or anywhere on the central screen to increment by 1 count.",
+  "@helpCountingTapBullet1": {
+    "description": "Bullet 1"
+  },
+  "helpCountingTapBold2": "Haptic pulse:",
+  "@helpCountingTapBold2": {
+    "description": "Bold prefix 2"
+  },
+  "helpCountingTapBullet2": "A gentle vibration confirms every chant so you can keep your eyes closed during meditation.",
+  "@helpCountingTapBullet2": {
+    "description": "Bullet 2"
+  },
+  "helpCountingTapBold3": "Crash recovery:",
+  "@helpCountingTapBold3": {
+    "description": "Bold prefix 3"
+  },
+  "helpCountingTapBullet3": "Every 5 taps are automatically saved to local storage. If your battery dies, not a single count is lost.",
+  "@helpCountingTapBullet3": {
+    "description": "Bullet 3"
+  },
+  "helpCountingUndoSection": "Undoing an Accidental Count",
+  "@helpCountingUndoSection": {
+    "description": "Undo section title on Counting Help screen"
+  },
+  "helpCountingUndoBold1": "Two-finger swipe:",
+  "@helpCountingUndoBold1": {
+    "description": "Bold prefix 1"
+  },
+  "helpCountingUndoBullet1": "Swipe left or right across the mala circle with two fingers to decrement the count by 1.",
+  "@helpCountingUndoBullet1": {
+    "description": "Bullet 1"
+  },
+  "helpCountingUndoBold2": "Zero count threshold:",
+  "@helpCountingUndoBold2": {
+    "description": "Bold prefix 2"
+  },
+  "helpCountingUndoBullet2": "If you reduce the session count to zero, the sitting session is gracefully cleared without polluting history.",
+  "@helpCountingUndoBullet2": {
+    "description": "Bullet 2"
+  },
+  "helpCountingTimerSection": "Session Timing & Status",
+  "@helpCountingTimerSection": {
+    "description": "Timer section title on Counting Help screen"
+  },
+  "helpCountingTimerBold1": "Active timer:",
+  "@helpCountingTimerBold1": {
+    "description": "Bold prefix 1"
+  },
+  "helpCountingTimerBullet1": "The top capsule displays the active duration spent in this sitting.",
+  "@helpCountingTimerBullet1": {
+    "description": "Bullet 1"
+  },
+  "helpCountingTimerBold2": "Progress badge:",
+  "@helpCountingTimerBold2": {
+    "description": "Bold prefix 2"
+  },
+  "helpCountingTimerBullet2": "Shows remaining beads to complete the current 108 cycle or confirms daily goal completion.",
+  "@helpCountingTimerBullet2": {
+    "description": "Bullet 2"
+  },
+
+  "helpMalaIntro": "In traditional Vedic and Buddhist practices, a Japa Mala consists of 108 beads. The app faithfully calculates rounds and progress based on this sacred principle.",
+  "@helpMalaIntro": {
+    "description": "Intro text on Mala Help screen"
+  },
+  "helpMalaBeadsSection": "108 Beads Calculation",
+  "@helpMalaBeadsSection": {
+    "description": "Mala calculation section title"
+  },
+  "helpMalaBeadsBold1": "1 Mala = 108 counts:",
+  "@helpMalaBeadsBold1": {
+    "description": "Bold prefix 1"
+  },
+  "helpMalaBeadsBullet1": "Every 108 counts automatically completes 1 full mala round.",
+  "@helpMalaBeadsBullet1": {
+    "description": "Bullet 1"
+  },
+  "helpMalaBeadsBold2": "Excess counts:",
+  "@helpMalaBeadsBold2": {
+    "description": "Bold prefix 2"
+  },
+  "helpMalaBeadsBullet2": "Counts between mala multiples (e.g. 115 counts = 1 mala + 7 counts) are clearly shown.",
+  "@helpMalaBeadsBullet2": {
+    "description": "Bullet 2"
+  },
+  "helpMalaBeadsBold3": "Mala chime:",
+  "@helpMalaBeadsBold3": {
+    "description": "Bold prefix 3"
+  },
+  "helpMalaBeadsBullet3": "When enabled, a gentle bell sounds on the exact 108th bead of each round.",
+  "@helpMalaBeadsBullet3": {
+    "description": "Bullet 3"
+  },
+  "helpMalaGoalsSection": "Setting Goals & Dedications",
+  "@helpMalaGoalsSection": {
+    "description": "Mala goals section title"
+  },
+  "helpMalaGoalsBold1": "Daily target:",
+  "@helpMalaGoalsBold1": {
+    "description": "Bold prefix 1"
+  },
+  "helpMalaGoalsBullet1": "Set how many malas you commit to chanting every day. The card turns green upon reaching the target.",
+  "@helpMalaGoalsBullet1": {
+    "description": "Bullet 1"
+  },
+  "helpMalaGoalsBold2": "Lifetime target:",
+  "@helpMalaGoalsBold2": {
+    "description": "Bold prefix 2"
+  },
+  "helpMalaGoalsBullet2": "Set long-term sadhana goals (e.g. 100,000 chants or 1,000 malas) to track your cumulative spiritual journey.",
+  "@helpMalaGoalsBullet2": {
+    "description": "Bullet 2"
+  },
+
+  "helpOpticalIntro": "Optical Air-Gap Sync allows you to migrate all your counters and history between two phones without Wi-Fi, Bluetooth, or cloud servers.",
+  "@helpOpticalIntro": {
+    "description": "Intro text on Optical Sync Help screen"
+  },
+  "helpOpticalHowSection": "How to Transfer",
+  "@helpOpticalHowSection": {
+    "description": "Optical how section title"
+  },
+  "helpOpticalHowBold1": "On the sender phone:",
+  "@helpOpticalHowBold1": {
+    "description": "Bold prefix 1"
+  },
+  "helpOpticalHowBullet1": "Go to Settings -> Optical Air-Gap Sync (Send). An animated QR stream will begin playing.",
+  "@helpOpticalHowBullet1": {
+    "description": "Bullet 1"
+  },
+  "helpOpticalHowBold2": "On the receiver phone:",
+  "@helpOpticalHowBold2": {
+    "description": "Bold prefix 2"
+  },
+  "helpOpticalHowBullet2": "Go to Settings -> Optical Air-Gap Sync (Receive) and point the camera at the sender phone's screen.",
+  "@helpOpticalHowBullet2": {
+    "description": "Bullet 2"
+  },
+  "helpOpticalHowBold3": "Automatic assembly:",
+  "@helpOpticalHowBold3": {
+    "description": "Bold prefix 3"
+  },
+  "helpOpticalHowBullet3": "The receiver collects stream packets and reconstructs the full database with zero data corruption.",
+  "@helpOpticalHowBullet3": {
+    "description": "Bullet 3"
+  },
+  "helpOpticalTipsSection": "Tips for Fast Scanning",
+  "@helpOpticalTipsSection": {
+    "description": "Optical tips section title"
+  },
+  "helpOpticalTipsBold1": "Screen brightness:",
+  "@helpOpticalTipsBold1": {
+    "description": "Bold prefix 1"
+  },
+  "helpOpticalTipsBullet1": "Ensure the sending screen is at moderate-to-high brightness without screen glare.",
+  "@helpOpticalTipsBullet1": {
+    "description": "Bullet 1"
+  },
+  "helpOpticalTipsBold2": "Steady distance:",
+  "@helpOpticalTipsBold2": {
+    "description": "Bold prefix 2"
+  },
+  "helpOpticalTipsBullet2": "Hold the receiving phone steadily 15 to 25 cm away from the sender screen.",
+  "@helpOpticalTipsBullet2": {
+    "description": "Bullet 2"
+  },
+  "helpOpticalTipsBold3": "Fountain codes:",
+  "@helpOpticalTipsBold3": {
+    "description": "Bold prefix 3"
+  },
+  "helpOpticalTipsBullet3": "Even if the camera drops a few frames, fountain parity packets will recover the missing data.",
+  "@helpOpticalTipsBullet3": {
+    "description": "Bullet 3"
+  },
+
+  "helpAudioIntro": "Personalize the soundscape of your practice with gentle bells, temple chimes, and haptic vibrations.",
+  "@helpAudioIntro": {
+    "description": "Intro text on Audio Help screen"
+  },
+  "helpAudioTonesSection": "Chimes & Notification Tones",
+  "@helpAudioTonesSection": {
+    "description": "Audio tones section title"
+  },
+  "helpAudioTonesBold1": "Daily goal tone:",
+  "@helpAudioTonesBold1": {
+    "description": "Bold prefix 1"
+  },
+  "helpAudioTonesBullet1": "Plays a peaceful bell tone when you reach your daily target for any mantra.",
+  "@helpAudioTonesBullet1": {
+    "description": "Bullet 1"
+  },
+  "helpAudioTonesBold2": "Mala chime:",
+  "@helpAudioTonesBold2": {
+    "description": "Bold prefix 2"
+  },
+  "helpAudioTonesBullet2": "Plays a soft chime on the 108th bead of every round.",
+  "@helpAudioTonesBullet2": {
+    "description": "Bullet 2"
+  },
+  "helpAudioTonesBold3": "Custom audio picker:",
+  "@helpAudioTonesBold3": {
+    "description": "Bold prefix 3"
+  },
+  "helpAudioTonesBullet3": "Choose any MP3, WAV, or ringtone audio file from your device.",
+  "@helpAudioTonesBullet3": {
+    "description": "Bullet 3"
+  },
+  "helpAudioVibrationSection": "Haptic Vibration",
+  "@helpAudioVibrationSection": {
+    "description": "Audio vibration section title"
+  },
+  "helpAudioVibrationBold1": "Count pulse:",
+  "@helpAudioVibrationBold1": {
+    "description": "Bold prefix 1"
+  },
+  "helpAudioVibrationBullet1": "Subtle tactile pulse with every chant to keep track without looking.",
+  "@helpAudioVibrationBullet1": {
+    "description": "Bullet 1"
+  },
+  "helpAudioVibrationBold2": "Disable anytime:",
+  "@helpAudioVibrationBold2": {
+    "description": "Bold prefix 2"
+  },
+  "helpAudioVibrationBullet2": "Turn off vibration under Settings if you prefer silent meditation.",
+  "@helpAudioVibrationBullet2": {
+    "description": "Bullet 2"
+  },
+
+  "helpBackupIntro": "Your practice data is 100% owned by you. You can export complete backups to JSON files at any time.",
+  "@helpBackupIntro": {
+    "description": "Intro text on Backup Help screen"
+  },
+  "helpBackupExportSection": "Exporting Data",
+  "@helpBackupExportSection": {
+    "description": "Backup export section title"
+  },
+  "helpBackupExportBold1": "Standard JSON file:",
+  "@helpBackupExportBold1": {
+    "description": "Bold prefix 1"
+  },
+  "helpBackupExportBullet1": "Exports all counters, daily goals, lifetime progress, and session history into one clean file.",
+  "@helpBackupExportBullet1": {
+    "description": "Bullet 1"
+  },
+  "helpBackupExportBold2": "System share sheet:",
+  "@helpBackupExportBold2": {
+    "description": "Bold prefix 2"
+  },
+  "helpBackupExportBullet2": "Save the exported file to your local files, SD card, or share it via your favorite offline file transfer app.",
+  "@helpBackupExportBullet2": {
+    "description": "Bullet 2"
+  },
+  "helpBackupExportBold3": "Room & Gson compatible:",
+  "@helpBackupExportBold3": {
+    "description": "Bold prefix 3"
+  },
+  "helpBackupExportBullet3": "Fully compatible with existing and future versions of the app.",
+  "@helpBackupExportBullet3": {
+    "description": "Bullet 3"
+  },
+  "helpBackupImportSection": "Restoring Data",
+  "@helpBackupImportSection": {
+    "description": "Backup import section title"
+  },
+  "helpBackupImportBold1": "File picker:",
+  "@helpBackupImportBold1": {
+    "description": "Bold prefix 1"
+  },
+  "helpBackupImportBullet1": "Tap 'Import Backup File' and select your previously saved JSON file.",
+  "@helpBackupImportBullet1": {
+    "description": "Bullet 1"
+  },
+  "helpBackupImportBold2": "Safe validation:",
+  "@helpBackupImportBold2": {
+    "description": "Bold prefix 2"
+  },
+  "helpBackupImportBullet2": "The file is verified for integrity before restoring to prevent corrupted entries.",
+  "@helpBackupImportBullet2": {
+    "description": "Bullet 2"
+  },
+  "helpBackupImportBold3": "Instant refresh:",
+  "@helpBackupImportBold3": {
+    "description": "Bold prefix 3"
+  },
+  "helpBackupImportBullet3": "Counters and session history update immediately across the app.",
+  "@helpBackupImportBullet3": {
+    "description": "Bullet 3"
+  },
+
+  "helpPrivacyIntro": "SreerajP MantraJapa Counter is built with a strict privacy-first and offline-first ethos.",
+  "@helpPrivacyIntro": {
+    "description": "Intro text on Privacy Help screen"
+  },
+  "helpPrivacyOfflineSection": "100% Offline by Design",
+  "@helpPrivacyOfflineSection": {
+    "description": "Privacy offline section title"
+  },
+  "helpPrivacyOfflineBold1": "No INTERNET permission:",
+  "@helpPrivacyOfflineBold1": {
+    "description": "Bold prefix 1"
+  },
+  "helpPrivacyOfflineBullet1": "The app does not declare the Android INTERNET permission and cannot access the web.",
+  "@helpPrivacyOfflineBullet1": {
+    "description": "Bullet 1"
+  },
+  "helpPrivacyOfflineBold2": "Zero telemetry & tracking:",
+  "@helpPrivacyOfflineBold2": {
+    "description": "Bold prefix 2"
+  },
+  "helpPrivacyOfflineBullet2": "No analytics SDKs, crash reporters, or background advertising services are bundled.",
+  "@helpPrivacyOfflineBullet2": {
+    "description": "Bullet 2"
+  },
+  "helpPrivacyOfflineBold3": "No cloud login:",
+  "@helpPrivacyOfflineBold3": {
+    "description": "Bold prefix 3"
+  },
+  "helpPrivacyOfflineBullet3": "You never need to create an account or provide an email or phone number.",
+  "@helpPrivacyOfflineBullet3": {
+    "description": "Bullet 3"
+  },
+  "helpPrivacyStorageSection": "Local Storage & Data Integrity",
+  "@helpPrivacyStorageSection": {
+    "description": "Privacy storage section title"
+  },
+  "helpPrivacyStorageBold1": "SQLite database:",
+  "@helpPrivacyStorageBold1": {
+    "description": "Bold prefix 1"
+  },
+  "helpPrivacyStorageBullet1": "All counters and session history reside inside an encrypted/isolated SQLite database on your device.",
+  "@helpPrivacyStorageBullet1": {
+    "description": "Bullet 1"
+  },
+  "helpPrivacyStorageBold2": "Crash-proof writes:",
+  "@helpPrivacyStorageBold2": {
+    "description": "Bold prefix 2"
+  },
+  "helpPrivacyStorageBullet2": "Frequent recovery checkpoints ensure your count is preserved during sudden app switches.",
+  "@helpPrivacyStorageBullet2": {
+    "description": "Bullet 2"
+  },
+
+  "helpFaqIntro": "Quick answers to common questions about SreerajP MantraJapa Counter.",
+  "@helpFaqIntro": {
+    "description": "Intro text on FAQ Help screen"
+  },
+  "helpFaqQ1Title": "Why is the app completely offline?",
+  "@helpFaqQ1Title": {
+    "description": "FAQ Q1 title"
+  },
+  "helpFaqQ1Answer": "Japa meditation is a deeply personal and sacred practice. By running strictly offline with no network permissions, we ensure complete privacy, battery efficiency, and zero distractions.",
+  "@helpFaqQ1Answer": {
+    "description": "FAQ Q1 answer"
+  },
+  "helpFaqQ2Title": "How does Optical Air-Gap Sync work without internet?",
+  "@helpFaqQ2Title": {
+    "description": "FAQ Q2 title"
+  },
+  "helpFaqQ2Answer": "The sending phone converts your backup into an animated stream of QR codes displayed on screen. The receiving phone's camera reads these frames and reassembles the complete database locally in seconds.",
+  "@helpFaqQ2Answer": {
+    "description": "FAQ Q2 answer"
+  },
+  "helpFaqQ3Title": "What does Stillness Brightness mode do?",
+  "@helpFaqQ3Title": {
+    "description": "FAQ Q3 title"
+  },
+  "helpFaqQ3Answer": "It allows you to dim the screen to minimal ambient brightness so you can chant in dark rooms or temples without glaring light disturbing others.",
+  "@helpFaqQ3Answer": {
+    "description": "FAQ Q3 answer"
+  },
+  "helpFaqQ4Title": "Can I transfer my data when upgrading to a new phone?",
+  "@helpFaqQ4Title": {
+    "description": "FAQ Q4 title"
+  },
+  "helpFaqQ4Answer": "Yes! You can either use Optical Air-Gap Sync between both phones side-by-side or export a JSON backup file to restore on the new device.",
+  "@helpFaqQ4Answer": {
+    "description": "FAQ Q4 answer"
   }
 }

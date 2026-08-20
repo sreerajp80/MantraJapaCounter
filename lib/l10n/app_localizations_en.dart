@@ -610,4 +610,517 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get backupShareSubject => 'SreerajP MantraJapa Counter Backup';
+
+  @override
+  String get settingsAppearanceTitle => 'Appearance';
+
+  @override
+  String get settingsAppearanceSub =>
+      'Screen brightness, stillness mode & temple theme';
+
+  @override
+  String get settingsFeaturesTitle => 'Features';
+
+  @override
+  String get settingsFeaturesSub =>
+      'Explore all features of SreerajP MantraJapa Counter';
+
+  @override
+  String get settingsHelpTitle => 'Help & User Guides';
+
+  @override
+  String get settingsHelpSub =>
+      'How features like optical sync, mala counting & backup work';
+
+  @override
+  String get settingsAboutSub =>
+      'Version, developer details & spiritual purpose';
+
+  @override
+  String get appearanceTitle => 'Appearance';
+
+  @override
+  String get appearanceHeaderTitle => 'Temple Devotional Theme';
+
+  @override
+  String get appearanceHeaderSub =>
+      'Custom stillness brightness, sacred South Indian temple palette, and classical typography for distraction-free chanting.';
+
+  @override
+  String get appearanceBrightnessSection => 'Screen Brightness & Stillness';
+
+  @override
+  String get appearancePaletteSection => 'Sacred Temple Palette';
+
+  @override
+  String get appearanceTypographySection => 'Typography & Scripts';
+
+  @override
+  String get paletteVermillionName => 'Vermillion (Sindoor)';
+
+  @override
+  String get paletteVermillionRole =>
+      'Primary sacred accent, lotus motifs, active progress';
+
+  @override
+  String get paletteTulsiName => 'Tulsi Green';
+
+  @override
+  String get paletteTulsiRole =>
+      'Daily goal completed, auspicious success indicator';
+
+  @override
+  String get paletteSandalName => 'Sandalwood (Chandan)';
+
+  @override
+  String get paletteSandalRole =>
+      'Peaceful highlights, lifetime milestones, bead markers';
+
+  @override
+  String get paletteRoseName => 'Rose Devotion';
+
+  @override
+  String get paletteRoseRole =>
+      'Soft devotional accents, multi-counter rotation';
+
+  @override
+  String get paletteCreamName => 'Temple Sanctum Cream';
+
+  @override
+  String get paletteCreamRole =>
+      'Warm background reducing eye strain during long sittings';
+
+  @override
+  String get typographySerifTitle => 'EB Garamond (Devotional Serif)';
+
+  @override
+  String get typographySerifSub =>
+      'Classical italic numerals, mala totals, and sacred headers';
+
+  @override
+  String get typographySansTitle => 'Inter (Clean UI Sans)';
+
+  @override
+  String get typographySansSub =>
+      'Legible labels, practice history, and settings controls';
+
+  @override
+  String get typographyMalTitle => 'Noto Sans Malayalam (Indic Script)';
+
+  @override
+  String get typographyMalSub =>
+      'Authentic Malayalam mantra titles and stotram rendering';
+
+  @override
+  String get featuresTitle => 'Features';
+
+  @override
+  String get featuresHeaderTitle => 'SreerajP MantraJapa Counter Features';
+
+  @override
+  String get featuresHeaderSub =>
+      'Explore every sacred counting tool, air-gap sync safeguard, and temple aesthetic feature designed for your daily sadhana.';
+
+  @override
+  String get helpHeaderTitle => 'Help & User Guides';
+
+  @override
+  String get helpHeaderSub =>
+      'Comprehensive guides to counting gestures, 108 mala calculations, optical air-gap sync, and privacy safeguards.';
+
+  @override
+  String get helpCategoryCounting => 'Counting & Meditation Practice';
+
+  @override
+  String get helpCategorySync => 'Data Sync & Backup';
+
+  @override
+  String get helpCategoryAudio => 'Audio & Feedback';
+
+  @override
+  String get helpCategoryPrivacy => 'Privacy & Support';
+
+  @override
+  String get helpTopicCountingTitle => 'Counting & Gestures Guide';
+
+  @override
+  String get helpTopicCountingSub =>
+      'Tap anywhere on the ring, two-finger swipe undo, and session persistence';
+
+  @override
+  String get helpTopicMalaTitle => '108 Mala Math & Goals';
+
+  @override
+  String get helpTopicMalaSub =>
+      'How 108 bead cycles are calculated, excess counts, and daily goal targets';
+
+  @override
+  String get helpTopicOpticalSyncTitle => 'Optical Air-Gap Sync';
+
+  @override
+  String get helpTopicOpticalSyncSub =>
+      'Offline phone-to-phone data transfer via animated QR camera stream';
+
+  @override
+  String get helpTopicBackupTitle => 'JSON Backup & Restore';
+
+  @override
+  String get helpTopicBackupSub =>
+      'Exporting local backup files, sharing, and safe database restoration';
+
+  @override
+  String get helpTopicAudioTitle => 'Sound & Vibration Settings';
+
+  @override
+  String get helpTopicAudioSub =>
+      'Temple bell tones, mala chimes, custom audio files, and haptic feedback';
+
+  @override
+  String get helpTopicPrivacyTitle => 'Privacy & Offline-First Core';
+
+  @override
+  String get helpTopicPrivacySub =>
+      'Zero internet permissions, local SQLite storage, and zero telemetry';
+
+  @override
+  String get helpTopicFaqTitle => 'FAQs & Troubleshooting';
+
+  @override
+  String get helpTopicFaqSub =>
+      'Frequently asked questions, common issues, and helpful usage tips';
+
+  @override
+  String get helpCountingIntro =>
+      'The counting screen is intentionally designed for quiet, mindful focus. You do not need to look at the screen while chanting.';
+
+  @override
+  String get helpCountingTapSection => 'How to Count';
+
+  @override
+  String get helpCountingTapBold1 => 'Tap anywhere:';
+
+  @override
+  String get helpCountingTapBullet1 =>
+      'Tap inside the large circle or anywhere on the central screen to increment by 1 count.';
+
+  @override
+  String get helpCountingTapBold2 => 'Haptic pulse:';
+
+  @override
+  String get helpCountingTapBullet2 =>
+      'A gentle vibration confirms every chant so you can keep your eyes closed during meditation.';
+
+  @override
+  String get helpCountingTapBold3 => 'Crash recovery:';
+
+  @override
+  String get helpCountingTapBullet3 =>
+      'Every 5 taps are automatically saved to local storage. If your battery dies, not a single count is lost.';
+
+  @override
+  String get helpCountingUndoSection => 'Undoing an Accidental Count';
+
+  @override
+  String get helpCountingUndoBold1 => 'Two-finger swipe:';
+
+  @override
+  String get helpCountingUndoBullet1 =>
+      'Swipe left or right across the mala circle with two fingers to decrement the count by 1.';
+
+  @override
+  String get helpCountingUndoBold2 => 'Zero count threshold:';
+
+  @override
+  String get helpCountingUndoBullet2 =>
+      'If you reduce the session count to zero, the sitting session is gracefully cleared without polluting history.';
+
+  @override
+  String get helpCountingTimerSection => 'Session Timing & Status';
+
+  @override
+  String get helpCountingTimerBold1 => 'Active timer:';
+
+  @override
+  String get helpCountingTimerBullet1 =>
+      'The top capsule displays the active duration spent in this sitting.';
+
+  @override
+  String get helpCountingTimerBold2 => 'Progress badge:';
+
+  @override
+  String get helpCountingTimerBullet2 =>
+      'Shows remaining beads to complete the current 108 cycle or confirms daily goal completion.';
+
+  @override
+  String get helpMalaIntro =>
+      'In traditional Vedic and Buddhist practices, a Japa Mala consists of 108 beads. The app faithfully calculates rounds and progress based on this sacred principle.';
+
+  @override
+  String get helpMalaBeadsSection => '108 Beads Calculation';
+
+  @override
+  String get helpMalaBeadsBold1 => '1 Mala = 108 counts:';
+
+  @override
+  String get helpMalaBeadsBullet1 =>
+      'Every 108 counts automatically completes 1 full mala round.';
+
+  @override
+  String get helpMalaBeadsBold2 => 'Excess counts:';
+
+  @override
+  String get helpMalaBeadsBullet2 =>
+      'Counts between mala multiples (e.g. 115 counts = 1 mala + 7 counts) are clearly shown.';
+
+  @override
+  String get helpMalaBeadsBold3 => 'Mala chime:';
+
+  @override
+  String get helpMalaBeadsBullet3 =>
+      'When enabled, a gentle bell sounds on the exact 108th bead of each round.';
+
+  @override
+  String get helpMalaGoalsSection => 'Setting Goals & Dedications';
+
+  @override
+  String get helpMalaGoalsBold1 => 'Daily target:';
+
+  @override
+  String get helpMalaGoalsBullet1 =>
+      'Set how many malas you commit to chanting every day. The card turns green upon reaching the target.';
+
+  @override
+  String get helpMalaGoalsBold2 => 'Lifetime target:';
+
+  @override
+  String get helpMalaGoalsBullet2 =>
+      'Set long-term sadhana goals (e.g. 100,000 chants or 1,000 malas) to track your cumulative spiritual journey.';
+
+  @override
+  String get helpOpticalIntro =>
+      'Optical Air-Gap Sync allows you to migrate all your counters and history between two phones without Wi-Fi, Bluetooth, or cloud servers.';
+
+  @override
+  String get helpOpticalHowSection => 'How to Transfer';
+
+  @override
+  String get helpOpticalHowBold1 => 'On the sender phone:';
+
+  @override
+  String get helpOpticalHowBullet1 =>
+      'Go to Settings -> Optical Air-Gap Sync (Send). An animated QR stream will begin playing.';
+
+  @override
+  String get helpOpticalHowBold2 => 'On the receiver phone:';
+
+  @override
+  String get helpOpticalHowBullet2 =>
+      'Go to Settings -> Optical Air-Gap Sync (Receive) and point the camera at the sender phone\'s screen.';
+
+  @override
+  String get helpOpticalHowBold3 => 'Automatic assembly:';
+
+  @override
+  String get helpOpticalHowBullet3 =>
+      'The receiver collects stream packets and reconstructs the full database with zero data corruption.';
+
+  @override
+  String get helpOpticalTipsSection => 'Tips for Fast Scanning';
+
+  @override
+  String get helpOpticalTipsBold1 => 'Screen brightness:';
+
+  @override
+  String get helpOpticalTipsBullet1 =>
+      'Ensure the sending screen is at moderate-to-high brightness without screen glare.';
+
+  @override
+  String get helpOpticalTipsBold2 => 'Steady distance:';
+
+  @override
+  String get helpOpticalTipsBullet2 =>
+      'Hold the receiving phone steadily 15 to 25 cm away from the sender screen.';
+
+  @override
+  String get helpOpticalTipsBold3 => 'Fountain codes:';
+
+  @override
+  String get helpOpticalTipsBullet3 =>
+      'Even if the camera drops a few frames, fountain parity packets will recover the missing data.';
+
+  @override
+  String get helpAudioIntro =>
+      'Personalize the soundscape of your practice with gentle bells, temple chimes, and haptic vibrations.';
+
+  @override
+  String get helpAudioTonesSection => 'Chimes & Notification Tones';
+
+  @override
+  String get helpAudioTonesBold1 => 'Daily goal tone:';
+
+  @override
+  String get helpAudioTonesBullet1 =>
+      'Plays a peaceful bell tone when you reach your daily target for any mantra.';
+
+  @override
+  String get helpAudioTonesBold2 => 'Mala chime:';
+
+  @override
+  String get helpAudioTonesBullet2 =>
+      'Plays a soft chime on the 108th bead of every round.';
+
+  @override
+  String get helpAudioTonesBold3 => 'Custom audio picker:';
+
+  @override
+  String get helpAudioTonesBullet3 =>
+      'Choose any MP3, WAV, or ringtone audio file from your device.';
+
+  @override
+  String get helpAudioVibrationSection => 'Haptic Vibration';
+
+  @override
+  String get helpAudioVibrationBold1 => 'Count pulse:';
+
+  @override
+  String get helpAudioVibrationBullet1 =>
+      'Subtle tactile pulse with every chant to keep track without looking.';
+
+  @override
+  String get helpAudioVibrationBold2 => 'Disable anytime:';
+
+  @override
+  String get helpAudioVibrationBullet2 =>
+      'Turn off vibration under Settings if you prefer silent meditation.';
+
+  @override
+  String get helpBackupIntro =>
+      'Your practice data is 100% owned by you. You can export complete backups to JSON files at any time.';
+
+  @override
+  String get helpBackupExportSection => 'Exporting Data';
+
+  @override
+  String get helpBackupExportBold1 => 'Standard JSON file:';
+
+  @override
+  String get helpBackupExportBullet1 =>
+      'Exports all counters, daily goals, lifetime progress, and session history into one clean file.';
+
+  @override
+  String get helpBackupExportBold2 => 'System share sheet:';
+
+  @override
+  String get helpBackupExportBullet2 =>
+      'Save the exported file to your local files, SD card, or share it via your favorite offline file transfer app.';
+
+  @override
+  String get helpBackupExportBold3 => 'Room & Gson compatible:';
+
+  @override
+  String get helpBackupExportBullet3 =>
+      'Fully compatible with existing and future versions of the app.';
+
+  @override
+  String get helpBackupImportSection => 'Restoring Data';
+
+  @override
+  String get helpBackupImportBold1 => 'File picker:';
+
+  @override
+  String get helpBackupImportBullet1 =>
+      'Tap \'Import Backup File\' and select your previously saved JSON file.';
+
+  @override
+  String get helpBackupImportBold2 => 'Safe validation:';
+
+  @override
+  String get helpBackupImportBullet2 =>
+      'The file is verified for integrity before restoring to prevent corrupted entries.';
+
+  @override
+  String get helpBackupImportBold3 => 'Instant refresh:';
+
+  @override
+  String get helpBackupImportBullet3 =>
+      'Counters and session history update immediately across the app.';
+
+  @override
+  String get helpPrivacyIntro =>
+      'SreerajP MantraJapa Counter is built with a strict privacy-first and offline-first ethos.';
+
+  @override
+  String get helpPrivacyOfflineSection => '100% Offline by Design';
+
+  @override
+  String get helpPrivacyOfflineBold1 => 'No INTERNET permission:';
+
+  @override
+  String get helpPrivacyOfflineBullet1 =>
+      'The app does not declare the Android INTERNET permission and cannot access the web.';
+
+  @override
+  String get helpPrivacyOfflineBold2 => 'Zero telemetry & tracking:';
+
+  @override
+  String get helpPrivacyOfflineBullet2 =>
+      'No analytics SDKs, crash reporters, or background advertising services are bundled.';
+
+  @override
+  String get helpPrivacyOfflineBold3 => 'No cloud login:';
+
+  @override
+  String get helpPrivacyOfflineBullet3 =>
+      'You never need to create an account or provide an email or phone number.';
+
+  @override
+  String get helpPrivacyStorageSection => 'Local Storage & Data Integrity';
+
+  @override
+  String get helpPrivacyStorageBold1 => 'SQLite database:';
+
+  @override
+  String get helpPrivacyStorageBullet1 =>
+      'All counters and session history reside inside an encrypted/isolated SQLite database on your device.';
+
+  @override
+  String get helpPrivacyStorageBold2 => 'Crash-proof writes:';
+
+  @override
+  String get helpPrivacyStorageBullet2 =>
+      'Frequent recovery checkpoints ensure your count is preserved during sudden app switches.';
+
+  @override
+  String get helpFaqIntro =>
+      'Quick answers to common questions about SreerajP MantraJapa Counter.';
+
+  @override
+  String get helpFaqQ1Title => 'Why is the app completely offline?';
+
+  @override
+  String get helpFaqQ1Answer =>
+      'Japa meditation is a deeply personal and sacred practice. By running strictly offline with no network permissions, we ensure complete privacy, battery efficiency, and zero distractions.';
+
+  @override
+  String get helpFaqQ2Title =>
+      'How does Optical Air-Gap Sync work without internet?';
+
+  @override
+  String get helpFaqQ2Answer =>
+      'The sending phone converts your backup into an animated stream of QR codes displayed on screen. The receiving phone\'s camera reads these frames and reassembles the complete database locally in seconds.';
+
+  @override
+  String get helpFaqQ3Title => 'What does Stillness Brightness mode do?';
+
+  @override
+  String get helpFaqQ3Answer =>
+      'It allows you to dim the screen to minimal ambient brightness so you can chant in dark rooms or temples without glaring light disturbing others.';
+
+  @override
+  String get helpFaqQ4Title =>
+      'Can I transfer my data when upgrading to a new phone?';
+
+  @override
+  String get helpFaqQ4Answer =>
+      'Yes! You can either use Optical Air-Gap Sync between both phones side-by-side or export a JSON backup file to restore on the new device.';
 }

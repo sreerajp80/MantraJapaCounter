@@ -614,4 +614,509 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get backupShareSubject => 'മന്ത്ര ജപ കൗണ്ടർ ബാക്കപ്പ്';
+
+  @override
+  String get settingsAppearanceTitle => 'രൂപഭാവം';
+
+  @override
+  String get settingsAppearanceSub =>
+      'സ്ക്രീൻ തെളിച്ചം, നിശ്ചല മോഡ് & ക്ഷേത്ര തീം';
+
+  @override
+  String get settingsFeaturesTitle => 'സവിശേഷതകൾ';
+
+  @override
+  String get settingsFeaturesSub =>
+      'ആപ്പിന്റെ എല്ലാ സവിശേഷതകളും പര്യവേക്ഷണം ചെയ്യുക';
+
+  @override
+  String get settingsHelpTitle => 'സഹായവും ഉപയോക്തൃ ഗൈഡുകളും';
+
+  @override
+  String get settingsHelpSub =>
+      'ഒപ്റ്റിക്കൽ സിങ്ക്, മാല എണ്ണൽ, ബാക്കപ്പ് എന്നിവ എങ്ങനെ പ്രവർത്തിക്കുന്നു';
+
+  @override
+  String get settingsAboutSub => 'പതിപ്പ്, ഡെവലപ്പർ വിവരങ്ങൾ & ആത്മീയ ലക്ഷ്യം';
+
+  @override
+  String get appearanceTitle => 'രൂപഭാവം';
+
+  @override
+  String get appearanceHeaderTitle => 'ക്ഷേത്ര ഭക്തി തീം';
+
+  @override
+  String get appearanceHeaderSub =>
+      'ഇഷ്ടാനുസൃത നിശ്ചല തെളിച്ചം, പവിത്രമായ ദക്ഷിണേന്ത്യൻ ക്ഷേത്ര വർണ്ണങ്ങൾ, ക്ലാസിക്കൽ ടൈപ്പോഗ്രാഫി.';
+
+  @override
+  String get appearanceBrightnessSection => 'സ്ക്രീൻ തെളിച്ചവും നിശ്ചലതയും';
+
+  @override
+  String get appearancePaletteSection => 'പവിത്ര ക്ഷേത്ര വർണ്ണങ്ങൾ';
+
+  @override
+  String get appearanceTypographySection => 'ടൈപ്പോഗ്രാഫിയും ലിപികളും';
+
+  @override
+  String get paletteVermillionName => 'സിന്ദൂരം (Vermillion)';
+
+  @override
+  String get paletteVermillionRole =>
+      'പ്രധാന ആത്മീയ വർണ്ണം, താമര അടയാളങ്ങൾ, പുരോഗതി';
+
+  @override
+  String get paletteTulsiName => 'തുളസി പച്ച';
+
+  @override
+  String get paletteTulsiRole => 'ദൈനംദിന ലക്ഷ്യം പൂർത്തിയായി, ശുഭ സൂചകം';
+
+  @override
+  String get paletteSandalName => 'ചന്ദനം (Sandalwood)';
+
+  @override
+  String get paletteSandalRole => 'ശാന്തമായ അടയാളങ്ങൾ, മണി സൂചകങ്ങൾ';
+
+  @override
+  String get paletteRoseName => 'റോസ് ഭക്തി';
+
+  @override
+  String get paletteRoseRole => 'സൗമ്യമായ ഭക്തി വർണ്ണം';
+
+  @override
+  String get paletteCreamName => 'ക്ഷേത്ര ശ്രീകോവിൽ ക്രീം';
+
+  @override
+  String get paletteCreamRole => 'കണ്ണുകൾക്ക് ആശ്വാസം നൽകുന്ന പശ്ചാത്തലം';
+
+  @override
+  String get typographySerifTitle => 'EB Garamond (ഭക്തി സെരിഫ്)';
+
+  @override
+  String get typographySerifSub =>
+      'ക്ലാസിക്കൽ ഇറ്റാലിക് അക്കങ്ങൾ, മാല ആകെത്തുക, ശീർഷകങ്ങൾ';
+
+  @override
+  String get typographySansTitle => 'Inter (വ്യക്തമായ UI സാൻസ്)';
+
+  @override
+  String get typographySansSub => 'വ്യക്തമായ ലേബലുകൾ, ചരിത്രം, ക്രമീകരണങ്ങൾ';
+
+  @override
+  String get typographyMalTitle => 'Noto Sans Malayalam (മലയാള ലിപി)';
+
+  @override
+  String get typographyMalSub =>
+      'യഥാർത്ഥ മലയാളം മന്ത്ര ശീർഷകങ്ങളും സ്തോത്രങ്ങളും';
+
+  @override
+  String get featuresTitle => 'സവിശേഷതകൾ';
+
+  @override
+  String get featuresHeaderTitle => 'മന്ത്രജപ കൗണ്ടർ സവിശേഷതകൾ';
+
+  @override
+  String get featuresHeaderSub =>
+      'നിങ്ങളുടെ ദൈനംദിന സാധനയ്ക്കായി രൂപകൽപ്പന ചെയ്ത എല്ലാ സവിശേഷതകളും അറിയുക.';
+
+  @override
+  String get helpHeaderTitle => 'സഹായവും ഉപയോക്തൃ ഗൈഡുകളും';
+
+  @override
+  String get helpHeaderSub =>
+      'എണ്ണൽ രീതികൾ, 108 മാല കണക്കുകൂട്ടൽ, ഒപ്റ്റിക്കൽ എയർ-ഗ്യാപ്പ് സിങ്ക്, സ്വകാര്യത എന്നിവയ്ക്കുള്ള ഗൈഡുകൾ.';
+
+  @override
+  String get helpCategoryCounting => 'എണ്ണലും ധ്യാന സാധനയും';
+
+  @override
+  String get helpCategorySync => 'ഡാറ്റ സിങ്കും ബാക്കപ്പും';
+
+  @override
+  String get helpCategoryAudio => 'ഓഡിയോയും ഫീഡ്‌ബാക്കും';
+
+  @override
+  String get helpCategoryPrivacy => 'സ്വകാര്യതയും പിന്തുണയും';
+
+  @override
+  String get helpTopicCountingTitle => 'എണ്ണലും ആംഗ്യങ്ങളും ഗൈഡ്';
+
+  @override
+  String get helpTopicCountingSub =>
+      'വളയത്തിൽ എവിടെയും ടാപ്പ് ചെയ്യുക, രണ്ട് വിരൽ സ്വൈപ്പ് വഴി പഴയപടിയാക്കൽ';
+
+  @override
+  String get helpTopicMalaTitle => '108 മാല കണക്കുകൂട്ടലും ലക്ഷ്യങ്ങളും';
+
+  @override
+  String get helpTopicMalaSub =>
+      '108 മണി ചക്രങ്ങൾ, അധിക എണ്ണങ്ങൾ, ദൈനംദിന ലക്ഷ്യങ്ങൾ';
+
+  @override
+  String get helpTopicOpticalSyncTitle => 'ഒപ്റ്റിക്കൽ എയർ-ഗ്യാപ്പ് സിങ്ക്';
+
+  @override
+  String get helpTopicOpticalSyncSub =>
+      'ആനിമേഷൻ ചെയ്ത ക്യുആർ സ്ട്രീം വഴി ഫോണുകൾ തമ്മിൽ ഓഫ്‌ലൈൻ കൈമാറ്റം';
+
+  @override
+  String get helpTopicBackupTitle => 'JSON ബാക്കപ്പും പുനഃസ്ഥാപനവും';
+
+  @override
+  String get helpTopicBackupSub =>
+      'ലോക്കൽ ബാക്കപ്പ് ഫയലുകൾ എക്സ്പോർട്ട് ചെയ്യലും സുരക്ഷിത പുനഃസ്ഥാപനവും';
+
+  @override
+  String get helpTopicAudioTitle => 'ശബ്ദവും വൈബ്രേഷനും ക്രമീകരണങ്ങൾ';
+
+  @override
+  String get helpTopicAudioSub =>
+      'ക്ഷേത്ര മണി ശബ്ദങ്ങൾ, മാല നാദങ്ങൾ, വൈബ്രേഷൻ ഫീഡ്‌ബാക്ക്';
+
+  @override
+  String get helpTopicPrivacyTitle => 'സ്വകാര്യതയും ഓഫ്‌ലൈൻ രൂപകൽപ്പനയും';
+
+  @override
+  String get helpTopicPrivacySub =>
+      'ഇന്റർനെറ്റ് അനുമതികളില്ല, ലോക്കൽ SQLite സ്റ്റോറേജ്, സീറോ ടെലിമെട്രി';
+
+  @override
+  String get helpTopicFaqTitle => 'പതിവുചോദ്യങ്ങളും പരിഹാരങ്ങളും';
+
+  @override
+  String get helpTopicFaqSub =>
+      'സാധാരണ ചോദ്യങ്ങൾ, സംശയങ്ങൾ, സഹായകരമായ നുറുങ്ങുകൾ';
+
+  @override
+  String get helpCountingIntro =>
+      'ധ്യാനത്തിൽ പൂർണ്ണമായി മുഴുകാൻ വേണ്ടിയാണ് എണ്ണൽ സ്ക്രീൻ രൂപകൽപ്പന ചെയ്തിരിക്കുന്നത്. ജപിക്കുമ്പോൾ സ്ക്രീനിലേക്ക് നോക്കേണ്ടതില്ല.';
+
+  @override
+  String get helpCountingTapSection => 'എങ്ങനെ എണ്ണാം';
+
+  @override
+  String get helpCountingTapBold1 => 'എവിടെയും ടാപ്പ് ചെയ്യുക:';
+
+  @override
+  String get helpCountingTapBullet1 =>
+      '1 എണ്ണം കൂട്ടാൻ വലിയ വൃത്തത്തിനുള്ളിലോ സ്ക്രീനിലോ എവിടെയും ടാപ്പ് ചെയ്യുക.';
+
+  @override
+  String get helpCountingTapBold2 => 'ഹാപ്റ്റിക് പൾസ്:';
+
+  @override
+  String get helpCountingTapBullet2 =>
+      'ഓരോ ജപത്തിനും മൃദുവായ വൈബ്രേഷൻ ലഭിക്കുന്നു, അതിനാൽ കണ്ണുകൾ അടച്ച് ജപിക്കാം.';
+
+  @override
+  String get helpCountingTapBold3 => 'ക്രാഷ് റിക്കവറി:';
+
+  @override
+  String get helpCountingTapBullet3 =>
+      'ഓരോ 5 ടാപ്പുകളും സ്വയമേവ സേവ് ചെയ്യപ്പെടുന്നു.';
+
+  @override
+  String get helpCountingUndoSection => 'തെറ്റായ എണ്ണം തിരുത്തൽ';
+
+  @override
+  String get helpCountingUndoBold1 => 'രണ്ട് വിരൽ സ്വൈപ്പ്:';
+
+  @override
+  String get helpCountingUndoBullet1 =>
+      'എണ്ണം 1 കുറയ്ക്കാൻ മാല വൃത്തത്തിൽ രണ്ട് വിരലുകൾ വെച്ച് ഇടത്തോട്ടോ വലത്തോട്ടോ സ്വൈപ്പ് ചെയ്യുക.';
+
+  @override
+  String get helpCountingUndoBold2 => 'പൂജ്യം എണ്ണം:';
+
+  @override
+  String get helpCountingUndoBullet2 =>
+      'എണ്ണം പൂജ്യമായാൽ സെഷൻ മായ്ച്ചു കളയുന്നു.';
+
+  @override
+  String get helpCountingTimerSection => 'സെഷൻ സമയവും നിലയും';
+
+  @override
+  String get helpCountingTimerBold1 => 'ടൈമർ:';
+
+  @override
+  String get helpCountingTimerBullet1 =>
+      'മുകളിലെ പിൽ ഈ സെഷനിൽ ചെലവഴിച്ച സമയം കാണിക്കുന്നു.';
+
+  @override
+  String get helpCountingTimerBold2 => 'പുരോഗതി ബാഡ്ജ്:';
+
+  @override
+  String get helpCountingTimerBullet2 =>
+      'നിലവിലെ 108 ചക്രം പൂർത്തിയാക്കാൻ ബാക്കിയുള്ള മണികൾ കാണിക്കുന്നു.';
+
+  @override
+  String get helpMalaIntro =>
+      'പരമ്പരാഗത സാധനയിൽ ഒരു ജപമാലയിൽ 108 മണികൾ അടങ്ങിയിരിക്കുന്നു.';
+
+  @override
+  String get helpMalaBeadsSection => '108 മണികളുടെ കണക്കുകൂട്ടൽ';
+
+  @override
+  String get helpMalaBeadsBold1 => '1 മാല = 108 ജപങ്ങൾ:';
+
+  @override
+  String get helpMalaBeadsBullet1 =>
+      'ഓരോ 108 ജപങ്ങളും 1 പൂർണ്ണ മാലയായി മാറുന്നു.';
+
+  @override
+  String get helpMalaBeadsBold2 => 'അധിക എണ്ണങ്ങൾ:';
+
+  @override
+  String get helpMalaBeadsBullet2 =>
+      'മാല കഴിഞ്ഞുള്ള അധിക ജപങ്ങൾ വ്യക്തമായി കാണിക്കുന്നു.';
+
+  @override
+  String get helpMalaBeadsBold3 => 'മാല മണിനാദം:';
+
+  @override
+  String get helpMalaBeadsBullet3 =>
+      'ഓരോ 108-ാമത്തെ ജപത്തിലും മൃദുവായ മണി മുഴങ്ങുന്നു.';
+
+  @override
+  String get helpMalaGoalsSection => 'ലക്ഷ്യങ്ങൾ ക്രമീകരിക്കൽ';
+
+  @override
+  String get helpMalaGoalsBold1 => 'ദൈനംദിന ലക്ഷ്യം:';
+
+  @override
+  String get helpMalaGoalsBullet1 =>
+      'ദിവസേന എത്ര മാല ജപിക്കണമെന്ന് ക്രമീകരിക്കാം.';
+
+  @override
+  String get helpMalaGoalsBold2 => 'ആജീവനാന്ത ലക്ഷ്യം:';
+
+  @override
+  String get helpMalaGoalsBullet2 => 'ദീർഘകാല സാധനാ ലക്ഷ്യങ്ങൾ നിശ്ചയിക്കാം.';
+
+  @override
+  String get helpOpticalIntro =>
+      'ഇന്റർനെറ്റോ ബ്ലൂടൂത്തോ ഇല്ലാതെ രണ്ട് ഫോണുകൾ തമ്മിൽ ഡാറ്റ മാറ്റാൻ ഒപ്റ്റിക്കൽ എയർ-ഗ്യാപ്പ് സിങ്ക് സഹായിക്കുന്നു.';
+
+  @override
+  String get helpOpticalHowSection => 'എങ്ങനെ കൈമാറാം';
+
+  @override
+  String get helpOpticalHowBold1 => 'അയക്കുന്ന ഫോണിൽ:';
+
+  @override
+  String get helpOpticalHowBullet1 =>
+      'Settings -> Optical Air-Gap Sync (Send) തുറക്കുക. ആനിമേറ്റഡ് ക്യുആർ കാണാം.';
+
+  @override
+  String get helpOpticalHowBold2 => 'സ്വീകരിക്കുന്ന ഫോണിൽ:';
+
+  @override
+  String get helpOpticalHowBullet2 =>
+      'Settings -> Optical Air-Gap Sync (Receive) തുറന്ന് ക്യാമറ കാണിക്കുക.';
+
+  @override
+  String get helpOpticalHowBold3 => 'ഡാറ്റ പുനഃസൃഷ്ടി:';
+
+  @override
+  String get helpOpticalHowBullet3 =>
+      'ഡാറ്റ നിമിഷങ്ങൾക്കകം പൂർണ്ണമായി ഫോണിൽ ലഭിക്കുന്നു.';
+
+  @override
+  String get helpOpticalTipsSection => 'വേഗത്തിൽ സ്കാൻ ചെയ്യാൻ';
+
+  @override
+  String get helpOpticalTipsBold1 => 'തെളിച്ചം:';
+
+  @override
+  String get helpOpticalTipsBullet1 =>
+      'അയക്കുന്ന സ്ക്രീൻ തെളിച്ചമുള്ളതാണെന്ന് ഉറപ്പാക്കുക.';
+
+  @override
+  String get helpOpticalTipsBold2 => 'അകലം:';
+
+  @override
+  String get helpOpticalTipsBullet2 =>
+      '15 മുതൽ 25 സെന്റിമീറ്റർ അകലെ ക്യാമറ പിടിക്കുക.';
+
+  @override
+  String get helpOpticalTipsBold3 => 'ഫൗണ്ടൻ കോഡുകൾ:';
+
+  @override
+  String get helpOpticalTipsBullet3 =>
+      'ചില ഫ്രെയിമുകൾ നഷ്ടപ്പെട്ടാലും ഡാറ്റ കൃത്യമായി ലഭിക്കുന്നു.';
+
+  @override
+  String get helpAudioIntro =>
+      'മണി ശബ്ദങ്ങളും വൈബ്രേഷനും ഉപയോഗിച്ച് നിങ്ങളുടെ ജപ സാധന ക്രമീകരിക്കുക.';
+
+  @override
+  String get helpAudioTonesSection => 'നാദങ്ങളും ശബ്ദങ്ങളും';
+
+  @override
+  String get helpAudioTonesBold1 => 'ദൈനംദിന ലക്ഷ്യ ശബ്ദം:';
+
+  @override
+  String get helpAudioTonesBullet1 =>
+      'ലക്ഷ്യം പൂർത്തിയാകുമ്പോൾ ശാന്തമായ മണി മുഴങ്ങുന്നു.';
+
+  @override
+  String get helpAudioTonesBold2 => 'മാല നാദം:';
+
+  @override
+  String get helpAudioTonesBullet2 =>
+      'ഓരോ 108 മണി പൂർത്തിയാകുമ്പോൾ നേർത്ത മണിനാദം കേൾക്കാം.';
+
+  @override
+  String get helpAudioTonesBold3 => 'ഇഷ്ടാനുസൃത ഓഡിയോ:';
+
+  @override
+  String get helpAudioTonesBullet3 =>
+      'നിങ്ങളുടെ ഫോണിലെ ഏത് ഓഡിയോ ഫയലും തിരഞ്ഞെടുക്കാം.';
+
+  @override
+  String get helpAudioVibrationSection => 'വൈബ്രേഷൻ';
+
+  @override
+  String get helpAudioVibrationBold1 => 'എണ്ണൽ സ്പന്ദനം:';
+
+  @override
+  String get helpAudioVibrationBullet1 =>
+      'സ്ക്രീനിൽ നോക്കാതെ എണ്ണാൻ സഹായിക്കുന്ന മൃദു സ്പന്ദനം.';
+
+  @override
+  String get helpAudioVibrationBold2 => 'ഓഫ് ചെയ്യാം:';
+
+  @override
+  String get helpAudioVibrationBullet2 =>
+      'ക്രമീകരണങ്ങളിൽ നിന്ന് എപ്പോൾ വേണമെങ്കിലും വൈബ്രേഷൻ മാറ്റാം.';
+
+  @override
+  String get helpBackupIntro =>
+      'നിങ്ങളുടെ ജപ ഡാറ്റ നിങ്ങളുടെ സ്വന്തമാണ്. എപ്പോൾ വേണമെങ്കിലും ബാക്കപ്പ് ഫയൽ എക്സ്പോർട്ട് ചെയ്യാം.';
+
+  @override
+  String get helpBackupExportSection => 'ഡാറ്റ എക്സ്പോർട്ട് ചെയ്യൽ';
+
+  @override
+  String get helpBackupExportBold1 => 'JSON ഫയൽ:';
+
+  @override
+  String get helpBackupExportBullet1 =>
+      'എല്ലാ കൗണ്ടറുകളും ചരിത്രവും ഒറ്റ ഫയലിലേക്ക് എക്സ്പോർട്ട് ചെയ്യുന്നു.';
+
+  @override
+  String get helpBackupExportBold2 => 'ഷെയർ ഷീറ്റ്:';
+
+  @override
+  String get helpBackupExportBullet2 =>
+      'ലോക്കൽ ഫയലുകളിലോ എസ്ഡി കാർഡിലോ സൂക്ഷിക്കാം.';
+
+  @override
+  String get helpBackupExportBold3 => 'പൂർണ്ണ അനുയോജ്യത:';
+
+  @override
+  String get helpBackupExportBullet3 =>
+      'ഭാവിയിലെ എല്ലാ പതിപ്പുകളിലും പ്രവർത്തിക്കും.';
+
+  @override
+  String get helpBackupImportSection => 'ഡാറ്റ പുനഃസ്ഥാപിക്കൽ';
+
+  @override
+  String get helpBackupImportBold1 => 'ഫയൽ തിരഞ്ഞെടുക്കൽ:';
+
+  @override
+  String get helpBackupImportBullet1 =>
+      '\'ബാക്കപ്പ് ഫയൽ ഇംപോർട്ട് ചെയ്യുക\' അമർത്തി ഫയൽ തിരഞ്ഞെടുക്കുക.';
+
+  @override
+  String get helpBackupImportBold2 => 'സുരക്ഷിത പരിശോധന:';
+
+  @override
+  String get helpBackupImportBullet2 =>
+      'ഡാറ്റ തകരാറുകളില്ലെന്ന് പരിശോധിച്ച ശേഷം പുനഃസ്ഥാപിക്കുന്നു.';
+
+  @override
+  String get helpBackupImportBold3 => 'തൽക്ഷണ മാറ്റം:';
+
+  @override
+  String get helpBackupImportBullet3 =>
+      'എല്ലാ കൗണ്ടറുകളും ഉടൻ തന്നെ അപ്‌ഡേറ്റ് ആകുന്നു.';
+
+  @override
+  String get helpPrivacyIntro =>
+      'പൂർണ്ണ സ്വകാര്യതയോടെയും ഓഫ്‌ലൈനായും പ്രവർത്തിക്കുന്ന ആപ്പാണിത്.';
+
+  @override
+  String get helpPrivacyOfflineSection => '100% ഓഫ്‌ലൈൻ രൂപകൽപ്പന';
+
+  @override
+  String get helpPrivacyOfflineBold1 => 'ഇന്റർനെറ്റ് അനുമതിയില്ല:';
+
+  @override
+  String get helpPrivacyOfflineBullet1 =>
+      'ആപ്പിൽ ഇന്റർനെറ്റ് അനുമതി പൂർണ്ണമായും ഒഴിവാക്കിയിരിക്കുന്നു.';
+
+  @override
+  String get helpPrivacyOfflineBold2 => 'സീറോ ട്രാക്കിംഗ്:';
+
+  @override
+  String get helpPrivacyOfflineBullet2 =>
+      'പരസ്യങ്ങളോ ട്രാക്കിംഗ് സോഫ്റ്റ്‌വെയറോ ഇല്ല.';
+
+  @override
+  String get helpPrivacyOfflineBold3 => 'ലോഗിൻ ആവശ്യമില്ല:';
+
+  @override
+  String get helpPrivacyOfflineBullet3 => 'അക്കൗണ്ടോ ഇമെയിലോ ആവശ്യമില്ല.';
+
+  @override
+  String get helpPrivacyStorageSection => 'ഡാറ്റ സംരക്ഷണം';
+
+  @override
+  String get helpPrivacyStorageBold1 => 'SQLite ഡാറ്റാബേസ്:';
+
+  @override
+  String get helpPrivacyStorageBullet1 =>
+      'എല്ലാ ഡാറ്റയും നിങ്ങളുടെ ഉപകരണത്തിൽ മാത്രം സുരക്ഷിതമായി സൂക്ഷിക്കുന്നു.';
+
+  @override
+  String get helpPrivacyStorageBold2 => 'ക്രാഷ് പ്രൂഫ്:';
+
+  @override
+  String get helpPrivacyStorageBullet2 =>
+      'എണ്ണങ്ങൾ നഷ്ടപ്പെടാതിരിക്കാൻ കൃത്യമായ ഇടവേളകളിൽ സേവ് ചെയ്യുന്നു.';
+
+  @override
+  String get helpFaqIntro =>
+      'മന്ത്രജപ കൗണ്ടറിനെക്കുറിച്ചുള്ള പ്രധാന ചോദ്യങ്ങൾക്ക് ഉത്തരങ്ങൾ.';
+
+  @override
+  String get helpFaqQ1Title =>
+      'എന്തുകൊണ്ടാണ് ആപ്പ് പൂർണ്ണമായും ഓഫ്‌ലൈൻ ആയിരിക്കുന്നത്?';
+
+  @override
+  String get helpFaqQ1Answer =>
+      'ജപ ധ്യാനം തികച്ചും വ്യക്തിപരമാണ്. യാതൊരു ശ്രദ്ധാശൈഥില്യങ്ങളും ഇല്ലാതെ പൂർണ്ണ സ്വകാര്യതയോടെ ജപിക്കാൻ വേണ്ടിയാണിത്.';
+
+  @override
+  String get helpFaqQ2Title =>
+      'ഇന്റർനെറ്റ് ഇല്ലാതെ ഒപ്റ്റിക്കൽ സിങ്ക് എങ്ങനെ പ്രവർത്തിക്കുന്നു?';
+
+  @override
+  String get helpFaqQ2Answer =>
+      'ആനിമേറ്റഡ് ക്യുആർ കോഡുകൾ സ്ക്രീനിൽ കാണിച്ച് ക്യാമറ വഴി ഡാറ്റ ഓഫ്‌ലൈനായി കൈമാറുന്നു.';
+
+  @override
+  String get helpFaqQ3Title => 'നിശ്ചല തെളിച്ചം മോഡ് എന്തിനാണ്?';
+
+  @override
+  String get helpFaqQ3Answer =>
+      'ഇരുട്ടുള്ള മുറികളിലും ക്ഷേത്രങ്ങളിലും മറ്റുള്ളവർക്ക് ബുദ്ധിമുട്ടുണ്ടാക്കാതെ ജപിക്കാൻ സ്ക്രീൻ തെളിച്ചം കുറയ്ക്കുന്നു.';
+
+  @override
+  String get helpFaqQ4Title => 'പുതിയ ഫോണിലേക്ക് ഡാറ്റ മാറ്റാൻ കഴിയുമോ?';
+
+  @override
+  String get helpFaqQ4Answer =>
+      'അതെ! ഒപ്റ്റിക്കൽ എയർ-ഗ്യാപ്പ് സിങ്ക് വഴിയോ JSON ബാക്കപ്പ് ഫയൽ വഴിയോ ഡാറ്റ മാറ്റാം.';
 }

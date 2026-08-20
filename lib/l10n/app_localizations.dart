@@ -1147,6 +1147,894 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'SreerajP MantraJapa Counter Backup'**
   String get backupShareSubject;
+
+  /// Title for the Appearance card in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get settingsAppearanceTitle;
+
+  /// Subtitle for the Appearance card in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Screen brightness, stillness mode & temple theme'**
+  String get settingsAppearanceSub;
+
+  /// Title for the Features card in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Features'**
+  String get settingsFeaturesTitle;
+
+  /// Subtitle for the Features card in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Explore all features of SreerajP MantraJapa Counter'**
+  String get settingsFeaturesSub;
+
+  /// Title for the Help card in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Help & User Guides'**
+  String get settingsHelpTitle;
+
+  /// Subtitle for the Help card in settings
+  ///
+  /// In en, this message translates to:
+  /// **'How features like optical sync, mala counting & backup work'**
+  String get settingsHelpSub;
+
+  /// Subtitle for the About card in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Version, developer details & spiritual purpose'**
+  String get settingsAboutSub;
+
+  /// Title for Appearance screen
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearanceTitle;
+
+  /// Header title on Appearance screen
+  ///
+  /// In en, this message translates to:
+  /// **'Temple Devotional Theme'**
+  String get appearanceHeaderTitle;
+
+  /// Header subtitle on Appearance screen
+  ///
+  /// In en, this message translates to:
+  /// **'Custom stillness brightness, sacred South Indian temple palette, and classical typography for distraction-free chanting.'**
+  String get appearanceHeaderSub;
+
+  /// Brightness section header on Appearance screen
+  ///
+  /// In en, this message translates to:
+  /// **'Screen Brightness & Stillness'**
+  String get appearanceBrightnessSection;
+
+  /// Palette section header on Appearance screen
+  ///
+  /// In en, this message translates to:
+  /// **'Sacred Temple Palette'**
+  String get appearancePaletteSection;
+
+  /// Typography section header on Appearance screen
+  ///
+  /// In en, this message translates to:
+  /// **'Typography & Scripts'**
+  String get appearanceTypographySection;
+
+  /// Vermillion color name
+  ///
+  /// In en, this message translates to:
+  /// **'Vermillion (Sindoor)'**
+  String get paletteVermillionName;
+
+  /// Vermillion color role description
+  ///
+  /// In en, this message translates to:
+  /// **'Primary sacred accent, lotus motifs, active progress'**
+  String get paletteVermillionRole;
+
+  /// Tulsi color name
+  ///
+  /// In en, this message translates to:
+  /// **'Tulsi Green'**
+  String get paletteTulsiName;
+
+  /// Tulsi color role description
+  ///
+  /// In en, this message translates to:
+  /// **'Daily goal completed, auspicious success indicator'**
+  String get paletteTulsiRole;
+
+  /// Sandalwood color name
+  ///
+  /// In en, this message translates to:
+  /// **'Sandalwood (Chandan)'**
+  String get paletteSandalName;
+
+  /// Sandalwood color role description
+  ///
+  /// In en, this message translates to:
+  /// **'Peaceful highlights, lifetime milestones, bead markers'**
+  String get paletteSandalRole;
+
+  /// Rose color name
+  ///
+  /// In en, this message translates to:
+  /// **'Rose Devotion'**
+  String get paletteRoseName;
+
+  /// Rose color role description
+  ///
+  /// In en, this message translates to:
+  /// **'Soft devotional accents, multi-counter rotation'**
+  String get paletteRoseRole;
+
+  /// Cream background color name
+  ///
+  /// In en, this message translates to:
+  /// **'Temple Sanctum Cream'**
+  String get paletteCreamName;
+
+  /// Cream background color role description
+  ///
+  /// In en, this message translates to:
+  /// **'Warm background reducing eye strain during long sittings'**
+  String get paletteCreamRole;
+
+  /// Serif font title
+  ///
+  /// In en, this message translates to:
+  /// **'EB Garamond (Devotional Serif)'**
+  String get typographySerifTitle;
+
+  /// Serif font subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Classical italic numerals, mala totals, and sacred headers'**
+  String get typographySerifSub;
+
+  /// Sans font title
+  ///
+  /// In en, this message translates to:
+  /// **'Inter (Clean UI Sans)'**
+  String get typographySansTitle;
+
+  /// Sans font subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Legible labels, practice history, and settings controls'**
+  String get typographySansSub;
+
+  /// Malayalam font title
+  ///
+  /// In en, this message translates to:
+  /// **'Noto Sans Malayalam (Indic Script)'**
+  String get typographyMalTitle;
+
+  /// Malayalam font subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Authentic Malayalam mantra titles and stotram rendering'**
+  String get typographyMalSub;
+
+  /// Title for Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Features'**
+  String get featuresTitle;
+
+  /// Header title on Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'SreerajP MantraJapa Counter Features'**
+  String get featuresHeaderTitle;
+
+  /// Header subtitle on Features screen
+  ///
+  /// In en, this message translates to:
+  /// **'Explore every sacred counting tool, air-gap sync safeguard, and temple aesthetic feature designed for your daily sadhana.'**
+  String get featuresHeaderSub;
+
+  /// Header title on Help hub screen
+  ///
+  /// In en, this message translates to:
+  /// **'Help & User Guides'**
+  String get helpHeaderTitle;
+
+  /// Header subtitle on Help hub screen
+  ///
+  /// In en, this message translates to:
+  /// **'Comprehensive guides to counting gestures, 108 mala calculations, optical air-gap sync, and privacy safeguards.'**
+  String get helpHeaderSub;
+
+  /// Counting category header in help
+  ///
+  /// In en, this message translates to:
+  /// **'Counting & Meditation Practice'**
+  String get helpCategoryCounting;
+
+  /// Sync category header in help
+  ///
+  /// In en, this message translates to:
+  /// **'Data Sync & Backup'**
+  String get helpCategorySync;
+
+  /// Audio category header in help
+  ///
+  /// In en, this message translates to:
+  /// **'Audio & Feedback'**
+  String get helpCategoryAudio;
+
+  /// Privacy category header in help
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy & Support'**
+  String get helpCategoryPrivacy;
+
+  /// Counting topic title in help
+  ///
+  /// In en, this message translates to:
+  /// **'Counting & Gestures Guide'**
+  String get helpTopicCountingTitle;
+
+  /// Counting topic subtitle in help
+  ///
+  /// In en, this message translates to:
+  /// **'Tap anywhere on the ring, two-finger swipe undo, and session persistence'**
+  String get helpTopicCountingSub;
+
+  /// Mala topic title in help
+  ///
+  /// In en, this message translates to:
+  /// **'108 Mala Math & Goals'**
+  String get helpTopicMalaTitle;
+
+  /// Mala topic subtitle in help
+  ///
+  /// In en, this message translates to:
+  /// **'How 108 bead cycles are calculated, excess counts, and daily goal targets'**
+  String get helpTopicMalaSub;
+
+  /// Optical sync topic title in help
+  ///
+  /// In en, this message translates to:
+  /// **'Optical Air-Gap Sync'**
+  String get helpTopicOpticalSyncTitle;
+
+  /// Optical sync topic subtitle in help
+  ///
+  /// In en, this message translates to:
+  /// **'Offline phone-to-phone data transfer via animated QR camera stream'**
+  String get helpTopicOpticalSyncSub;
+
+  /// Backup topic title in help
+  ///
+  /// In en, this message translates to:
+  /// **'JSON Backup & Restore'**
+  String get helpTopicBackupTitle;
+
+  /// Backup topic subtitle in help
+  ///
+  /// In en, this message translates to:
+  /// **'Exporting local backup files, sharing, and safe database restoration'**
+  String get helpTopicBackupSub;
+
+  /// Audio topic title in help
+  ///
+  /// In en, this message translates to:
+  /// **'Sound & Vibration Settings'**
+  String get helpTopicAudioTitle;
+
+  /// Audio topic subtitle in help
+  ///
+  /// In en, this message translates to:
+  /// **'Temple bell tones, mala chimes, custom audio files, and haptic feedback'**
+  String get helpTopicAudioSub;
+
+  /// Privacy topic title in help
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy & Offline-First Core'**
+  String get helpTopicPrivacyTitle;
+
+  /// Privacy topic subtitle in help
+  ///
+  /// In en, this message translates to:
+  /// **'Zero internet permissions, local SQLite storage, and zero telemetry'**
+  String get helpTopicPrivacySub;
+
+  /// FAQ topic title in help
+  ///
+  /// In en, this message translates to:
+  /// **'FAQs & Troubleshooting'**
+  String get helpTopicFaqTitle;
+
+  /// FAQ topic subtitle in help
+  ///
+  /// In en, this message translates to:
+  /// **'Frequently asked questions, common issues, and helpful usage tips'**
+  String get helpTopicFaqSub;
+
+  /// Intro text on Counting Help screen
+  ///
+  /// In en, this message translates to:
+  /// **'The counting screen is intentionally designed for quiet, mindful focus. You do not need to look at the screen while chanting.'**
+  String get helpCountingIntro;
+
+  /// Tap section title on Counting Help screen
+  ///
+  /// In en, this message translates to:
+  /// **'How to Count'**
+  String get helpCountingTapSection;
+
+  /// Bold prefix 1
+  ///
+  /// In en, this message translates to:
+  /// **'Tap anywhere:'**
+  String get helpCountingTapBold1;
+
+  /// Bullet 1
+  ///
+  /// In en, this message translates to:
+  /// **'Tap inside the large circle or anywhere on the central screen to increment by 1 count.'**
+  String get helpCountingTapBullet1;
+
+  /// Bold prefix 2
+  ///
+  /// In en, this message translates to:
+  /// **'Haptic pulse:'**
+  String get helpCountingTapBold2;
+
+  /// Bullet 2
+  ///
+  /// In en, this message translates to:
+  /// **'A gentle vibration confirms every chant so you can keep your eyes closed during meditation.'**
+  String get helpCountingTapBullet2;
+
+  /// Bold prefix 3
+  ///
+  /// In en, this message translates to:
+  /// **'Crash recovery:'**
+  String get helpCountingTapBold3;
+
+  /// Bullet 3
+  ///
+  /// In en, this message translates to:
+  /// **'Every 5 taps are automatically saved to local storage. If your battery dies, not a single count is lost.'**
+  String get helpCountingTapBullet3;
+
+  /// Undo section title on Counting Help screen
+  ///
+  /// In en, this message translates to:
+  /// **'Undoing an Accidental Count'**
+  String get helpCountingUndoSection;
+
+  /// Bold prefix 1
+  ///
+  /// In en, this message translates to:
+  /// **'Two-finger swipe:'**
+  String get helpCountingUndoBold1;
+
+  /// Bullet 1
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe left or right across the mala circle with two fingers to decrement the count by 1.'**
+  String get helpCountingUndoBullet1;
+
+  /// Bold prefix 2
+  ///
+  /// In en, this message translates to:
+  /// **'Zero count threshold:'**
+  String get helpCountingUndoBold2;
+
+  /// Bullet 2
+  ///
+  /// In en, this message translates to:
+  /// **'If you reduce the session count to zero, the sitting session is gracefully cleared without polluting history.'**
+  String get helpCountingUndoBullet2;
+
+  /// Timer section title on Counting Help screen
+  ///
+  /// In en, this message translates to:
+  /// **'Session Timing & Status'**
+  String get helpCountingTimerSection;
+
+  /// Bold prefix 1
+  ///
+  /// In en, this message translates to:
+  /// **'Active timer:'**
+  String get helpCountingTimerBold1;
+
+  /// Bullet 1
+  ///
+  /// In en, this message translates to:
+  /// **'The top capsule displays the active duration spent in this sitting.'**
+  String get helpCountingTimerBullet1;
+
+  /// Bold prefix 2
+  ///
+  /// In en, this message translates to:
+  /// **'Progress badge:'**
+  String get helpCountingTimerBold2;
+
+  /// Bullet 2
+  ///
+  /// In en, this message translates to:
+  /// **'Shows remaining beads to complete the current 108 cycle or confirms daily goal completion.'**
+  String get helpCountingTimerBullet2;
+
+  /// Intro text on Mala Help screen
+  ///
+  /// In en, this message translates to:
+  /// **'In traditional Vedic and Buddhist practices, a Japa Mala consists of 108 beads. The app faithfully calculates rounds and progress based on this sacred principle.'**
+  String get helpMalaIntro;
+
+  /// Mala calculation section title
+  ///
+  /// In en, this message translates to:
+  /// **'108 Beads Calculation'**
+  String get helpMalaBeadsSection;
+
+  /// Bold prefix 1
+  ///
+  /// In en, this message translates to:
+  /// **'1 Mala = 108 counts:'**
+  String get helpMalaBeadsBold1;
+
+  /// Bullet 1
+  ///
+  /// In en, this message translates to:
+  /// **'Every 108 counts automatically completes 1 full mala round.'**
+  String get helpMalaBeadsBullet1;
+
+  /// Bold prefix 2
+  ///
+  /// In en, this message translates to:
+  /// **'Excess counts:'**
+  String get helpMalaBeadsBold2;
+
+  /// Bullet 2
+  ///
+  /// In en, this message translates to:
+  /// **'Counts between mala multiples (e.g. 115 counts = 1 mala + 7 counts) are clearly shown.'**
+  String get helpMalaBeadsBullet2;
+
+  /// Bold prefix 3
+  ///
+  /// In en, this message translates to:
+  /// **'Mala chime:'**
+  String get helpMalaBeadsBold3;
+
+  /// Bullet 3
+  ///
+  /// In en, this message translates to:
+  /// **'When enabled, a gentle bell sounds on the exact 108th bead of each round.'**
+  String get helpMalaBeadsBullet3;
+
+  /// Mala goals section title
+  ///
+  /// In en, this message translates to:
+  /// **'Setting Goals & Dedications'**
+  String get helpMalaGoalsSection;
+
+  /// Bold prefix 1
+  ///
+  /// In en, this message translates to:
+  /// **'Daily target:'**
+  String get helpMalaGoalsBold1;
+
+  /// Bullet 1
+  ///
+  /// In en, this message translates to:
+  /// **'Set how many malas you commit to chanting every day. The card turns green upon reaching the target.'**
+  String get helpMalaGoalsBullet1;
+
+  /// Bold prefix 2
+  ///
+  /// In en, this message translates to:
+  /// **'Lifetime target:'**
+  String get helpMalaGoalsBold2;
+
+  /// Bullet 2
+  ///
+  /// In en, this message translates to:
+  /// **'Set long-term sadhana goals (e.g. 100,000 chants or 1,000 malas) to track your cumulative spiritual journey.'**
+  String get helpMalaGoalsBullet2;
+
+  /// Intro text on Optical Sync Help screen
+  ///
+  /// In en, this message translates to:
+  /// **'Optical Air-Gap Sync allows you to migrate all your counters and history between two phones without Wi-Fi, Bluetooth, or cloud servers.'**
+  String get helpOpticalIntro;
+
+  /// Optical how section title
+  ///
+  /// In en, this message translates to:
+  /// **'How to Transfer'**
+  String get helpOpticalHowSection;
+
+  /// Bold prefix 1
+  ///
+  /// In en, this message translates to:
+  /// **'On the sender phone:'**
+  String get helpOpticalHowBold1;
+
+  /// Bullet 1
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Settings -> Optical Air-Gap Sync (Send). An animated QR stream will begin playing.'**
+  String get helpOpticalHowBullet1;
+
+  /// Bold prefix 2
+  ///
+  /// In en, this message translates to:
+  /// **'On the receiver phone:'**
+  String get helpOpticalHowBold2;
+
+  /// Bullet 2
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Settings -> Optical Air-Gap Sync (Receive) and point the camera at the sender phone\'s screen.'**
+  String get helpOpticalHowBullet2;
+
+  /// Bold prefix 3
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic assembly:'**
+  String get helpOpticalHowBold3;
+
+  /// Bullet 3
+  ///
+  /// In en, this message translates to:
+  /// **'The receiver collects stream packets and reconstructs the full database with zero data corruption.'**
+  String get helpOpticalHowBullet3;
+
+  /// Optical tips section title
+  ///
+  /// In en, this message translates to:
+  /// **'Tips for Fast Scanning'**
+  String get helpOpticalTipsSection;
+
+  /// Bold prefix 1
+  ///
+  /// In en, this message translates to:
+  /// **'Screen brightness:'**
+  String get helpOpticalTipsBold1;
+
+  /// Bullet 1
+  ///
+  /// In en, this message translates to:
+  /// **'Ensure the sending screen is at moderate-to-high brightness without screen glare.'**
+  String get helpOpticalTipsBullet1;
+
+  /// Bold prefix 2
+  ///
+  /// In en, this message translates to:
+  /// **'Steady distance:'**
+  String get helpOpticalTipsBold2;
+
+  /// Bullet 2
+  ///
+  /// In en, this message translates to:
+  /// **'Hold the receiving phone steadily 15 to 25 cm away from the sender screen.'**
+  String get helpOpticalTipsBullet2;
+
+  /// Bold prefix 3
+  ///
+  /// In en, this message translates to:
+  /// **'Fountain codes:'**
+  String get helpOpticalTipsBold3;
+
+  /// Bullet 3
+  ///
+  /// In en, this message translates to:
+  /// **'Even if the camera drops a few frames, fountain parity packets will recover the missing data.'**
+  String get helpOpticalTipsBullet3;
+
+  /// Intro text on Audio Help screen
+  ///
+  /// In en, this message translates to:
+  /// **'Personalize the soundscape of your practice with gentle bells, temple chimes, and haptic vibrations.'**
+  String get helpAudioIntro;
+
+  /// Audio tones section title
+  ///
+  /// In en, this message translates to:
+  /// **'Chimes & Notification Tones'**
+  String get helpAudioTonesSection;
+
+  /// Bold prefix 1
+  ///
+  /// In en, this message translates to:
+  /// **'Daily goal tone:'**
+  String get helpAudioTonesBold1;
+
+  /// Bullet 1
+  ///
+  /// In en, this message translates to:
+  /// **'Plays a peaceful bell tone when you reach your daily target for any mantra.'**
+  String get helpAudioTonesBullet1;
+
+  /// Bold prefix 2
+  ///
+  /// In en, this message translates to:
+  /// **'Mala chime:'**
+  String get helpAudioTonesBold2;
+
+  /// Bullet 2
+  ///
+  /// In en, this message translates to:
+  /// **'Plays a soft chime on the 108th bead of every round.'**
+  String get helpAudioTonesBullet2;
+
+  /// Bold prefix 3
+  ///
+  /// In en, this message translates to:
+  /// **'Custom audio picker:'**
+  String get helpAudioTonesBold3;
+
+  /// Bullet 3
+  ///
+  /// In en, this message translates to:
+  /// **'Choose any MP3, WAV, or ringtone audio file from your device.'**
+  String get helpAudioTonesBullet3;
+
+  /// Audio vibration section title
+  ///
+  /// In en, this message translates to:
+  /// **'Haptic Vibration'**
+  String get helpAudioVibrationSection;
+
+  /// Bold prefix 1
+  ///
+  /// In en, this message translates to:
+  /// **'Count pulse:'**
+  String get helpAudioVibrationBold1;
+
+  /// Bullet 1
+  ///
+  /// In en, this message translates to:
+  /// **'Subtle tactile pulse with every chant to keep track without looking.'**
+  String get helpAudioVibrationBullet1;
+
+  /// Bold prefix 2
+  ///
+  /// In en, this message translates to:
+  /// **'Disable anytime:'**
+  String get helpAudioVibrationBold2;
+
+  /// Bullet 2
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off vibration under Settings if you prefer silent meditation.'**
+  String get helpAudioVibrationBullet2;
+
+  /// Intro text on Backup Help screen
+  ///
+  /// In en, this message translates to:
+  /// **'Your practice data is 100% owned by you. You can export complete backups to JSON files at any time.'**
+  String get helpBackupIntro;
+
+  /// Backup export section title
+  ///
+  /// In en, this message translates to:
+  /// **'Exporting Data'**
+  String get helpBackupExportSection;
+
+  /// Bold prefix 1
+  ///
+  /// In en, this message translates to:
+  /// **'Standard JSON file:'**
+  String get helpBackupExportBold1;
+
+  /// Bullet 1
+  ///
+  /// In en, this message translates to:
+  /// **'Exports all counters, daily goals, lifetime progress, and session history into one clean file.'**
+  String get helpBackupExportBullet1;
+
+  /// Bold prefix 2
+  ///
+  /// In en, this message translates to:
+  /// **'System share sheet:'**
+  String get helpBackupExportBold2;
+
+  /// Bullet 2
+  ///
+  /// In en, this message translates to:
+  /// **'Save the exported file to your local files, SD card, or share it via your favorite offline file transfer app.'**
+  String get helpBackupExportBullet2;
+
+  /// Bold prefix 3
+  ///
+  /// In en, this message translates to:
+  /// **'Room & Gson compatible:'**
+  String get helpBackupExportBold3;
+
+  /// Bullet 3
+  ///
+  /// In en, this message translates to:
+  /// **'Fully compatible with existing and future versions of the app.'**
+  String get helpBackupExportBullet3;
+
+  /// Backup import section title
+  ///
+  /// In en, this message translates to:
+  /// **'Restoring Data'**
+  String get helpBackupImportSection;
+
+  /// Bold prefix 1
+  ///
+  /// In en, this message translates to:
+  /// **'File picker:'**
+  String get helpBackupImportBold1;
+
+  /// Bullet 1
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Import Backup File\' and select your previously saved JSON file.'**
+  String get helpBackupImportBullet1;
+
+  /// Bold prefix 2
+  ///
+  /// In en, this message translates to:
+  /// **'Safe validation:'**
+  String get helpBackupImportBold2;
+
+  /// Bullet 2
+  ///
+  /// In en, this message translates to:
+  /// **'The file is verified for integrity before restoring to prevent corrupted entries.'**
+  String get helpBackupImportBullet2;
+
+  /// Bold prefix 3
+  ///
+  /// In en, this message translates to:
+  /// **'Instant refresh:'**
+  String get helpBackupImportBold3;
+
+  /// Bullet 3
+  ///
+  /// In en, this message translates to:
+  /// **'Counters and session history update immediately across the app.'**
+  String get helpBackupImportBullet3;
+
+  /// Intro text on Privacy Help screen
+  ///
+  /// In en, this message translates to:
+  /// **'SreerajP MantraJapa Counter is built with a strict privacy-first and offline-first ethos.'**
+  String get helpPrivacyIntro;
+
+  /// Privacy offline section title
+  ///
+  /// In en, this message translates to:
+  /// **'100% Offline by Design'**
+  String get helpPrivacyOfflineSection;
+
+  /// Bold prefix 1
+  ///
+  /// In en, this message translates to:
+  /// **'No INTERNET permission:'**
+  String get helpPrivacyOfflineBold1;
+
+  /// Bullet 1
+  ///
+  /// In en, this message translates to:
+  /// **'The app does not declare the Android INTERNET permission and cannot access the web.'**
+  String get helpPrivacyOfflineBullet1;
+
+  /// Bold prefix 2
+  ///
+  /// In en, this message translates to:
+  /// **'Zero telemetry & tracking:'**
+  String get helpPrivacyOfflineBold2;
+
+  /// Bullet 2
+  ///
+  /// In en, this message translates to:
+  /// **'No analytics SDKs, crash reporters, or background advertising services are bundled.'**
+  String get helpPrivacyOfflineBullet2;
+
+  /// Bold prefix 3
+  ///
+  /// In en, this message translates to:
+  /// **'No cloud login:'**
+  String get helpPrivacyOfflineBold3;
+
+  /// Bullet 3
+  ///
+  /// In en, this message translates to:
+  /// **'You never need to create an account or provide an email or phone number.'**
+  String get helpPrivacyOfflineBullet3;
+
+  /// Privacy storage section title
+  ///
+  /// In en, this message translates to:
+  /// **'Local Storage & Data Integrity'**
+  String get helpPrivacyStorageSection;
+
+  /// Bold prefix 1
+  ///
+  /// In en, this message translates to:
+  /// **'SQLite database:'**
+  String get helpPrivacyStorageBold1;
+
+  /// Bullet 1
+  ///
+  /// In en, this message translates to:
+  /// **'All counters and session history reside inside an encrypted/isolated SQLite database on your device.'**
+  String get helpPrivacyStorageBullet1;
+
+  /// Bold prefix 2
+  ///
+  /// In en, this message translates to:
+  /// **'Crash-proof writes:'**
+  String get helpPrivacyStorageBold2;
+
+  /// Bullet 2
+  ///
+  /// In en, this message translates to:
+  /// **'Frequent recovery checkpoints ensure your count is preserved during sudden app switches.'**
+  String get helpPrivacyStorageBullet2;
+
+  /// Intro text on FAQ Help screen
+  ///
+  /// In en, this message translates to:
+  /// **'Quick answers to common questions about SreerajP MantraJapa Counter.'**
+  String get helpFaqIntro;
+
+  /// FAQ Q1 title
+  ///
+  /// In en, this message translates to:
+  /// **'Why is the app completely offline?'**
+  String get helpFaqQ1Title;
+
+  /// FAQ Q1 answer
+  ///
+  /// In en, this message translates to:
+  /// **'Japa meditation is a deeply personal and sacred practice. By running strictly offline with no network permissions, we ensure complete privacy, battery efficiency, and zero distractions.'**
+  String get helpFaqQ1Answer;
+
+  /// FAQ Q2 title
+  ///
+  /// In en, this message translates to:
+  /// **'How does Optical Air-Gap Sync work without internet?'**
+  String get helpFaqQ2Title;
+
+  /// FAQ Q2 answer
+  ///
+  /// In en, this message translates to:
+  /// **'The sending phone converts your backup into an animated stream of QR codes displayed on screen. The receiving phone\'s camera reads these frames and reassembles the complete database locally in seconds.'**
+  String get helpFaqQ2Answer;
+
+  /// FAQ Q3 title
+  ///
+  /// In en, this message translates to:
+  /// **'What does Stillness Brightness mode do?'**
+  String get helpFaqQ3Title;
+
+  /// FAQ Q3 answer
+  ///
+  /// In en, this message translates to:
+  /// **'It allows you to dim the screen to minimal ambient brightness so you can chant in dark rooms or temples without glaring light disturbing others.'**
+  String get helpFaqQ3Answer;
+
+  /// FAQ Q4 title
+  ///
+  /// In en, this message translates to:
+  /// **'Can I transfer my data when upgrading to a new phone?'**
+  String get helpFaqQ4Title;
+
+  /// FAQ Q4 answer
+  ///
+  /// In en, this message translates to:
+  /// **'Yes! You can either use Optical Air-Gap Sync between both phones side-by-side or export a JSON backup file to restore on the new device.'**
+  String get helpFaqQ4Answer;
 }
 
 class _AppLocalizationsDelegate
