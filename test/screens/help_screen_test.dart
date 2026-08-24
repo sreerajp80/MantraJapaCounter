@@ -36,7 +36,9 @@ void main() {
     expect(find.text('JSON Backup & Restore'), findsOneWidget);
   });
 
-  testWidgets('CountingHelpScreen renders sections and bullets', (tester) async {
+  testWidgets('CountingHelpScreen renders sections and bullets', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(1080, 4000);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
@@ -77,7 +79,9 @@ void main() {
     expect(find.text('108 Beads Calculation'), findsOneWidget);
   });
 
-  testWidgets('OpticalSyncHelpScreen renders air-gap instructions', (tester) async {
+  testWidgets('OpticalSyncHelpScreen renders air-gap instructions', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(1080, 4000);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
@@ -135,7 +139,9 @@ void main() {
     expect(find.text('JSON Backup & Restore'), findsWidgets);
   });
 
-  testWidgets('PrivacyOfflineHelpScreen renders privacy details', (tester) async {
+  testWidgets('PrivacyOfflineHelpScreen renders privacy details', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(1080, 4000);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);

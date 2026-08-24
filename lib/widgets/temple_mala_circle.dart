@@ -71,12 +71,15 @@ class _MalaPainter extends CustomPainter {
     const guruDiameter = 12.0;
     final radius = size.width / 2 - guruDiameter / 2;
 
-    final filledBeadColor =
-        goalReached ? TempleColors.vermillion : TempleColors.sandal;
-    final activeBeadColor =
-        goalReached ? TempleColors.vermillionDeep : TempleColors.vermillion;
-    final unfilledBeadBase =
-        goalReached ? TempleColors.vermillion : TempleColors.sandal;
+    final filledBeadColor = goalReached
+        ? TempleColors.vermillion
+        : TempleColors.sandal;
+    final activeBeadColor = goalReached
+        ? TempleColors.vermillionDeep
+        : TempleColors.vermillion;
+    final unfilledBeadBase = goalReached
+        ? TempleColors.vermillion
+        : TempleColors.sandal;
 
     for (var i = 0; i < beadSegments; i++) {
       final angle = (i * (360 / beadSegments) - 90) * math.pi / 180;

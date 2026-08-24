@@ -28,9 +28,18 @@ class CountingHelpScreen extends StatelessWidget {
                     icon: Icons.touch_app_outlined,
                     title: l.helpCountingTapSection,
                     children: [
-                      HelpBullet(l.helpCountingTapBullet1, boldPrefix: l.helpCountingTapBold1),
-                      HelpBullet(l.helpCountingTapBullet2, boldPrefix: l.helpCountingTapBold2),
-                      HelpBullet(l.helpCountingTapBullet3, boldPrefix: l.helpCountingTapBold3),
+                      HelpBullet(
+                        l.helpCountingTapBullet1,
+                        boldPrefix: l.helpCountingTapBold1,
+                      ),
+                      HelpBullet(
+                        l.helpCountingTapBullet2,
+                        boldPrefix: l.helpCountingTapBold2,
+                      ),
+                      HelpBullet(
+                        l.helpCountingTapBullet3,
+                        boldPrefix: l.helpCountingTapBold3,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -39,8 +48,14 @@ class CountingHelpScreen extends StatelessWidget {
                     icon: Icons.swipe_outlined,
                     title: l.helpCountingUndoSection,
                     children: [
-                      HelpBullet(l.helpCountingUndoBullet1, boldPrefix: l.helpCountingUndoBold1),
-                      HelpBullet(l.helpCountingUndoBullet2, boldPrefix: l.helpCountingUndoBold2),
+                      HelpBullet(
+                        l.helpCountingUndoBullet1,
+                        boldPrefix: l.helpCountingUndoBold1,
+                      ),
+                      HelpBullet(
+                        l.helpCountingUndoBullet2,
+                        boldPrefix: l.helpCountingUndoBold2,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -49,8 +64,14 @@ class CountingHelpScreen extends StatelessWidget {
                     icon: Icons.timer_outlined,
                     title: l.helpCountingTimerSection,
                     children: [
-                      HelpBullet(l.helpCountingTimerBullet1, boldPrefix: l.helpCountingTimerBold1),
-                      HelpBullet(l.helpCountingTimerBullet2, boldPrefix: l.helpCountingTimerBold2),
+                      HelpBullet(
+                        l.helpCountingTimerBullet1,
+                        boldPrefix: l.helpCountingTimerBold1,
+                      ),
+                      HelpBullet(
+                        l.helpCountingTimerBullet2,
+                        boldPrefix: l.helpCountingTimerBold2,
+                      ),
                     ],
                   ),
                 ],

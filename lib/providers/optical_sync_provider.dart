@@ -109,10 +109,10 @@ class OpticalSyncTransmitNotifier extends Notifier<OpticalSyncTransmitState> {
   }
 }
 
-final opticalSyncTransmitProvider = NotifierProvider<
-    OpticalSyncTransmitNotifier, OpticalSyncTransmitState>(
-  OpticalSyncTransmitNotifier.new,
-);
+final opticalSyncTransmitProvider =
+    NotifierProvider<OpticalSyncTransmitNotifier, OpticalSyncTransmitState>(
+      OpticalSyncTransmitNotifier.new,
+    );
 
 // ────────────────────────── Receive State & Notifier ──────────────────────────
 
@@ -183,11 +183,10 @@ class OpticalSyncReceiveNotifier extends Notifier<OpticalSyncReceiveState> {
 
     if (progress.isComplete && progress.decodedJsonPayload != null) {
       try {
-        jsonMap = jsonDecode(progress.decodedJsonPayload!) as Map<String, dynamic>;
+        jsonMap =
+            jsonDecode(progress.decodedJsonPayload!) as Map<String, dynamic>;
       } catch (e) {
-        state = state.copyWith(
-          errorMessage: 'Corrupted payload format: $e',
-        );
+        state = state.copyWith(errorMessage: 'Corrupted payload format: $e');
         return;
       }
     }
@@ -218,7 +217,7 @@ class OpticalSyncReceiveNotifier extends Notifier<OpticalSyncReceiveState> {
   }
 }
 
-final opticalSyncReceiveProvider = NotifierProvider<
-    OpticalSyncReceiveNotifier, OpticalSyncReceiveState>(
-  OpticalSyncReceiveNotifier.new,
-);
+final opticalSyncReceiveProvider =
+    NotifierProvider<OpticalSyncReceiveNotifier, OpticalSyncReceiveState>(
+      OpticalSyncReceiveNotifier.new,
+    );

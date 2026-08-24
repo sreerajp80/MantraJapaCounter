@@ -108,105 +108,105 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
         _saveAndExit(context);
       },
       child: Scaffold(
-      backgroundColor: TempleColors.bg,
-      body: SafeArea(
-        child: Column(
-          children: [
-            _topBar(
-              context,
-              durationMs: session.duration,
-              isPaused: session.isPaused,
-            ),
-            _mantraTitle(session.counterName),
-            Expanded(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  final available = math.min(
-                    constraints.maxWidth,
-                    constraints.maxHeight,
-                  );
-                  final medallion = (available * 0.98).clamp(240.0, 520.0);
-                  final mala = medallion / 1.14;
-                  final tapRadius = mala / 2;
-                  final center = Offset(medallion / 2, medallion / 2);
-                  return Center(
-                    child: SizedBox(
-                      width: medallion,
-                      height: medallion,
-                      child: Listener(
-                        behavior: HitTestBehavior.translucent,
-                        onPointerDown: (event) {
-                          _activePointers[event.pointer] = event.position;
-                        },
-                        onPointerMove: _onPointerMove,
-                        onPointerUp: _onPointerEnd,
-                        onPointerCancel: _onPointerEnd,
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTapUp: (details) {
-                            if ((details.localPosition - center).distance <=
-                                tapRadius) {
-                              ref
-                                  .read(
-                                    countingNotifierProvider(
-                                      widget.counterId,
-                                    ).notifier,
-                                  )
-                                  .tap();
-                            }
+        backgroundColor: TempleColors.bg,
+        body: SafeArea(
+          child: Column(
+            children: [
+              _topBar(
+                context,
+                durationMs: session.duration,
+                isPaused: session.isPaused,
+              ),
+              _mantraTitle(session.counterName),
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final available = math.min(
+                      constraints.maxWidth,
+                      constraints.maxHeight,
+                    );
+                    final medallion = (available * 0.98).clamp(240.0, 520.0);
+                    final mala = medallion / 1.14;
+                    final tapRadius = mala / 2;
+                    final center = Offset(medallion / 2, medallion / 2);
+                    return Center(
+                      child: SizedBox(
+                        width: medallion,
+                        height: medallion,
+                        child: Listener(
+                          behavior: HitTestBehavior.translucent,
+                          onPointerDown: (event) {
+                            _activePointers[event.pointer] = event.position;
                           },
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Container(
-                                width: medallion,
-                                height: medallion,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: TempleColors.cardSoft,
+                          onPointerMove: _onPointerMove,
+                          onPointerUp: _onPointerEnd,
+                          onPointerCancel: _onPointerEnd,
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTapUp: (details) {
+                              if ((details.localPosition - center).distance <=
+                                  tapRadius) {
+                                ref
+                                    .read(
+                                      countingNotifierProvider(
+                                        widget.counterId,
+                                      ).notifier,
+                                    )
+                                    .tap();
+                              }
+                            },
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Container(
+                                  width: medallion,
+                                  height: medallion,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: TempleColors.cardSoft,
+                                  ),
                                 ),
-                              ),
-                              TempleMedallion(
-                                size: medallion,
-                                color: isDailyGoalReached
-                                    ? TempleColors.vermillionDeep
-                                    : TempleColors.vermillion,
-                                opacity: isDailyGoalReached ? 0.45 : 0.28,
-                              ),
-                              TempleMalaCircle(
-                                count: sessionInMala,
-                                goal: 108,
-                                diameter: medallion,
-                                goalReached: isDailyGoalReached,
-                                child: _centerNumber(
-                                  sessionInMala: sessionInMala,
-                                  sessionMalas: sessionMalas,
-                                  beadsRemaining: beadsRemaining,
-                                  isLifetimeGoalReached:
-                                      isLifetimeGoalReached,
-                                  isDailyGoalReached: isDailyGoalReached,
+                                TempleMedallion(
+                                  size: medallion,
+                                  color: isDailyGoalReached
+                                      ? TempleColors.vermillionDeep
+                                      : TempleColors.vermillion,
+                                  opacity: isDailyGoalReached ? 0.45 : 0.28,
                                 ),
-                              ),
-                            ],
+                                TempleMalaCircle(
+                                  count: sessionInMala,
+                                  goal: 108,
+                                  diameter: medallion,
+                                  goalReached: isDailyGoalReached,
+                                  child: _centerNumber(
+                                    sessionInMala: sessionInMala,
+                                    sessionMalas: sessionMalas,
+                                    beadsRemaining: beadsRemaining,
+                                    isLifetimeGoalReached:
+                                        isLifetimeGoalReached,
+                                    isDailyGoalReached: isDailyGoalReached,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-            _footer(
-              lifetimeTotal: lifetimeWithSession,
-              todayTotal: todayWithSession,
-              sessionTotal: session.tapCount,
-              counterGoal: counter?.goal ?? 0,
-              dailyGoal: counter?.dailyGoal ?? 0,
-              isDailyGoalReached: isDailyGoalReached,
-            ),
-          ],
+              _footer(
+                lifetimeTotal: lifetimeWithSession,
+                todayTotal: todayWithSession,
+                sessionTotal: session.tapCount,
+                counterGoal: counter?.goal ?? 0,
+                dailyGoal: counter?.dailyGoal ?? 0,
+                isDailyGoalReached: isDailyGoalReached,
+              ),
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
@@ -437,11 +437,10 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
     if ((event.position.dx - start.dx).abs() < _swipeThresholdPx) return;
 
     _swipeDecrementFired = true;
-    ref
-        .read(countingNotifierProvider(widget.counterId).notifier)
-        .decrement();
-    final vibrationEnabled =
-        ref.read(settingsNotifierProvider).vibrationEnabled;
+    ref.read(countingNotifierProvider(widget.counterId).notifier).decrement();
+    final vibrationEnabled = ref
+        .read(settingsNotifierProvider)
+        .vibrationEnabled;
     if (vibrationEnabled) {
       HapticFeedback.mediumImpact();
     }
@@ -479,9 +478,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
           const SizedBox(height: 6),
           _FooterStat(
             label: l.footerDaily,
-            chants: dailyGoal > 0
-                ? '$todayTotal/$dailyGoal'
-                : '$todayTotal',
+            chants: dailyGoal > 0 ? '$todayTotal/$dailyGoal' : '$todayTotal',
             malas: dailyGoal > 0
                 ? '${malaForCount(todayTotal)}/${malaForCount(dailyGoal)}'
                 : '${malaForCount(todayTotal)}',
@@ -603,8 +600,7 @@ class _FooterStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cardColor =
-        highlighted ? TempleColors.vermillion : TempleColors.card;
+    final cardColor = highlighted ? TempleColors.vermillion : TempleColors.card;
     final borderColor = highlighted
         ? TempleColors.vermillionDeep
         : TempleColors.sandal.withValues(alpha: 0.45);

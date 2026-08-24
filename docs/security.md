@@ -1,10 +1,8 @@
 # Security — Mantra Japa Counter
 
-This app stores spiritual practice counting data only. There is no authentication data, financial
-data, health records, or personally identifiable information. The security profile is **low**.
+This document defines the security boundaries, threat model, permission constraints, and offline data handling policies for Mantra Japa Counter.
 
-The sections below document the controls in place and the deliberate decisions not to apply
-controls that would be disproportionate for this risk level.
+Read [AGENTS.md](../AGENTS.md) and [CLAUDE.md](../CLAUDE.md) before modifying security-sensitive code. See [GUIDELINES_MANIFEST.md](GUIDELINES_MANIFEST.md) for full guideline references.
 
 ---
 

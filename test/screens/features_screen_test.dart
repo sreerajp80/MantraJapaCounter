@@ -5,7 +5,9 @@ import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/screens/features_screen.dart';
 
 void main() {
-  testWidgets('FeaturesScreen renders categories and feature highlights', (tester) async {
+  testWidgets('FeaturesScreen renders categories and feature highlights', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(1080, 4000);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);

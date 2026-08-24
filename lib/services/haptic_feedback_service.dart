@@ -7,8 +7,9 @@ import 'package:flutter/services.dart';
 /// and VibrationEffect with USAGE_ALARM attributes for vibration. Errors are
 /// always swallowed — feedback is best-effort and must never break a count.
 class HapticFeedbackService {
-  static const _channel =
-      MethodChannel('com.sreerajp.mantrajapacounter/haptic');
+  static const _channel = MethodChannel(
+    'com.sreerajp.mantrajapacounter/haptic',
+  );
 
   /// Built-in mala-completion beep — a 100ms DTMF tone at max volume on the
   /// notification stream. No audio asset is shipped; ToneGenerator synthesises

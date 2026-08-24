@@ -29,7 +29,10 @@ class HelpHomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
 
-                  _sectionHeader(l.helpCategoryCounting, Icons.touch_app_outlined),
+                  _sectionHeader(
+                    l.helpCategoryCounting,
+                    Icons.touch_app_outlined,
+                  ),
                   const SizedBox(height: 8),
                   _TopicCard(
                     icon: Icons.touch_app_outlined,
@@ -63,7 +66,10 @@ class HelpHomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 22),
 
-                  _sectionHeader(l.helpCategoryAudio, Icons.notifications_active_outlined),
+                  _sectionHeader(
+                    l.helpCategoryAudio,
+                    Icons.notifications_active_outlined,
+                  ),
                   const SizedBox(height: 8),
                   _TopicCard(
                     icon: Icons.volume_up_outlined,
@@ -73,7 +79,10 @@ class HelpHomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 22),
 
-                  _sectionHeader(l.helpCategoryPrivacy, Icons.security_outlined),
+                  _sectionHeader(
+                    l.helpCategoryPrivacy,
+                    Icons.security_outlined,
+                  ),
                   const SizedBox(height: 8),
                   _TopicCard(
                     icon: Icons.shield_outlined,
@@ -107,7 +116,11 @@ class HelpHomeScreen extends StatelessWidget {
         children: [
           TempleIconButton(
             onTap: () => context.pop(),
-            child: const Icon(Icons.arrow_back, size: 18, color: TempleColors.ink),
+            child: const Icon(
+              Icons.arrow_back,
+              size: 18,
+              color: TempleColors.ink,
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -189,7 +202,11 @@ class _HeaderCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
             ),
             child: const Center(
-              child: Icon(Icons.help_outline_rounded, color: TempleColors.vermillion, size: 30),
+              child: Icon(
+                Icons.help_outline_rounded,
+                color: TempleColors.vermillion,
+                size: 30,
+              ),
             ),
           ),
           const SizedBox(width: 14),
@@ -288,7 +305,11 @@ class _TopicCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_right, color: TempleColors.ink3, size: 18),
+              const Icon(
+                Icons.chevron_right,
+                color: TempleColors.ink3,
+                size: 18,
+              ),
             ],
           ),
         ),

@@ -22,7 +22,11 @@ class JapaCounterRepository {
     await _createV3(db);
   }
 
-  static Future<void> onUpgrade(Database db, int oldVersion, int newVersion) async {
+  static Future<void> onUpgrade(
+    Database db,
+    int oldVersion,
+    int newVersion,
+  ) async {
     if (oldVersion < 2) await _createV2(db);
     if (oldVersion < 3) await _createV3(db);
   }
@@ -56,22 +60,38 @@ class JapaCounterRepository {
       )
     ''');
     await db.execute(
-        'CREATE INDEX IF NOT EXISTS idx_sessions_counterId ON japa_sessions(counterId)');
+      'CREATE INDEX IF NOT EXISTS idx_sessions_counterId ON japa_sessions(counterId)',
+    );
     await db.execute(
-        'CREATE INDEX IF NOT EXISTS idx_sessions_timestamp ON japa_sessions(timestamp)');
+      'CREATE INDEX IF NOT EXISTS idx_sessions_timestamp ON japa_sessions(timestamp)',
+    );
   }
 
   static Future<void> _createV3(Database db) async {
     // Add malas and chants columns to japa_sessions
-    await _addColumnIfMissing(db, 'japa_sessions', 'malas', 'INTEGER NOT NULL DEFAULT 0');
-    await _addColumnIfMissing(db, 'japa_sessions', 'chants', 'INTEGER NOT NULL DEFAULT 0');
+    await _addColumnIfMissing(
+      db,
+      'japa_sessions',
+      'malas',
+      'INTEGER NOT NULL DEFAULT 0',
+    );
+    await _addColumnIfMissing(
+      db,
+      'japa_sessions',
+      'chants',
+      'INTEGER NOT NULL DEFAULT 0',
+    );
     // Add disabledAt and disabledReason columns to counters
     await _addColumnIfMissing(db, 'counters', 'disabledAt', 'INTEGER');
     await _addColumnIfMissing(db, 'counters', 'disabledReason', 'TEXT');
   }
 
   static Future<void> _addColumnIfMissing(
-      Database db, String table, String column, String definition) async {
+    Database db,
+    String table,
+    String column,
+    String definition,
+  ) async {
     final cols = await db.rawQuery('PRAGMA table_info($table)');
     final exists = cols.any((c) => c['name'] == column);
     if (!exists) {
@@ -105,12 +125,20 @@ class JapaCounterRepository {
   }
 
   Future<void> insertCounter(Counter counter) async {
-    await _db.insert('counters', counter.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    await _db.insert(
+      'counters',
+      counter.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   Future<void> updateCounter(Counter counter) async {
-    await _db.update('counters', counter.toMap(), where: 'id = ?', whereArgs: [counter.id]);
+    await _db.update(
+      'counters',
+      counter.toMap(),
+      where: 'id = ?',
+      whereArgs: [counter.id],
+    );
   }
 
   Future<void> deleteCounter(String id) async {
@@ -139,20 +167,30 @@ class JapaCounterRepository {
   }
 
   Future<JapaSession?> getSessionById(String id) async {
-    final rows = await _db.query('japa_sessions',
-        where: 'id = ?', whereArgs: [id]);
+    final rows = await _db.query(
+      'japa_sessions',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
     if (rows.isEmpty) return null;
     return JapaSession.fromMap(rows.first);
   }
 
   Future<void> insertSession(JapaSession session) async {
-    await _db.insert('japa_sessions', session.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    await _db.insert(
+      'japa_sessions',
+      session.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   Future<void> updateSession(JapaSession session) async {
-    await _db.update('japa_sessions', session.toMap(),
-        where: 'id = ?', whereArgs: [session.id]);
+    await _db.update(
+      'japa_sessions',
+      session.toMap(),
+      where: 'id = ?',
+      whereArgs: [session.id],
+    );
   }
 
   Future<void> deleteSession(String id) async {
@@ -164,27 +202,36 @@ class JapaCounterRepository {
   }
 
   Future<void> deleteSessionsByCounterId(String counterId) async {
-    await _db.delete('japa_sessions', where: 'counterId = ?', whereArgs: [counterId]);
+    await _db.delete(
+      'japa_sessions',
+      where: 'counterId = ?',
+      whereArgs: [counterId],
+    );
   }
 
   // ──────────────────────────── Aggregation ───────────────────────────────────
 
   Future<int> getTotalCountForCounter(String counterId) async {
     final result = await _db.rawQuery(
-        'SELECT SUM(count) as total FROM japa_sessions WHERE counterId = ?', [counterId]);
+      'SELECT SUM(count) as total FROM japa_sessions WHERE counterId = ?',
+      [counterId],
+    );
     return (result.first['total'] as int?) ?? 0;
   }
 
   Future<int> getTodayCountForCounter(String counterId) async {
     final todayStart = _todayStartMs();
     final result = await _db.rawQuery(
-        'SELECT SUM(count) as total FROM japa_sessions WHERE counterId = ? AND timestamp >= ?',
-        [counterId, todayStart]);
+      'SELECT SUM(count) as total FROM japa_sessions WHERE counterId = ? AND timestamp >= ?',
+      [counterId, todayStart],
+    );
     return (result.first['total'] as int?) ?? 0;
   }
 
   Future<double> getAverageDailyCountForCounter(
-      String counterId, int startDateMs) async {
+    String counterId,
+    int startDateMs,
+  ) async {
     final rows = await _db.query(
       'japa_sessions',
       where: 'counterId = ? AND timestamp >= ?',
@@ -256,13 +303,19 @@ class JapaCounterRepository {
         final fixed = c.startDate == 0
             ? c.copyWith(startDate: c.createdAt > 0 ? c.createdAt : now)
             : c;
-        await txn.insert('counters', fixed.toMap(),
-            conflictAlgorithm: ConflictAlgorithm.replace);
+        await txn.insert(
+          'counters',
+          fixed.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
       }
 
       for (final s in data.sessions) {
-        await txn.insert('japa_sessions', s.toMap(),
-            conflictAlgorithm: ConflictAlgorithm.replace);
+        await txn.insert(
+          'japa_sessions',
+          s.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
       }
     });
   }
@@ -276,8 +329,18 @@ class JapaCounterRepository {
 
   static String _formatDate(DateTime dt) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     final day = dt.day.toString().padLeft(2, '0');
     return '${months[dt.month - 1]} $day, ${dt.year}';

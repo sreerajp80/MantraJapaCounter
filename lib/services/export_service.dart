@@ -64,7 +64,8 @@ class ExportService {
 
     if (!decoded.containsKey('counters') || !decoded.containsKey('sessions')) {
       throw const ValidationException(
-          'Missing required fields: counters, sessions');
+        'Missing required fields: counters, sessions',
+      );
     }
 
     final ExportData data;

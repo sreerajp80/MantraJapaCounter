@@ -1,8 +1,14 @@
-# Mantra Japa Counter — App Overview & Feature Catalog
+# Features — Mantra Japa Counter
 
-## App Description
+This document provides a comprehensive feature catalog and capability overview for the Mantra Japa Counter application.
 
-**Mantra Japa Counter** (Package ID: `com.sreerajp.mantrajapacounter`, Version: `6.9.1+1`) is a privacy-first, fully offline Flutter mobile application crafted for spiritual practitioners, meditators, sadhakas, and devotees of all traditions, paths, and backgrounds to track mantra recitations (*japa* practice), prayers, chants, dynamic sacred affirmations, and spiritual disciplines. The application seamlessly bridges ancient mala counting traditions (108 beads per round) with modern digital capabilities including daily offering goals, lifetime vow/sankalpa tracking, multi-counter management, detailed session history analytics, customizable audio/haptic feedback, and robust data backup and restore functionality.
+Read [architecture.md](architecture.md) for technical design and [project_structure.md](project_structure.md) for folder layout.
+
+---
+
+## 1. App Description
+
+**Mantra Japa Counter** (Package ID: `com.sreerajp.mantrajapacounter`, Version: `6.10.2+19`) is a privacy-first, fully offline Flutter mobile application crafted for spiritual practitioners, meditators, sadhakas, and devotees of all traditions, paths, and backgrounds to track mantra recitations (*japa* practice), prayers, chants, dynamic sacred affirmations, and spiritual disciplines. The application seamlessly bridges ancient mala counting traditions (108 beads per round) with modern digital capabilities including daily offering goals, lifetime vow/sankalpa tracking, multi-counter management, detailed session history analytics, customizable audio/haptic feedback, and robust data backup and restore functionality.
 
 Designed to foster deep stillness, reverence, and undivided focus during meditation, the app features an inclusive, high-contrast visual design system inspired by South Indian temple architecture ("Temple" theme). It combines a serene cream and sandalwood color palette (`#FBF6EC`, `#D8A13A`), sacred traditional iconography (Om badge, temple arch, diya flame, lotus motif, and a 27-segment mala circle), custom variable typography (EB Garamond serif, Inter sans-serif, and Noto Sans Malayalam for Indic Unicode text), and subtle haptic/gesture responses. 
 
@@ -10,7 +16,7 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 
 ---
 
-## Core Technical & Architectural Profile
+## 2. Core Technical & Architectural Profile
 
 | Concern | Details / Package |
 |---|---|
@@ -27,7 +33,7 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 | **Localization** | `flutter_localizations` (`intl`) supporting English (`en`) & Malayalam (`ml`) |
 | **Typography** | `EBGaramond` (variable font), `Inter` (variable font), `NotoSansMalayalam` (variable font) |
 | **Native Integration** | `MainActivity.kt` Kotlin plugin implementing native `ToneGenerator` DTMF beeps, `USAGE_ALARM` audio/vibration attributes, ringtone query via `RingtoneManager`, and `STREAM_ALARM` volume boost/auto-restore (`6000ms` window) |
-| **App Build Flavors** | `prod` (`Mantra Japa Counter`) and `dev` (`Mantra Japa Counter Dev`) with release signing enforcement in Gradle |
+| **App Build Flavors** | `prod` (`SreerajP MantraJapa Counter`) and `dev` (`SreerajP MantraJapa Counter Dev`) with release signing enforcement in Gradle |
 | **Ergonomics & Layout** | Locked in portrait mode (`SystemChrome.setPreferredOrientations`) for single-handed counting |
 | **Privacy & Network** | **100% Offline** — Zero internet permissions, zero network calls, zero third-party analytics |
 

@@ -50,7 +50,10 @@ void main() {
 
       final rawText = frame.serialize();
       // Tamper with serialized CRC32 value
-      final corruptedText = rawText.replaceAll('"c":${frame.crc32}', '"c":9999999');
+      final corruptedText = rawText.replaceAll(
+        '"c":${frame.crc32}',
+        '"c":9999999',
+      );
 
       final parsedFrame = OpticalSyncFrame.parse(corruptedText);
       expect(parsedFrame, isNull);
@@ -77,7 +80,7 @@ void main() {
           'lifetimeGoal': 50000,
           'dailyGoal': 216,
           'status': 'ACTIVE',
-        }
+        },
       ],
       'sessions': [
         {
@@ -86,8 +89,8 @@ void main() {
           'date': '2026-08-12',
           'count': 108,
           'durationSeconds': 900,
-        }
-      ]
+        },
+      ],
     });
 
     test('Encodes payload into systematic and parity frames', () {
@@ -124,32 +127,35 @@ void main() {
       expect(progress.decodedJsonPayload, equals(sampleJson));
     });
 
-    test('Reconstructs payload under 50% systematic frame drops using LT parity frames', () {
-      final frames = OpticalSyncService.generateFrames(
-        sampleJson,
-        sessionId: 'test-session',
-        maxFramesToGenerate: 60,
-      );
+    test(
+      'Reconstructs payload under 50% systematic frame drops using LT parity frames',
+      () {
+        final frames = OpticalSyncService.generateFrames(
+          sampleJson,
+          sessionId: 'test-session',
+          maxFramesToGenerate: 60,
+        );
 
-      final decoder = OpticalSyncDecoder();
-      OpticalSyncReceiveProgress? progress;
+        final decoder = OpticalSyncDecoder();
+        OpticalSyncReceiveProgress? progress;
 
-      // Simulate dropping odd systematic frames, feeding parity frames instead
-      for (int i = 0; i < frames.length; i++) {
-        final frame = frames[i];
-        if (frame.isSystematic && frame.frameIndex % 2 != 0) {
-          // Drop odd systematic frame
-          continue;
+        // Simulate dropping odd systematic frames, feeding parity frames instead
+        for (int i = 0; i < frames.length; i++) {
+          final frame = frames[i];
+          if (frame.isSystematic && frame.frameIndex % 2 != 0) {
+            // Drop odd systematic frame
+            continue;
+          }
+
+          progress = decoder.processFrame(frame);
+          if (progress.isComplete) break;
         }
 
-        progress = decoder.processFrame(frame);
-        if (progress.isComplete) break;
-      }
-
-      expect(progress, isNotNull);
-      expect(progress!.isComplete, isTrue);
-      expect(progress.decodedJsonPayload, equals(sampleJson));
-    });
+        expect(progress, isNotNull);
+        expect(progress!.isComplete, isTrue);
+        expect(progress.decodedJsonPayload, equals(sampleJson));
+      },
+    );
 
     test('Rejects frames with mismatched session ID', () {
       final frames1 = OpticalSyncService.generateFrames(

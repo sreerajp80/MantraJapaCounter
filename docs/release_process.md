@@ -1,5 +1,11 @@
 # Release Process — Mantra Japa Counter
 
+This document defines the release runbook, signing configuration, build commands, and quality verification checklist for Mantra Japa Counter.
+
+Read [AGENTS.md](../AGENTS.md) and [CLAUDE.md](../CLAUDE.md) before building or publishing a release. See [GUIDELINES_MANIFEST.md](GUIDELINES_MANIFEST.md) for full guideline references.
+
+---
+
 ## 1. Release Scope
 
 - App: `Mantra Japa Counter`

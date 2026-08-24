@@ -28,9 +28,18 @@ class BackupHelpScreen extends StatelessWidget {
                     icon: Icons.upload_file_outlined,
                     title: l.helpBackupExportSection,
                     children: [
-                      HelpBullet(l.helpBackupExportBullet1, boldPrefix: l.helpBackupExportBold1),
-                      HelpBullet(l.helpBackupExportBullet2, boldPrefix: l.helpBackupExportBold2),
-                      HelpBullet(l.helpBackupExportBullet3, boldPrefix: l.helpBackupExportBold3),
+                      HelpBullet(
+                        l.helpBackupExportBullet1,
+                        boldPrefix: l.helpBackupExportBold1,
+                      ),
+                      HelpBullet(
+                        l.helpBackupExportBullet2,
+                        boldPrefix: l.helpBackupExportBold2,
+                      ),
+                      HelpBullet(
+                        l.helpBackupExportBullet3,
+                        boldPrefix: l.helpBackupExportBold3,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -39,9 +48,18 @@ class BackupHelpScreen extends StatelessWidget {
                     icon: Icons.download_for_offline_outlined,
                     title: l.helpBackupImportSection,
                     children: [
-                      HelpBullet(l.helpBackupImportBullet1, boldPrefix: l.helpBackupImportBold1),
-                      HelpBullet(l.helpBackupImportBullet2, boldPrefix: l.helpBackupImportBold2),
-                      HelpBullet(l.helpBackupImportBullet3, boldPrefix: l.helpBackupImportBold3),
+                      HelpBullet(
+                        l.helpBackupImportBullet1,
+                        boldPrefix: l.helpBackupImportBold1,
+                      ),
+                      HelpBullet(
+                        l.helpBackupImportBullet2,
+                        boldPrefix: l.helpBackupImportBold2,
+                      ),
+                      HelpBullet(
+                        l.helpBackupImportBullet3,
+                        boldPrefix: l.helpBackupImportBold3,
+                      ),
                     ],
                   ),
                 ],

@@ -28,9 +28,18 @@ class MalaMathHelpScreen extends StatelessWidget {
                     icon: Icons.lens_blur_outlined,
                     title: l.helpMalaBeadsSection,
                     children: [
-                      HelpBullet(l.helpMalaBeadsBullet1, boldPrefix: l.helpMalaBeadsBold1),
-                      HelpBullet(l.helpMalaBeadsBullet2, boldPrefix: l.helpMalaBeadsBold2),
-                      HelpBullet(l.helpMalaBeadsBullet3, boldPrefix: l.helpMalaBeadsBold3),
+                      HelpBullet(
+                        l.helpMalaBeadsBullet1,
+                        boldPrefix: l.helpMalaBeadsBold1,
+                      ),
+                      HelpBullet(
+                        l.helpMalaBeadsBullet2,
+                        boldPrefix: l.helpMalaBeadsBold2,
+                      ),
+                      HelpBullet(
+                        l.helpMalaBeadsBullet3,
+                        boldPrefix: l.helpMalaBeadsBold3,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -39,8 +48,14 @@ class MalaMathHelpScreen extends StatelessWidget {
                     icon: Icons.flag_outlined,
                     title: l.helpMalaGoalsSection,
                     children: [
-                      HelpBullet(l.helpMalaGoalsBullet1, boldPrefix: l.helpMalaGoalsBold1),
-                      HelpBullet(l.helpMalaGoalsBullet2, boldPrefix: l.helpMalaGoalsBold2),
+                      HelpBullet(
+                        l.helpMalaGoalsBullet1,
+                        boldPrefix: l.helpMalaGoalsBold1,
+                      ),
+                      HelpBullet(
+                        l.helpMalaGoalsBullet2,
+                        boldPrefix: l.helpMalaGoalsBold2,
+                      ),
                     ],
                   ),
                 ],

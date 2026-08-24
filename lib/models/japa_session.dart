@@ -8,10 +8,10 @@ class JapaSession {
   final String counterId;
   final String counterName;
   final int count;
-  final int malas;   // count ÷ 108
-  final int chants;  // count % 108
+  final int malas; // count ÷ 108
+  final int chants; // count % 108
   final int timestamp; // epoch ms
-  final int duration;  // ms
+  final int duration; // ms
 
   const JapaSession({
     required this.id,
@@ -33,17 +33,16 @@ class JapaSession {
     int? chants,
     int? timestamp,
     int? duration,
-  }) =>
-      JapaSession(
-        id: id ?? this.id,
-        counterId: counterId ?? this.counterId,
-        counterName: counterName ?? this.counterName,
-        count: count ?? this.count,
-        malas: malas ?? this.malas,
-        chants: chants ?? this.chants,
-        timestamp: timestamp ?? this.timestamp,
-        duration: duration ?? this.duration,
-      );
+  }) => JapaSession(
+    id: id ?? this.id,
+    counterId: counterId ?? this.counterId,
+    counterName: counterName ?? this.counterName,
+    count: count ?? this.count,
+    malas: malas ?? this.malas,
+    chants: chants ?? this.chants,
+    timestamp: timestamp ?? this.timestamp,
+    duration: duration ?? this.duration,
+  );
 
   Map<String, dynamic> toMap() => {
     'id': id,

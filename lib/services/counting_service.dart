@@ -47,7 +47,10 @@ class CountingService {
 
   /// Returns updated session after decrementing by one increment step (min 0).
   ActiveSession onDecrement(ActiveSession session) {
-    final newCount = (session.tapCount - session.incrementStep).clamp(0, 999999);
+    final newCount = (session.tapCount - session.incrementStep).clamp(
+      0,
+      999999,
+    );
     return session.copyWith(tapCount: newCount);
   }
 

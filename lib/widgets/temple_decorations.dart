@@ -53,16 +53,36 @@ class _ArchPainter extends CustomPainter {
     final outerPath = Path()
       ..moveTo(p(10, 80).dx, p(10, 80).dy)
       ..lineTo(p(10, 40).dx, p(10, 40).dy)
-      ..quadraticBezierTo(p(10, 10).dx, p(10, 10).dy, p(100, 10).dx, p(100, 10).dy)
-      ..quadraticBezierTo(p(190, 10).dx, p(190, 10).dy, p(190, 40).dx, p(190, 40).dy)
+      ..quadraticBezierTo(
+        p(10, 10).dx,
+        p(10, 10).dy,
+        p(100, 10).dx,
+        p(100, 10).dy,
+      )
+      ..quadraticBezierTo(
+        p(190, 10).dx,
+        p(190, 10).dy,
+        p(190, 40).dx,
+        p(190, 40).dy,
+      )
       ..lineTo(p(190, 80).dx, p(190, 80).dy);
     canvas.drawPath(outerPath, outer);
 
     final innerPath = Path()
       ..moveTo(p(30, 80).dx, p(30, 80).dy)
       ..lineTo(p(30, 50).dx, p(30, 50).dy)
-      ..quadraticBezierTo(p(30, 25).dx, p(30, 25).dy, p(100, 25).dx, p(100, 25).dy)
-      ..quadraticBezierTo(p(170, 25).dx, p(170, 25).dy, p(170, 50).dx, p(170, 50).dy)
+      ..quadraticBezierTo(
+        p(30, 25).dx,
+        p(30, 25).dy,
+        p(100, 25).dx,
+        p(100, 25).dy,
+      )
+      ..quadraticBezierTo(
+        p(170, 25).dx,
+        p(170, 25).dy,
+        p(170, 50).dx,
+        p(170, 50).dy,
+      )
       ..lineTo(p(170, 80).dx, p(170, 80).dy);
     canvas.drawPath(innerPath, inner);
 
@@ -140,16 +160,30 @@ class _MedallionPainter extends CustomPainter {
     // Pointed-tip leaf petal: widest in the lower-third, narrowing sharply
     // to a soft point at the tip. control1 sits at full width near the
     // base; control2 converges toward the axis approaching the tip.
-    Path petal({required double base, required double tip, required double width}) {
+    Path petal({
+      required double base,
+      required double tip,
+      required double width,
+    }) {
       final span = tip - base;
       return Path()
         ..moveTo(0, -base)
-        ..cubicTo(-width, -(base + span * 0.30),
-                  -width * 0.30, -(tip - span * 0.05),
-                  0, -tip)
-        ..cubicTo(width * 0.30, -(tip - span * 0.05),
-                  width, -(base + span * 0.30),
-                  0, -base)
+        ..cubicTo(
+          -width,
+          -(base + span * 0.30),
+          -width * 0.30,
+          -(tip - span * 0.05),
+          0,
+          -tip,
+        )
+        ..cubicTo(
+          width * 0.30,
+          -(tip - span * 0.05),
+          width,
+          -(base + span * 0.30),
+          0,
+          -base,
+        )
         ..close();
     }
 
@@ -238,8 +272,7 @@ class _LotusPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _LotusPainter oldDelegate) =>
-      oldDelegate.color != color ||
-      oldDelegate.strokeWidth != strokeWidth;
+      oldDelegate.color != color || oldDelegate.strokeWidth != strokeWidth;
 }
 
 /// Diya (oil lamp) outline icon — used for "daily goal" and timer accents.
@@ -303,8 +336,7 @@ class _DiyaPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _DiyaPainter oldDelegate) =>
-      oldDelegate.color != color ||
-      oldDelegate.strokeWidth != strokeWidth;
+      oldDelegate.color != color || oldDelegate.strokeWidth != strokeWidth;
 }
 
 /// Decorative "॥ ॐ ॥" badge — shown in the top bar above the arch.

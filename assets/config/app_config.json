@@ -1,11 +1,12 @@
 {
   "appName": "SreerajP MantraJapa Counter",
   "description": "Offline-first application for tracking mantra recitation practice with customizable counters and session history.",
-  "version": "6.10.2",
-  "build": "19",
+  "version": "6.10.3",
+  "build": "20",
   "details": {
     "Author": "Sreeraj P",
     "Email": "sreerajp@zohomail.in",
+    "Last Build Date": "24-08-2026",
     "License": "All libraries used are open source.",
     "AI used": "Google Gemini / Anthropic Claude",
     "IDE used": "VS Code / Antigravity IDE"

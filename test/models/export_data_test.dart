@@ -9,11 +9,7 @@ void main() {
       exportVersion: 1,
       exportDate: 1700000000000,
       counters: [
-        Counter(
-            id: 'c1',
-            name: 'Gayatri',
-            startDate: 1000,
-            createdAt: 1000),
+        Counter(id: 'c1', name: 'Gayatri', startDate: 1000, createdAt: 1000),
       ],
       sessions: [
         const JapaSession(

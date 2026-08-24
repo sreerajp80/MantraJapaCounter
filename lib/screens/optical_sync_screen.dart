@@ -11,10 +11,7 @@ import '../widgets/optical_sync_import_preview_sheet.dart';
 class OpticalSyncScreen extends ConsumerStatefulWidget {
   final bool isTransmitter;
 
-  const OpticalSyncScreen({
-    super.key,
-    required this.isTransmitter,
-  });
+  const OpticalSyncScreen({super.key, required this.isTransmitter});
 
   @override
   ConsumerState<OpticalSyncScreen> createState() => _OpticalSyncScreenState();
@@ -177,7 +174,9 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
                       : Icons.play_circle_filled,
                 ),
                 onPressed: () {
-                  ref.read(opticalSyncTransmitProvider.notifier).togglePlayPause();
+                  ref
+                      .read(opticalSyncTransmitProvider.notifier)
+                      .togglePlayPause();
                 },
               ),
             ],
@@ -203,7 +202,9 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
                   selectedColor: TempleColors.vermillion,
                   labelStyle: TextStyle(
                     color: isSelected ? Colors.white : TempleColors.ink,
-                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    fontWeight: isSelected
+                        ? FontWeight.bold
+                        : FontWeight.normal,
                   ),
                   onSelected: (selected) {
                     if (selected) {
@@ -315,10 +316,7 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
                   width: 250,
                   height: 250,
                   decoration: BoxDecoration(
-                    border: Border.all(
-                      color: TempleColors.sandal,
-                      width: 3,
-                    ),
+                    border: Border.all(color: TempleColors.sandal, width: 3),
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),

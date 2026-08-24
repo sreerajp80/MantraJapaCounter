@@ -4,9 +4,9 @@ import 'japa_session.dart';
 ///
 /// Computed at read time — not stored in the database.
 class DailySummary {
-  final String date;          // Formatted: "Jan 23, 2025"
+  final String date; // Formatted: "Jan 23, 2025"
   final int totalCount;
-  final int totalDuration;    // ms
+  final int totalDuration; // ms
   final List<JapaSession> sessions;
 
   const DailySummary({

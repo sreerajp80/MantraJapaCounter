@@ -28,9 +28,18 @@ class PrivacyOfflineHelpScreen extends StatelessWidget {
                     icon: Icons.wifi_off_outlined,
                     title: l.helpPrivacyOfflineSection,
                     children: [
-                      HelpBullet(l.helpPrivacyOfflineBullet1, boldPrefix: l.helpPrivacyOfflineBold1),
-                      HelpBullet(l.helpPrivacyOfflineBullet2, boldPrefix: l.helpPrivacyOfflineBold2),
-                      HelpBullet(l.helpPrivacyOfflineBullet3, boldPrefix: l.helpPrivacyOfflineBold3),
+                      HelpBullet(
+                        l.helpPrivacyOfflineBullet1,
+                        boldPrefix: l.helpPrivacyOfflineBold1,
+                      ),
+                      HelpBullet(
+                        l.helpPrivacyOfflineBullet2,
+                        boldPrefix: l.helpPrivacyOfflineBold2,
+                      ),
+                      HelpBullet(
+                        l.helpPrivacyOfflineBullet3,
+                        boldPrefix: l.helpPrivacyOfflineBold3,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -39,8 +48,14 @@ class PrivacyOfflineHelpScreen extends StatelessWidget {
                     icon: Icons.storage_outlined,
                     title: l.helpPrivacyStorageSection,
                     children: [
-                      HelpBullet(l.helpPrivacyStorageBullet1, boldPrefix: l.helpPrivacyStorageBold1),
-                      HelpBullet(l.helpPrivacyStorageBullet2, boldPrefix: l.helpPrivacyStorageBold2),
+                      HelpBullet(
+                        l.helpPrivacyStorageBullet1,
+                        boldPrefix: l.helpPrivacyStorageBold1,
+                      ),
+                      HelpBullet(
+                        l.helpPrivacyStorageBullet2,
+                        boldPrefix: l.helpPrivacyStorageBold2,
+                      ),
                     ],
                   ),
                 ],

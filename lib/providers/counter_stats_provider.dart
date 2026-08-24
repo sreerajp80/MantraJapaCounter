@@ -24,33 +24,34 @@ class CounterStats {
 /// Matches the Kotlin app's formula:
 ///   totalCount = counter.initialCount + SUM(session.count) for the counter
 ///   todayCount = SUM(session.count) for sessions since today's midnight
-final counterStatsProvider =
-    FutureProvider.autoDispose.family<CounterStats, String>((ref, counterId) async {
-  final repo = ref.watch(japaCounterRepositoryProvider);
-  // Watch the counters list so edits (e.g. changing initialCount) refresh stats
-  // immediately without needing to leave and re-enter the screen.
-  final counters = await ref.watch(countersNotifierProvider.future);
-  final counter = counters.where((c) => c.id == counterId).firstOrNull;
-  final dbTotal = await repo.getTotalCountForCounter(counterId);
-  final today = await repo.getTodayCountForCounter(counterId);
-  final initial = counter?.initialCount ?? 0;
-  final total = initial + dbTotal;
-  return CounterStats(
-    totalCount: total,
-    todayCount: today,
-    totalMalas: malaForCount(total),
-    todayMalas: malaForCount(today),
-    averageDaily: 0, // computed separately for the about screen
-  );
-});
+final counterStatsProvider = FutureProvider.autoDispose
+    .family<CounterStats, String>((ref, counterId) async {
+      final repo = ref.watch(japaCounterRepositoryProvider);
+      // Watch the counters list so edits (e.g. changing initialCount) refresh stats
+      // immediately without needing to leave and re-enter the screen.
+      final counters = await ref.watch(countersNotifierProvider.future);
+      final counter = counters.where((c) => c.id == counterId).firstOrNull;
+      final dbTotal = await repo.getTotalCountForCounter(counterId);
+      final today = await repo.getTodayCountForCounter(counterId);
+      final initial = counter?.initialCount ?? 0;
+      final total = initial + dbTotal;
+      return CounterStats(
+        totalCount: total,
+        todayCount: today,
+        totalMalas: malaForCount(total),
+        todayMalas: malaForCount(today),
+        averageDaily: 0, // computed separately for the about screen
+      );
+    });
 
-final counterAverageProvider =
-    FutureProvider.autoDispose.family<double, ({String counterId, int startDateMs})>(
-  (ref, args) async {
-    final repo = ref.watch(japaCounterRepositoryProvider);
-    return repo.getAverageDailyCountForCounter(args.counterId, args.startDateMs);
-  },
-);
+final counterAverageProvider = FutureProvider.autoDispose
+    .family<double, ({String counterId, int startDateMs})>((ref, args) async {
+      final repo = ref.watch(japaCounterRepositoryProvider);
+      return repo.getAverageDailyCountForCounter(
+        args.counterId,
+        args.startDateMs,
+      );
+    });
 
 /// Aggregate "today" stats across all active counters — drives the summary
 /// pill at the top of CounterListScreen.
@@ -65,8 +66,9 @@ class TodayAggregate {
   });
 }
 
-final todayAggregateProvider =
-    FutureProvider.autoDispose<TodayAggregate>((ref) async {
+final todayAggregateProvider = FutureProvider.autoDispose<TodayAggregate>((
+  ref,
+) async {
   final repo = ref.watch(japaCounterRepositoryProvider);
   final counters = await ref.watch(countersNotifierProvider.future);
   final active = counters.where((c) => c.isActive).toList();

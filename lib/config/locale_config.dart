@@ -21,8 +21,7 @@ class LocaleConfig {
   static Locale localeResolution(
     Locale? deviceLocale,
     Iterable<Locale> supported,
-  ) =>
-      resolve(deviceLocale);
+  ) => resolve(deviceLocale);
 
   /// Context-free lookup for code that runs outside the widget tree (e.g. the
   /// notification service). Resolves against the current platform locale.

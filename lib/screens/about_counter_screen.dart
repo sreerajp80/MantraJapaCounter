@@ -20,12 +20,10 @@ class AboutCounterScreen extends ConsumerWidget {
     final counterAsync = ref.watch(_counterDetailProvider(counterId));
     final statsAsync = ref.watch(counterStatsProvider(counterId));
     final averageAsync = ref.watch(
-      counterAverageProvider(
-        (
-          counterId: counterId,
-          startDateMs: counterAsync.value?.startDate ?? 0,
-        ),
-      ),
+      counterAverageProvider((
+        counterId: counterId,
+        startDateMs: counterAsync.value?.startDate ?? 0,
+      )),
     );
 
     return Scaffold(
@@ -110,8 +108,10 @@ class _CounterDetail extends StatelessWidget {
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         if (counter.disabledReason != null)
-                          Text(counter.disabledReason!,
-                              style: const TextStyle(fontSize: 12)),
+                          Text(
+                            counter.disabledReason!,
+                            style: const TextStyle(fontSize: 12),
+                          ),
                       ],
                     ),
                   ),
@@ -138,8 +138,10 @@ class _CounterDetail extends StatelessWidget {
               color: Colors.orange,
             ),
             CircularProgressWidget(
-              progress: (totalMalas / (goalMalas > 0 ? goalMalas : 1))
-                  .clamp(0.0, 1.0),
+              progress: (totalMalas / (goalMalas > 0 ? goalMalas : 1)).clamp(
+                0.0,
+                1.0,
+              ),
               centerText: '$totalMalas',
               bottomLabel: l.labelMalas,
               color: Colors.purple,
@@ -154,10 +156,14 @@ class _CounterDetail extends StatelessWidget {
         _infoRow(l.infoStatus, _statusText(counter.status)),
         _infoRow(l.infoIncrementStep, '+${counter.incrementStep}'),
         _infoRow(l.infoInitialCount, '${counter.initialCount}'),
-        _infoRow(l.infoLifetimeGoal,
-            counter.goal > 0 ? '${counter.goal}' : l.notSet),
-        _infoRow(l.infoDailyGoal,
-            counter.dailyGoal > 0 ? '${counter.dailyGoal}' : l.notSet),
+        _infoRow(
+          l.infoLifetimeGoal,
+          counter.goal > 0 ? '${counter.goal}' : l.notSet,
+        ),
+        _infoRow(
+          l.infoDailyGoal,
+          counter.dailyGoal > 0 ? '${counter.dailyGoal}' : l.notSet,
+        ),
         _infoRow(l.infoStarted, _formatDate(counter.startDate)),
         _infoRow(l.infoCreated, _formatDate(counter.createdAt)),
         _infoRow(l.infoAvgDaily, averageDaily.toStringAsFixed(1)),
@@ -175,18 +181,24 @@ class _CounterDetail extends StatelessWidget {
         children: [
           SizedBox(
             width: 140,
-            child: Text(label,
-                style: TextStyle(
-                    color: Colors.grey[800],
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14)),
+            child: Text(
+              label,
+              style: TextStyle(
+                color: Colors.grey[800],
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+              ),
+            ),
           ),
           Expanded(
-            child: Text(value,
-                style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14)),
+            child: Text(
+              value,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+              ),
+            ),
           ),
         ],
       ),
@@ -208,8 +220,18 @@ class _CounterDetail extends StatelessWidget {
     if (ms == 0) return '—';
     final dt = DateTime.fromMillisecondsSinceEpoch(ms);
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return '${months[dt.month - 1]} ${dt.day.toString().padLeft(2, '0')}, ${dt.year}';
   }
@@ -217,5 +239,5 @@ class _CounterDetail extends StatelessWidget {
 
 final _counterDetailProvider = FutureProvider.autoDispose
     .family<Counter?, String>((ref, id) async {
-  return ref.watch(japaCounterRepositoryProvider).getCounterById(id);
-});
+      return ref.watch(japaCounterRepositoryProvider).getCounterById(id);
+    });

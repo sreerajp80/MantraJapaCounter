@@ -68,9 +68,11 @@ class OpticalSyncService {
     // 2. Generate LT Parity Fountain Frames (totalOriginalChunks onwards)
     if (totalOriginalChunks > 1) {
       final random = Random(sessionId.hashCode);
-      for (int fIndex = totalOriginalChunks;
-          fIndex < maxFramesToGenerate;
-          fIndex++) {
+      for (
+        int fIndex = totalOriginalChunks;
+        fIndex < maxFramesToGenerate;
+        fIndex++
+      ) {
         // Pick degree 2 or 3
         final degree = min(totalOriginalChunks, 2 + random.nextInt(2));
         final selectedIndices = <int>{};
@@ -162,8 +164,9 @@ class OpticalSyncDecoder {
 
   void _addFrame(OpticalSyncFrame frame) {
     // Clean indices of already resolved chunks
-    final remainingIndices =
-        frame.chunkIndices.where((idx) => !_resolvedChunks.containsKey(idx)).toList();
+    final remainingIndices = frame.chunkIndices
+        .where((idx) => !_resolvedChunks.containsKey(idx))
+        .toList();
 
     if (remainingIndices.isEmpty) {
       // All chunks in this frame already resolved
@@ -270,8 +273,5 @@ class _ParityEquation {
   Set<int> chunkIndices;
   List<int> dataBytes;
 
-  _ParityEquation({
-    required this.chunkIndices,
-    required this.dataBytes,
-  });
+  _ParityEquation({required this.chunkIndices, required this.dataBytes});
 }

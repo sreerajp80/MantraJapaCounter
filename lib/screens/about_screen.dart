@@ -9,7 +9,7 @@ class AboutScreen extends StatelessWidget {
   final ConfigService _configService;
 
   AboutScreen({super.key, ConfigService? configService})
-      : _configService = configService ?? ConfigService();
+    : _configService = configService ?? ConfigService();
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +55,7 @@ class AboutScreen extends StatelessWidget {
                   child: Text(
                     config.description,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    ),
+                    style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                 ),
               ],
@@ -69,11 +66,7 @@ class AboutScreen extends StatelessWidget {
                 l.aboutPurposeBody,
               ),
               const SizedBox(height: 16),
-              _infoRow(
-                Icons.wifi_off,
-                l.aboutOfflineTitle,
-                l.aboutOfflineBody,
-              ),
+              _infoRow(Icons.wifi_off, l.aboutOfflineTitle, l.aboutOfflineBody),
               const SizedBox(height: 16),
               _infoRow(
                 Icons.lock_outline,
@@ -81,17 +74,14 @@ class AboutScreen extends StatelessWidget {
                 l.aboutPrivacyBody,
               ),
               const SizedBox(height: 16),
-              _infoRow(
-                Icons.backup,
-                l.aboutBackupTitle,
-                l.aboutBackupBody,
-              ),
+              _infoRow(Icons.backup, l.aboutBackupTitle, l.aboutBackupBody),
               const SizedBox(height: 24),
               const Divider(),
               const SizedBox(height: 8),
               // Dynamic details rendered from AppConfig.details
               for (final entry in config.details.entries)
-                if (entry.key.trim().isNotEmpty && entry.value.trim().isNotEmpty)
+                if (entry.key.trim().isNotEmpty &&
+                    entry.value.trim().isNotEmpty)
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     title: Text(

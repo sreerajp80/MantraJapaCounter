@@ -10,7 +10,7 @@ class ConfigService {
   final Future<String> Function(String path) _loadAsset;
 
   ConfigService({Future<String> Function(String path)? loadAsset})
-      : _loadAsset = loadAsset ?? rootBundle.loadString;
+    : _loadAsset = loadAsset ?? rootBundle.loadString;
 
   Future<AppConfig> load() async {
     try {

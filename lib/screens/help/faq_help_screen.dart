@@ -27,36 +27,28 @@ class FaqHelpScreen extends StatelessWidget {
                   HelpSection(
                     icon: Icons.help_outline,
                     title: l.helpFaqQ1Title,
-                    children: [
-                      HelpBullet(l.helpFaqQ1Answer),
-                    ],
+                    children: [HelpBullet(l.helpFaqQ1Answer)],
                   ),
                   const SizedBox(height: 20),
 
                   HelpSection(
                     icon: Icons.help_outline,
                     title: l.helpFaqQ2Title,
-                    children: [
-                      HelpBullet(l.helpFaqQ2Answer),
-                    ],
+                    children: [HelpBullet(l.helpFaqQ2Answer)],
                   ),
                   const SizedBox(height: 20),
 
                   HelpSection(
                     icon: Icons.help_outline,
                     title: l.helpFaqQ3Title,
-                    children: [
-                      HelpBullet(l.helpFaqQ3Answer),
-                    ],
+                    children: [HelpBullet(l.helpFaqQ3Answer)],
                   ),
                   const SizedBox(height: 20),
 
                   HelpSection(
                     icon: Icons.help_outline,
                     title: l.helpFaqQ4Title,
-                    children: [
-                      HelpBullet(l.helpFaqQ4Answer),
-                    ],
+                    children: [HelpBullet(l.helpFaqQ4Answer)],
                   ),
                 ],
               ),

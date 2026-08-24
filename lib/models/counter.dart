@@ -9,12 +9,12 @@ class Counter {
   final String name;
   final int initialCount;
   final int incrementStep;
-  final int goal;       // 0 = no lifetime goal
-  final int dailyGoal;  // 0 = no daily goal
-  final int startDate;  // epoch ms
-  final int createdAt;  // epoch ms
+  final int goal; // 0 = no lifetime goal
+  final int dailyGoal; // 0 = no daily goal
+  final int startDate; // epoch ms
+  final int createdAt; // epoch ms
   final CounterStatus status;
-  final int? disabledAt;     // epoch ms; null if active
+  final int? disabledAt; // epoch ms; null if active
   final String? disabledReason;
 
   const Counter({
@@ -45,8 +45,10 @@ class Counter {
     return (todayCount / dailyGoal).clamp(0.0, 1.0);
   }
 
-  bool isLifetimeGoalAchieved(int totalCount) => hasLifetimeGoal && totalCount >= goal;
-  bool isDailyGoalAchieved(int todayCount) => hasDailyGoal && todayCount >= dailyGoal;
+  bool isLifetimeGoalAchieved(int totalCount) =>
+      hasLifetimeGoal && totalCount >= goal;
+  bool isDailyGoalAchieved(int todayCount) =>
+      hasDailyGoal && todayCount >= dailyGoal;
 
   Counter copyWith({
     String? id,

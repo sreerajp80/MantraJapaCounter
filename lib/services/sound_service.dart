@@ -27,8 +27,9 @@ class RingtoneOption {
 ///     `audioplayers` `DeviceFileSource` configured with alarm usage, with a
 ///     paired native boost call so the file is loud enough to hear.
 class SoundService {
-  static const _channel =
-      MethodChannel('com.sreerajp.mantrajapacounter/haptic');
+  static const _channel = MethodChannel(
+    'com.sreerajp.mantrajapacounter/haptic',
+  );
 
   final AudioPlayer _player = AudioPlayer();
 
@@ -73,15 +74,18 @@ class SoundService {
   /// Returns the list of device notification ringtones for the picker UI.
   Future<List<RingtoneOption>> listNotificationRingtones() async {
     try {
-      final raw = await _channel
-          .invokeMethod<List<dynamic>>('listNotificationRingtones');
+      final raw = await _channel.invokeMethod<List<dynamic>>(
+        'listNotificationRingtones',
+      );
       if (raw == null) return const [];
       return raw
           .whereType<Map>()
-          .map((m) => RingtoneOption(
-                title: (m['title'] as String?) ?? '',
-                uri: (m['uri'] as String?) ?? '',
-              ))
+          .map(
+            (m) => RingtoneOption(
+              title: (m['title'] as String?) ?? '',
+              uri: (m['uri'] as String?) ?? '',
+            ),
+          )
           .where((r) => r.uri.isNotEmpty && r.title.isNotEmpty)
           .toList(growable: false);
     } catch (_) {

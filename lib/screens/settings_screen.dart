@@ -63,37 +63,51 @@ class SettingsScreen extends ConsumerWidget {
                   _Section(
                     title: l.sectionDailyGoal,
                     sub: l.sectionDailyGoalSub,
-                    iconBuilder: (s, c) =>
-                        TempleDiyaIcon(size: s, color: c),
+                    iconBuilder: (s, c) => TempleDiyaIcon(size: s, color: c),
                     children: [
                       _SettingsRow(
-                        leading: const Icon(Icons.notifications_outlined,
-                            size: 15, color: TempleColors.ink2),
+                        leading: const Icon(
+                          Icons.notifications_outlined,
+                          size: 15,
+                          color: TempleColors.ink2,
+                        ),
                         title: l.enableNotification,
                         sub: l.enableNotificationSub,
                         toggle: settings.dailyGoalNotificationsEnabled,
-                        onToggle:
-                            notifier.setDailyGoalNotificationsEnabled,
+                        onToggle: notifier.setDailyGoalNotificationsEnabled,
                       ),
                       _SettingsRow(
-                        leading: const Icon(Icons.vibration,
-                            size: 15, color: TempleColors.ink2),
+                        leading: const Icon(
+                          Icons.vibration,
+                          size: 15,
+                          color: TempleColors.ink2,
+                        ),
                         title: l.vibration,
                         sub: l.vibrationSub,
                         toggle: settings.vibrationEnabled,
                         onToggle: notifier.setVibrationEnabled,
                       ),
                       _SettingsRow(
-                        leading: const Icon(Icons.volume_up_outlined,
-                            size: 15, color: TempleColors.ink2),
+                        leading: const Icon(
+                          Icons.volume_up_outlined,
+                          size: 15,
+                          color: TempleColors.ink2,
+                        ),
                         title: l.notificationSound,
                         sub: _notificationSoundSubtitle(l, settings),
                         onTap: () => _showNotificationSoundPicker(
-                            context, ref, settings, notifier),
+                          context,
+                          ref,
+                          settings,
+                          notifier,
+                        ),
                       ),
                       _SettingsRow(
-                        leading: const Icon(Icons.play_arrow_outlined,
-                            size: 15, color: TempleColors.ink2),
+                        leading: const Icon(
+                          Icons.play_arrow_outlined,
+                          size: 15,
+                          color: TempleColors.ink2,
+                        ),
                         title: l.previewTone,
                         sub: l.previewToneSub,
                         right: l.play,
@@ -106,12 +120,14 @@ class SettingsScreen extends ConsumerWidget {
                   _Section(
                     title: l.sectionMala,
                     sub: l.sectionMalaSub,
-                    iconBuilder: (s, c) =>
-                        TempleLotusIcon(size: s, color: c),
+                    iconBuilder: (s, c) => TempleLotusIcon(size: s, color: c),
                     children: [
                       _SettingsRow(
-                        leading: const Icon(Icons.access_time,
-                            size: 15, color: TempleColors.ink2),
+                        leading: const Icon(
+                          Icons.access_time,
+                          size: 15,
+                          color: TempleColors.ink2,
+                        ),
                         title: l.enableMalaSound,
                         sub: l.enableMalaSoundSub,
                         toggle: settings.malaNotificationsEnabled,
@@ -122,11 +138,8 @@ class SettingsScreen extends ConsumerWidget {
                   _Section(
                     title: l.sectionStillness,
                     sub: l.sectionStillnessSub,
-                    iconBuilder: (s, c) => Icon(
-                      Icons.brightness_5_outlined,
-                      size: s,
-                      color: c,
-                    ),
+                    iconBuilder: (s, c) =>
+                        Icon(Icons.brightness_5_outlined, size: s, color: c),
                     children: [
                       _BrightnessRow(
                         value: settings.screenBrightness < 0
@@ -141,34 +154,46 @@ class SettingsScreen extends ConsumerWidget {
                   _Section(
                     title: 'Data Backup & Optical Sync',
                     sub: '100% offline device-to-device sync and backup',
-                    iconBuilder: (s, c) => Icon(
-                      Icons.sync,
-                      size: s,
-                      color: c,
-                    ),
+                    iconBuilder: (s, c) => Icon(Icons.sync, size: s, color: c),
                     children: [
                       _SettingsRow(
-                        leading: const Icon(Icons.qr_code_2_outlined,
-                            size: 15, color: TempleColors.ink2),
+                        leading: const Icon(
+                          Icons.qr_code_2_outlined,
+                          size: 15,
+                          color: TempleColors.ink2,
+                        ),
                         title: 'Optical Air-Gap Sync (Send)',
-                        sub: 'Transmit counters & history via animated QR stream',
-                        onTap: () => context.push('/backup/optical-sync/transmit'),
+                        sub:
+                            'Transmit counters & history via animated QR stream',
+                        onTap: () =>
+                            context.push('/backup/optical-sync/transmit'),
                       ),
                       _SettingsRow(
-                        leading: const Icon(Icons.qr_code_scanner_outlined,
-                            size: 15, color: TempleColors.ink2),
+                        leading: const Icon(
+                          Icons.qr_code_scanner_outlined,
+                          size: 15,
+                          color: TempleColors.ink2,
+                        ),
                         title: 'Optical Air-Gap Sync (Receive)',
-                        sub: 'Scan animated QR stream from another phone camera',
-                        onTap: () => context.push('/backup/optical-sync/receive'),
+                        sub:
+                            'Scan animated QR stream from another phone camera',
+                        onTap: () =>
+                            context.push('/backup/optical-sync/receive'),
                       ),
                       _SettingsRow(
-                        leading: const Icon(Icons.upload_file_outlined,
-                            size: 15, color: TempleColors.ink2),
+                        leading: const Icon(
+                          Icons.upload_file_outlined,
+                          size: 15,
+                          color: TempleColors.ink2,
+                        ),
                         title: 'Export Backup File (JSON)',
-                        sub: 'Export all data to a local JSON file & share sheet',
+                        sub:
+                            'Export all data to a local JSON file & share sheet',
                         onTap: () async {
                           try {
-                            await ref.read(exportServiceProvider).exportAndShare();
+                            await ref
+                                .read(exportServiceProvider)
+                                .exportAndShare();
                           } catch (e) {
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -179,8 +204,11 @@ class SettingsScreen extends ConsumerWidget {
                         },
                       ),
                       _SettingsRow(
-                        leading: const Icon(Icons.download_for_offline_outlined,
-                            size: 15, color: TempleColors.ink2),
+                        leading: const Icon(
+                          Icons.download_for_offline_outlined,
+                          size: 15,
+                          color: TempleColors.ink2,
+                        ),
                         title: 'Import Backup File (JSON)',
                         sub: 'Restore counters and history from a backup file',
                         onTap: () async {
@@ -191,13 +219,19 @@ class SettingsScreen extends ConsumerWidget {
                             );
                             final pickedPath = result?.files.single.path;
                             if (pickedPath != null) {
-                              final jsonString = await File(pickedPath).readAsString();
-                              await ref.read(exportServiceProvider).importFromJson(jsonString);
+                              final jsonString = await File(
+                                pickedPath,
+                              ).readAsString();
+                              await ref
+                                  .read(exportServiceProvider)
+                                  .importFromJson(jsonString);
                               ref.invalidate(countersNotifierProvider);
                               if (context.mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content: Text('Data restored successfully!'),
+                                    content: Text(
+                                      'Data restored successfully!',
+                                    ),
                                     backgroundColor: TempleColors.tulsi,
                                   ),
                                 );
@@ -217,9 +251,7 @@ class SettingsScreen extends ConsumerWidget {
                   const SizedBox(height: 18),
                   _GuidanceCard(),
                   const SizedBox(height: 18),
-                  _DangerCard(
-                    onTap: () => _confirmClearAll(context, ref),
-                  ),
+                  _DangerCard(onTap: () => _confirmClearAll(context, ref)),
                 ],
               ),
             ),
@@ -239,8 +271,11 @@ class SettingsScreen extends ConsumerWidget {
         children: [
           TempleIconButton(
             onTap: () => context.pop(),
-            child: const Icon(Icons.arrow_back,
-                size: 18, color: TempleColors.ink),
+            child: const Icon(
+              Icons.arrow_back,
+              size: 18,
+              color: TempleColors.ink,
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -343,16 +378,14 @@ class SettingsScreen extends ConsumerWidget {
                           title: r.title,
                           selected: selectedUri == r.uri,
                           onTap: () async {
-                            await notifier.setNotificationSound(
-                                r.uri, r.title);
+                            await notifier.setNotificationSound(r.uri, r.title);
                             await soundService.playTone(r.uri);
                             if (sheetContext.mounted) {
                               Navigator.pop(sheetContext);
                             }
                           },
                         ),
-                      const Divider(
-                          height: 16, color: TempleColors.line),
+                      const Divider(height: 16, color: TempleColors.line),
                       _RingtoneTile(
                         title: l.browseAudioFile,
                         leading: const Icon(
@@ -377,7 +410,9 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   Future<void> _browseAudioFile(
-      BuildContext context, SettingsNotifier notifier) async {
+    BuildContext context,
+    SettingsNotifier notifier,
+  ) async {
     final result = await FilePicker.pickFiles(type: FileType.audio);
     final picked = result?.files.single;
     if (picked?.path != null) {
@@ -394,8 +429,9 @@ class SettingsScreen extends ConsumerWidget {
         content: Text(l.clearAllDataMessage),
         actions: [
           TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(l.cancel)),
+            onPressed: () => Navigator.pop(context),
+            child: Text(l.cancel),
+          ),
           TextButton(
             onPressed: () async {
               Navigator.pop(context);
@@ -404,13 +440,15 @@ class SettingsScreen extends ConsumerWidget {
               await repo.deleteAllCounters();
               ref.invalidate(countersNotifierProvider);
               if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(l.allDataCleared)),
-                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(l.allDataCleared)));
               }
             },
-            child: Text(l.clearAllButton,
-                style: const TextStyle(color: TempleColors.vermillionDeep)),
+            child: Text(
+              l.clearAllButton,
+              style: const TextStyle(color: TempleColors.vermillionDeep),
+            ),
           ),
         ],
       ),
@@ -485,7 +523,11 @@ class _SettingsCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_right, color: TempleColors.ink3, size: 18),
+              const Icon(
+                Icons.chevron_right,
+                color: TempleColors.ink3,
+                size: 18,
+              ),
             ],
           ),
         ),
@@ -527,7 +569,8 @@ class _Section extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: TempleColors.cardSoft,
                     border: Border.fromBorderSide(
-                        BorderSide(color: TempleColors.line)),
+                      BorderSide(color: TempleColors.line),
+                    ),
                   ),
                   child: Center(
                     child: iconBuilder(16, TempleColors.vermillion),
@@ -667,8 +710,11 @@ class _SettingsRow extends StatelessWidget {
             else if (toggle != null)
               _Pill(value: toggle!)
             else
-              const Icon(Icons.chevron_right,
-                  size: 16, color: TempleColors.ink3),
+              const Icon(
+                Icons.chevron_right,
+                size: 16,
+                color: TempleColors.ink3,
+              ),
           ],
         ),
       ),
@@ -791,18 +837,22 @@ class _BrightnessRow extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(AppLocalizations.of(context).brightnessStill,
-                    style: AppTheme.serif(
-                      fontSize: 10,
-                      color: TempleColors.ink3,
-                      fontWeight: FontWeight.w400,
-                    )),
+                Text(
+                  AppLocalizations.of(context).brightnessStill,
+                  style: AppTheme.serif(
+                    fontSize: 10,
+                    color: TempleColors.ink3,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
                 TextButton(
                   onPressed: onReset,
                   style: TextButton.styleFrom(
                     visualDensity: VisualDensity.compact,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 6, vertical: 0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 0,
+                    ),
                     minimumSize: Size.zero,
                   ),
                   child: Text(
@@ -814,12 +864,14 @@ class _BrightnessRow extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(AppLocalizations.of(context).brightnessFull,
-                    style: AppTheme.serif(
-                      fontSize: 10,
-                      color: TempleColors.ink3,
-                      fontWeight: FontWeight.w400,
-                    )),
+                Text(
+                  AppLocalizations.of(context).brightnessFull,
+                  style: AppTheme.serif(
+                    fontSize: 10,
+                    color: TempleColors.ink3,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ],
             ),
           ),
@@ -882,8 +934,11 @@ class _DangerCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              const Icon(Icons.delete_outline,
-                  color: TempleColors.vermillionDeep, size: 22),
+              const Icon(
+                Icons.delete_outline,
+                color: TempleColors.vermillionDeep,
+                size: 22,
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -942,7 +997,8 @@ class _RingtoneTile extends StatelessWidget {
           children: [
             SizedBox(
               width: 28,
-              child: leading ??
+              child:
+                  leading ??
                   Icon(
                     selected
                         ? Icons.radio_button_checked
@@ -959,8 +1015,7 @@ class _RingtoneTile extends StatelessWidget {
                 title,
                 style: AppTheme.sans(
                   fontSize: 15,
-                  fontWeight:
-                      selected ? FontWeight.w600 : FontWeight.w500,
+                  fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
                   color: TempleColors.ink,
                 ),
               ),

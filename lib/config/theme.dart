@@ -23,12 +23,7 @@ class TempleColors {
 
   /// Rotation used to give each counter card its own accent. Order matches
   /// the design's example list: vermillion → tulsi → sandal → rose.
-  static const List<Color> accentRotation = [
-    vermillion,
-    tulsi,
-    sandal,
-    rose,
-  ];
+  static const List<Color> accentRotation = [vermillion, tulsi, sandal, rose];
 
   /// Deterministic accent for a counter, keyed off its stable id so the
   /// color never shifts when the list is reordered or new counters are added.
@@ -63,17 +58,16 @@ class AppTheme {
     FontStyle fontStyle = FontStyle.italic,
     double? height,
     double? letterSpacing,
-  }) =>
-      TextStyle(
-        fontFamily: _serifFamily,
-        fontFamilyFallback: _uiFallback,
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        color: color,
-        fontStyle: fontStyle,
-        height: height,
-        letterSpacing: letterSpacing,
-      );
+  }) => TextStyle(
+    fontFamily: _serifFamily,
+    fontFamilyFallback: _uiFallback,
+    fontSize: fontSize,
+    fontWeight: fontWeight,
+    color: color,
+    fontStyle: fontStyle,
+    height: height,
+    letterSpacing: letterSpacing,
+  );
 
   /// Inter — primary UI sans. Used for body, labels, buttons.
   static TextStyle sans({
@@ -82,16 +76,15 @@ class AppTheme {
     Color color = TempleColors.ink,
     double? height,
     double? letterSpacing,
-  }) =>
-      TextStyle(
-        fontFamily: _sansFamily,
-        fontFamilyFallback: _uiFallback,
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        color: color,
-        height: height,
-        letterSpacing: letterSpacing,
-      );
+  }) => TextStyle(
+    fontFamily: _sansFamily,
+    fontFamilyFallback: _uiFallback,
+    fontSize: fontSize,
+    fontWeight: fontWeight,
+    color: color,
+    height: height,
+    letterSpacing: letterSpacing,
+  );
 
   /// Noto Sans Malayalam — for Indic mantra names. Falls back to Inter for
   /// non-Malayalam glyphs via Flutter's font fallback chain.
@@ -100,15 +93,14 @@ class AppTheme {
     FontWeight fontWeight = FontWeight.w600,
     Color color = TempleColors.ink,
     double? height,
-  }) =>
-      TextStyle(
-        fontFamily: _malFamily,
-        fontFamilyFallback: const [_sansFamily],
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        color: color,
-        height: height,
-      );
+  }) => TextStyle(
+    fontFamily: _malFamily,
+    fontFamilyFallback: const [_sansFamily],
+    fontSize: fontSize,
+    fontWeight: fontWeight,
+    color: color,
+    height: height,
+  );
 
   /// All-caps eyebrow label used throughout the design.
   static TextStyle eyebrow({
@@ -116,16 +108,15 @@ class AppTheme {
     Color color = TempleColors.ink3,
     double letterSpacing = 1.5,
     FontWeight fontWeight = FontWeight.w600,
-  }) =>
-      TextStyle(
-        fontFamily: _sansFamily,
-        fontFamilyFallback: _uiFallback,
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        color: color,
-        letterSpacing: letterSpacing,
-        height: 1.2,
-      );
+  }) => TextStyle(
+    fontFamily: _sansFamily,
+    fontFamilyFallback: _uiFallback,
+    fontSize: fontSize,
+    fontWeight: fontWeight,
+    color: color,
+    letterSpacing: letterSpacing,
+    height: 1.2,
+  );
 
   static ThemeData light() {
     final scheme = ColorScheme(
@@ -158,11 +149,11 @@ class AppTheme {
     );
 
     final textTheme = ThemeData.light().textTheme.apply(
-          fontFamily: _sansFamily,
-          fontFamilyFallback: _uiFallback,
-          bodyColor: TempleColors.ink,
-          displayColor: TempleColors.ink,
-        );
+      fontFamily: _sansFamily,
+      fontFamilyFallback: _uiFallback,
+      bodyColor: TempleColors.ink,
+      displayColor: TempleColors.ink,
+    );
 
     return ThemeData(
       useMaterial3: true,
@@ -199,9 +190,8 @@ class AppTheme {
       ),
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith(
-          (s) => s.contains(WidgetState.selected)
-              ? Colors.white
-              : TempleColors.bg,
+          (s) =>
+              s.contains(WidgetState.selected) ? Colors.white : TempleColors.bg,
         ),
         trackColor: WidgetStateProperty.resolveWith(
           (s) => s.contains(WidgetState.selected)
@@ -241,10 +231,7 @@ class AppTheme {
           borderRadius: BorderRadius.circular(16),
           side: const BorderSide(color: TempleColors.line),
         ),
-        titleTextStyle: serif(
-          fontSize: 20,
-          color: TempleColors.ink,
-        ),
+        titleTextStyle: serif(fontSize: 20, color: TempleColors.ink),
         contentTextStyle: sans(
           fontSize: 14,
           fontWeight: FontWeight.w400,

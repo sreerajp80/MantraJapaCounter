@@ -28,9 +28,18 @@ class SoundHapticsHelpScreen extends StatelessWidget {
                     icon: Icons.volume_up_outlined,
                     title: l.helpAudioTonesSection,
                     children: [
-                      HelpBullet(l.helpAudioTonesBullet1, boldPrefix: l.helpAudioTonesBold1),
-                      HelpBullet(l.helpAudioTonesBullet2, boldPrefix: l.helpAudioTonesBold2),
-                      HelpBullet(l.helpAudioTonesBullet3, boldPrefix: l.helpAudioTonesBold3),
+                      HelpBullet(
+                        l.helpAudioTonesBullet1,
+                        boldPrefix: l.helpAudioTonesBold1,
+                      ),
+                      HelpBullet(
+                        l.helpAudioTonesBullet2,
+                        boldPrefix: l.helpAudioTonesBold2,
+                      ),
+                      HelpBullet(
+                        l.helpAudioTonesBullet3,
+                        boldPrefix: l.helpAudioTonesBold3,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -39,8 +48,14 @@ class SoundHapticsHelpScreen extends StatelessWidget {
                     icon: Icons.vibration_outlined,
                     title: l.helpAudioVibrationSection,
                     children: [
-                      HelpBullet(l.helpAudioVibrationBullet1, boldPrefix: l.helpAudioVibrationBold1),
-                      HelpBullet(l.helpAudioVibrationBullet2, boldPrefix: l.helpAudioVibrationBold2),
+                      HelpBullet(
+                        l.helpAudioVibrationBullet1,
+                        boldPrefix: l.helpAudioVibrationBold1,
+                      ),
+                      HelpBullet(
+                        l.helpAudioVibrationBullet2,
+                        boldPrefix: l.helpAudioVibrationBold2,
+                      ),
                     ],
                   ),
                 ],

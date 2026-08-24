@@ -19,12 +19,12 @@ class ActiveSession {
   final String sessionId;
   final String counterId;
   final String counterName;
-  final int startTime;          // epoch ms — original start, never changes
-  final int tapCount;           // total count in this session
+  final int startTime; // epoch ms — original start, never changes
+  final int tapCount; // total count in this session
   final int incrementStep;
-  final int accumulatedMs;      // active duration from completed segments
-  final int lastResumeTimeMs;   // epoch ms — start of current active segment
-  final bool isPaused;          // true while waiting to resume on next tap
+  final int accumulatedMs; // active duration from completed segments
+  final int lastResumeTimeMs; // epoch ms — start of current active segment
+  final bool isPaused; // true while waiting to resume on next tap
 
   const ActiveSession({
     required this.sessionId,
@@ -94,8 +94,7 @@ class ActiveSession {
       tapCount: map['tapCount'] as int,
       incrementStep: map['incrementStep'] as int? ?? 1,
       accumulatedMs: (map['accumulatedMs'] as num?)?.toInt() ?? 0,
-      lastResumeTimeMs:
-          (map['lastResumeTimeMs'] as num?)?.toInt() ?? start,
+      lastResumeTimeMs: (map['lastResumeTimeMs'] as num?)?.toInt() ?? start,
       isPaused: map['isPaused'] as bool? ?? false,
     );
   }

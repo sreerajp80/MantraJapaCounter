@@ -82,11 +82,7 @@ class OpticalSyncImportPreviewSheet extends ConsumerWidget {
                   label: 'Counters',
                   value: '$counterCount',
                 ),
-                Container(
-                  height: 36,
-                  width: 1,
-                  color: TempleColors.line,
-                ),
+                Container(height: 36, width: 1, color: TempleColors.line),
                 _buildStatPill(
                   theme,
                   icon: Icons.history,
@@ -120,7 +116,9 @@ class OpticalSyncImportPreviewSheet extends ConsumerWidget {
                 if (success) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Optical sync import successful! Data restored.'),
+                      content: Text(
+                        'Optical sync import successful! Data restored.',
+                      ),
                       backgroundColor: TempleColors.tulsi,
                     ),
                   );
@@ -143,9 +141,7 @@ class OpticalSyncImportPreviewSheet extends ConsumerWidget {
             onPressed: () => context.pop(),
             child: Text(
               LocaleConfig.strings().cancel,
-              style: const TextStyle(
-                color: TempleColors.ink2,
-              ),
+              style: const TextStyle(color: TempleColors.ink2),
             ),
           ),
         ],
@@ -178,9 +174,7 @@ class OpticalSyncImportPreviewSheet extends ConsumerWidget {
         const SizedBox(height: 2),
         Text(
           label,
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: TempleColors.ink3,
-          ),
+          style: theme.textTheme.bodySmall?.copyWith(color: TempleColors.ink3),
         ),
       ],
     );

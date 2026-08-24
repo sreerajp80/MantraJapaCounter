@@ -23,10 +23,8 @@ class MalaCountDisplay extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Text('$countLabel: $count',
-            style: style.copyWith(color: textColor)),
-        Text('$malaLabel: $malas',
-            style: style.copyWith(color: textColor)),
+        Text('$countLabel: $count', style: style.copyWith(color: textColor)),
+        Text('$malaLabel: $malas', style: style.copyWith(color: textColor)),
       ],
     );
   }

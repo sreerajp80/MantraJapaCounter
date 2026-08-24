@@ -18,10 +18,7 @@ void main() {
         'description': 'A test app description',
         'version': '1.2.3',
         'build': '45',
-        'details': {
-          'Author': 'Test Author',
-          'License': 'MIT',
-        },
+        'details': {'Author': 'Test Author', 'License': 'MIT'},
       };
 
       final config = AppConfig.fromJson(jsonMap);
@@ -56,9 +53,7 @@ void main() {
         'details': {'Developer': 'Test Dev'},
       });
 
-      final service = ConfigService(
-        loadAsset: (path) async => validJsonText,
-      );
+      final service = ConfigService(loadAsset: (path) async => validJsonText);
 
       final config = await service.load();
       expect(config.appName, equals('Mock App'));
@@ -67,21 +62,23 @@ void main() {
       expect(config.details['Developer'], equals('Test Dev'));
     });
 
-    test('load() returns fallback on asset load error or malformed JSON',
-        () async {
-      final serviceWithError = ConfigService(
-        loadAsset: (path) async => throw Exception('Asset missing'),
-      );
+    test(
+      'load() returns fallback on asset load error or malformed JSON',
+      () async {
+        final serviceWithError = ConfigService(
+          loadAsset: (path) async => throw Exception('Asset missing'),
+        );
 
-      final config1 = await serviceWithError.load();
-      expect(config1.appName, equals(AppConfig.fallback.appName));
+        final config1 = await serviceWithError.load();
+        expect(config1.appName, equals(AppConfig.fallback.appName));
 
-      final serviceWithBadJson = ConfigService(
-        loadAsset: (path) async => 'invalid json {',
-      );
+        final serviceWithBadJson = ConfigService(
+          loadAsset: (path) async => 'invalid json {',
+        );
 
-      final config2 = await serviceWithBadJson.load();
-      expect(config2.appName, equals(AppConfig.fallback.appName));
-    });
+        final config2 = await serviceWithBadJson.load();
+        expect(config2.appName, equals(AppConfig.fallback.appName));
+      },
+    );
   });
 }

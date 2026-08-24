@@ -28,9 +28,18 @@ class OpticalSyncHelpScreen extends StatelessWidget {
                     icon: Icons.qr_code_2_outlined,
                     title: l.helpOpticalHowSection,
                     children: [
-                      HelpBullet(l.helpOpticalHowBullet1, boldPrefix: l.helpOpticalHowBold1),
-                      HelpBullet(l.helpOpticalHowBullet2, boldPrefix: l.helpOpticalHowBold2),
-                      HelpBullet(l.helpOpticalHowBullet3, boldPrefix: l.helpOpticalHowBold3),
+                      HelpBullet(
+                        l.helpOpticalHowBullet1,
+                        boldPrefix: l.helpOpticalHowBold1,
+                      ),
+                      HelpBullet(
+                        l.helpOpticalHowBullet2,
+                        boldPrefix: l.helpOpticalHowBold2,
+                      ),
+                      HelpBullet(
+                        l.helpOpticalHowBullet3,
+                        boldPrefix: l.helpOpticalHowBold3,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -39,9 +48,18 @@ class OpticalSyncHelpScreen extends StatelessWidget {
                     icon: Icons.tips_and_updates_outlined,
                     title: l.helpOpticalTipsSection,
                     children: [
-                      HelpBullet(l.helpOpticalTipsBullet1, boldPrefix: l.helpOpticalTipsBold1),
-                      HelpBullet(l.helpOpticalTipsBullet2, boldPrefix: l.helpOpticalTipsBold2),
-                      HelpBullet(l.helpOpticalTipsBullet3, boldPrefix: l.helpOpticalTipsBold3),
+                      HelpBullet(
+                        l.helpOpticalTipsBullet1,
+                        boldPrefix: l.helpOpticalTipsBold1,
+                      ),
+                      HelpBullet(
+                        l.helpOpticalTipsBullet2,
+                        boldPrefix: l.helpOpticalTipsBold2,
+                      ),
+                      HelpBullet(
+                        l.helpOpticalTipsBullet3,
+                        boldPrefix: l.helpOpticalTipsBold3,
+                      ),
                     ],
                   ),
                 ],

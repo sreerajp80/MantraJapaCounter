@@ -24,8 +24,10 @@ class NotificationService {
     await plugin.initialize(settings: initSettings);
 
     // Create notification channels (Android 8+)
-    final android =
-        plugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+    final android = plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
     if (android != null) {
       // Drop any prior channels first — Android caches the sound config from
       // creation time, so a channel that once had `playSound: true` will keep
@@ -33,18 +35,22 @@ class NotificationService {
       // channel from older builds is also deleted; mala completion no longer
       // posts a status-bar entry.
       await android.deleteNotificationChannel(
-          channelId: AppConstants.dailyGoalChannelId);
+        channelId: AppConstants.dailyGoalChannelId,
+      );
       await android.deleteNotificationChannel(
-          channelId: AppConstants.malaChannelId);
+        channelId: AppConstants.malaChannelId,
+      );
 
-      await android.createNotificationChannel(const AndroidNotificationChannel(
-        AppConstants.dailyGoalChannelId,
-        AppConstants.dailyGoalChannelName,
-        description: 'Alerts when you reach your daily mantra goal',
-        importance: Importance.defaultImportance,
-        playSound: false,
-        enableVibration: false,
-      ));
+      await android.createNotificationChannel(
+        const AndroidNotificationChannel(
+          AppConstants.dailyGoalChannelId,
+          AppConstants.dailyGoalChannelName,
+          description: 'Alerts when you reach your daily mantra goal',
+          importance: Importance.defaultImportance,
+          playSound: false,
+          enableVibration: false,
+        ),
+      );
     }
   }
 

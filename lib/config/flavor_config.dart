@@ -6,7 +6,10 @@ class AppFlavorConfig {
   static AppFlavor _flavor = AppFlavor.prod;
 
   static void init() {
-    const flavorStr = String.fromEnvironment('FLUTTER_APP_FLAVOR', defaultValue: 'prod');
+    const flavorStr = String.fromEnvironment(
+      'FLUTTER_APP_FLAVOR',
+      defaultValue: 'prod',
+    );
     _flavor = flavorStr == 'dev' ? AppFlavor.dev : AppFlavor.prod;
   }
 
@@ -17,8 +20,9 @@ class AppFlavorConfig {
 
   static bool get enableVerboseLogging => _flavor == AppFlavor.dev;
 
-  static String get appName =>
-      _flavor == AppFlavor.dev ? 'SreerajP MantraJapa Counter Dev' : 'SreerajP MantraJapa Counter';
+  static String get appName => _flavor == AppFlavor.dev
+      ? 'SreerajP MantraJapa Counter Dev'
+      : 'SreerajP MantraJapa Counter';
 
   static String get packageId => _flavor == AppFlavor.dev
       ? 'com.sreerajp.mantrajapacounter.dev'

@@ -7,11 +7,10 @@ import 'app_providers.dart';
 final countersProvider = FutureProvider<List<Counter>>((ref) async {
   final repo = ref.watch(japaCounterRepositoryProvider);
   final all = await repo.getAllCounters();
-  return all
-    ..sort((a, b) {
-      if (a.isActive != b.isActive) return a.isActive ? -1 : 1;
-      return b.createdAt.compareTo(a.createdAt);
-    });
+  return all..sort((a, b) {
+    if (a.isActive != b.isActive) return a.isActive ? -1 : 1;
+    return b.createdAt.compareTo(a.createdAt);
+  });
 });
 
 /// Notifier for counter CRUD operations.
@@ -20,11 +19,10 @@ class CountersNotifier extends AsyncNotifier<List<Counter>> {
   Future<List<Counter>> build() async {
     final repo = ref.watch(japaCounterRepositoryProvider);
     final all = await repo.getAllCounters();
-    return all
-      ..sort((a, b) {
-        if (a.isActive != b.isActive) return a.isActive ? -1 : 1;
-        return b.createdAt.compareTo(a.createdAt);
-      });
+    return all..sort((a, b) {
+      if (a.isActive != b.isActive) return a.isActive ? -1 : 1;
+      return b.createdAt.compareTo(a.createdAt);
+    });
   }
 
   Future<void> addCounter({
@@ -64,7 +62,10 @@ class CountersNotifier extends AsyncNotifier<List<Counter>> {
   }
 
   Future<void> disableCounter(
-      String id, CounterStatus status, String? reason) async {
+    String id,
+    CounterStatus status,
+    String? reason,
+  ) async {
     final repo = ref.read(japaCounterRepositoryProvider);
     final counter = await repo.getCounterById(id);
     if (counter == null) return;
@@ -92,4 +93,6 @@ class CountersNotifier extends AsyncNotifier<List<Counter>> {
 }
 
 final countersNotifierProvider =
-    AsyncNotifierProvider<CountersNotifier, List<Counter>>(CountersNotifier.new);
+    AsyncNotifierProvider<CountersNotifier, List<Counter>>(
+      CountersNotifier.new,
+    );

@@ -27,7 +27,8 @@ class ExportData {
 
   factory ExportData.fromJson(Map<String, dynamic> json) => ExportData(
     exportVersion: (json['exportVersion'] as num?)?.toInt() ?? 1,
-    exportDate: (json['exportDate'] as num?)?.toInt() ??
+    exportDate:
+        (json['exportDate'] as num?)?.toInt() ??
         DateTime.now().millisecondsSinceEpoch,
     counters: (json['counters'] as List<dynamic>)
         .map((e) => Counter.fromJson(e as Map<String, dynamic>))

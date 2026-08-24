@@ -16,18 +16,23 @@ import '../services/sound_service.dart';
 // already-initialised instances.
 
 final databaseProvider = Provider<Database>((ref) {
-  throw UnimplementedError('Override databaseProvider in main.dart ProviderScope');
+  throw UnimplementedError(
+    'Override databaseProvider in main.dart ProviderScope',
+  );
 });
 
 final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
   throw UnimplementedError(
-      'Override sharedPreferencesProvider in main.dart ProviderScope');
+    'Override sharedPreferencesProvider in main.dart ProviderScope',
+  );
 });
 
-final notificationsPluginProvider =
-    Provider<FlutterLocalNotificationsPlugin>((ref) {
+final notificationsPluginProvider = Provider<FlutterLocalNotificationsPlugin>((
+  ref,
+) {
   throw UnimplementedError(
-      'Override notificationsPluginProvider in main.dart ProviderScope');
+    'Override notificationsPluginProvider in main.dart ProviderScope',
+  );
 });
 
 // ──────────────────────────── Repository providers ──────────────────────────

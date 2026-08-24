@@ -81,9 +81,9 @@ class CountingNotifier extends StateNotifier<CountingState> {
   final String _counterId;
 
   // Per-session DB tracking — matches Kotlin's lastDbWrittenCount semantics.
-  String? _sessionDbId;          // id of the row in japa_sessions for this session
-  bool _isSessionInDb = false;   // has the row been inserted yet?
-  int _lastDbWrittenCount = 0;   // count value last persisted to DB
+  String? _sessionDbId; // id of the row in japa_sessions for this session
+  bool _isSessionInDb = false; // has the row been inserted yet?
+  int _lastDbWrittenCount = 0; // count value last persisted to DB
 
   // Captured at init() so the daily-goal threshold check stays cheap.
   // Editing the counter mid-session does not retroactively change the goal.
@@ -119,34 +119,39 @@ class CountingNotifier extends StateNotifier<CountingState> {
       // Resume the abandoned/paused session for this counter.
       session = saved;
       _sessionDbId = saved.sessionId;
-      final existing =
-          _sessionDbId == null ? null : await repo.getSessionById(_sessionDbId!);
+      final existing = _sessionDbId == null
+          ? null
+          : await repo.getSessionById(_sessionDbId!);
       if (existing == null && saved.tapCount > 0) {
         // Prefs had taps but no DB row — write it now to recover.
         final id = _sessionDbId ?? _uuid.v4();
         _sessionDbId = id;
-        await repo.insertSession(JapaSession(
-          id: id,
-          counterId: counter.id,
-          counterName: counter.name,
-          count: saved.tapCount,
-          malas: saved.tapCount ~/ 108,
-          chants: saved.tapCount % 108,
-          timestamp: saved.startTime,
-          duration: saved.duration,
-        ));
+        await repo.insertSession(
+          JapaSession(
+            id: id,
+            counterId: counter.id,
+            counterName: counter.name,
+            count: saved.tapCount,
+            malas: saved.tapCount ~/ 108,
+            chants: saved.tapCount % 108,
+            timestamp: saved.startTime,
+            duration: saved.duration,
+          ),
+        );
         _isSessionInDb = true;
         _lastDbWrittenCount = saved.tapCount;
       } else if (existing != null) {
         _isSessionInDb = true;
         if (saved.tapCount > existing.count) {
           // Prefs had more recent data — update DB.
-          await repo.updateSession(existing.copyWith(
-            count: saved.tapCount,
-            malas: saved.tapCount ~/ 108,
-            chants: saved.tapCount % 108,
-            duration: saved.duration,
-          ));
+          await repo.updateSession(
+            existing.copyWith(
+              count: saved.tapCount,
+              malas: saved.tapCount ~/ 108,
+              chants: saved.tapCount % 108,
+              duration: saved.duration,
+            ),
+          );
           _lastDbWrittenCount = saved.tapCount;
         } else {
           _lastDbWrittenCount = existing.count;
@@ -194,8 +199,9 @@ class CountingNotifier extends StateNotifier<CountingState> {
   }
 
   Future<void> _refreshTotalsFromCounter() async {
-    final counter =
-        await _ref.read(japaCounterRepositoryProvider).getCounterById(_counterId);
+    final counter = await _ref
+        .read(japaCounterRepositoryProvider)
+        .getCounterById(_counterId);
     await _refreshTotals(counter?.initialCount ?? 0);
   }
 
@@ -231,8 +237,9 @@ class CountingNotifier extends StateNotifier<CountingState> {
 
     final resumed = _resumeIfPaused(session);
     final wasZero = resumed.tapCount == 0;
-    final updated =
-        resumed.copyWith(tapCount: resumed.tapCount + resumed.incrementStep);
+    final updated = resumed.copyWith(
+      tapCount: resumed.tapCount + resumed.incrementStep,
+    );
     state = state.copyWith(session: updated);
 
     if (wasZero) {
@@ -320,16 +327,18 @@ class CountingNotifier extends StateNotifier<CountingState> {
       await _insertSessionRow(session);
       return;
     }
-    await repo.updateSession(JapaSession(
-      id: existing.id,
-      counterId: existing.counterId,
-      counterName: existing.counterName,
-      count: session.tapCount,
-      malas: session.tapCount ~/ 108,
-      chants: session.tapCount % 108,
-      timestamp: existing.timestamp,
-      duration: session.duration,
-    ));
+    await repo.updateSession(
+      JapaSession(
+        id: existing.id,
+        counterId: existing.counterId,
+        counterName: existing.counterName,
+        count: session.tapCount,
+        malas: session.tapCount ~/ 108,
+        chants: session.tapCount % 108,
+        timestamp: existing.timestamp,
+        duration: session.duration,
+      ),
+    );
     _lastDbWrittenCount = session.tapCount;
     _lastDbWriteMs = DateTime.now().millisecondsSinceEpoch;
     _tapsSinceLastDbFlush = 0;
@@ -339,16 +348,18 @@ class CountingNotifier extends StateNotifier<CountingState> {
   void _scheduleDbWrite(ActiveSession session) {
     final now = DateTime.now().millisecondsSinceEpoch;
     final elapsedMs = _lastDbWriteMs == 0 ? 1 << 30 : now - _lastDbWriteMs;
-    final shouldNow = elapsedMs >= AppConstants.dbBatchIntervalSeconds * 1000 ||
+    final shouldNow =
+        elapsedMs >= AppConstants.dbBatchIntervalSeconds * 1000 ||
         _tapsSinceLastDbFlush >= AppConstants.dbBatchTapCount;
     _dbDebounce?.cancel();
     if (shouldNow) {
       _updateSessionRow(session);
     } else {
-      final waitMs =
-          AppConstants.dbBatchIntervalSeconds * 1000 - elapsedMs;
-      _dbDebounce = Timer(Duration(milliseconds: waitMs.clamp(50, 60000)),
-          () => _updateSessionRow(state.session ?? session));
+      final waitMs = AppConstants.dbBatchIntervalSeconds * 1000 - elapsedMs;
+      _dbDebounce = Timer(
+        Duration(milliseconds: waitMs.clamp(50, 60000)),
+        () => _updateSessionRow(state.session ?? session),
+      );
     }
   }
 
@@ -371,18 +382,21 @@ class CountingNotifier extends StateNotifier<CountingState> {
 
   void _schedulePrefsWrite(ActiveSession session) {
     final now = DateTime.now().millisecondsSinceEpoch;
-    final elapsedMs = _lastPrefsWriteMs == 0 ? 1 << 30 : now - _lastPrefsWriteMs;
+    final elapsedMs = _lastPrefsWriteMs == 0
+        ? 1 << 30
+        : now - _lastPrefsWriteMs;
     final shouldNow =
         elapsedMs >= AppConstants.prefsBatchIntervalSeconds * 1000 ||
-            _tapsSinceLastPrefsFlush >= AppConstants.prefsBatchTapCount;
+        _tapsSinceLastPrefsFlush >= AppConstants.prefsBatchTapCount;
     _prefsDebounce?.cancel();
     if (shouldNow) {
       _writePrefsImmediately(session);
     } else {
-      final waitMs =
-          AppConstants.prefsBatchIntervalSeconds * 1000 - elapsedMs;
-      _prefsDebounce = Timer(Duration(milliseconds: waitMs.clamp(50, 60000)),
-          () => _writePrefsImmediately(state.session ?? session));
+      final waitMs = AppConstants.prefsBatchIntervalSeconds * 1000 - elapsedMs;
+      _prefsDebounce = Timer(
+        Duration(milliseconds: waitMs.clamp(50, 60000)),
+        () => _writePrefsImmediately(state.session ?? session),
+      );
     }
   }
 
@@ -410,10 +424,12 @@ class CountingNotifier extends StateNotifier<CountingState> {
     state = state.copyWith(isCompleting: true);
     _stopTimers();
 
-    final subMalaDailyGoalMet = _dailyGoal > 0 &&
+    final subMalaDailyGoalMet =
+        _dailyGoal > 0 &&
         _dailyGoal < 108 &&
         state.liveTodayTotal >= _dailyGoal;
-    final shouldPause = session.tapCount > 0 &&
+    final shouldPause =
+        session.tapCount > 0 &&
         session.tapCount % 108 != 0 &&
         !subMalaDailyGoalMet;
 
@@ -421,10 +437,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
       // Freeze the active segment into accumulatedMs and persist as paused.
       final paused = session.isPaused
           ? session
-          : session.copyWith(
-              isPaused: true,
-              accumulatedMs: session.duration,
-            );
+          : session.copyWith(isPaused: true, accumulatedMs: session.duration);
       state = state.copyWith(session: paused);
       await _updateSessionRow(paused);
       await _writePrefsImmediately(paused);
@@ -604,5 +617,5 @@ class CountingNotifier extends StateNotifier<CountingState> {
 
 final countingNotifierProvider = StateNotifierProvider.autoDispose
     .family<CountingNotifier, CountingState, String>(
-  (ref, counterId) => CountingNotifier(ref, counterId),
-);
+      (ref, counterId) => CountingNotifier(ref, counterId),
+    );

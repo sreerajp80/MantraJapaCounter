@@ -44,7 +44,8 @@ class GoalProgressBar extends StatelessWidget {
           value: progress,
           backgroundColor: Colors.white.withValues(alpha: 0.3),
           valueColor: AlwaysStoppedAnimation<Color>(
-              isComplete ? Colors.greenAccent : Colors.white),
+            isComplete ? Colors.greenAccent : Colors.white,
+          ),
           minHeight: isComplete ? 8 : 4,
         ),
       ],

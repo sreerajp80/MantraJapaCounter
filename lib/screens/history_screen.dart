@@ -21,8 +21,7 @@ class HistoryScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
-    final summariesAsync =
-        ref.watch(historySummariesProvider(filterCounterId));
+    final summariesAsync = ref.watch(historySummariesProvider(filterCounterId));
     final counterAsync = filterCounterId == null
         ? null
         : ref.watch(_counterProvider(filterCounterId!));
@@ -35,8 +34,7 @@ class HistoryScreen extends ConsumerWidget {
             _topBar(context, ref),
             Expanded(
               child: summariesAsync.when(
-                loading: () =>
-                    const Center(child: CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator()),
                 error: (e, _) => Center(child: Text(l.errorWithMessage('$e'))),
                 data: (summaries) => _body(
                   l: l,
@@ -44,8 +42,7 @@ class HistoryScreen extends ConsumerWidget {
                   counterName: counterAsync?.value?.name,
                   counterGoal: counterAsync?.value?.goal ?? 0,
                   counterDailyGoal: counterAsync?.value?.dailyGoal ?? 0,
-                  counterInitialCount:
-                      counterAsync?.value?.initialCount ?? 0,
+                  counterInitialCount: counterAsync?.value?.initialCount ?? 0,
                   showCounterNames: filterCounterId == null,
                 ),
               ),
@@ -64,14 +61,20 @@ class HistoryScreen extends ConsumerWidget {
         children: [
           TempleIconButton(
             onTap: () => context.pop(),
-            child: const Icon(Icons.arrow_back,
-                size: 18, color: TempleColors.ink),
+            child: const Icon(
+              Icons.arrow_back,
+              size: 18,
+              color: TempleColors.ink,
+            ),
           ),
           const TempleOmBadge(),
           TempleIconButton(
             onTap: () => _confirmClear(context, ref),
-            child: const Icon(Icons.delete_outline,
-                size: 18, color: TempleColors.ink),
+            child: const Icon(
+              Icons.delete_outline,
+              size: 18,
+              color: TempleColors.ink,
+            ),
           ),
         ],
       ),
@@ -94,15 +97,16 @@ class HistoryScreen extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const TempleLotusIcon(
-                  size: 48, color: TempleColors.vermillion),
+              const TempleLotusIcon(size: 48, color: TempleColors.vermillion),
               const SizedBox(height: 16),
-              Text(l.noSessionsRecorded,
-                  style: AppTheme.serif(
-                    fontSize: 14,
-                    color: TempleColors.ink2,
-                    fontWeight: FontWeight.w400,
-                  )),
+              Text(
+                l.noSessionsRecorded,
+                style: AppTheme.serif(
+                  fontSize: 14,
+                  color: TempleColors.ink2,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ],
           ),
         ),
@@ -110,7 +114,8 @@ class HistoryScreen extends ConsumerWidget {
     }
 
     // Match the Kotlin formula: initialCount + SUM(session.count).
-    final lifetimeTotal = counterInitialCount +
+    final lifetimeTotal =
+        counterInitialCount +
         summaries.fold<int>(0, (sum, d) => sum + d.totalCount);
 
     // Running lifetime total at the END of each day. summaries are sorted
@@ -144,11 +149,14 @@ class HistoryScreen extends ConsumerWidget {
               if (i == 0) {
                 return Padding(
                   padding: const EdgeInsets.only(top: 4, bottom: 12),
-                  child: Text(l.recentOfferings,
-                      style: AppTheme.eyebrow(
-                          fontSize: 10,
-                          letterSpacing: 3,
-                          color: TempleColors.ink2)),
+                  child: Text(
+                    l.recentOfferings,
+                    style: AppTheme.eyebrow(
+                      fontSize: 10,
+                      letterSpacing: 3,
+                      color: TempleColors.ink2,
+                    ),
+                  ),
                 );
               }
               final s = summaries[i - 1];
@@ -175,8 +183,18 @@ class HistoryScreen extends ConsumerWidget {
   // Must match the format produced by JapaCounterRepository._formatDate.
   static String _formatDate(DateTime dt) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     final day = dt.day.toString().padLeft(2, '0');
     return '${months[dt.month - 1]} $day, ${dt.year}';
@@ -187,14 +205,17 @@ class HistoryScreen extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text(filterCounterId == null
-            ? l.clearAllHistoryTitle
-            : l.clearCounterHistoryTitle),
+        title: Text(
+          filterCounterId == null
+              ? l.clearAllHistoryTitle
+              : l.clearCounterHistoryTitle,
+        ),
         content: Text(l.clearHistoryMessage),
         actions: [
           TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(l.cancel)),
+            onPressed: () => Navigator.pop(context),
+            child: Text(l.cancel),
+          ),
           TextButton(
             onPressed: () async {
               Navigator.pop(context);
@@ -206,8 +227,10 @@ class HistoryScreen extends ConsumerWidget {
               }
               ref.invalidate(historySummariesProvider(filterCounterId));
             },
-            child: Text(l.clear,
-                style: const TextStyle(color: TempleColors.vermillionDeep)),
+            child: Text(
+              l.clear,
+              style: const TextStyle(color: TempleColors.vermillionDeep),
+            ),
           ),
         ],
       ),
@@ -274,10 +297,7 @@ class _Hero extends StatelessWidget {
               ] else
                 Text(
                   l.allCounters,
-                  style: AppTheme.serif(
-                    fontSize: 22,
-                    color: TempleColors.ink,
-                  ),
+                  style: AppTheme.serif(fontSize: 22, color: TempleColors.ink),
                 ),
               const SizedBox(height: 22),
               Row(
@@ -313,7 +333,8 @@ class _Hero extends StatelessWidget {
                 pct == null
                     ? l.chantsOfferedDays(dayCount)
                     : l.chantsOfferedPercent(
-                        pct.toStringAsFixed(pct >= 10 ? 0 : 2)),
+                        pct.toStringAsFixed(pct >= 10 ? 0 : 2),
+                      ),
                 style: AppTheme.eyebrow(
                   fontSize: 10,
                   letterSpacing: 2,
@@ -421,12 +442,16 @@ class _DayGroupState extends ConsumerState<_DayGroup> {
     final summary = widget.summary;
     final dayMalas = malaForCount(summary.totalCount);
     final goalProgress = widget.counterGoal > 0
-        ? (widget.dayCumulativeTotal / widget.counterGoal * 100)
-            .clamp(0.0, 100.0)
+        ? (widget.dayCumulativeTotal / widget.counterGoal * 100).clamp(
+            0.0,
+            100.0,
+          )
         : null;
-    final isDailyComplete = widget.counterDailyGoal > 0 &&
+    final isDailyComplete =
+        widget.counterDailyGoal > 0 &&
         summary.totalCount >= widget.counterDailyGoal;
-    final isLifetimeComplete = widget.counterGoal > 0 &&
+    final isLifetimeComplete =
+        widget.counterGoal > 0 &&
         widget.dayCumulativeTotal >= widget.counterGoal;
     final sessionCount = summary.sessions.length;
 
@@ -540,8 +565,9 @@ class _DayGroupState extends ConsumerState<_DayGroup> {
                             ),
                             const SizedBox(width: 14),
                             _Pair(
-                                label: widget.l.labelMala,
-                                value: dayMalas.toString()),
+                              label: widget.l.labelMala,
+                              value: dayMalas.toString(),
+                            ),
                             const SizedBox(width: 14),
                             if (goalProgress != null)
                               Flexible(
@@ -803,7 +829,9 @@ class _Pair extends StatelessWidget {
 }
 
 // Used to fetch the named counter when the screen is filtered.
-final _counterProvider =
-    FutureProvider.autoDispose.family<dynamic, String>((ref, id) {
+final _counterProvider = FutureProvider.autoDispose.family<dynamic, String>((
+  ref,
+  id,
+) {
   return ref.watch(japaCounterRepositoryProvider).getCounterById(id);
 });

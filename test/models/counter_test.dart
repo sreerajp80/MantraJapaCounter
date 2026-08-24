@@ -46,8 +46,10 @@ void main() {
     });
 
     test('DISABLED_SUCCESS round-trip', () {
-      expect(CounterStatus.fromDb('DISABLED_SUCCESS'),
-          CounterStatus.disabledSuccess);
+      expect(
+        CounterStatus.fromDb('DISABLED_SUCCESS'),
+        CounterStatus.disabledSuccess,
+      );
       expect(CounterStatus.disabledSuccess.toDb(), 'DISABLED_SUCCESS');
     });
 

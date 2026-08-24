@@ -21,10 +21,7 @@ import '../screens/optical_sync_screen.dart';
 final appRouter = GoRouter(
   initialLocation: '/',
   routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const CounterListScreen(),
-    ),
+    GoRoute(path: '/', builder: (context, state) => const CounterListScreen()),
     GoRoute(
       path: '/counting/:counterId',
       builder: (context, state) {
@@ -58,10 +55,7 @@ final appRouter = GoRouter(
       path: '/settings/features',
       builder: (context, state) => const FeaturesScreen(),
     ),
-    GoRoute(
-      path: '/help',
-      builder: (context, state) => const HelpHomeScreen(),
-    ),
+    GoRoute(path: '/help', builder: (context, state) => const HelpHomeScreen()),
     GoRoute(
       path: '/help/counting',
       builder: (context, state) => const CountingHelpScreen(),
@@ -90,20 +84,17 @@ final appRouter = GoRouter(
       path: '/help/faqs',
       builder: (context, state) => const FaqHelpScreen(),
     ),
-    GoRoute(
-      path: '/about',
-      builder: (context, state) => AboutScreen(),
-    ),
+    GoRoute(path: '/about', builder: (context, state) => AboutScreen()),
     GoRoute(
       path: '/backup/optical-sync/transmit',
       builder: (context, state) => const OpticalSyncScreen(isTransmitter: true),
     ),
     GoRoute(
       path: '/backup/optical-sync/receive',
-      builder: (context, state) => const OpticalSyncScreen(isTransmitter: false),
+      builder: (context, state) =>
+          const OpticalSyncScreen(isTransmitter: false),
     ),
   ],
-  errorBuilder: (context, state) => Scaffold(
-    body: Center(child: Text('Page not found: ${state.uri}')),
-  ),
+  errorBuilder: (context, state) =>
+      Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),
 );

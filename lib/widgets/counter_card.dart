@@ -47,8 +47,9 @@ class CounterCard extends StatelessWidget {
     final lifetimePercent = lifetimeRatio * 100;
     final lifetimeComplete = counter.isLifetimeGoalAchieved(totalCount);
 
-    final cardColor =
-        lifetimeComplete && !isDisabled ? TempleColors.cardSoft : TempleColors.card;
+    final cardColor = lifetimeComplete && !isDisabled
+        ? TempleColors.cardSoft
+        : TempleColors.card;
     final cardBorder = lifetimeComplete && !isDisabled
         ? TempleColors.sandal
         : TempleColors.line;
@@ -59,7 +60,10 @@ class CounterCard extends StatelessWidget {
         color: cardColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: cardBorder, width: lifetimeComplete ? 1.2 : 1),
+          side: BorderSide(
+            color: cardBorder,
+            width: lifetimeComplete ? 1.2 : 1,
+          ),
         ),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
@@ -83,7 +87,12 @@ class CounterCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _header(accent, dailyComplete, lifetimeComplete, isDisabled),
+                    _header(
+                      accent,
+                      dailyComplete,
+                      lifetimeComplete,
+                      isDisabled,
+                    ),
                     const SizedBox(height: 14),
                     _bigCount(l, accent, malas),
                     const SizedBox(height: 14),
@@ -129,9 +138,7 @@ class CounterCard extends StatelessWidget {
             shape: BoxShape.circle,
             border: Border.fromBorderSide(BorderSide(color: TempleColors.line)),
           ),
-          child: Center(
-            child: TempleLotusIcon(size: 18, color: accent),
-          ),
+          child: Center(child: TempleLotusIcon(size: 18, color: accent)),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -179,8 +186,10 @@ class CounterCard extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: TempleColors.sandal,
-                border:
-                    Border.all(color: TempleColors.vermillionDeep, width: 1),
+                border: Border.all(
+                  color: TempleColors.vermillionDeep,
+                  width: 1,
+                ),
               ),
               child: const Icon(
                 Icons.emoji_events,
@@ -231,12 +240,12 @@ class CounterCard extends StatelessWidget {
   }) {
     final percentLabel = counter.hasDailyGoal
         ? (dailyComplete
-            ? l.cardComplete
-            : l.cardPercentDaily(
-                (dailyProgress * 100).clamp(0, 100).round()))
+              ? l.cardComplete
+              : l.cardPercentDaily((dailyProgress * 100).clamp(0, 100).round()))
         : l.cardNoDaily;
-    final percentColor =
-        dailyComplete ? TempleColors.tulsi : TempleColors.vermillion;
+    final percentColor = dailyComplete
+        ? TempleColors.tulsi
+        : TempleColors.vermillion;
 
     final todayMalas = malaForCount(todayCount);
     final todayCountLabel = counter.hasDailyGoal

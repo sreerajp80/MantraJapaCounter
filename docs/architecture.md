@@ -1,5 +1,11 @@
 # Architecture — Mantra Japa Counter
 
+This document defines the architectural design, layer boundaries, state management, and persistence patterns for the Mantra Japa Counter application.
+
+Read [AGENTS.md](../AGENTS.md) and [CLAUDE.md](../CLAUDE.md) before making any code modifications. See [GUIDELINES_MANIFEST.md](GUIDELINES_MANIFEST.md) for the complete list of guidelines.
+
+---
+
 ## 1. Scope
 
 - Product: `Mantra Japa Counter`

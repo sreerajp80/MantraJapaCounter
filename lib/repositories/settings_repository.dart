@@ -80,7 +80,8 @@ class SettingsRepository {
   // ──────────────────────────── User settings ─────────────────────────────────
 
   double get screenBrightness =>
-      _prefs.getDouble(AppConstants.prefsBrightnessKey) ?? -1.0; // -1 = system default
+      _prefs.getDouble(AppConstants.prefsBrightnessKey) ??
+      -1.0; // -1 = system default
 
   Future<void> setScreenBrightness(double value) async {
     await _prefs.setDouble(AppConstants.prefsBrightnessKey, value);

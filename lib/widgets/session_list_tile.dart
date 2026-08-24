@@ -17,8 +17,10 @@ class SessionListTile extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
         ),
       ),
-      title: Text(session.counterName,
-          style: const TextStyle(fontWeight: FontWeight.w600)),
+      title: Text(
+        session.counterName,
+        style: const TextStyle(fontWeight: FontWeight.w600),
+      ),
       subtitle: Text(
         '${session.count} counts · ${_formatDuration(session.duration)}',
         style: const TextStyle(fontSize: 12),

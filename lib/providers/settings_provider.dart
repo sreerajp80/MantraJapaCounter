@@ -50,14 +50,16 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
   final SettingsRepository _repo;
 
   SettingsNotifier(this._repo)
-      : super(AppSettings(
+    : super(
+        AppSettings(
           screenBrightness: _repo.screenBrightness,
           dailyGoalNotificationsEnabled: _repo.dailyGoalNotificationsEnabled,
           malaNotificationsEnabled: _repo.malaNotificationsEnabled,
           notificationSoundUri: _repo.notificationSoundUri,
           notificationSoundName: _repo.notificationSoundName,
           vibrationEnabled: _repo.vibrationEnabled,
-        ));
+        ),
+      );
 
   Future<void> setScreenBrightness(double value) async {
     await _repo.setScreenBrightness(value);
@@ -92,5 +94,5 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
 
 final settingsNotifierProvider =
     StateNotifierProvider<SettingsNotifier, AppSettings>((ref) {
-  return SettingsNotifier(ref.watch(settingsRepositoryProvider));
-});
+      return SettingsNotifier(ref.watch(settingsRepositoryProvider));
+    });

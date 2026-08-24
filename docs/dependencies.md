@@ -19,7 +19,7 @@ Read [AGENTS.md](../AGENTS.md) and [security.md](security.md) before modifying `
 | Notifications | `flutter_local_notifications` | `^21.0.0` | Local daily practice reminders |
 | File Selection | `file_picker` | `^11.0.2` | Custom notification tone selection |
 | Audio Playback | `audioplayers` | `^6.1.0` | Custom tone playback |
-| Data Sharing | `path_provider`, `share_plus` | `^2.1.5` / `^12.0.2` | Exporting & sharing JSON backup files |
+| Data Sharing & Optical Sync | `path_provider`, `share_plus`, `qr_flutter`, `mobile_scanner` | `^2.1.5` / `^12.0.2` / `^4.1.0` / `^7.1.2` | Exporting & sharing JSON backup files and air-gapped QR sync |
 | Logging | `logger` | `^2.5.0` | Sanitized local file and console logging |
 | Package Metadata | `package_info_plus` | `^9.0.1` | Runtime version verification against `app_config.json` |
 | Identifiers | `uuid` | `^4.5.1` | RFC 4122 v4 UUID generation for records |

@@ -30,24 +30,28 @@ class SessionRecoveryService {
       final existing = await _repo.getSessionById(saved.sessionId);
       if (existing == null) {
         // Prefs reports taps but no DB row exists — write it now for safety.
-        await _repo.insertSession(JapaSession(
-          id: saved.sessionId,
-          counterId: saved.counterId,
-          counterName: saved.counterName,
-          count: saved.tapCount,
-          malas: saved.tapCount ~/ 108,
-          chants: saved.tapCount % 108,
-          timestamp: saved.startTime,
-          duration: saved.duration,
-        ));
+        await _repo.insertSession(
+          JapaSession(
+            id: saved.sessionId,
+            counterId: saved.counterId,
+            counterName: saved.counterName,
+            count: saved.tapCount,
+            malas: saved.tapCount ~/ 108,
+            chants: saved.tapCount % 108,
+            timestamp: saved.startTime,
+            duration: saved.duration,
+          ),
+        );
       } else if (saved.tapCount > existing.count) {
         // Prefs has a more recent count than DB — sync it forward.
-        await _repo.updateSession(existing.copyWith(
-          count: saved.tapCount,
-          malas: saved.tapCount ~/ 108,
-          chants: saved.tapCount % 108,
-          duration: saved.duration,
-        ));
+        await _repo.updateSession(
+          existing.copyWith(
+            count: saved.tapCount,
+            malas: saved.tapCount ~/ 108,
+            chants: saved.tapCount % 108,
+            duration: saved.duration,
+          ),
+        );
       }
       // Leave the prefs entry intact — CountingNotifier.init() consumes it.
     }

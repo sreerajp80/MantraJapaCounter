@@ -35,22 +35,33 @@ class AppearanceScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 20),
 
-                  _sectionHeader(l.appearanceBrightnessSection, Icons.brightness_6_outlined),
+                  _sectionHeader(
+                    l.appearanceBrightnessSection,
+                    Icons.brightness_6_outlined,
+                  ),
                   const SizedBox(height: 8),
                   _BrightnessCard(
-                    value: settings.screenBrightness < 0 ? 0.5 : settings.screenBrightness,
+                    value: settings.screenBrightness < 0
+                        ? 0.5
+                        : settings.screenBrightness,
                     usingSystem: settings.screenBrightness < 0,
                     onChanged: notifier.setScreenBrightness,
                     onReset: () => notifier.setScreenBrightness(-1.0),
                   ),
                   const SizedBox(height: 22),
 
-                  _sectionHeader(l.appearancePaletteSection, Icons.color_lens_outlined),
+                  _sectionHeader(
+                    l.appearancePaletteSection,
+                    Icons.color_lens_outlined,
+                  ),
                   const SizedBox(height: 8),
                   _ColorPaletteCard(),
                   const SizedBox(height: 22),
 
-                  _sectionHeader(l.appearanceTypographySection, Icons.font_download_outlined),
+                  _sectionHeader(
+                    l.appearanceTypographySection,
+                    Icons.font_download_outlined,
+                  ),
                   const SizedBox(height: 8),
                   _TypographyCard(),
                 ],
@@ -72,7 +83,11 @@ class AppearanceScreen extends ConsumerWidget {
         children: [
           TempleIconButton(
             onTap: () => context.pop(),
-            child: const Icon(Icons.arrow_back, size: 18, color: TempleColors.ink),
+            child: const Icon(
+              Icons.arrow_back,
+              size: 18,
+              color: TempleColors.ink,
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -278,16 +293,16 @@ class _BrightnessCard extends StatelessWidget {
               children: [
                 Text(
                   l.brightnessStill,
-                  style: AppTheme.serif(
-                    fontSize: 11,
-                    color: TempleColors.ink3,
-                  ),
+                  style: AppTheme.serif(fontSize: 11, color: TempleColors.ink3),
                 ),
                 TextButton(
                   onPressed: onReset,
                   style: TextButton.styleFrom(
                     visualDensity: VisualDensity.compact,
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
                     minimumSize: Size.zero,
                   ),
                   child: Text(
@@ -301,10 +316,7 @@ class _BrightnessCard extends StatelessWidget {
                 ),
                 Text(
                   l.brightnessFull,
-                  style: AppTheme.serif(
-                    fontSize: 11,
-                    color: TempleColors.ink3,
-                  ),
+                  style: AppTheme.serif(fontSize: 11, color: TempleColors.ink3),
                 ),
               ],
             ),
@@ -387,7 +399,10 @@ class _ColorRow extends StatelessWidget {
           decoration: BoxDecoration(
             color: color,
             shape: BoxShape.circle,
-            border: Border.all(color: borderColor ?? Colors.transparent, width: 1.5),
+            border: Border.all(
+              color: borderColor ?? Colors.transparent,
+              width: 1.5,
+            ),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.06),
@@ -413,10 +428,7 @@ class _ColorRow extends StatelessWidget {
               const SizedBox(height: 2),
               Text(
                 role,
-                style: AppTheme.sans(
-                  fontSize: 12.5,
-                  color: TempleColors.ink2,
-                ),
+                style: AppTheme.sans(fontSize: 12.5, color: TempleColors.ink2),
               ),
             ],
           ),
@@ -493,10 +505,7 @@ class _TypeSample extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 2),
-        Text(
-          sub,
-          style: AppTheme.sans(fontSize: 12, color: TempleColors.ink2),
-        ),
+        Text(sub, style: AppTheme.sans(fontSize: 12, color: TempleColors.ink2)),
         const SizedBox(height: 8),
         Container(
           width: double.infinity,

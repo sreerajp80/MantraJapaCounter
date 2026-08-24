@@ -22,7 +22,11 @@ class HelpDetailTopBar extends StatelessWidget {
         children: [
           TempleIconButton(
             onTap: () => context.pop(),
-            child: const Icon(Icons.arrow_back, size: 18, color: TempleColors.ink),
+            child: const Icon(
+              Icons.arrow_back,
+              size: 18,
+              color: TempleColors.ink,
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
