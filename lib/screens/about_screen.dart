@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../core/config/app_config.dart';
 import '../core/config/config_service.dart';
 import '../l10n/app_localizations.dart';
+import '../utils/build_date.g.dart';
 
 /// App info and credits screen.
 /// Data-driven: reads values from `ConfigService` and iterates `AppConfig.details` dynamically.
@@ -49,6 +50,15 @@ class AboutScreen extends StatelessWidget {
                   style: const TextStyle(color: Colors.grey),
                 ),
               ),
+              if (kBuildDate.isNotEmpty) ...[
+                const SizedBox(height: 2),
+                Center(
+                  child: Text(
+                    l.aboutBuildDate(kBuildDate),
+                    style: const TextStyle(color: Colors.grey, fontSize: 13),
+                  ),
+                ),
+              ],
               if (config.description.isNotEmpty) ...[
                 const SizedBox(height: 12),
                 Center(

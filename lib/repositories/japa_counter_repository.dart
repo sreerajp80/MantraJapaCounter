@@ -20,6 +20,7 @@ class JapaCounterRepository {
     await _createV1(db);
     await _createV2(db);
     await _createV3(db);
+    await _createV4(db);
   }
 
   static Future<void> onUpgrade(
@@ -29,6 +30,7 @@ class JapaCounterRepository {
   ) async {
     if (oldVersion < 2) await _createV2(db);
     if (oldVersion < 3) await _createV3(db);
+    if (oldVersion < 4) await _createV4(db);
   }
 
   static Future<void> _createV1(Database db) async {
@@ -84,6 +86,16 @@ class JapaCounterRepository {
     // Add disabledAt and disabledReason columns to counters
     await _addColumnIfMissing(db, 'counters', 'disabledAt', 'INTEGER');
     await _addColumnIfMissing(db, 'counters', 'disabledReason', 'TEXT');
+  }
+
+  static Future<void> _createV4(Database db) async {
+    // Add isLocked column to counters
+    await _addColumnIfMissing(
+      db,
+      'counters',
+      'isLocked',
+      'INTEGER NOT NULL DEFAULT 0',
+    );
   }
 
   static Future<void> _addColumnIfMissing(

@@ -433,6 +433,11 @@
     "description": "App version label on the about screen",
     "placeholders": { "version": { "type": "String" } }
   },
+  "aboutBuildDate": "Build date: {date}",
+  "@aboutBuildDate": {
+    "description": "Build date label on the about screen",
+    "placeholders": { "date": { "type": "String" } }
+  },
   "aboutPurposeTitle": "Purpose",
   "@aboutPurposeTitle": {
     "description": "Header for Purpose section in About screen"
@@ -1343,5 +1348,30 @@
   "helpFaqQ4Answer": "Yes! You can either use Optical Air-Gap Sync between both phones side-by-side or export a JSON backup file to restore on the new device.",
   "@helpFaqQ4Answer": {
     "description": "FAQ Q4 answer"
+  },
+  "lockCounter": "Lock counter",
+  "@lockCounter": {
+    "description": "Action label to lock a counter"
+  },
+  "unlockCounter": "Unlock counter",
+  "@unlockCounter": {
+    "description": "Action label to unlock a counter"
+  },
+  "counterLockedNotice": "\"{name}\" is locked. Unlock to start chanting.",
+  "@counterLockedNotice": {
+    "description": "Notice shown when tapping a locked counter card",
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "counterLockedTooltip": "Locked — tap to unlock",
+  "@counterLockedTooltip": {
+    "description": "Tooltip for locked button on counter card"
+  },
+  "counterUnlockedTooltip": "Unlocked — tap to lock",
+  "@counterUnlockedTooltip": {
+    "description": "Tooltip for unlocked button on counter card"
+  },
+  "statusLocked": "Locked",
+  "@statusLocked": {
+    "description": "Status text indicating counter is locked"
   }
 }

@@ -21,6 +21,7 @@ class CounterCard extends StatelessWidget {
   final int todayCount;
   final VoidCallback onTap;
   final VoidCallback onLongPress;
+  final VoidCallback? onToggleLock;
 
   const CounterCard({
     super.key,
@@ -29,6 +30,7 @@ class CounterCard extends StatelessWidget {
     required this.todayCount,
     required this.onTap,
     required this.onLongPress,
+    this.onToggleLock,
   });
 
   @override
@@ -67,7 +69,20 @@ class CounterCard extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
-          onTap: isDisabled ? null : onTap,
+          onTap: isDisabled
+              ? null
+              : (counter.isLocked
+                  ? () {
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(l.counterLockedNotice(counter.name)),
+                          duration: const Duration(seconds: 2),
+                          behavior: SnackBarBehavior.floating,
+                        ),
+                      );
+                    }
+                  : onTap),
           onLongPress: onLongPress,
           child: Stack(
             children: [
@@ -88,6 +103,7 @@ class CounterCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _header(
+                      l,
                       accent,
                       dailyComplete,
                       lifetimeComplete,
@@ -123,6 +139,7 @@ class CounterCard extends StatelessWidget {
   }
 
   Widget _header(
+    AppLocalizations l,
     Color accent,
     bool dailyComplete,
     bool lifetimeComplete,
@@ -195,6 +212,43 @@ class CounterCard extends StatelessWidget {
                 Icons.emoji_events,
                 color: Colors.white,
                 size: 15,
+              ),
+            ),
+          if ((dailyComplete || lifetimeComplete) && onToggleLock != null)
+            const SizedBox(width: 6),
+          if (onToggleLock != null)
+            Material(
+              color: Colors.transparent,
+              child: InkResponse(
+                onTap: onToggleLock,
+                radius: 18,
+                child: Tooltip(
+                  message: counter.isLocked
+                      ? l.counterLockedTooltip
+                      : l.counterUnlockedTooltip,
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: counter.isLocked
+                        ? BoxDecoration(
+                            color: TempleColors.sandal.withValues(alpha: 0.2),
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: TempleColors.sandal.withValues(alpha: 0.6),
+                              width: 1,
+                            ),
+                          )
+                        : null,
+                    child: Icon(
+                      counter.isLocked
+                          ? Icons.lock
+                          : Icons.lock_open_outlined,
+                      color: counter.isLocked
+                          ? TempleColors.vermillionDeep
+                          : TempleColors.ink3,
+                      size: 18,
+                    ),
+                  ),
+                ),
               ),
             ),
         ],

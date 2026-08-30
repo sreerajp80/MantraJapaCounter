@@ -16,6 +16,7 @@ class Counter {
   final CounterStatus status;
   final int? disabledAt; // epoch ms; null if active
   final String? disabledReason;
+  final bool isLocked;
 
   const Counter({
     required this.id,
@@ -29,6 +30,7 @@ class Counter {
     this.status = CounterStatus.active,
     this.disabledAt,
     this.disabledReason,
+    this.isLocked = false,
   });
 
   bool get hasLifetimeGoal => goal > 0;
@@ -62,6 +64,7 @@ class Counter {
     CounterStatus? status,
     int? disabledAt,
     String? disabledReason,
+    bool? isLocked,
   }) {
     return Counter(
       id: id ?? this.id,
@@ -75,6 +78,7 @@ class Counter {
       status: status ?? this.status,
       disabledAt: disabledAt ?? this.disabledAt,
       disabledReason: disabledReason ?? this.disabledReason,
+      isLocked: isLocked ?? this.isLocked,
     );
   }
 
@@ -90,6 +94,7 @@ class Counter {
     'status': status.toDb(),
     'disabledAt': disabledAt,
     'disabledReason': disabledReason,
+    'isLocked': isLocked ? 1 : 0,
   };
 
   factory Counter.fromMap(Map<String, dynamic> map) => Counter(
@@ -104,6 +109,7 @@ class Counter {
     status: CounterStatus.fromDb(map['status'] as String? ?? 'ACTIVE'),
     disabledAt: map['disabledAt'] as int?,
     disabledReason: map['disabledReason'] as String?,
+    isLocked: (map['isLocked'] as int? ?? 0) == 1,
   );
 
   /// JSON serialisation — must be compatible with Android Gson export format.
@@ -119,6 +125,7 @@ class Counter {
     'status': status.toDb(),
     if (disabledAt != null) 'disabledAt': disabledAt,
     if (disabledReason != null) 'disabledReason': disabledReason,
+    if (isLocked) 'isLocked': isLocked,
   };
 
   factory Counter.fromJson(Map<String, dynamic> json) => Counter(
@@ -133,5 +140,6 @@ class Counter {
     status: CounterStatus.fromDb(json['status'] as String? ?? 'ACTIVE'),
     disabledAt: (json['disabledAt'] as num?)?.toInt(),
     disabledReason: json['disabledReason'] as String?,
+    isLocked: json['isLocked'] as bool? ?? false,
   );
 }

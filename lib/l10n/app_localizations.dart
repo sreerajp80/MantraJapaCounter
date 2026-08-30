@@ -716,6 +716,12 @@ abstract class AppLocalizations {
   /// **'Version {version}'**
   String versionLabel(String version);
 
+  /// Build date label on the about screen
+  ///
+  /// In en, this message translates to:
+  /// **'Build date: {date}'**
+  String aboutBuildDate(String date);
+
   /// Header for Purpose section in About screen
   ///
   /// In en, this message translates to:
@@ -2035,6 +2041,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Yes! You can either use Optical Air-Gap Sync between both phones side-by-side or export a JSON backup file to restore on the new device.'**
   String get helpFaqQ4Answer;
+
+  /// Action label to lock a counter
+  ///
+  /// In en, this message translates to:
+  /// **'Lock counter'**
+  String get lockCounter;
+
+  /// Action label to unlock a counter
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock counter'**
+  String get unlockCounter;
+
+  /// Notice shown when tapping a locked counter card
+  ///
+  /// In en, this message translates to:
+  /// **'\"{name}\" is locked. Unlock to start chanting.'**
+  String counterLockedNotice(String name);
+
+  /// Tooltip for locked button on counter card
+  ///
+  /// In en, this message translates to:
+  /// **'Locked — tap to unlock'**
+  String get counterLockedTooltip;
+
+  /// Tooltip for unlocked button on counter card
+  ///
+  /// In en, this message translates to:
+  /// **'Unlocked — tap to lock'**
+  String get counterUnlockedTooltip;
+
+  /// Status text indicating counter is locked
+  ///
+  /// In en, this message translates to:
+  /// **'Locked'**
+  String get statusLocked;
 }
 
 class _AppLocalizationsDelegate

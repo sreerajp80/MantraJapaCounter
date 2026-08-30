@@ -78,6 +78,40 @@ void main() {
       final c = Counter.fromJson(minimal);
       expect(c.incrementStep, 1);
       expect(c.goal, 0);
+      expect(c.isLocked, false);
+    });
+  });
+
+  group('Counter locking', () {
+    test('defaults to unlocked (isLocked = false)', () {
+      expect(base.isLocked, false);
+    });
+
+    test('copyWith toggles isLocked', () {
+      final locked = base.copyWith(isLocked: true);
+      expect(locked.isLocked, true);
+      final unlocked = locked.copyWith(isLocked: false);
+      expect(unlocked.isLocked, false);
+    });
+
+    test('toMap and fromMap preserve isLocked', () {
+      final locked = base.copyWith(isLocked: true);
+      final map = locked.toMap();
+      expect(map['isLocked'], 1);
+      final restored = Counter.fromMap(map);
+      expect(restored.isLocked, true);
+
+      final unmap = base.toMap();
+      expect(unmap['isLocked'], 0);
+      expect(Counter.fromMap(unmap).isLocked, false);
+    });
+
+    test('toJson and fromJson preserve isLocked', () {
+      final locked = base.copyWith(isLocked: true);
+      final json = locked.toJson();
+      expect(json['isLocked'], true);
+      final restored = Counter.fromJson(json);
+      expect(restored.isLocked, true);
     });
   });
 }

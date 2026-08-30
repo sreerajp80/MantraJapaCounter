@@ -78,6 +78,15 @@ class CountersNotifier extends AsyncNotifier<List<Counter>> {
     ref.invalidateSelf();
   }
 
+  Future<void> toggleLock(String id) async {
+    final repo = ref.read(japaCounterRepositoryProvider);
+    final counter = await repo.getCounterById(id);
+    if (counter == null) return;
+    final updated = counter.copyWith(isLocked: !counter.isLocked);
+    await repo.updateCounter(updated);
+    ref.invalidateSelf();
+  }
+
   String _newId() {
     final r = DateTime.now().microsecondsSinceEpoch;
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.splitMapJoin(

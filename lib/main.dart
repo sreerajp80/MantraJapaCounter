@@ -23,11 +23,11 @@ void main() async {
   // Step 2 — lock portrait before any frames render
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  // Step 3 — open the database (schema v3, apply migrations if upgrading)
+  // Step 3 — open the database (schema v4, apply migrations if upgrading)
   final dbPath = p.join(await getDatabasesPath(), 'japa_counter.db');
   final db = await openDatabase(
     dbPath,
-    version: 3,
+    version: 4,
     onCreate: JapaCounterRepository.onCreate,
     onUpgrade: JapaCounterRepository.onUpgrade,
     onConfigure: (db) async {

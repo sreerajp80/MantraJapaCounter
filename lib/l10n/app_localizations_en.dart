@@ -368,6 +368,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String aboutBuildDate(String date) {
+    return 'Build date: $date';
+  }
+
+  @override
   String get aboutPurposeTitle => 'Purpose';
 
   @override
@@ -1123,4 +1128,24 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get helpFaqQ4Answer =>
       'Yes! You can either use Optical Air-Gap Sync between both phones side-by-side or export a JSON backup file to restore on the new device.';
+
+  @override
+  String get lockCounter => 'Lock counter';
+
+  @override
+  String get unlockCounter => 'Unlock counter';
+
+  @override
+  String counterLockedNotice(String name) {
+    return '\"$name\" is locked. Unlock to start chanting.';
+  }
+
+  @override
+  String get counterLockedTooltip => 'Locked — tap to unlock';
+
+  @override
+  String get counterUnlockedTooltip => 'Unlocked — tap to lock';
+
+  @override
+  String get statusLocked => 'Locked';
 }

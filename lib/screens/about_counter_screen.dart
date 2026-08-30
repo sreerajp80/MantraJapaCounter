@@ -153,7 +153,7 @@ class _CounterDetail extends StatelessWidget {
 
         // ── Details table ────────────────────────────────────────────────────
         _infoRow(l.infoName, counter.name),
-        _infoRow(l.infoStatus, _statusText(counter.status)),
+        _infoRow(l.infoStatus, _statusText(counter)),
         _infoRow(l.infoIncrementStep, '+${counter.incrementStep}'),
         _infoRow(l.infoInitialCount, '${counter.initialCount}'),
         _infoRow(
@@ -205,8 +205,11 @@ class _CounterDetail extends StatelessWidget {
     );
   }
 
-  String _statusText(CounterStatus s) {
-    switch (s) {
+  String _statusText(Counter counter) {
+    if (counter.isLocked && counter.isActive) {
+      return '${l.statusActive} · ${l.statusLocked}';
+    }
+    switch (counter.status) {
       case CounterStatus.active:
         return l.statusActive;
       case CounterStatus.disabledSuccess:

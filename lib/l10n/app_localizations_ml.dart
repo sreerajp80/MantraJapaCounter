@@ -371,6 +371,11 @@ class AppLocalizationsMl extends AppLocalizations {
   }
 
   @override
+  String aboutBuildDate(String date) {
+    return 'ബിൽഡ് തീയതി: $date';
+  }
+
+  @override
   String get aboutPurposeTitle => 'ഉദ്ദേശ്യം';
 
   @override
@@ -1119,4 +1124,26 @@ class AppLocalizationsMl extends AppLocalizations {
   @override
   String get helpFaqQ4Answer =>
       'അതെ! ഒപ്റ്റിക്കൽ എയർ-ഗ്യാപ്പ് സിങ്ക് വഴിയോ JSON ബാക്കപ്പ് ഫയൽ വഴിയോ ഡാറ്റ മാറ്റാം.';
+
+  @override
+  String get lockCounter => 'കൗണ്ടർ ലോക്ക് ചെയ്യുക';
+
+  @override
+  String get unlockCounter => 'കൗണ്ടർ അൺലോക്ക് ചെയ്യുക';
+
+  @override
+  String counterLockedNotice(String name) {
+    return '\"$name\" ലോക്ക് ചെയ്‌തിരിക്കുന്നു. ജപിക്കാൻ അൺലോക്ക് ചെയ്യുക.';
+  }
+
+  @override
+  String get counterLockedTooltip =>
+      'ലോക്ക് ചെയ്‌തിരിക്കുന്നു — അൺലോക്ക് ചെയ്യാൻ അമർത്തുക';
+
+  @override
+  String get counterUnlockedTooltip =>
+      'അൺലോക്ക് ചെയ്‌തിരിക്കുന്നു — ലോക്ക് ചെയ്യാൻ അമർത്തുക';
+
+  @override
+  String get statusLocked => 'ലോക്ക് ചെയ്‌തു';
 }

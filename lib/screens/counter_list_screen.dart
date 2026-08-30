@@ -325,6 +325,9 @@ class _CounterCardWrapper extends ConsumerWidget {
         todayCount: 0,
         onTap: () => context.push('/counting/${counter.id}'),
         onLongPress: () => _showOptions(context, ref),
+        onToggleLock: () => ref
+            .read(countersNotifierProvider.notifier)
+            .toggleLock(counter.id),
       ),
       error: (_, _) => const SizedBox.shrink(),
       data: (stats) => CounterCard(
@@ -333,6 +336,9 @@ class _CounterCardWrapper extends ConsumerWidget {
         todayCount: stats.todayCount,
         onTap: () => context.push('/counting/${counter.id}'),
         onLongPress: () => _showOptions(context, ref),
+        onToggleLock: () => ref
+            .read(countersNotifierProvider.notifier)
+            .toggleLock(counter.id),
       ),
     );
   }
@@ -421,6 +427,19 @@ class _CounterOptionsSheet extends StatelessWidget {
             },
           ),
           if (counter.isActive) ...[
+            ListTile(
+              leading: Icon(
+                counter.isLocked ? Icons.lock_open : Icons.lock_outline,
+                color: TempleColors.vermillion,
+              ),
+              title: Text(counter.isLocked ? l.unlockCounter : l.lockCounter),
+              onTap: () {
+                Navigator.pop(context);
+                ref
+                    .read(countersNotifierProvider.notifier)
+                    .toggleLock(counter.id);
+              },
+            ),
             ListTile(
               leading: const Icon(
                 Icons.check_circle,
