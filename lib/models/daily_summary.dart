@@ -1,4 +1,4 @@
-import 'japa_session.dart';
+import 'package:mantra_japa_counter/models/japa_session.dart';
 
 /// Aggregated view of all sessions on a single calendar day.
 ///

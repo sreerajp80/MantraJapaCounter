@@ -1,4 +1,4 @@
-import '../config/app_constants.dart';
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 
 /// Mala number that the given chant count *belongs to* (ceiling).
 ///

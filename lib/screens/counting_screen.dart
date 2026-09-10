@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../config/theme.dart';
-import '../l10n/app_localizations.dart';
-import '../providers/counting_provider.dart';
-import '../providers/app_providers.dart';
-import '../providers/settings_provider.dart';
-import '../utils/mala.dart';
-import '../widgets/temple_decorations.dart';
-import '../widgets/temple_mala_circle.dart';
+import 'package:mantra_japa_counter/theme/theme.dart';
+import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/providers/counting_provider.dart';
+import 'package:mantra_japa_counter/providers/app_providers.dart';
+import 'package:mantra_japa_counter/providers/settings_provider.dart';
+import 'package:mantra_japa_counter/core/utils/mala.dart';
+import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
+import 'package:mantra_japa_counter/widgets/temple_mala_circle.dart';
 
 /// Active counting screen — Temple variation.
 ///
@@ -263,10 +263,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
                     color: TempleColors.vermillion,
                   )
                 else
-                  const TempleDiyaIcon(
-                    size: 14,
-                    color: TempleColors.vermillion,
-                  ),
+                  const TempleDiyaIcon(size: 14),
                 const SizedBox(width: 6),
                 Text(
                   isPaused
@@ -326,23 +323,14 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
           const SizedBox(
             height: 40,
             child: Center(
-              child: TempleArch(
-                width: 200,
-                height: 36,
-                color: TempleColors.vermillion,
-                opacity: 0.25,
-              ),
+              child: TempleArch(width: 200, height: 36, opacity: 0.25),
             ),
           ),
           const SizedBox(height: 2),
           Text(
             name,
             textAlign: TextAlign.center,
-            style: AppTheme.mal(
-              fontSize: 22,
-              color: TempleColors.ink,
-              height: 1.2,
-            ),
+            style: AppTheme.mal(fontSize: 22, height: 1.2),
           ),
         ],
       ),
@@ -362,23 +350,10 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
       children: [
         Text(
           sessionInMala.toString(),
-          style: AppTheme.serif(
-            fontSize: 96,
-            fontWeight: FontWeight.w500,
-            color: TempleColors.ink,
-            height: 0.85,
-            letterSpacing: -3,
-          ),
+          style: AppTheme.serif(fontSize: 96, height: 0.85, letterSpacing: -3),
         ),
         const SizedBox(height: 6),
-        Text(
-          l.ofOneHundredEight,
-          style: AppTheme.serif(
-            fontSize: 14,
-            color: TempleColors.ink,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+        Text(l.ofOneHundredEight, style: AppTheme.serif(fontSize: 14)),
         const SizedBox(height: 8),
         Row(
           mainAxisSize: MainAxisSize.min,
@@ -418,7 +393,6 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
             style: AppTheme.serif(
               fontSize: 11,
               color: TempleColors.vermillionDeep,
-              fontWeight: FontWeight.w500,
             ),
           ),
         ],
@@ -620,13 +594,11 @@ class _FooterStat extends StatelessWidget {
           BoxShadow(
             color: shadowColor.withValues(alpha: 0.35),
             blurRadius: 12,
-            spreadRadius: 0,
             offset: const Offset(0, 5),
           ),
           BoxShadow(
             color: shadowColor.withValues(alpha: 0.18),
             blurRadius: 4,
-            spreadRadius: 0,
             offset: const Offset(0, 1),
           ),
         ],
@@ -638,7 +610,6 @@ class _FooterStat extends StatelessWidget {
             label.toUpperCase(),
             style: AppTheme.eyebrow(
               fontSize: 9,
-              letterSpacing: 1.5,
               color: textColor,
               fontWeight: FontWeight.w700,
             ),
@@ -694,7 +665,6 @@ class _FooterStat extends StatelessWidget {
             style: AppTheme.serif(
               fontSize: fontSize,
               color: valueColor,
-              fontWeight: FontWeight.w500,
               fontStyle: FontStyle.normal,
               height: 1,
             ),
@@ -708,7 +678,6 @@ class _FooterStat extends StatelessWidget {
             style: AppTheme.serif(
               fontSize: fontSize * 0.78,
               color: suffixColor,
-              fontWeight: FontWeight.w500,
               fontStyle: FontStyle.normal,
               height: 1,
             ),

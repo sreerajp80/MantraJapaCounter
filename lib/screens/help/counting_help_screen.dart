@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../config/theme.dart';
-import '../../l10n/app_localizations.dart';
-import 'help_widgets.dart';
+import 'package:mantra_japa_counter/theme/theme.dart';
+import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/screens/help/help_widgets.dart';
 
 class CountingHelpScreen extends StatelessWidget {
   const CountingHelpScreen({super.key});

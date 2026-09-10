@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import '../l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 
 /// Locale policy: the app follows the device language. Malayalam devices get
 /// Malayalam; every other locale falls back to English. There is no in-app

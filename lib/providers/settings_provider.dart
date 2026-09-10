@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/legacy.dart';
-import '../repositories/settings_repository.dart';
-import 'app_providers.dart';
+import 'package:mantra_japa_counter/repositories/settings_repository.dart';
+import 'package:mantra_japa_counter/providers/app_providers.dart';
 
 /// Snapshot of all user settings read from SharedPreferences.
 class AppSettings {

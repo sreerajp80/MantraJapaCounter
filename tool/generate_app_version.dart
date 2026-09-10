@@ -1,4 +1,4 @@
-// Generates lib/utils/app_version.g.dart from pubspec.yaml.
+// Generates lib/core/utils/app_version.g.dart from pubspec.yaml.
 // Run before release builds:  dart run tool/generate_app_version.dart
 
 // ignore_for_file: avoid_print
@@ -20,7 +20,7 @@ void main() {
   // Preserve the full pubspec version (e.g. "6.10.3+20") for display.
   final fullVersion = match.group(1)!;
 
-  final file = File('lib/utils/app_version.g.dart');
+  final file = File('lib/core/utils/app_version.g.dart');
   file.writeAsStringSync(
     '// GENERATED FILE — DO NOT EDIT.\n'
     '// Run: dart run tool/generate_app_version.dart\n'

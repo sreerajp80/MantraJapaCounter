@@ -2,7 +2,7 @@
 class AppConstants {
   // Database
   static const String dbName = 'japa_counter.db';
-  static const int dbVersion = 3;
+  static const int dbVersion = 4;
 
   // Mala
   static const int malaSize = 108;

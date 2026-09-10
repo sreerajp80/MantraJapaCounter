@@ -130,7 +130,7 @@ Android release builds run R8 code shrinking. Verify `android/app/proguard-rules
 - JSON serialization: keep `toJson`/`fromJson` methods if generated via `json_serializable`
 
 Run a full release build test after adding any new dependency; R8 can silently strip
-classes accessed only via reflection. See `docs/flutter_build_flavors_guide.md` for required rules.
+classes accessed only via reflection. See `docs/guidelines/flutter_build_flavors_guide.md` for required rules.
 
 ### 8.3 Debuggable Flag
 

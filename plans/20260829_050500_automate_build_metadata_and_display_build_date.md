@@ -1,6 +1,6 @@
 # Implementation Plan: Automate Build Metadata and Display Build Date
 
-**Status:** Completed
+**Status:** completed
 
 ## 1. Issue Description
 

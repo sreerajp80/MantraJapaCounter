@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mantra_japa_counter/core/config/config_service.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/screens/about_screen.dart';
-import 'package:mantra_japa_counter/utils/build_date.g.dart';
+import 'package:mantra_japa_counter/core/utils/build_date.g.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 void main() {

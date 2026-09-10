@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../config/theme.dart';
-import '../../l10n/app_localizations.dart';
-import '../../widgets/temple_decorations.dart';
+import 'package:mantra_japa_counter/theme/theme.dart';
+import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
 
 /// Top bar for individual help topic screens.
 class HelpDetailTopBar extends StatelessWidget {
@@ -36,25 +36,16 @@ class HelpDetailTopBar extends StatelessWidget {
                 Text(
                   l.practiceEyebrow,
                   style: AppTheme.eyebrow(
-                    fontSize: 10,
                     letterSpacing: 3,
                     color: TempleColors.vermillion,
                   ),
                 ),
                 const SizedBox(height: 2),
-                Text(
-                  title,
-                  style: AppTheme.serif(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
-                    color: TempleColors.ink,
-                    height: 1,
-                  ),
-                ),
+                Text(title, style: AppTheme.serif(fontSize: 24, height: 1)),
               ],
             ),
           ),
-          const TempleLotusIcon(size: 20, color: TempleColors.vermillion),
+          const TempleLotusIcon(size: 20),
         ],
       ),
     );
@@ -76,14 +67,7 @@ class HelpIntroCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: TempleColors.line),
       ),
-      child: Text(
-        text,
-        style: AppTheme.sans(
-          fontSize: 13.5,
-          color: TempleColors.ink,
-          height: 1.5,
-        ),
-      ),
+      child: Text(text, style: AppTheme.sans(fontSize: 13.5, height: 1.5)),
     );
   }
 }
@@ -116,7 +100,6 @@ class HelpSection extends StatelessWidget {
                 style: AppTheme.serif(
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
-                  color: TempleColors.ink,
                 ),
               ),
             ),
@@ -167,11 +150,7 @@ class HelpBullet extends StatelessWidget {
           Expanded(
             child: RichText(
               text: TextSpan(
-                style: AppTheme.sans(
-                  fontSize: 13,
-                  color: TempleColors.ink,
-                  height: 1.45,
-                ),
+                style: AppTheme.sans(fontSize: 13, height: 1.45),
                 children: [
                   if (boldPrefix != null)
                     TextSpan(

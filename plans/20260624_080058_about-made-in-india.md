@@ -1,5 +1,7 @@
 # Plan: Add "Made with ❤️ from India" to About screen footer
 
+**Status:** completed
+
 ## Issue / Request
 Add a footer line — **Made with ❤️ from India** (with a red heart) — at the bottom of
 the About screen, matching the attached screenshot.

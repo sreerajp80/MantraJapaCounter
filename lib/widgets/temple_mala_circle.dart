@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import '../config/theme.dart';
+import 'package:mantra_japa_counter/theme/theme.dart';
 
 /// Circular mala (108-bead rosary) visualization. Beads are drawn around a
 /// circle; filled beads (count out of goal) use [TempleColors.sandal] while

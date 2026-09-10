@@ -5,16 +5,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
-import 'config/flavor_config.dart';
-import 'config/locale_config.dart';
-import 'config/router.dart';
-import 'config/theme.dart';
-import 'l10n/app_localizations.dart';
-import 'providers/app_providers.dart';
-import 'repositories/japa_counter_repository.dart';
-import 'repositories/settings_repository.dart';
-import 'services/notification_service.dart';
-import 'services/session_recovery_service.dart';
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
+import 'package:mantra_japa_counter/core/flavor/flavor_config.dart';
+import 'package:mantra_japa_counter/core/locale/locale_config.dart';
+import 'package:mantra_japa_counter/core/routing/router.dart';
+import 'package:mantra_japa_counter/theme/theme.dart';
+import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/providers/app_providers.dart';
+import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
+import 'package:mantra_japa_counter/repositories/settings_repository.dart';
+import 'package:mantra_japa_counter/services/notification_service.dart';
+import 'package:mantra_japa_counter/services/session_recovery_service.dart';
 
 void main() async {
   // Step 1 — binding must be first
@@ -23,11 +24,12 @@ void main() async {
   // Step 2 — lock portrait before any frames render
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  // Step 3 — open the database (schema v4, apply migrations if upgrading)
-  final dbPath = p.join(await getDatabasesPath(), 'japa_counter.db');
+  // Step 3 — open the database (schema version from AppConstants; migrations
+  // in JapaCounterRepository run automatically when the version is bumped)
+  final dbPath = p.join(await getDatabasesPath(), AppConstants.dbName);
   final db = await openDatabase(
     dbPath,
-    version: 4,
+    version: AppConstants.dbVersion,
     onCreate: JapaCounterRepository.onCreate,
     onUpgrade: JapaCounterRepository.onUpgrade,
     onConfigure: (db) async {

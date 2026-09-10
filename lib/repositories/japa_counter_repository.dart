@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
-import '../models/counter.dart';
-import '../models/daily_summary.dart';
-import '../models/export_data.dart';
-import '../models/japa_session.dart';
+import 'package:mantra_japa_counter/models/counter.dart';
+import 'package:mantra_japa_counter/models/daily_summary.dart';
+import 'package:mantra_japa_counter/models/export_data.dart';
+import 'package:mantra_japa_counter/models/japa_session.dart';
 
 /// All sqflite access for counters and sessions.
 ///

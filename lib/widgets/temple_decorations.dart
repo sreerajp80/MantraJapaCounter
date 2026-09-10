@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import '../config/theme.dart';
+import 'package:mantra_japa_counter/theme/theme.dart';
 
 /// Decorative temple gateway arch — two concentric arches with a finial dot.
 /// Used at the top of the counter list and active counter screens.

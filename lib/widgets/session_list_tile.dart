@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/japa_session.dart';
+import 'package:mantra_japa_counter/models/japa_session.dart';
 
 /// List tile for a single session in the history screen.
 class SessionListTile extends StatelessWidget {

@@ -17,7 +17,7 @@ This file is read by AI agents and LLM coding assistants (Gemini, Antigravity, C
 | Dart SDK | `^3.12.2` or higher |
 | State management | `flutter_riverpod` |
 | Navigation | `go_router` |
-| Database | `sqflite` (schema v3) |
+| Database | `sqflite` (schema v4) |
 | Key-value storage | `shared_preferences` |
 | Orientation | Portrait only |
 | Connectivity | Fully offline — no INTERNET permission |
@@ -31,8 +31,8 @@ This file is read by AI agents and LLM coding assistants (Gemini, Antigravity, C
 | [docs/architecture.md](docs/architecture.md) | Changing structure, screens, state, services, models, repositories |
 | [docs/security.md](docs/security.md) | Touching permissions, logging, storage, crypto, manifest |
 | [docs/release_process.md](docs/release_process.md) | Building a release, versioning, release checklist |
-| [docs/flutter_build_flavors_guide.md](docs/flutter_build_flavors_guide.md) | Build config, signing, flavors, Gradle, ProGuard |
-| [docs/flutter_project_engineering_standard.md](docs/flutter_project_engineering_standard.md) | Any code change — layers, naming, testing standards |
+| [docs/guidelines/flutter_build_flavors_guide.md](docs/guidelines/flutter_build_flavors_guide.md) | Build config, signing, flavors, Gradle, ProGuard |
+| [docs/guidelines/flutter_project_engineering_standard.md](docs/guidelines/flutter_project_engineering_standard.md) | Any code change — layers, naming, testing standards |
 | [docs/GUIDELINES_MANIFEST.md](docs/GUIDELINES_MANIFEST.md) | The shared Flutter guidelines index |
 
 ---
@@ -49,7 +49,7 @@ This file is read by AI agents and LLM coding assistants (Gemini, Antigravity, C
 
 ## Architecture rules
 
-- **Layout**: Tier 1 layer-first under `lib/` (`config/`, `core/config/`, `models/`, `providers/`, `repositories/`, `screens/`, `services/`, `widgets/`, `main.dart`).
+- **Layout**: Tier 1 layer-first under `lib/` (`core/config/`, `core/constants/`, `core/flavor/`, `core/locale/`, `core/routing/`, `core/utils/`, `l10n/`, `models/`, `providers/`, `repositories/`, `screens/`, `services/`, `theme/`, `widgets/`, `main.dart`). `core/config/` holds only `AppConfig` + `ConfigService`.
 - **Layer boundaries**:
   - Widgets must not know SQL, SharedPreferences keys, file paths, or notification channel IDs.
   - Services must not know BuildContext, navigation routes, or UI strings.
@@ -126,8 +126,8 @@ flutter build appbundle --flavor prod --release \
 
 ## Testing rules
 
-- Mirror `lib/` structure in `test/` (e.g., `test/models/`, `test/services/`, `test/utils/`).
-- Required test coverage areas: Mala calculations (1 mala = 108 counts), session recovery, database migrations (v1 → v2 → v3), JSON export/import compatibility.
+- Mirror `lib/` structure in `test/` (e.g., `test/models/`, `test/services/`, `test/core/utils/`).
+- Required test coverage areas: Mala calculations (1 mala = 108 counts), session recovery, database migrations (v1 → v2 → v3 → v4), JSON export/import compatibility.
 
 ---
 

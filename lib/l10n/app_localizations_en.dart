@@ -1148,4 +1148,384 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get statusLocked => 'Locked';
+
+  @override
+  String get settingsBackupTitle => 'Data Backup & Optical Sync';
+
+  @override
+  String get settingsBackupSub =>
+      '100% offline device-to-device sync and backup';
+
+  @override
+  String get settingsOpticalSendTitle => 'Optical Air-Gap Sync (Send)';
+
+  @override
+  String get settingsOpticalSendSub =>
+      'Transmit counters & history via animated QR stream';
+
+  @override
+  String get settingsOpticalReceiveTitle => 'Optical Air-Gap Sync (Receive)';
+
+  @override
+  String get settingsOpticalReceiveSub =>
+      'Scan animated QR stream from another phone camera';
+
+  @override
+  String get settingsExportTitle => 'Export Backup File (JSON)';
+
+  @override
+  String get settingsExportSub =>
+      'Export all data to a local JSON file & share sheet';
+
+  @override
+  String get settingsImportTitle => 'Import Backup File (JSON)';
+
+  @override
+  String get settingsImportSub =>
+      'Restore counters and history from a backup file';
+
+  @override
+  String get dataRestoredSuccess => 'Data restored successfully!';
+
+  @override
+  String get opticalSendTitle => 'Optical Sync Stream (Send)';
+
+  @override
+  String get opticalReceiveTitle => 'Optical Sync Receiver (Scan)';
+
+  @override
+  String get opticalNoFrames => 'No data frames generated.';
+
+  @override
+  String opticalSessionId(String id) {
+    return 'SESSION ID: $id';
+  }
+
+  @override
+  String opticalFrameProgress(int current, int total) {
+    return 'Frame $current / $total';
+  }
+
+  @override
+  String opticalSystematicChunk(int index) {
+    return 'Systematic Data Chunk #$index';
+  }
+
+  @override
+  String opticalParityFrame(int index) {
+    return 'Fountain Parity Frame #$index';
+  }
+
+  @override
+  String get opticalStreamRate => 'Stream Rate (FPS)';
+
+  @override
+  String get opticalSendHint =>
+      'Point the receiving device\'s camera at this screen. The animated QR stream will transmit all counters and session history 100% offline.';
+
+  @override
+  String opticalReconstructing(int done, int total) {
+    return 'Reconstructing: $done / $total chunks';
+  }
+
+  @override
+  String get opticalAlignCamera => 'Align camera with animated QR stream...';
+
+  @override
+  String get opticalStreamComplete => 'Optical Sync Stream Complete';
+
+  @override
+  String get opticalStatCounters => 'Counters';
+
+  @override
+  String get opticalStatSessionLogs => 'Session Logs';
+
+  @override
+  String get opticalImportRestore => 'Import & Restore Data';
+
+  @override
+  String get opticalImportSuccess =>
+      'Optical sync import successful! Data restored.';
+
+  @override
+  String get opticalImportFailed => 'Failed to import data.';
+
+  @override
+  String get featCat1Name => 'Sacred Japa & Mala Counting';
+
+  @override
+  String get featCat1Sub =>
+      'Distraction-free chanting, 108 mala mathematics, and fluid gestures';
+
+  @override
+  String get featCat2Name => 'Optical Air-Gap Sync & Data Safety';
+
+  @override
+  String get featCat2Sub =>
+      '100% offline device-to-device synchronization via camera & QR streaming';
+
+  @override
+  String get featCat3Name => 'Practice Insights & History';
+
+  @override
+  String get featCat3Sub =>
+      'Comprehensive daily logs, streak counters, and per-counter breakdowns';
+
+  @override
+  String get featCat4Name => 'Temple Aesthetics, Audio & Haptics';
+
+  @override
+  String get featCat4Sub =>
+      'Peaceful devotional palette, resonant bell tones, and Malayalam support';
+
+  @override
+  String get featCat5Name => 'Privacy & Offline-First Core';
+
+  @override
+  String get featCat5Sub =>
+      'Zero cloud tracking, zero network requests, and absolute data privacy';
+
+  @override
+  String get featMalaTitle => '108 Mala Beads Calculation';
+
+  @override
+  String get featMalaDesc =>
+      'Automatically calculates completed malas (1 mala = 108 chants) and keeps track of excess counts and progress rings.';
+
+  @override
+  String get featMalaH1 => '108 beads formula';
+
+  @override
+  String get featMalaH2 => 'Excess counts counter';
+
+  @override
+  String get featMalaH3 => 'Mala completion chime';
+
+  @override
+  String get featImmersionTitle => 'Full-Screen Immersion & Tap Area';
+
+  @override
+  String get featImmersionDesc =>
+      'Tap anywhere on the large sacred ring to increment your count effortlessly without needing to look at specific buttons.';
+
+  @override
+  String get featImmersionH1 => 'Large touch zone';
+
+  @override
+  String get featImmersionH2 => 'Subtle haptic pulse';
+
+  @override
+  String get featImmersionH3 => 'Distraction-free focus';
+
+  @override
+  String get featUndoTitle => 'Two-Finger Swipe Undo';
+
+  @override
+  String get featUndoDesc =>
+      'Made an accidental count? Simply swipe left or right with two fingers on the ring to decrement the count cleanly.';
+
+  @override
+  String get featUndoH1 => 'Horizontal swipe gesture';
+
+  @override
+  String get featUndoH2 => 'Instant count reversal';
+
+  @override
+  String get featUndoH3 => 'Prevents over-counting';
+
+  @override
+  String get featTimerTitle => 'Persistent Session Timer & Goals';
+
+  @override
+  String get featTimerDesc =>
+      'Tracks active sitting duration with automatic background pause. Configure daily goals and lifetime dedication targets per mantra.';
+
+  @override
+  String get featTimerH1 => 'Active duration timer';
+
+  @override
+  String get featTimerH2 => 'Per-mantra daily goals';
+
+  @override
+  String get featTimerH3 => 'Lifetime dedication target';
+
+  @override
+  String get featQrStreamTitle => 'High-Density Animated QR Stream';
+
+  @override
+  String get featQrStreamDesc =>
+      'Transfer complete practice records, counters, and history between phones in seconds using a high-speed optical QR code stream.';
+
+  @override
+  String get featQrStreamH1 => 'Zero Wi-Fi / Bluetooth';
+
+  @override
+  String get featQrStreamH2 => '10-15 FPS animated stream';
+
+  @override
+  String get featQrStreamH3 => 'Instant phone transfer';
+
+  @override
+  String get featFountainTitle => 'Luby Transform Fountain Code Recovery';
+
+  @override
+  String get featFountainDesc =>
+      'Transfers data using mathematical fountain codes and CRC32 verification so dropped camera frames are recovered automatically.';
+
+  @override
+  String get featFountainH1 => 'Loss-tolerant recovery';
+
+  @override
+  String get featFountainH2 => 'CRC32 checksums';
+
+  @override
+  String get featFountainH3 => 'Out-of-order frame assembly';
+
+  @override
+  String get featJsonExportTitle => 'Offline JSON Export & Restore';
+
+  @override
+  String get featJsonExportDesc =>
+      'Export full database backups to a plain JSON file to save on your local storage, share sheet, or restore anytime.';
+
+  @override
+  String get featJsonExportH1 => 'Standard JSON schema';
+
+  @override
+  String get featJsonExportH2 => 'One-tap export/import';
+
+  @override
+  String get featJsonExportH3 => 'Room/Gson compatibility';
+
+  @override
+  String get featDailyLogTitle => 'Daily Practice Log & Breakdown';
+
+  @override
+  String get featDailyLogDesc =>
+      'Review historical sittings grouped by date with start timestamps, sitting duration, counts chanted, and malas completed.';
+
+  @override
+  String get featDailyLogH1 => 'Date-wise grouping';
+
+  @override
+  String get featDailyLogH2 => 'Sitting duration breakdown';
+
+  @override
+  String get featDailyLogH3 => 'Daily mala tally';
+
+  @override
+  String get featFilterTitle => 'Per-Counter Filtering';
+
+  @override
+  String get featFilterDesc =>
+      'Isolate and view history for individual mantras or view the combined sadhana across all active counters.';
+
+  @override
+  String get featFilterH1 => 'Specific mantra view';
+
+  @override
+  String get featFilterH2 => 'Combined daily view';
+
+  @override
+  String get featFilterH3 => 'Lifetime totals';
+
+  @override
+  String get featPaletteTitle => 'Temple Devotional Palette';
+
+  @override
+  String get featPaletteDesc =>
+      'Authentic temple palette with sacred cream backgrounds and vermillion, sandal yellow, tulsi green, and rose accents.';
+
+  @override
+  String get featPaletteH1 => 'Cream & gold background';
+
+  @override
+  String get featPaletteH2 => 'Vermillion & Tulsi accents';
+
+  @override
+  String get featPaletteH3 => 'Serif numeral typography';
+
+  @override
+  String get featBellTitle => 'Peaceful Bell Tones & Audio Picker';
+
+  @override
+  String get featBellDesc =>
+      'Gentle meditation chimes when completing malas or reaching daily goals. Choose system ringtones or pick custom local audio files.';
+
+  @override
+  String get featBellH1 => 'Mala & goal bell tones';
+
+  @override
+  String get featBellH2 => 'Custom audio picker';
+
+  @override
+  String get featBellH3 => 'Tone preview in settings';
+
+  @override
+  String get featBrightnessTitle => 'Stillness Brightness Mode';
+
+  @override
+  String get featBrightnessDesc =>
+      'Dim screen brightness to minimal ambient levels for distraction-free early morning, temple, or late-night meditation.';
+
+  @override
+  String get featBrightnessH1 => 'Custom brightness slider';
+
+  @override
+  String get featBrightnessH2 => '1-tap system restore';
+
+  @override
+  String get featBrightnessH3 => 'OLED battery efficiency';
+
+  @override
+  String get featBilingualTitle => 'Bilingual Malayalam & English UI';
+
+  @override
+  String get featBilingualDesc =>
+      'Full Malayalam scripture and interface support alongside English with bundled Noto Sans Malayalam fonts.';
+
+  @override
+  String get featBilingualH1 => 'Full Malayalam localization';
+
+  @override
+  String get featBilingualH2 => 'Authentic Indic font glyphs';
+
+  @override
+  String get featBilingualH3 => '1-tap language switch';
+
+  @override
+  String get featOfflineTitle => '100% Offline with Zero INTERNET Permission';
+
+  @override
+  String get featOfflineDesc =>
+      'The application manifest completely lacks internet permissions. No telemetry, ads, or analytics can ever run.';
+
+  @override
+  String get featOfflineH1 => 'No INTERNET permission';
+
+  @override
+  String get featOfflineH2 => 'Zero cloud telemetry';
+
+  @override
+  String get featOfflineH3 => 'No tracking or ads';
+
+  @override
+  String get featSqliteTitle => 'Local SQLite Database & Crash Recovery';
+
+  @override
+  String get featSqliteDesc =>
+      'Dual-layer persistence saves active counts every 5 taps/5 seconds to prevent accidental data loss during phone reboots.';
+
+  @override
+  String get featSqliteH1 => 'ACID-compliant SQLite v3';
+
+  @override
+  String get featSqliteH2 => '5-tap crash recovery';
+
+  @override
+  String get featSqliteH3 => 'Safe data migrations';
+
+  @override
+  String get opticalStreamCompleteSub =>
+      '100% offline payload reconstructed via camera scanner.';
 }

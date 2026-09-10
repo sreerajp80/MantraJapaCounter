@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../config/locale_config.dart';
-import '../config/theme.dart';
-import '../providers/optical_sync_provider.dart';
+import 'package:mantra_japa_counter/core/locale/locale_config.dart';
+import 'package:mantra_japa_counter/theme/theme.dart';
+import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/providers/optical_sync_provider.dart';
 
 class OpticalSyncImportPreviewSheet extends ConsumerWidget {
   const OpticalSyncImportPreviewSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context);
     final receiveState = ref.watch(opticalSyncReceiveProvider);
     final theme = Theme.of(context);
 
@@ -47,7 +49,7 @@ class OpticalSyncImportPreviewSheet extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Optical Sync Stream Complete',
+                      l.opticalStreamComplete,
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: TempleColors.vermillion,
@@ -55,7 +57,7 @@ class OpticalSyncImportPreviewSheet extends ConsumerWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      '100% offline payload reconstructed via camera scanner.',
+                      l.opticalStreamCompleteSub,
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: TempleColors.ink2,
                       ),
@@ -79,14 +81,14 @@ class OpticalSyncImportPreviewSheet extends ConsumerWidget {
                 _buildStatPill(
                   theme,
                   icon: Icons.auto_stories_outlined,
-                  label: 'Counters',
+                  label: l.opticalStatCounters,
                   value: '$counterCount',
                 ),
                 Container(height: 36, width: 1, color: TempleColors.line),
                 _buildStatPill(
                   theme,
                   icon: Icons.history,
-                  label: 'Session Logs',
+                  label: l.opticalStatSessionLogs,
                   value: '$sessionCount',
                 ),
               ],
@@ -103,9 +105,9 @@ class OpticalSyncImportPreviewSheet extends ConsumerWidget {
               ),
             ),
             icon: const Icon(Icons.download_done_rounded),
-            label: const Text(
-              'Import & Restore Data',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            label: Text(
+              l.opticalImportRestore,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             onPressed: () async {
               final success = await ref
@@ -115,10 +117,8 @@ class OpticalSyncImportPreviewSheet extends ConsumerWidget {
                 context.pop(); // Close sheet
                 if (success) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Optical sync import successful! Data restored.',
-                      ),
+                    SnackBar(
+                      content: Text(l.opticalImportSuccess),
                       backgroundColor: TempleColors.tulsi,
                     ),
                   );
@@ -127,7 +127,7 @@ class OpticalSyncImportPreviewSheet extends ConsumerWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        receiveState.errorMessage ?? 'Failed to import data.',
+                        receiveState.errorMessage ?? l.opticalImportFailed,
                       ),
                       backgroundColor: TempleColors.vermillion,
                     ),

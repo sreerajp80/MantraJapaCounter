@@ -1,9 +1,9 @@
 import 'dart:async';
-import '../config/app_constants.dart';
-import '../models/active_session.dart';
-import '../models/japa_session.dart';
-import '../repositories/japa_counter_repository.dart';
-import '../repositories/settings_repository.dart';
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
+import 'package:mantra_japa_counter/models/active_session.dart';
+import 'package:mantra_japa_counter/models/japa_session.dart';
+import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
+import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 
 // uuid is not in pubspec yet — use a simple helper until added
 // For now inline a deterministic UUID v4 stub using dart:math

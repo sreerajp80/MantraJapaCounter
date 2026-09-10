@@ -1,6 +1,6 @@
 # Implementation Plan: Counter Lock Feature
 
-**Status:** COMPLETED
+**Status:** completed
 
 ## Overview
 Add a lock/unlock capability to mantra counters on the counter list page. When a counter is locked, accidental taps on the card will not open the counting screen, preventing users from inadvertently counting towards the wrong counter. Users can toggle lock status via a dedicated lock button on the counter card as well as via the counter options menu.

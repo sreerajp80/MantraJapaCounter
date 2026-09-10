@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../core/config/app_config.dart';
-import '../core/config/config_service.dart';
-import '../l10n/app_localizations.dart';
-import '../utils/build_date.g.dart';
+import 'package:mantra_japa_counter/core/config/app_config.dart';
+import 'package:mantra_japa_counter/core/config/config_service.dart';
+import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/core/utils/build_date.g.dart';
 
 /// App info and credits screen.
 /// Data-driven: reads values from `ConfigService` and iterates `AppConfig.details` dynamically.

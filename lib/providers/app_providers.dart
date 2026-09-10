@@ -2,14 +2,14 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
-import '../repositories/japa_counter_repository.dart';
-import '../repositories/settings_repository.dart';
-import '../services/counting_service.dart';
-import '../services/export_service.dart';
-import '../services/haptic_feedback_service.dart';
-import '../services/notification_service.dart';
-import '../services/session_recovery_service.dart';
-import '../services/sound_service.dart';
+import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
+import 'package:mantra_japa_counter/repositories/settings_repository.dart';
+import 'package:mantra_japa_counter/services/counting_service.dart';
+import 'package:mantra_japa_counter/services/export_service.dart';
+import 'package:mantra_japa_counter/services/haptic_feedback_service.dart';
+import 'package:mantra_japa_counter/services/notification_service.dart';
+import 'package:mantra_japa_counter/services/session_recovery_service.dart';
+import 'package:mantra_japa_counter/services/sound_service.dart';
 
 // ──────────────────────────── Infrastructure providers ──────────────────────
 // These are overridden at the root ProviderScope in main.dart with the

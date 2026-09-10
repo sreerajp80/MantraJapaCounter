@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mantra_japa_counter/utils/mala.dart';
+import 'package:mantra_japa_counter/core/utils/mala.dart';
 
 void main() {
   group('malaForCount', () {

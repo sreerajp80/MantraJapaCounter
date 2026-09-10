@@ -1,6 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import '../config/app_constants.dart';
-import '../config/locale_config.dart';
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
+import 'package:mantra_japa_counter/core/locale/locale_config.dart';
 
 /// Notification service: visible status-bar entry for daily goal completion.
 ///
@@ -46,7 +46,6 @@ class NotificationService {
           AppConstants.dailyGoalChannelId,
           AppConstants.dailyGoalChannelName,
           description: 'Alerts when you reach your daily mantra goal',
-          importance: Importance.defaultImportance,
           playSound: false,
           enableVibration: false,
         ),
@@ -64,8 +63,6 @@ class NotificationService {
         android: AndroidNotificationDetails(
           AppConstants.dailyGoalChannelId,
           AppConstants.dailyGoalChannelName,
-          importance: Importance.defaultImportance,
-          priority: Priority.defaultPriority,
           enableVibration: false,
           playSound: false,
         ),

@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'counter.dart';
-import 'japa_session.dart';
+import 'package:mantra_japa_counter/models/counter.dart';
+import 'package:mantra_japa_counter/models/japa_session.dart';
 
 /// Top-level wrapper for JSON import/export.
 ///

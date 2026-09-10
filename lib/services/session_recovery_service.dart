@@ -1,6 +1,6 @@
-import '../models/japa_session.dart';
-import '../repositories/japa_counter_repository.dart';
-import '../repositories/settings_repository.dart';
+import 'package:mantra_japa_counter/models/japa_session.dart';
+import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
+import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 
 /// Reconciles any in-progress session persisted in SharedPreferences with the
 /// `japa_sessions` table on app start.

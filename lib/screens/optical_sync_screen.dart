@@ -4,9 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import '../config/theme.dart';
-import '../providers/optical_sync_provider.dart';
-import '../widgets/optical_sync_import_preview_sheet.dart';
+import 'package:mantra_japa_counter/theme/theme.dart';
+import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/providers/optical_sync_provider.dart';
+import 'package:mantra_japa_counter/widgets/optical_sync_import_preview_sheet.dart';
 
 class OpticalSyncScreen extends ConsumerStatefulWidget {
   final bool isTransmitter;
@@ -46,13 +47,12 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: TempleColors.bg,
       appBar: AppBar(
         title: Text(
-          widget.isTransmitter
-              ? 'Optical Sync Stream (Send)'
-              : 'Optical Sync Receiver (Scan)',
+          widget.isTransmitter ? l.opticalSendTitle : l.opticalReceiveTitle,
         ),
       ),
       body: widget.isTransmitter
@@ -64,6 +64,7 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
   // ──────────────────────────── Transmitter View ────────────────────────────
 
   Widget _buildTransmitterView(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final state = ref.watch(opticalSyncTransmitProvider);
     final theme = Theme.of(context);
 
@@ -88,7 +89,7 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
 
     final currentFrame = state.currentFrame;
     if (currentFrame == null) {
-      return const Center(child: Text('No data frames generated.'));
+      return Center(child: Text(l.opticalNoFrames));
     }
 
     return SingleChildScrollView(
@@ -102,7 +103,7 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
               borderRadius: BorderRadius.circular(16),
             ),
             child: Text(
-              'SESSION ID: ${state.sessionId}',
+              l.opticalSessionId(state.sessionId),
               style: theme.textTheme.labelMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: TempleColors.vermillion,
@@ -131,7 +132,6 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
             ),
             child: QrImageView(
               data: currentFrame.serialize(),
-              version: QrVersions.auto,
               size: 260.0,
               backgroundColor: Colors.white,
               eyeStyle: const QrEyeStyle(
@@ -146,7 +146,10 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
           ),
           const SizedBox(height: 16),
           Text(
-            'Frame ${state.currentFrameIndex + 1} / ${state.frames.length}',
+            l.opticalFrameProgress(
+              state.currentFrameIndex + 1,
+              state.frames.length,
+            ),
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: TempleColors.ink,
@@ -154,8 +157,8 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
           ),
           Text(
             currentFrame.isSystematic
-                ? 'Systematic Data Chunk #${currentFrame.frameIndex}'
-                : 'Fountain Parity Frame #${currentFrame.frameIndex}',
+                ? l.opticalSystematicChunk(currentFrame.frameIndex)
+                : l.opticalParityFrame(currentFrame.frameIndex),
             style: theme.textTheme.bodySmall?.copyWith(
               color: TempleColors.ink2,
             ),
@@ -184,7 +187,7 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
           const SizedBox(height: 12),
           // Speed Selectors
           Text(
-            'Stream Rate (FPS)',
+            l.opticalStreamRate,
             style: theme.textTheme.labelMedium?.copyWith(
               color: TempleColors.ink2,
             ),
@@ -222,7 +225,7 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
-              'Point the receiving device\'s camera at this screen. The animated QR stream will transmit all counters and session history 100% offline.',
+              l.opticalSendHint,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodySmall?.copyWith(
                 color: TempleColors.ink2,
@@ -237,6 +240,7 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
   // ──────────────────────────── Receiver View ────────────────────────────
 
   Widget _buildReceiverView(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final state = ref.watch(opticalSyncReceiveProvider);
     final theme = Theme.of(context);
 
@@ -266,8 +270,11 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
                 children: [
                   Text(
                     state.progress.totalOriginalChunks > 0
-                        ? 'Reconstructing: ${state.progress.reconstructedChunksCount} / ${state.progress.totalOriginalChunks} chunks'
-                        : 'Align camera with animated QR stream...',
+                        ? l.opticalReconstructing(
+                            state.progress.reconstructedChunksCount,
+                            state.progress.totalOriginalChunks,
+                          )
+                        : l.opticalAlignCamera,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: TempleColors.vermillion,

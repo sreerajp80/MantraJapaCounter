@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import '../config/app_constants.dart';
-import '../models/active_session.dart';
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
+import 'package:mantra_japa_counter/models/active_session.dart';
 
 /// All SharedPreferences access: user settings and active-session crash recovery.
 ///

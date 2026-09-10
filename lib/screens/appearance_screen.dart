@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../config/theme.dart';
-import '../l10n/app_localizations.dart';
-import '../providers/settings_provider.dart';
-import '../widgets/temple_decorations.dart';
+import 'package:mantra_japa_counter/theme/theme.dart';
+import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/providers/settings_provider.dart';
+import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
 
 /// Appearance preferences screen reached from Settings -> Appearance.
 /// Provides screen brightness controls, Stillness mode configuration,
@@ -97,7 +97,6 @@ class AppearanceScreen extends ConsumerWidget {
                 Text(
                   l.practiceEyebrow,
                   style: AppTheme.eyebrow(
-                    fontSize: 10,
                     letterSpacing: 3,
                     color: TempleColors.vermillion,
                   ),
@@ -105,17 +104,12 @@ class AppearanceScreen extends ConsumerWidget {
                 const SizedBox(height: 2),
                 Text(
                   l.appearanceTitle,
-                  style: AppTheme.serif(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w500,
-                    color: TempleColors.ink,
-                    height: 1,
-                  ),
+                  style: AppTheme.serif(fontSize: 28, height: 1),
                 ),
               ],
             ),
           ),
-          const TempleLotusIcon(size: 22, color: TempleColors.vermillion),
+          const TempleLotusIcon(size: 22),
         ],
       ),
     );
@@ -131,11 +125,7 @@ class AppearanceScreen extends ConsumerWidget {
           Expanded(
             child: Text(
               title,
-              style: AppTheme.serif(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: TempleColors.ink,
-              ),
+              style: AppTheme.serif(fontSize: 16, fontWeight: FontWeight.w600),
             ),
           ),
         ],
@@ -168,9 +158,7 @@ class _HeaderCard extends StatelessWidget {
               color: TempleColors.vermillion.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(14),
             ),
-            child: const Center(
-              child: TempleDiyaIcon(size: 26, color: TempleColors.vermillion),
-            ),
+            child: const Center(child: TempleDiyaIcon(size: 26)),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -182,7 +170,6 @@ class _HeaderCard extends StatelessWidget {
                   style: AppTheme.serif(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: TempleColors.ink,
                   ),
                 ),
                 const SizedBox(height: 3),
@@ -230,7 +217,6 @@ class _BrightnessCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 child: Column(
@@ -241,7 +227,6 @@ class _BrightnessCard extends StatelessWidget {
                       style: AppTheme.sans(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        color: TempleColors.ink,
                       ),
                     ),
                     const SizedBox(height: 3),
@@ -422,7 +407,6 @@ class _ColorRow extends StatelessWidget {
                 style: AppTheme.sans(
                   fontSize: 14.5,
                   fontWeight: FontWeight.w600,
-                  color: TempleColors.ink,
                 ),
               ),
               const SizedBox(height: 2),
@@ -470,7 +454,7 @@ class _TypographyCard extends StatelessWidget {
             title: l.typographyMalTitle,
             sub: l.typographyMalSub,
             sample: 'ഓം നമഃ ശിവായ · ഹരേ കൃഷ്ണ',
-            style: AppTheme.mal(fontSize: 15, color: TempleColors.ink),
+            style: AppTheme.mal(fontSize: 15),
           ),
         ],
       ),
@@ -498,11 +482,7 @@ class _TypeSample extends StatelessWidget {
       children: [
         Text(
           title,
-          style: AppTheme.sans(
-            fontSize: 14.5,
-            fontWeight: FontWeight.w600,
-            color: TempleColors.ink,
-          ),
+          style: AppTheme.sans(fontSize: 14.5, fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 2),
         Text(sub, style: AppTheme.sans(fontSize: 12, color: TempleColors.ink2)),

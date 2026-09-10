@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/counter.dart';
-import '../models/counter_status.dart';
-import 'app_providers.dart';
+import 'package:mantra_japa_counter/models/counter.dart';
+import 'package:mantra_japa_counter/models/counter_status.dart';
+import 'package:mantra_japa_counter/providers/app_providers.dart';
 
 /// Async list of all counters, sorted: active first, then by createdAt DESC.
 final countersProvider = FutureProvider<List<Counter>>((ref) async {

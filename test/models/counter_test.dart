@@ -3,7 +3,7 @@ import 'package:mantra_japa_counter/models/counter.dart';
 import 'package:mantra_japa_counter/models/counter_status.dart';
 
 void main() {
-  final base = Counter(
+  const base = Counter(
     id: 'test-id',
     name: 'Gayatri',
     goal: 100,

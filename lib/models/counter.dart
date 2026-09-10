@@ -1,4 +1,4 @@
-import 'counter_status.dart';
+import 'package:mantra_japa_counter/models/counter_status.dart';
 
 /// Immutable domain model for a named mantra counter.
 ///

@@ -11,14 +11,13 @@ void main() {
     bool tapped = false;
     bool lockToggled = false;
 
-    final counter = Counter(
+    const counter = Counter(
       id: 'test-c1',
       name: 'Om Namah Shivaya',
       goal: 1080,
       dailyGoal: 108,
       startDate: 1000,
       createdAt: 1000,
-      isLocked: false,
     );
 
     await tester.pumpWidget(
@@ -60,7 +59,7 @@ void main() {
       bool tapped = false;
       bool lockToggled = false;
 
-      final lockedCounter = Counter(
+      const lockedCounter = Counter(
         id: 'test-c2',
         name: 'Gayatri Mantra',
         goal: 1080,

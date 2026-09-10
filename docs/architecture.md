@@ -64,12 +64,24 @@ Read [AGENTS.md](../AGENTS.md) and [CLAUDE.md](../CLAUDE.md) before making any c
 
 ```text
 lib/
-|-- config/           # Flavor config, app constants, theme tokens, router definitions
+|-- core/
+|   |-- config/       # AppConfig + ConfigService (About screen). Fixed path.
+|   |-- constants/    # AppConstants: timing, limits, prefs keys, mala size
+|   |-- flavor/       # AppFlavorConfig (dev / prod)
+|   |-- locale/       # LocaleConfig: device locale -> en / ml
+|   |-- routing/      # go_router route definitions
+|   `-- utils/        # Mala maths + generated build metadata (*.g.dart)
+|-- l10n/             # ARB files + generated AppLocalizations
 |-- models/           # Immutable domain models: Counter, JapaSession, CounterStatus, DailySummary, ActiveSession
 |-- providers/        # Riverpod providers: counters list, active session, history, settings
 |-- repositories/     # Data access: JapaCounterRepository (sqflite), SettingsRepository (shared_preferences)
-|-- screens/          # One file per screen: counter_list, counting, history, settings, about_counter, about
+|-- screens/          # One file per simple screen: counting, about_counter, about, appearance, features, optical_sync
+|   |-- counter_list/ # Home screen + its header, list item, options sheet, counter dialog, import/export dialog
+|   |-- history/      # History screen + its hero, day group, session row
+|   |-- settings/     # Settings screen + its tiles, brightness row, info cards, notification sound picker
+|   `-- help/         # Help home + one screen per help topic
 |-- services/         # Business logic: CountingService, ExportService, NotificationService, SessionRecoveryService
+|-- theme/            # Colors, text styles, ThemeData
 |-- widgets/          # Shared reusable widgets: CounterCard, ProgressBar, MalaDisplay, GoalProgressBar, etc.
 `-- main.dart
 ```
@@ -78,7 +90,13 @@ lib/
 
 | Path | Responsibility |
 |------|----------------|
-| `lib/config/` | App-wide constants, flavor config, theme tokens, go_router route definitions |
+| `lib/core/config/` | `AppConfig` + `ConfigService` for the About screen only |
+| `lib/core/constants/` | App-wide technical constants (values only) |
+| `lib/core/flavor/` | Build flavor detection |
+| `lib/core/locale/` | Locale policy (which device languages map to which app language) |
+| `lib/core/routing/` | go_router route definitions |
+| `lib/core/utils/` | Small pure helpers (mala maths) and generated build metadata |
+| `lib/theme/` | Theme tokens, text styles, `ThemeData` |
 | `lib/models/` | Immutable domain entities; no Flutter imports, no sqflite imports |
 | `lib/providers/` | Riverpod providers bridging services/repositories to UI; no direct sqflite access |
 | `lib/repositories/` | sqflite + SharedPreferences access; maps DB rows to domain models; no business logic |
@@ -94,7 +112,7 @@ lib/
 |------|-------------|-------|
 | 1 | `WidgetsFlutterBinding.ensureInitialized()` | Always first |
 | 2 | `SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])` | Lock portrait before any frames render |
-| 3 | `openDatabase(path, version: 3, onCreate: ..., onUpgrade: ...)` | Apply schema version 3; runs migrations 1→2→3 if upgrading |
+| 3 | `openDatabase(path, version: AppConstants.dbVersion, onCreate: ..., onUpgrade: ...)` | Apply the current schema version (4); runs migrations 1→2→3→4 if upgrading |
 | 4 | `SharedPreferences.getInstance()` | Used for crash-recovery active session and user settings |
 | 5 | `AppFlavorConfig.init(flavor)` | Read flavor via `String.fromEnvironment('FLUTTER_APP_FLAVOR')` — auto-populated by `--flavor` |
 | 6 | `FlutterLocalNotificationsPlugin.initialize(...)` | Create Android notification channels for goal and mala alerts |
@@ -249,7 +267,7 @@ Migration history:
 ## 13. Navigation
 
 - Navigation approach: `go_router`
-- Route definition location: `lib/config/router.dart`
+- Route definition location: `lib/core/routing/router.dart`
 - Protected-route strategy: none — app contains no sensitive data requiring an access lock
 - Deep-link support: no
 
@@ -271,7 +289,7 @@ Migration history:
 
 ### Local Storage
 
-- Database: `sqflite` — main data store for all counters and sessions; schema version 3
+- Database: `sqflite` — main data store for all counters and sessions; schema version 4
 - WAL mode: enabled (`PRAGMA journal_mode=WAL`) for concurrent read performance during active counting
 - Key-value storage: `shared_preferences` — active session crash recovery, notification preferences, screen brightness setting
 - Secure storage: not applicable — app data contains only spiritual practice counts; no sensitive data requiring encryption
@@ -303,8 +321,8 @@ Migration history:
 
 ## 16. UI System
 
-- Theme source of truth: `lib/config/theme.dart`
-- Design tokens location: `lib/config/colors.dart`, `lib/config/typography.dart`
+- Theme source of truth: `lib/theme/theme.dart`
+- Design tokens location: `lib/theme/theme.dart` (colors and text styles live in the same file)
 - Shared widget strategy: `lib/widgets/` — CounterCard, CircularProgressWidget, MalaCountDisplay, GoalProgressBar, SessionListTile
 - Accessibility expectations:
   - Minimum touch target: 48 × 48 dp; the counting tap area covers the full screen, far exceeding this
@@ -359,7 +377,7 @@ test/
 - Mala calculation: `count ÷ 108` integer division produces correct completed rounds
 - Session crash recovery: SharedPreferences written every 5 taps or 5 seconds; DB written every 30 seconds or 20 taps; both write paths must be exercised
 - Daily goal progress: sessions within the same calendar date aggregated correctly across midnight boundaries
-- Database migration from v1 → v2 → v3
+- Database migration from v1 → v2 → v3 → v4
 - Import parsing: malformed JSON rejected without corrupting existing database state
 - Import compatibility: Android Gson-exported JSON parses correctly in Flutter
 - Error boundary: sqflite open failure handled gracefully at startup
@@ -416,7 +434,7 @@ test/
 ## 22. Related Documents
 
 - `README.md`
-- `docs/flutter_project_engineering_standard.md`
-- `docs/flutter_build_flavors_guide.md`
+- `docs/guidelines/flutter_project_engineering_standard.md`
+- `docs/guidelines/flutter_build_flavors_guide.md`
 - `docs/release_process.md`
 - `docs/security.md`

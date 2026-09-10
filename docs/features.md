@@ -24,7 +24,7 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 | **Desugaring** | `com.android.tools:desugar_jdk_libs:2.1.4` (Core JDK library desugaring for Java 8+ APIs) |
 | **State Management** | `flutter_riverpod` (v3.3.1) with `AsyncNotifier` and `StateNotifier` architecture |
 | **Navigation** | `go_router` (v17.2.2) with declarative routing and parameter passing |
-| **Local Database** | `sqflite` (v2.4.2) with SQLite schema version 3 & `path` (v1.9.1) |
+| **Local Database** | `sqflite` (v2.4.2) with SQLite schema version 4 & `path` (v1.9.1) |
 | **Key-Value Storage** | `shared_preferences` (v2.5.3) for settings and crash-recovery session state |
 | **Audio Playback** | `audioplayers` (v6.1.0) + Native Android MethodChannel (`com.sreerajp.mantrajapacounter/haptic`) |
 | **Notifications** | `flutter_local_notifications` (v21.0.0) |

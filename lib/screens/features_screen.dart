@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../config/theme.dart';
-import '../l10n/app_localizations.dart';
-import '../widgets/temple_decorations.dart';
+import 'package:mantra_japa_counter/theme/theme.dart';
+import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
 
 class _AppFeature {
   final String title;
@@ -36,209 +36,139 @@ class _FeatureCategory {
 class FeaturesScreen extends StatelessWidget {
   const FeaturesScreen({super.key});
 
-  static const List<_FeatureCategory> _categories = [
+  /// Built from [AppLocalizations] on every build so the catalogue
+  /// follows the selected language. All text lives in the ARB files.
+  static List<_FeatureCategory> _categories(AppLocalizations l) => [
     _FeatureCategory(
-      name: 'Sacred Japa & Mala Counting',
-      subtitle:
-          'Distraction-free chanting, 108 mala mathematics, and fluid gestures',
+      name: l.featCat1Name,
+      subtitle: l.featCat1Sub,
       icon: Icons.all_inclusive_outlined,
       features: [
         _AppFeature(
-          title: '108 Mala Beads Calculation',
-          description:
-              'Automatically calculates completed malas (1 mala = 108 chants) and keeps track of excess counts and progress rings.',
+          title: l.featMalaTitle,
+          description: l.featMalaDesc,
           icon: Icons.lens_blur_outlined,
-          highlights: [
-            '108 beads formula',
-            'Excess counts counter',
-            'Mala completion chime',
-          ],
+          highlights: [l.featMalaH1, l.featMalaH2, l.featMalaH3],
         ),
         _AppFeature(
-          title: 'Full-Screen Immersion & Tap Area',
-          description:
-              'Tap anywhere on the large sacred ring to increment your count effortlessly without needing to look at specific buttons.',
+          title: l.featImmersionTitle,
+          description: l.featImmersionDesc,
           icon: Icons.touch_app_outlined,
-          highlights: [
-            'Large touch zone',
-            'Subtle haptic pulse',
-            'Distraction-free focus',
-          ],
+          highlights: [l.featImmersionH1, l.featImmersionH2, l.featImmersionH3],
         ),
         _AppFeature(
-          title: 'Two-Finger Swipe Undo',
-          description:
-              'Made an accidental count? Simply swipe left or right with two fingers on the ring to decrement the count cleanly.',
+          title: l.featUndoTitle,
+          description: l.featUndoDesc,
           icon: Icons.swipe_outlined,
-          highlights: [
-            'Horizontal swipe gesture',
-            'Instant count reversal',
-            'Prevents over-counting',
-          ],
+          highlights: [l.featUndoH1, l.featUndoH2, l.featUndoH3],
         ),
         _AppFeature(
-          title: 'Persistent Session Timer & Goals',
-          description:
-              'Tracks active sitting duration with automatic background pause. Configure daily goals and lifetime dedication targets per mantra.',
+          title: l.featTimerTitle,
+          description: l.featTimerDesc,
           icon: Icons.timer_outlined,
-          highlights: [
-            'Active duration timer',
-            'Per-mantra daily goals',
-            'Lifetime dedication target',
-          ],
+          highlights: [l.featTimerH1, l.featTimerH2, l.featTimerH3],
         ),
       ],
     ),
     _FeatureCategory(
-      name: 'Optical Air-Gap Sync & Data Safety',
-      subtitle:
-          '100% offline device-to-device synchronization via camera & QR streaming',
+      name: l.featCat2Name,
+      subtitle: l.featCat2Sub,
       icon: Icons.sync_outlined,
       features: [
         _AppFeature(
-          title: 'High-Density Animated QR Stream',
-          description:
-              'Transfer complete practice records, counters, and history between phones in seconds using a high-speed optical QR code stream.',
+          title: l.featQrStreamTitle,
+          description: l.featQrStreamDesc,
           icon: Icons.qr_code_2_outlined,
-          highlights: [
-            'Zero Wi-Fi / Bluetooth',
-            '10-15 FPS animated stream',
-            'Instant phone transfer',
-          ],
+          highlights: [l.featQrStreamH1, l.featQrStreamH2, l.featQrStreamH3],
         ),
         _AppFeature(
-          title: 'Luby Transform Fountain Code Recovery',
-          description:
-              'Transfers data using mathematical fountain codes and CRC32 verification so dropped camera frames are recovered automatically.',
+          title: l.featFountainTitle,
+          description: l.featFountainDesc,
           icon: Icons.auto_fix_high_outlined,
-          highlights: [
-            'Loss-tolerant recovery',
-            'CRC32 checksums',
-            'Out-of-order frame assembly',
-          ],
+          highlights: [l.featFountainH1, l.featFountainH2, l.featFountainH3],
         ),
         _AppFeature(
-          title: 'Offline JSON Export & Restore',
-          description:
-              'Export full database backups to a plain JSON file to save on your local storage, share sheet, or restore anytime.',
+          title: l.featJsonExportTitle,
+          description: l.featJsonExportDesc,
           icon: Icons.backup_outlined,
           highlights: [
-            'Standard JSON schema',
-            'One-tap export/import',
-            'Room/Gson compatibility',
+            l.featJsonExportH1,
+            l.featJsonExportH2,
+            l.featJsonExportH3,
           ],
         ),
       ],
     ),
     _FeatureCategory(
-      name: 'Practice Insights & History',
-      subtitle:
-          'Comprehensive daily logs, streak counters, and per-counter breakdowns',
+      name: l.featCat3Name,
+      subtitle: l.featCat3Sub,
       icon: Icons.insights_outlined,
       features: [
         _AppFeature(
-          title: 'Daily Practice Log & Breakdown',
-          description:
-              'Review historical sittings grouped by date with start timestamps, sitting duration, counts chanted, and malas completed.',
+          title: l.featDailyLogTitle,
+          description: l.featDailyLogDesc,
           icon: Icons.calendar_month_outlined,
-          highlights: [
-            'Date-wise grouping',
-            'Sitting duration breakdown',
-            'Daily mala tally',
-          ],
+          highlights: [l.featDailyLogH1, l.featDailyLogH2, l.featDailyLogH3],
         ),
         _AppFeature(
-          title: 'Per-Counter Filtering',
-          description:
-              'Isolate and view history for individual mantras or view the combined sadhana across all active counters.',
+          title: l.featFilterTitle,
+          description: l.featFilterDesc,
           icon: Icons.filter_alt_outlined,
-          highlights: [
-            'Specific mantra view',
-            'Combined daily view',
-            'Lifetime totals',
-          ],
+          highlights: [l.featFilterH1, l.featFilterH2, l.featFilterH3],
         ),
       ],
     ),
     _FeatureCategory(
-      name: 'Temple Aesthetics, Audio & Haptics',
-      subtitle:
-          'Peaceful devotional palette, resonant bell tones, and Malayalam support',
+      name: l.featCat4Name,
+      subtitle: l.featCat4Sub,
       icon: Icons.palette_outlined,
       features: [
         _AppFeature(
-          title: 'Temple Devotional Palette',
-          description:
-              'Authentic temple palette with sacred cream backgrounds and vermillion, sandal yellow, tulsi green, and rose accents.',
+          title: l.featPaletteTitle,
+          description: l.featPaletteDesc,
           icon: Icons.color_lens_outlined,
-          highlights: [
-            'Cream & gold background',
-            'Vermillion & Tulsi accents',
-            'Serif numeral typography',
-          ],
+          highlights: [l.featPaletteH1, l.featPaletteH2, l.featPaletteH3],
         ),
         _AppFeature(
-          title: 'Peaceful Bell Tones & Audio Picker',
-          description:
-              'Gentle meditation chimes when completing malas or reaching daily goals. Choose system ringtones or pick custom local audio files.',
+          title: l.featBellTitle,
+          description: l.featBellDesc,
           icon: Icons.notifications_active_outlined,
-          highlights: [
-            'Mala & goal bell tones',
-            'Custom audio picker',
-            'Tone preview in settings',
-          ],
+          highlights: [l.featBellH1, l.featBellH2, l.featBellH3],
         ),
         _AppFeature(
-          title: 'Stillness Brightness Mode',
-          description:
-              'Dim screen brightness to minimal ambient levels for distraction-free early morning, temple, or late-night meditation.',
+          title: l.featBrightnessTitle,
+          description: l.featBrightnessDesc,
           icon: Icons.brightness_medium_outlined,
           highlights: [
-            'Custom brightness slider',
-            '1-tap system restore',
-            'OLED battery efficiency',
+            l.featBrightnessH1,
+            l.featBrightnessH2,
+            l.featBrightnessH3,
           ],
         ),
         _AppFeature(
-          title: 'Bilingual Malayalam & English UI',
-          description:
-              'Full Malayalam scripture and interface support alongside English with bundled Noto Sans Malayalam fonts.',
+          title: l.featBilingualTitle,
+          description: l.featBilingualDesc,
           icon: Icons.translate_outlined,
-          highlights: [
-            'Full Malayalam localization',
-            'Authentic Indic font glyphs',
-            '1-tap language switch',
-          ],
+          highlights: [l.featBilingualH1, l.featBilingualH2, l.featBilingualH3],
         ),
       ],
     ),
     _FeatureCategory(
-      name: 'Privacy & Offline-First Core',
-      subtitle:
-          'Zero cloud tracking, zero network requests, and absolute data privacy',
+      name: l.featCat5Name,
+      subtitle: l.featCat5Sub,
       icon: Icons.security_outlined,
       features: [
         _AppFeature(
-          title: '100% Offline with Zero INTERNET Permission',
-          description:
-              'The application manifest completely lacks internet permissions. No telemetry, ads, or analytics can ever run.',
+          title: l.featOfflineTitle,
+          description: l.featOfflineDesc,
           icon: Icons.wifi_off_outlined,
-          highlights: [
-            'No INTERNET permission',
-            'Zero cloud telemetry',
-            'No tracking or ads',
-          ],
+          highlights: [l.featOfflineH1, l.featOfflineH2, l.featOfflineH3],
         ),
         _AppFeature(
-          title: 'Local SQLite Database & Crash Recovery',
-          description:
-              'Dual-layer persistence saves active counts every 5 taps/5 seconds to prevent accidental data loss during phone reboots.',
+          title: l.featSqliteTitle,
+          description: l.featSqliteDesc,
           icon: Icons.storage_outlined,
-          highlights: [
-            'ACID-compliant SQLite v3',
-            '5-tap crash recovery',
-            'Safe data migrations',
-          ],
+          highlights: [l.featSqliteH1, l.featSqliteH2, l.featSqliteH3],
         ),
       ],
     ),
@@ -264,7 +194,7 @@ class FeaturesScreen extends StatelessWidget {
                     subtitle: l.featuresHeaderSub,
                   ),
                   const SizedBox(height: 20),
-                  for (final category in _categories) ...[
+                  for (final category in _categories(l)) ...[
                     _buildCategoryHeader(category),
                     const SizedBox(height: 8),
                     _buildCategoryCard(category),
@@ -303,7 +233,6 @@ class FeaturesScreen extends StatelessWidget {
                 Text(
                   l.practiceEyebrow,
                   style: AppTheme.eyebrow(
-                    fontSize: 10,
                     letterSpacing: 3,
                     color: TempleColors.vermillion,
                   ),
@@ -311,17 +240,12 @@ class FeaturesScreen extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   l.featuresTitle,
-                  style: AppTheme.serif(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w500,
-                    color: TempleColors.ink,
-                    height: 1,
-                  ),
+                  style: AppTheme.serif(fontSize: 28, height: 1),
                 ),
               ],
             ),
           ),
-          const TempleLotusIcon(size: 22, color: TempleColors.vermillion),
+          const TempleLotusIcon(size: 22),
         ],
       ),
     );
@@ -343,7 +267,6 @@ class FeaturesScreen extends StatelessWidget {
                   style: AppTheme.serif(
                     fontSize: 17,
                     fontWeight: FontWeight.w600,
-                    color: TempleColors.ink,
                   ),
                 ),
               ),
@@ -422,7 +345,6 @@ class _HeaderCard extends StatelessWidget {
                   style: AppTheme.serif(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: TempleColors.ink,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -484,7 +406,6 @@ class _FeatureTile extends StatelessWidget {
                       style: AppTheme.sans(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        color: TempleColors.ink,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -526,14 +447,7 @@ class _FeatureTile extends StatelessWidget {
                         color: TempleColors.tulsi,
                       ),
                       const SizedBox(width: 5),
-                      Text(
-                        h,
-                        style: AppTheme.sans(
-                          fontSize: 11.5,
-                          fontWeight: FontWeight.w500,
-                          color: TempleColors.ink,
-                        ),
-                      ),
+                      Text(h, style: AppTheme.sans(fontSize: 11.5)),
                     ],
                   ),
                 );

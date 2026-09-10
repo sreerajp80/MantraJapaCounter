@@ -2077,6 +2077,690 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Locked'**
   String get statusLocked;
+
+  /// Settings section title for backup and optical sync
+  ///
+  /// In en, this message translates to:
+  /// **'Data Backup & Optical Sync'**
+  String get settingsBackupTitle;
+
+  /// Settings section subtitle for backup and optical sync
+  ///
+  /// In en, this message translates to:
+  /// **'100% offline device-to-device sync and backup'**
+  String get settingsBackupSub;
+
+  /// Settings row title to start an optical sync transmission
+  ///
+  /// In en, this message translates to:
+  /// **'Optical Air-Gap Sync (Send)'**
+  String get settingsOpticalSendTitle;
+
+  /// Settings row subtitle for optical sync send
+  ///
+  /// In en, this message translates to:
+  /// **'Transmit counters & history via animated QR stream'**
+  String get settingsOpticalSendSub;
+
+  /// Settings row title to start an optical sync reception
+  ///
+  /// In en, this message translates to:
+  /// **'Optical Air-Gap Sync (Receive)'**
+  String get settingsOpticalReceiveTitle;
+
+  /// Settings row subtitle for optical sync receive
+  ///
+  /// In en, this message translates to:
+  /// **'Scan animated QR stream from another phone camera'**
+  String get settingsOpticalReceiveSub;
+
+  /// Settings row title to export a JSON backup
+  ///
+  /// In en, this message translates to:
+  /// **'Export Backup File (JSON)'**
+  String get settingsExportTitle;
+
+  /// Settings row subtitle for JSON export
+  ///
+  /// In en, this message translates to:
+  /// **'Export all data to a local JSON file & share sheet'**
+  String get settingsExportSub;
+
+  /// Settings row title to import a JSON backup
+  ///
+  /// In en, this message translates to:
+  /// **'Import Backup File (JSON)'**
+  String get settingsImportTitle;
+
+  /// Settings row subtitle for JSON import
+  ///
+  /// In en, this message translates to:
+  /// **'Restore counters and history from a backup file'**
+  String get settingsImportSub;
+
+  /// Snackbar shown after a backup file is imported successfully
+  ///
+  /// In en, this message translates to:
+  /// **'Data restored successfully!'**
+  String get dataRestoredSuccess;
+
+  /// App bar title on the optical sync transmit screen
+  ///
+  /// In en, this message translates to:
+  /// **'Optical Sync Stream (Send)'**
+  String get opticalSendTitle;
+
+  /// App bar title on the optical sync receive screen
+  ///
+  /// In en, this message translates to:
+  /// **'Optical Sync Receiver (Scan)'**
+  String get opticalReceiveTitle;
+
+  /// Empty state shown when no QR frames could be generated
+  ///
+  /// In en, this message translates to:
+  /// **'No data frames generated.'**
+  String get opticalNoFrames;
+
+  /// Label showing the optical sync session identifier
+  ///
+  /// In en, this message translates to:
+  /// **'SESSION ID: {id}'**
+  String opticalSessionId(String id);
+
+  /// Progress label showing the current QR frame out of the total
+  ///
+  /// In en, this message translates to:
+  /// **'Frame {current} / {total}'**
+  String opticalFrameProgress(int current, int total);
+
+  /// Label for a systematic (original) data frame
+  ///
+  /// In en, this message translates to:
+  /// **'Systematic Data Chunk #{index}'**
+  String opticalSystematicChunk(int index);
+
+  /// Label for a fountain-code parity frame
+  ///
+  /// In en, this message translates to:
+  /// **'Fountain Parity Frame #{index}'**
+  String opticalParityFrame(int index);
+
+  /// Label for the QR stream frames-per-second slider
+  ///
+  /// In en, this message translates to:
+  /// **'Stream Rate (FPS)'**
+  String get opticalStreamRate;
+
+  /// Instruction text on the optical sync transmit screen
+  ///
+  /// In en, this message translates to:
+  /// **'Point the receiving device\'s camera at this screen. The animated QR stream will transmit all counters and session history 100% offline.'**
+  String get opticalSendHint;
+
+  /// Progress text while rebuilding data from scanned QR frames
+  ///
+  /// In en, this message translates to:
+  /// **'Reconstructing: {done} / {total} chunks'**
+  String opticalReconstructing(int done, int total);
+
+  /// Hint shown while the receiver is waiting to detect QR frames
+  ///
+  /// In en, this message translates to:
+  /// **'Align camera with animated QR stream...'**
+  String get opticalAlignCamera;
+
+  /// Title of the sheet shown when a QR stream has been fully received
+  ///
+  /// In en, this message translates to:
+  /// **'Optical Sync Stream Complete'**
+  String get opticalStreamComplete;
+
+  /// Stat label for the number of counters received
+  ///
+  /// In en, this message translates to:
+  /// **'Counters'**
+  String get opticalStatCounters;
+
+  /// Stat label for the number of session logs received
+  ///
+  /// In en, this message translates to:
+  /// **'Session Logs'**
+  String get opticalStatSessionLogs;
+
+  /// Button that imports the received optical sync data
+  ///
+  /// In en, this message translates to:
+  /// **'Import & Restore Data'**
+  String get opticalImportRestore;
+
+  /// Snackbar shown after optical sync data is imported
+  ///
+  /// In en, this message translates to:
+  /// **'Optical sync import successful! Data restored.'**
+  String get opticalImportSuccess;
+
+  /// Snackbar shown when optical sync import fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to import data.'**
+  String get opticalImportFailed;
+
+  /// Features screen category name: japa and mala counting
+  ///
+  /// In en, this message translates to:
+  /// **'Sacred Japa & Mala Counting'**
+  String get featCat1Name;
+
+  /// Features screen category subtitle: japa and mala counting
+  ///
+  /// In en, this message translates to:
+  /// **'Distraction-free chanting, 108 mala mathematics, and fluid gestures'**
+  String get featCat1Sub;
+
+  /// Features screen category name: optical sync and data safety
+  ///
+  /// In en, this message translates to:
+  /// **'Optical Air-Gap Sync & Data Safety'**
+  String get featCat2Name;
+
+  /// Features screen category subtitle: optical sync and data safety
+  ///
+  /// In en, this message translates to:
+  /// **'100% offline device-to-device synchronization via camera & QR streaming'**
+  String get featCat2Sub;
+
+  /// Features screen category name: practice insights and history
+  ///
+  /// In en, this message translates to:
+  /// **'Practice Insights & History'**
+  String get featCat3Name;
+
+  /// Features screen category subtitle: practice insights and history
+  ///
+  /// In en, this message translates to:
+  /// **'Comprehensive daily logs, streak counters, and per-counter breakdowns'**
+  String get featCat3Sub;
+
+  /// Features screen category name: aesthetics, audio and haptics
+  ///
+  /// In en, this message translates to:
+  /// **'Temple Aesthetics, Audio & Haptics'**
+  String get featCat4Name;
+
+  /// Features screen category subtitle: aesthetics, audio and haptics
+  ///
+  /// In en, this message translates to:
+  /// **'Peaceful devotional palette, resonant bell tones, and Malayalam support'**
+  String get featCat4Sub;
+
+  /// Features screen category name: privacy and offline-first core
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy & Offline-First Core'**
+  String get featCat5Name;
+
+  /// Features screen category subtitle: privacy and offline-first core
+  ///
+  /// In en, this message translates to:
+  /// **'Zero cloud tracking, zero network requests, and absolute data privacy'**
+  String get featCat5Sub;
+
+  /// Features screen feature title: 108 Mala Beads Calculation
+  ///
+  /// In en, this message translates to:
+  /// **'108 Mala Beads Calculation'**
+  String get featMalaTitle;
+
+  /// Features screen feature description: 108 Mala Beads Calculation
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically calculates completed malas (1 mala = 108 chants) and keeps track of excess counts and progress rings.'**
+  String get featMalaDesc;
+
+  /// Features screen highlight 1 for: 108 Mala Beads Calculation
+  ///
+  /// In en, this message translates to:
+  /// **'108 beads formula'**
+  String get featMalaH1;
+
+  /// Features screen highlight 2 for: 108 Mala Beads Calculation
+  ///
+  /// In en, this message translates to:
+  /// **'Excess counts counter'**
+  String get featMalaH2;
+
+  /// Features screen highlight 3 for: 108 Mala Beads Calculation
+  ///
+  /// In en, this message translates to:
+  /// **'Mala completion chime'**
+  String get featMalaH3;
+
+  /// Features screen feature title: Full-Screen Immersion & Tap Area
+  ///
+  /// In en, this message translates to:
+  /// **'Full-Screen Immersion & Tap Area'**
+  String get featImmersionTitle;
+
+  /// Features screen feature description: Full-Screen Immersion & Tap Area
+  ///
+  /// In en, this message translates to:
+  /// **'Tap anywhere on the large sacred ring to increment your count effortlessly without needing to look at specific buttons.'**
+  String get featImmersionDesc;
+
+  /// Features screen highlight 1 for: Full-Screen Immersion & Tap Area
+  ///
+  /// In en, this message translates to:
+  /// **'Large touch zone'**
+  String get featImmersionH1;
+
+  /// Features screen highlight 2 for: Full-Screen Immersion & Tap Area
+  ///
+  /// In en, this message translates to:
+  /// **'Subtle haptic pulse'**
+  String get featImmersionH2;
+
+  /// Features screen highlight 3 for: Full-Screen Immersion & Tap Area
+  ///
+  /// In en, this message translates to:
+  /// **'Distraction-free focus'**
+  String get featImmersionH3;
+
+  /// Features screen feature title: Two-Finger Swipe Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Two-Finger Swipe Undo'**
+  String get featUndoTitle;
+
+  /// Features screen feature description: Two-Finger Swipe Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Made an accidental count? Simply swipe left or right with two fingers on the ring to decrement the count cleanly.'**
+  String get featUndoDesc;
+
+  /// Features screen highlight 1 for: Two-Finger Swipe Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Horizontal swipe gesture'**
+  String get featUndoH1;
+
+  /// Features screen highlight 2 for: Two-Finger Swipe Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Instant count reversal'**
+  String get featUndoH2;
+
+  /// Features screen highlight 3 for: Two-Finger Swipe Undo
+  ///
+  /// In en, this message translates to:
+  /// **'Prevents over-counting'**
+  String get featUndoH3;
+
+  /// Features screen feature title: Persistent Session Timer & Goals
+  ///
+  /// In en, this message translates to:
+  /// **'Persistent Session Timer & Goals'**
+  String get featTimerTitle;
+
+  /// Features screen feature description: Persistent Session Timer & Goals
+  ///
+  /// In en, this message translates to:
+  /// **'Tracks active sitting duration with automatic background pause. Configure daily goals and lifetime dedication targets per mantra.'**
+  String get featTimerDesc;
+
+  /// Features screen highlight 1 for: Persistent Session Timer & Goals
+  ///
+  /// In en, this message translates to:
+  /// **'Active duration timer'**
+  String get featTimerH1;
+
+  /// Features screen highlight 2 for: Persistent Session Timer & Goals
+  ///
+  /// In en, this message translates to:
+  /// **'Per-mantra daily goals'**
+  String get featTimerH2;
+
+  /// Features screen highlight 3 for: Persistent Session Timer & Goals
+  ///
+  /// In en, this message translates to:
+  /// **'Lifetime dedication target'**
+  String get featTimerH3;
+
+  /// Features screen feature title: High-Density Animated QR Stream
+  ///
+  /// In en, this message translates to:
+  /// **'High-Density Animated QR Stream'**
+  String get featQrStreamTitle;
+
+  /// Features screen feature description: High-Density Animated QR Stream
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer complete practice records, counters, and history between phones in seconds using a high-speed optical QR code stream.'**
+  String get featQrStreamDesc;
+
+  /// Features screen highlight 1 for: High-Density Animated QR Stream
+  ///
+  /// In en, this message translates to:
+  /// **'Zero Wi-Fi / Bluetooth'**
+  String get featQrStreamH1;
+
+  /// Features screen highlight 2 for: High-Density Animated QR Stream
+  ///
+  /// In en, this message translates to:
+  /// **'10-15 FPS animated stream'**
+  String get featQrStreamH2;
+
+  /// Features screen highlight 3 for: High-Density Animated QR Stream
+  ///
+  /// In en, this message translates to:
+  /// **'Instant phone transfer'**
+  String get featQrStreamH3;
+
+  /// Features screen feature title: Luby Transform Fountain Code Recovery
+  ///
+  /// In en, this message translates to:
+  /// **'Luby Transform Fountain Code Recovery'**
+  String get featFountainTitle;
+
+  /// Features screen feature description: Luby Transform Fountain Code Recovery
+  ///
+  /// In en, this message translates to:
+  /// **'Transfers data using mathematical fountain codes and CRC32 verification so dropped camera frames are recovered automatically.'**
+  String get featFountainDesc;
+
+  /// Features screen highlight 1 for: Luby Transform Fountain Code Recovery
+  ///
+  /// In en, this message translates to:
+  /// **'Loss-tolerant recovery'**
+  String get featFountainH1;
+
+  /// Features screen highlight 2 for: Luby Transform Fountain Code Recovery
+  ///
+  /// In en, this message translates to:
+  /// **'CRC32 checksums'**
+  String get featFountainH2;
+
+  /// Features screen highlight 3 for: Luby Transform Fountain Code Recovery
+  ///
+  /// In en, this message translates to:
+  /// **'Out-of-order frame assembly'**
+  String get featFountainH3;
+
+  /// Features screen feature title: Offline JSON Export & Restore
+  ///
+  /// In en, this message translates to:
+  /// **'Offline JSON Export & Restore'**
+  String get featJsonExportTitle;
+
+  /// Features screen feature description: Offline JSON Export & Restore
+  ///
+  /// In en, this message translates to:
+  /// **'Export full database backups to a plain JSON file to save on your local storage, share sheet, or restore anytime.'**
+  String get featJsonExportDesc;
+
+  /// Features screen highlight 1 for: Offline JSON Export & Restore
+  ///
+  /// In en, this message translates to:
+  /// **'Standard JSON schema'**
+  String get featJsonExportH1;
+
+  /// Features screen highlight 2 for: Offline JSON Export & Restore
+  ///
+  /// In en, this message translates to:
+  /// **'One-tap export/import'**
+  String get featJsonExportH2;
+
+  /// Features screen highlight 3 for: Offline JSON Export & Restore
+  ///
+  /// In en, this message translates to:
+  /// **'Room/Gson compatibility'**
+  String get featJsonExportH3;
+
+  /// Features screen feature title: Daily Practice Log & Breakdown
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Practice Log & Breakdown'**
+  String get featDailyLogTitle;
+
+  /// Features screen feature description: Daily Practice Log & Breakdown
+  ///
+  /// In en, this message translates to:
+  /// **'Review historical sittings grouped by date with start timestamps, sitting duration, counts chanted, and malas completed.'**
+  String get featDailyLogDesc;
+
+  /// Features screen highlight 1 for: Daily Practice Log & Breakdown
+  ///
+  /// In en, this message translates to:
+  /// **'Date-wise grouping'**
+  String get featDailyLogH1;
+
+  /// Features screen highlight 2 for: Daily Practice Log & Breakdown
+  ///
+  /// In en, this message translates to:
+  /// **'Sitting duration breakdown'**
+  String get featDailyLogH2;
+
+  /// Features screen highlight 3 for: Daily Practice Log & Breakdown
+  ///
+  /// In en, this message translates to:
+  /// **'Daily mala tally'**
+  String get featDailyLogH3;
+
+  /// Features screen feature title: Per-Counter Filtering
+  ///
+  /// In en, this message translates to:
+  /// **'Per-Counter Filtering'**
+  String get featFilterTitle;
+
+  /// Features screen feature description: Per-Counter Filtering
+  ///
+  /// In en, this message translates to:
+  /// **'Isolate and view history for individual mantras or view the combined sadhana across all active counters.'**
+  String get featFilterDesc;
+
+  /// Features screen highlight 1 for: Per-Counter Filtering
+  ///
+  /// In en, this message translates to:
+  /// **'Specific mantra view'**
+  String get featFilterH1;
+
+  /// Features screen highlight 2 for: Per-Counter Filtering
+  ///
+  /// In en, this message translates to:
+  /// **'Combined daily view'**
+  String get featFilterH2;
+
+  /// Features screen highlight 3 for: Per-Counter Filtering
+  ///
+  /// In en, this message translates to:
+  /// **'Lifetime totals'**
+  String get featFilterH3;
+
+  /// Features screen feature title: Temple Devotional Palette
+  ///
+  /// In en, this message translates to:
+  /// **'Temple Devotional Palette'**
+  String get featPaletteTitle;
+
+  /// Features screen feature description: Temple Devotional Palette
+  ///
+  /// In en, this message translates to:
+  /// **'Authentic temple palette with sacred cream backgrounds and vermillion, sandal yellow, tulsi green, and rose accents.'**
+  String get featPaletteDesc;
+
+  /// Features screen highlight 1 for: Temple Devotional Palette
+  ///
+  /// In en, this message translates to:
+  /// **'Cream & gold background'**
+  String get featPaletteH1;
+
+  /// Features screen highlight 2 for: Temple Devotional Palette
+  ///
+  /// In en, this message translates to:
+  /// **'Vermillion & Tulsi accents'**
+  String get featPaletteH2;
+
+  /// Features screen highlight 3 for: Temple Devotional Palette
+  ///
+  /// In en, this message translates to:
+  /// **'Serif numeral typography'**
+  String get featPaletteH3;
+
+  /// Features screen feature title: Peaceful Bell Tones & Audio Picker
+  ///
+  /// In en, this message translates to:
+  /// **'Peaceful Bell Tones & Audio Picker'**
+  String get featBellTitle;
+
+  /// Features screen feature description: Peaceful Bell Tones & Audio Picker
+  ///
+  /// In en, this message translates to:
+  /// **'Gentle meditation chimes when completing malas or reaching daily goals. Choose system ringtones or pick custom local audio files.'**
+  String get featBellDesc;
+
+  /// Features screen highlight 1 for: Peaceful Bell Tones & Audio Picker
+  ///
+  /// In en, this message translates to:
+  /// **'Mala & goal bell tones'**
+  String get featBellH1;
+
+  /// Features screen highlight 2 for: Peaceful Bell Tones & Audio Picker
+  ///
+  /// In en, this message translates to:
+  /// **'Custom audio picker'**
+  String get featBellH2;
+
+  /// Features screen highlight 3 for: Peaceful Bell Tones & Audio Picker
+  ///
+  /// In en, this message translates to:
+  /// **'Tone preview in settings'**
+  String get featBellH3;
+
+  /// Features screen feature title: Stillness Brightness Mode
+  ///
+  /// In en, this message translates to:
+  /// **'Stillness Brightness Mode'**
+  String get featBrightnessTitle;
+
+  /// Features screen feature description: Stillness Brightness Mode
+  ///
+  /// In en, this message translates to:
+  /// **'Dim screen brightness to minimal ambient levels for distraction-free early morning, temple, or late-night meditation.'**
+  String get featBrightnessDesc;
+
+  /// Features screen highlight 1 for: Stillness Brightness Mode
+  ///
+  /// In en, this message translates to:
+  /// **'Custom brightness slider'**
+  String get featBrightnessH1;
+
+  /// Features screen highlight 2 for: Stillness Brightness Mode
+  ///
+  /// In en, this message translates to:
+  /// **'1-tap system restore'**
+  String get featBrightnessH2;
+
+  /// Features screen highlight 3 for: Stillness Brightness Mode
+  ///
+  /// In en, this message translates to:
+  /// **'OLED battery efficiency'**
+  String get featBrightnessH3;
+
+  /// Features screen feature title: Bilingual Malayalam & English UI
+  ///
+  /// In en, this message translates to:
+  /// **'Bilingual Malayalam & English UI'**
+  String get featBilingualTitle;
+
+  /// Features screen feature description: Bilingual Malayalam & English UI
+  ///
+  /// In en, this message translates to:
+  /// **'Full Malayalam scripture and interface support alongside English with bundled Noto Sans Malayalam fonts.'**
+  String get featBilingualDesc;
+
+  /// Features screen highlight 1 for: Bilingual Malayalam & English UI
+  ///
+  /// In en, this message translates to:
+  /// **'Full Malayalam localization'**
+  String get featBilingualH1;
+
+  /// Features screen highlight 2 for: Bilingual Malayalam & English UI
+  ///
+  /// In en, this message translates to:
+  /// **'Authentic Indic font glyphs'**
+  String get featBilingualH2;
+
+  /// Features screen highlight 3 for: Bilingual Malayalam & English UI
+  ///
+  /// In en, this message translates to:
+  /// **'1-tap language switch'**
+  String get featBilingualH3;
+
+  /// Features screen feature title: 100% Offline with Zero INTERNET Permission
+  ///
+  /// In en, this message translates to:
+  /// **'100% Offline with Zero INTERNET Permission'**
+  String get featOfflineTitle;
+
+  /// Features screen feature description: 100% Offline with Zero INTERNET Permission
+  ///
+  /// In en, this message translates to:
+  /// **'The application manifest completely lacks internet permissions. No telemetry, ads, or analytics can ever run.'**
+  String get featOfflineDesc;
+
+  /// Features screen highlight 1 for: 100% Offline with Zero INTERNET Permission
+  ///
+  /// In en, this message translates to:
+  /// **'No INTERNET permission'**
+  String get featOfflineH1;
+
+  /// Features screen highlight 2 for: 100% Offline with Zero INTERNET Permission
+  ///
+  /// In en, this message translates to:
+  /// **'Zero cloud telemetry'**
+  String get featOfflineH2;
+
+  /// Features screen highlight 3 for: 100% Offline with Zero INTERNET Permission
+  ///
+  /// In en, this message translates to:
+  /// **'No tracking or ads'**
+  String get featOfflineH3;
+
+  /// Features screen feature title: Local SQLite Database & Crash Recovery
+  ///
+  /// In en, this message translates to:
+  /// **'Local SQLite Database & Crash Recovery'**
+  String get featSqliteTitle;
+
+  /// Features screen feature description: Local SQLite Database & Crash Recovery
+  ///
+  /// In en, this message translates to:
+  /// **'Dual-layer persistence saves active counts every 5 taps/5 seconds to prevent accidental data loss during phone reboots.'**
+  String get featSqliteDesc;
+
+  /// Features screen highlight 1 for: Local SQLite Database & Crash Recovery
+  ///
+  /// In en, this message translates to:
+  /// **'ACID-compliant SQLite v3'**
+  String get featSqliteH1;
+
+  /// Features screen highlight 2 for: Local SQLite Database & Crash Recovery
+  ///
+  /// In en, this message translates to:
+  /// **'5-tap crash recovery'**
+  String get featSqliteH2;
+
+  /// Features screen highlight 3 for: Local SQLite Database & Crash Recovery
+  ///
+  /// In en, this message translates to:
+  /// **'Safe data migrations'**
+  String get featSqliteH3;
+
+  /// Subtitle of the sheet shown when a QR stream has been fully received
+  ///
+  /// In en, this message translates to:
+  /// **'100% offline payload reconstructed via camera scanner.'**
+  String get opticalStreamCompleteSub;
 }
 
 class _AppLocalizationsDelegate

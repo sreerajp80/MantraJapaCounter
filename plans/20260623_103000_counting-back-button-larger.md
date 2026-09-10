@@ -1,5 +1,7 @@
 # Plan: Make the back arrow on the Counting screen larger / easier to tap
 
+**Status:** completed
+
 ## Issue
 On the Counting screen, the back arrow (top-left) is small and hard to tap. It is a
 `TempleIconButton` rendered at the default size of 38×38 px with an 18 px icon, giving a

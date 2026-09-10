@@ -1146,4 +1146,388 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get statusLocked => 'ലോക്ക് ചെയ്‌തു';
+
+  @override
+  String get settingsBackupTitle => 'ഡാറ്റ ബാക്കപ്പും ഒപ്റ്റിക്കൽ സിങ്കും';
+
+  @override
+  String get settingsBackupSub =>
+      '100% ഓഫ്‌ലൈൻ ഉപകരണങ്ങൾ തമ്മിലുള്ള സിങ്കും ബാക്കപ്പും';
+
+  @override
+  String get settingsOpticalSendTitle =>
+      'ഒപ്റ്റിക്കൽ എയർ-ഗ്യാപ് സിങ്ക് (അയയ്ക്കുക)';
+
+  @override
+  String get settingsOpticalSendSub =>
+      'ആനിമേറ്റഡ് QR സ്ട്രീം വഴി കൗണ്ടറുകളും ചരിത്രവും കൈമാറുക';
+
+  @override
+  String get settingsOpticalReceiveTitle =>
+      'ഒപ്റ്റിക്കൽ എയർ-ഗ്യാപ് സിങ്ക് (സ്വീകരിക്കുക)';
+
+  @override
+  String get settingsOpticalReceiveSub =>
+      'മറ്റൊരു ഫോണിന്റെ സ്ക്രീനിലെ ആനിമേറ്റഡ് QR സ്ട്രീം സ്കാൻ ചെയ്യുക';
+
+  @override
+  String get settingsExportTitle => 'ബാക്കപ്പ് ഫയൽ എക്സ്പോർട്ട് ചെയ്യുക (JSON)';
+
+  @override
+  String get settingsExportSub =>
+      'എല്ലാ ഡാറ്റയും ഒരു ലോക്കൽ JSON ഫയലിലേക്ക് എക്സ്പോർട്ട് ചെയ്ത് പങ്കിടുക';
+
+  @override
+  String get settingsImportTitle => 'ബാക്കപ്പ് ഫയൽ ഇംപോർട്ട് ചെയ്യുക (JSON)';
+
+  @override
+  String get settingsImportSub =>
+      'ബാക്കപ്പ് ഫയലിൽ നിന്ന് കൗണ്ടറുകളും ചരിത്രവും പുനഃസ്ഥാപിക്കുക';
+
+  @override
+  String get dataRestoredSuccess => 'ഡാറ്റ വിജയകരമായി പുനഃസ്ഥാപിച്ചു!';
+
+  @override
+  String get opticalSendTitle => 'ഒപ്റ്റിക്കൽ സിങ്ക് സ്ട്രീം (അയയ്ക്കുക)';
+
+  @override
+  String get opticalReceiveTitle => 'ഒപ്റ്റിക്കൽ സിങ്ക് റിസീവർ (സ്കാൻ)';
+
+  @override
+  String get opticalNoFrames => 'ഡാറ്റ ഫ്രെയിമുകളൊന്നും ഉണ്ടാക്കിയിട്ടില്ല.';
+
+  @override
+  String opticalSessionId(String id) {
+    return 'സെഷൻ ഐഡി: $id';
+  }
+
+  @override
+  String opticalFrameProgress(int current, int total) {
+    return 'ഫ്രെയിം $current / $total';
+  }
+
+  @override
+  String opticalSystematicChunk(int index) {
+    return 'സിസ്റ്റമാറ്റിക് ഡാറ്റ ചങ്ക് #$index';
+  }
+
+  @override
+  String opticalParityFrame(int index) {
+    return 'ഫൗണ്ടൻ പാരിറ്റി ഫ്രെയിം #$index';
+  }
+
+  @override
+  String get opticalStreamRate => 'സ്ട്രീം വേഗത (FPS)';
+
+  @override
+  String get opticalSendHint =>
+      'സ്വീകരിക്കുന്ന ഉപകരണത്തിന്റെ ക്യാമറ ഈ സ്ക്രീനിലേക്ക് ചൂണ്ടുക. ആനിമേറ്റഡ് QR സ്ട്രീം എല്ലാ കൗണ്ടറുകളും സെഷൻ ചരിത്രവും 100% ഓഫ്‌ലൈനായി കൈമാറും.';
+
+  @override
+  String opticalReconstructing(int done, int total) {
+    return 'പുനർനിർമ്മിക്കുന്നു: $done / $total ചങ്കുകൾ';
+  }
+
+  @override
+  String get opticalAlignCamera =>
+      'ക്യാമറ ആനിമേറ്റഡ് QR സ്ട്രീമിലേക്ക് ചേർത്തുവയ്ക്കുക...';
+
+  @override
+  String get opticalStreamComplete => 'ഒപ്റ്റിക്കൽ സിങ്ക് സ്ട്രീം പൂർത്തിയായി';
+
+  @override
+  String get opticalStatCounters => 'കൗണ്ടറുകൾ';
+
+  @override
+  String get opticalStatSessionLogs => 'സെഷൻ രേഖകൾ';
+
+  @override
+  String get opticalImportRestore => 'ഡാറ്റ ഇംപോർട്ട് ചെയ്ത് പുനഃസ്ഥാപിക്കുക';
+
+  @override
+  String get opticalImportSuccess =>
+      'ഒപ്റ്റിക്കൽ സിങ്ക് ഇംപോർട്ട് വിജയകരം! ഡാറ്റ പുനഃസ്ഥാപിച്ചു.';
+
+  @override
+  String get opticalImportFailed => 'ഡാറ്റ ഇംപോർട്ട് ചെയ്യാൻ കഴിഞ്ഞില്ല.';
+
+  @override
+  String get featCat1Name => 'പവിത്ര ജപവും മാല എണ്ണവും';
+
+  @override
+  String get featCat1Sub =>
+      'ശ്രദ്ധ പതറാത്ത ജപം, 108 മാല ഗണിതം, സുഗമമായ ആംഗ്യങ്ങൾ';
+
+  @override
+  String get featCat2Name => 'ഒപ്റ്റിക്കൽ എയർ-ഗ്യാപ് സിങ്കും ഡാറ്റ സുരക്ഷയും';
+
+  @override
+  String get featCat2Sub =>
+      'ക്യാമറയും QR സ്ട്രീമിംഗും വഴി 100% ഓഫ്‌ലൈൻ ഉപകരണ സിങ്ക്';
+
+  @override
+  String get featCat3Name => 'സാധന വിശകലനവും ചരിത്രവും';
+
+  @override
+  String get featCat3Sub =>
+      'വിശദമായ ദൈനംദിന രേഖകൾ, തുടർച്ചാ കണക്ക്, കൗണ്ടർ തിരിച്ചുള്ള വിവരണം';
+
+  @override
+  String get featCat4Name => 'ക്ഷേത്ര ഭംഗി, ശബ്ദം, സ്പർശന പ്രതികരണം';
+
+  @override
+  String get featCat4Sub =>
+      'ശാന്തമായ ഭക്തി വർണ്ണങ്ങൾ, മണിനാദങ്ങൾ, മലയാളം പിന്തുണ';
+
+  @override
+  String get featCat5Name => 'സ്വകാര്യതയും ഓഫ്‌ലൈൻ-ആദ്യ രൂപകൽപ്പനയും';
+
+  @override
+  String get featCat5Sub =>
+      'ക്ലൗഡ് ട്രാക്കിംഗ് ഇല്ല, നെറ്റ്‌വർക്ക് അഭ്യർത്ഥനകൾ ഇല്ല, പൂർണ്ണ ഡാറ്റ സ്വകാര്യത';
+
+  @override
+  String get featMalaTitle => '108 മാല മണി കണക്ക്';
+
+  @override
+  String get featMalaDesc =>
+      'പൂർത്തിയായ മാലകൾ (1 മാല = 108 ജപം) സ്വയമേവ കണക്കാക്കുകയും ബാക്കി എണ്ണവും പുരോഗതി വളയങ്ങളും രേഖപ്പെടുത്തുകയും ചെയ്യുന്നു.';
+
+  @override
+  String get featMalaH1 => '108 മണി സൂത്രം';
+
+  @override
+  String get featMalaH2 => 'ബാക്കി എണ്ണ കൗണ്ടർ';
+
+  @override
+  String get featMalaH3 => 'മാല പൂർത്തിയാകുമ്പോൾ മണിനാദം';
+
+  @override
+  String get featImmersionTitle => 'പൂർണ്ണ സ്ക്രീൻ ലയനവും ടാപ്പ് ഇടവും';
+
+  @override
+  String get featImmersionDesc =>
+      'പ്രത്യേക ബട്ടണുകൾ നോക്കേണ്ട ആവശ്യമില്ലാതെ, വലിയ പവിത്ര വളയത്തിൽ എവിടെയും ടാപ്പ് ചെയ്ത് എണ്ണം എളുപ്പത്തിൽ കൂട്ടാം.';
+
+  @override
+  String get featImmersionH1 => 'വിശാലമായ സ്പർശന ഇടം';
+
+  @override
+  String get featImmersionH2 => 'മൃദുവായ സ്പർശന പ്രതികരണം';
+
+  @override
+  String get featImmersionH3 => 'ശ്രദ്ധ പതറാത്ത ഏകാഗ്രത';
+
+  @override
+  String get featUndoTitle => 'രണ്ട് വിരൽ സ്വൈപ്പ് പിൻവലിക്കൽ';
+
+  @override
+  String get featUndoDesc =>
+      'അബദ്ധത്തിൽ എണ്ണിയോ? വളയത്തിൽ രണ്ട് വിരലുകൊണ്ട് ഇടത്തോട്ടോ വലത്തോട്ടോ സ്വൈപ്പ് ചെയ്ത് എണ്ണം കുറയ്ക്കാം.';
+
+  @override
+  String get featUndoH1 => 'തിരശ്ചീന സ്വൈപ്പ് ആംഗ്യം';
+
+  @override
+  String get featUndoH2 => 'ഉടനടി എണ്ണം പിൻവലിക്കൽ';
+
+  @override
+  String get featUndoH3 => 'അധികം എണ്ണുന്നത് തടയുന്നു';
+
+  @override
+  String get featTimerTitle => 'സ്ഥിരമായ സെഷൻ ടൈമറും ലക്ഷ്യങ്ങളും';
+
+  @override
+  String get featTimerDesc =>
+      'സ്വയമേവ താൽക്കാലികമായി നിർത്തുന്ന സൗകര്യത്തോടെ ഇരിപ്പിന്റെ സമയം രേഖപ്പെടുത്തുന്നു. ഓരോ മന്ത്രത്തിനും ദൈനംദിന ലക്ഷ്യങ്ങളും ജീവിതകാല സമർപ്പണ ലക്ഷ്യങ്ങളും ക്രമീകരിക്കാം.';
+
+  @override
+  String get featTimerH1 => 'സജീവ സമയ ടൈമർ';
+
+  @override
+  String get featTimerH2 => 'മന്ത്രം തിരിച്ചുള്ള ദൈനംദിന ലക്ഷ്യം';
+
+  @override
+  String get featTimerH3 => 'ജീവിതകാല സമർപ്പണ ലക്ഷ്യം';
+
+  @override
+  String get featQrStreamTitle => 'ഉയർന്ന സാന്ദ്രതയുള്ള ആനിമേറ്റഡ് QR സ്ട്രീം';
+
+  @override
+  String get featQrStreamDesc =>
+      'അതിവേഗ ഒപ്റ്റിക്കൽ QR കോഡ് സ്ട്രീം ഉപയോഗിച്ച് സാധന രേഖകളും കൗണ്ടറുകളും ചരിത്രവും സെക്കൻഡുകൾക്കുള്ളിൽ ഫോണുകൾക്കിടയിൽ കൈമാറാം.';
+
+  @override
+  String get featQrStreamH1 => 'Wi-Fi / ബ്ലൂടൂത്ത് ആവശ്യമില്ല';
+
+  @override
+  String get featQrStreamH2 => '10-15 FPS ആനിമേറ്റഡ് സ്ട്രീം';
+
+  @override
+  String get featQrStreamH3 => 'തൽക്ഷണ ഫോൺ കൈമാറ്റം';
+
+  @override
+  String get featFountainTitle => 'ലൂബി ട്രാൻസ്ഫോം ഫൗണ്ടൻ കോഡ് വീണ്ടെടുക്കൽ';
+
+  @override
+  String get featFountainDesc =>
+      'ഗണിതശാസ്ത്ര ഫൗണ്ടൻ കോഡുകളും CRC32 പരിശോധനയും ഉപയോഗിക്കുന്നതിനാൽ നഷ്ടപ്പെട്ട ക്യാമറ ഫ്രെയിമുകൾ സ്വയമേവ വീണ്ടെടുക്കുന്നു.';
+
+  @override
+  String get featFountainH1 => 'നഷ്ടം സഹിക്കുന്ന വീണ്ടെടുക്കൽ';
+
+  @override
+  String get featFountainH2 => 'CRC32 പരിശോധനാ സംഖ്യകൾ';
+
+  @override
+  String get featFountainH3 => 'ക്രമം തെറ്റിയ ഫ്രെയിം കൂട്ടിച്ചേർക്കൽ';
+
+  @override
+  String get featJsonExportTitle => 'ഓഫ്‌ലൈൻ JSON എക്സ്പോർട്ടും പുനഃസ്ഥാപനവും';
+
+  @override
+  String get featJsonExportDesc =>
+      'പൂർണ്ണ ഡാറ്റാബേസ് ബാക്കപ്പ് ഒരു സാധാരണ JSON ഫയലിലേക്ക് എക്സ്പോർട്ട് ചെയ്ത് ഉപകരണത്തിൽ സൂക്ഷിക്കാം, പങ്കിടാം, എപ്പോൾ വേണമെങ്കിലും പുനഃസ്ഥാപിക്കാം.';
+
+  @override
+  String get featJsonExportH1 => 'സാധാരണ JSON ഘടന';
+
+  @override
+  String get featJsonExportH2 => 'ഒറ്റ ടാപ്പ് എക്സ്പോർട്ട്/ഇംപോർട്ട്';
+
+  @override
+  String get featJsonExportH3 => 'Room/Gson അനുയോജ്യത';
+
+  @override
+  String get featDailyLogTitle => 'ദൈനംദിന സാധന രേഖയും വിവരണവും';
+
+  @override
+  String get featDailyLogDesc =>
+      'തീയതി അനുസരിച്ച് ക്രമീകരിച്ച പഴയ ഇരിപ്പുകൾ, ആരംഭ സമയം, ഇരിപ്പിന്റെ ദൈർഘ്യം, ജപിച്ച എണ്ണം, പൂർത്തിയായ മാലകൾ എന്നിവ സഹിതം കാണാം.';
+
+  @override
+  String get featDailyLogH1 => 'തീയതി തിരിച്ചുള്ള ക്രമീകരണം';
+
+  @override
+  String get featDailyLogH2 => 'ഇരിപ്പ് സമയ വിവരണം';
+
+  @override
+  String get featDailyLogH3 => 'ദൈനംദിന മാല കണക്ക്';
+
+  @override
+  String get featFilterTitle => 'കൗണ്ടർ തിരിച്ചുള്ള അരിച്ചെടുക്കൽ';
+
+  @override
+  String get featFilterDesc =>
+      'ഓരോ മന്ത്രത്തിന്റെയും ചരിത്രം പ്രത്യേകം കാണാം, അല്ലെങ്കിൽ എല്ലാ സജീവ കൗണ്ടറുകളുടെയും സംയുക്ത സാധന കാണാം.';
+
+  @override
+  String get featFilterH1 => 'പ്രത്യേക മന്ത്ര കാഴ്ച';
+
+  @override
+  String get featFilterH2 => 'സംയുക്ത ദൈനംദിന കാഴ്ച';
+
+  @override
+  String get featFilterH3 => 'ജീവിതകാല ആകെത്തുക';
+
+  @override
+  String get featPaletteTitle => 'ക്ഷേത്ര ഭക്തി വർണ്ണനിര';
+
+  @override
+  String get featPaletteDesc =>
+      'പവിത്രമായ ക്രീം പശ്ചാത്തലവും സിന്ദൂരം, ചന്ദന മഞ്ഞ, തുളസി പച്ച, റോസ് നിറങ്ങളും ചേർന്ന ആധികാരിക ക്ഷേത്ര വർണ്ണനിര.';
+
+  @override
+  String get featPaletteH1 => 'ക്രീം, സ്വർണ്ണ പശ്ചാത്തലം';
+
+  @override
+  String get featPaletteH2 => 'സിന്ദൂര, തുളസി നിറങ്ങൾ';
+
+  @override
+  String get featPaletteH3 => 'സെരിഫ് അക്ക അക്ഷരവിന്യാസം';
+
+  @override
+  String get featBellTitle => 'ശാന്തമായ മണിനാദങ്ങളും ശബ്ദ തിരഞ്ഞെടുപ്പും';
+
+  @override
+  String get featBellDesc =>
+      'മാല പൂർത്തിയാകുമ്പോഴോ ദൈനംദിന ലക്ഷ്യത്തിലെത്തുമ്പോഴോ മൃദുവായ ധ്യാന നാദം. സിസ്റ്റം റിംഗ്ടോണുകൾ തിരഞ്ഞെടുക്കാം അല്ലെങ്കിൽ സ്വന്തം ശബ്ദ ഫയലുകൾ ഉപയോഗിക്കാം.';
+
+  @override
+  String get featBellH1 => 'മാല, ലക്ഷ്യ മണിനാദങ്ങൾ';
+
+  @override
+  String get featBellH2 => 'സ്വന്തം ശബ്ദ തിരഞ്ഞെടുപ്പ്';
+
+  @override
+  String get featBellH3 => 'ക്രമീകരണങ്ങളിൽ നാദ പരിശോധന';
+
+  @override
+  String get featBrightnessTitle => 'നിശ്ചലതാ പ്രകാശ രീതി';
+
+  @override
+  String get featBrightnessDesc =>
+      'അതിരാവിലെ, ക്ഷേത്രത്തിൽ, അല്ലെങ്കിൽ രാത്രി വൈകിയുള്ള ധ്യാനത്തിന് ശ്രദ്ധ പതറാതിരിക്കാൻ സ്ക്രീൻ പ്രകാശം കുറയ്ക്കുന്നു.';
+
+  @override
+  String get featBrightnessH1 => 'സ്വന്തം പ്രകാശ സ്ലൈഡർ';
+
+  @override
+  String get featBrightnessH2 => 'ഒറ്റ ടാപ്പിൽ പഴയപടിയാക്കൽ';
+
+  @override
+  String get featBrightnessH3 => 'OLED ബാറ്ററി ലാഭം';
+
+  @override
+  String get featBilingualTitle => 'മലയാളം, ഇംഗ്ലീഷ് ദ്വിഭാഷാ ഇന്റർഫേസ്';
+
+  @override
+  String get featBilingualDesc =>
+      'Noto Sans Malayalam ഫോണ്ടുകൾ ഉൾപ്പെടുത്തി ഇംഗ്ലീഷിനൊപ്പം പൂർണ്ണ മലയാളം ലിപിയും ഇന്റർഫേസ് പിന്തുണയും.';
+
+  @override
+  String get featBilingualH1 => 'പൂർണ്ണ മലയാളം പരിഭാഷ';
+
+  @override
+  String get featBilingualH2 => 'ആധികാരിക ഇന്ത്യൻ ലിപി അക്ഷരങ്ങൾ';
+
+  @override
+  String get featBilingualH3 => 'ഒറ്റ ടാപ്പിൽ ഭാഷ മാറ്റം';
+
+  @override
+  String get featOfflineTitle => 'INTERNET അനുമതിയില്ലാതെ 100% ഓഫ്‌ലൈൻ';
+
+  @override
+  String get featOfflineDesc =>
+      'ആപ്പിന്റെ മാനിഫെസ്റ്റിൽ ഇന്റർനെറ്റ് അനുമതി ഒട്ടുമില്ല. ടെലിമെട്രിയോ പരസ്യങ്ങളോ അനലിറ്റിക്സോ ഒരിക്കലും പ്രവർത്തിക്കില്ല.';
+
+  @override
+  String get featOfflineH1 => 'INTERNET അനുമതിയില്ല';
+
+  @override
+  String get featOfflineH2 => 'ക്ലൗഡ് ടെലിമെട്രി ഇല്ല';
+
+  @override
+  String get featOfflineH3 => 'ട്രാക്കിംഗോ പരസ്യങ്ങളോ ഇല്ല';
+
+  @override
+  String get featSqliteTitle =>
+      'ലോക്കൽ SQLite ഡാറ്റാബേസും തകരാർ വീണ്ടെടുക്കലും';
+
+  @override
+  String get featSqliteDesc =>
+      'ഫോൺ പുനരാരംഭിക്കുമ്പോൾ ഡാറ്റ നഷ്ടപ്പെടാതിരിക്കാൻ ഇരട്ട പാളി സംഭരണം ഓരോ 5 ടാപ്പിലും 5 സെക്കൻഡിലും എണ്ണം സൂക്ഷിക്കുന്നു.';
+
+  @override
+  String get featSqliteH1 => 'ACID അനുസരിക്കുന്ന SQLite v3';
+
+  @override
+  String get featSqliteH2 => '5 ടാപ്പ് തകരാർ വീണ്ടെടുക്കൽ';
+
+  @override
+  String get featSqliteH3 => 'സുരക്ഷിത ഡാറ്റ മൈഗ്രേഷൻ';
+
+  @override
+  String get opticalStreamCompleteSub =>
+      'ക്യാമറ സ്കാനർ വഴി 100% ഓഫ്‌ലൈനായി ഡാറ്റ പുനർനിർമ്മിച്ചു.';
 }

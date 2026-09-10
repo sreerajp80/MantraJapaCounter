@@ -2,13 +2,13 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:uuid/uuid.dart';
-import '../config/app_constants.dart';
-import '../models/active_session.dart';
-import '../models/japa_session.dart';
-import 'app_providers.dart';
-import 'counter_stats_provider.dart';
-import 'counters_provider.dart';
-import 'history_provider.dart';
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
+import 'package:mantra_japa_counter/models/active_session.dart';
+import 'package:mantra_japa_counter/models/japa_session.dart';
+import 'package:mantra_japa_counter/providers/app_providers.dart';
+import 'package:mantra_japa_counter/providers/counter_stats_provider.dart';
+import 'package:mantra_japa_counter/providers/counters_provider.dart';
+import 'package:mantra_japa_counter/providers/history_provider.dart';
 
 const _uuid = Uuid();
 

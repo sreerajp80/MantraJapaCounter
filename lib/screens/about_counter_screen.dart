@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../l10n/app_localizations.dart';
-import '../providers/app_providers.dart';
-import '../providers/counter_stats_provider.dart';
-import '../models/counter.dart';
-import '../models/counter_status.dart';
-import '../utils/mala.dart';
-import '../widgets/circular_progress_widget.dart';
+import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/providers/app_providers.dart';
+import 'package:mantra_japa_counter/providers/counter_stats_provider.dart';
+import 'package:mantra_japa_counter/models/counter.dart';
+import 'package:mantra_japa_counter/models/counter_status.dart';
+import 'package:mantra_japa_counter/core/utils/mala.dart';
+import 'package:mantra_japa_counter/widgets/circular_progress_widget.dart';
 
 /// Statistics and details screen for a single counter.
 class AboutCounterScreen extends ConsumerWidget {

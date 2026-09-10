@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../config/theme.dart';
-import '../l10n/app_localizations.dart';
-import '../models/counter.dart';
-import '../models/counter_status.dart';
-import '../utils/mala.dart';
-import 'temple_decorations.dart';
+import 'package:mantra_japa_counter/theme/theme.dart';
+import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/models/counter.dart';
+import 'package:mantra_japa_counter/models/counter_status.dart';
+import 'package:mantra_japa_counter/core/utils/mala.dart';
+import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
 
 /// Counter card on the list screen — Temple variation.
 ///
@@ -44,7 +44,7 @@ class CounterCard extends StatelessWidget {
         : 0.0;
     final dailyComplete = counter.isDailyGoalAchieved(todayCount);
     final lifetimeRatio = counter.hasLifetimeGoal
-        ? (totalCount / counter.goal).clamp(0.0, double.infinity).toDouble()
+        ? (totalCount / counter.goal).clamp(0.0, double.infinity)
         : 0.0;
     final lifetimePercent = lifetimeRatio * 100;
     final lifetimeComplete = counter.isLifetimeGoalAchieved(totalCount);
@@ -72,17 +72,17 @@ class CounterCard extends StatelessWidget {
           onTap: isDisabled
               ? null
               : (counter.isLocked
-                  ? () {
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(l.counterLockedNotice(counter.name)),
-                          duration: const Duration(seconds: 2),
-                          behavior: SnackBarBehavior.floating,
-                        ),
-                      );
-                    }
-                  : onTap),
+                    ? () {
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(l.counterLockedNotice(counter.name)),
+                            duration: const Duration(seconds: 2),
+                            behavior: SnackBarBehavior.floating,
+                          ),
+                        );
+                      }
+                    : onTap),
           onLongPress: onLongPress,
           child: Stack(
             children: [
@@ -155,7 +155,7 @@ class CounterCard extends StatelessWidget {
             shape: BoxShape.circle,
             border: Border.fromBorderSide(BorderSide(color: TempleColors.line)),
           ),
-          child: Center(child: TempleLotusIcon(size: 18, color: accent)),
+          child: Center(child: TempleLotusIcon(color: accent)),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -203,10 +203,7 @@ class CounterCard extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: TempleColors.sandal,
-                border: Border.all(
-                  color: TempleColors.vermillionDeep,
-                  width: 1,
-                ),
+                border: Border.all(color: TempleColors.vermillionDeep),
               ),
               child: const Icon(
                 Icons.emoji_events,
@@ -215,37 +212,46 @@ class CounterCard extends StatelessWidget {
               ),
             ),
           if ((dailyComplete || lifetimeComplete) && onToggleLock != null)
-            const SizedBox(width: 6),
+            const SizedBox(width: 2),
           if (onToggleLock != null)
             Material(
               color: Colors.transparent,
               child: InkResponse(
                 onTap: onToggleLock,
-                radius: 18,
+                radius: 24,
                 child: Tooltip(
                   message: counter.isLocked
                       ? l.counterLockedTooltip
                       : l.counterUnlockedTooltip,
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: counter.isLocked
-                        ? BoxDecoration(
-                            color: TempleColors.sandal.withValues(alpha: 0.2),
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: TempleColors.sandal.withValues(alpha: 0.6),
-                              width: 1,
-                            ),
-                          )
-                        : null,
-                    child: Icon(
-                      counter.isLocked
-                          ? Icons.lock
-                          : Icons.lock_open_outlined,
-                      color: counter.isLocked
-                          ? TempleColors.vermillionDeep
-                          : TempleColors.ink3,
-                      size: 18,
+                  child: SizedBox(
+                    width: 48,
+                    height: 48,
+                    child: Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: counter.isLocked
+                            ? BoxDecoration(
+                                color: TempleColors.sandal.withValues(
+                                  alpha: 0.2,
+                                ),
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: TempleColors.sandal.withValues(
+                                    alpha: 0.6,
+                                  ),
+                                ),
+                              )
+                            : null,
+                        child: Icon(
+                          counter.isLocked
+                              ? Icons.lock
+                              : Icons.lock_open_outlined,
+                          color: counter.isLocked
+                              ? TempleColors.vermillionDeep
+                              : TempleColors.ink3,
+                          size: 20,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -265,7 +271,6 @@ class CounterCard extends StatelessWidget {
           _format(totalCount),
           style: AppTheme.serif(
             fontSize: 38,
-            fontWeight: FontWeight.w500,
             color: accent,
             letterSpacing: -0.5,
             height: 1,
@@ -275,11 +280,7 @@ class CounterCard extends StatelessWidget {
         Flexible(
           child: Text(
             l.cardChantsMala(malas),
-            style: AppTheme.serif(
-              fontSize: 13,
-              color: TempleColors.ink,
-              fontWeight: FontWeight.w600,
-            ),
+            style: AppTheme.serif(fontSize: 13, fontWeight: FontWeight.w600),
           ),
         ),
       ],

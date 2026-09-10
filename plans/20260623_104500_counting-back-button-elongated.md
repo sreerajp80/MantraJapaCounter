@@ -1,5 +1,7 @@
 # Plan: Make the Counting screen back button elongated (pill-shaped)
 
+**Status:** completed
+
 ## Issue
 The back button is now bigger (48×48) but still a circle. The user wants it elongated
 width-wise so it better covers the finger tip when tapped.

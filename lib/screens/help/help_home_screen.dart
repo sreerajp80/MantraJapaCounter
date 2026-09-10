@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../config/theme.dart';
-import '../../l10n/app_localizations.dart';
-import '../../widgets/temple_decorations.dart';
+import 'package:mantra_japa_counter/theme/theme.dart';
+import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
 
 /// Main Help hub reached from Settings -> Help.
 class HelpHomeScreen extends StatelessWidget {
@@ -130,7 +130,6 @@ class HelpHomeScreen extends StatelessWidget {
                 Text(
                   l.practiceEyebrow,
                   style: AppTheme.eyebrow(
-                    fontSize: 10,
                     letterSpacing: 3,
                     color: TempleColors.vermillion,
                   ),
@@ -138,17 +137,12 @@ class HelpHomeScreen extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   l.helpTitle,
-                  style: AppTheme.serif(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w500,
-                    color: TempleColors.ink,
-                    height: 1,
-                  ),
+                  style: AppTheme.serif(fontSize: 28, height: 1),
                 ),
               ],
             ),
           ),
-          const TempleLotusIcon(size: 22, color: TempleColors.vermillion),
+          const TempleLotusIcon(size: 22),
         ],
       ),
     );
@@ -164,11 +158,7 @@ class HelpHomeScreen extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: AppTheme.serif(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: TempleColors.ink,
-              ),
+              style: AppTheme.serif(fontSize: 16, fontWeight: FontWeight.w600),
             ),
           ),
         ],
@@ -219,7 +209,6 @@ class _HeaderCard extends StatelessWidget {
                   style: AppTheme.serif(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: TempleColors.ink,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -290,7 +279,6 @@ class _TopicCard extends StatelessWidget {
                       style: AppTheme.sans(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        color: TempleColors.ink,
                       ),
                     ),
                     const SizedBox(height: 3),

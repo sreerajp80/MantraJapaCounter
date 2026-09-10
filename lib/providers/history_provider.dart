@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/daily_summary.dart';
-import 'app_providers.dart';
+import 'package:mantra_japa_counter/models/daily_summary.dart';
+import 'package:mantra_japa_counter/providers/app_providers.dart';
 
 /// Daily summaries for the history screen, optionally filtered to one counter.
 ///

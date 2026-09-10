@@ -5,14 +5,13 @@ import 'package:mantra_japa_counter/models/japa_session.dart';
 
 void main() {
   group('ExportData JSON round-trip', () {
-    final data = ExportData(
-      exportVersion: 1,
+    const data = ExportData(
       exportDate: 1700000000000,
       counters: [
         Counter(id: 'c1', name: 'Gayatri', startDate: 1000, createdAt: 1000),
       ],
       sessions: [
-        const JapaSession(
+        JapaSession(
           id: 's1',
           counterId: 'c1',
           counterName: 'Gayatri',
@@ -36,7 +35,7 @@ void main() {
     });
 
     test('fromJson tolerates missing exportVersion', () {
-      final json = '{"counters":[],"sessions":[]}';
+      const json = '{"counters":[],"sessions":[]}';
       final d = ExportData.fromJsonString(json);
       expect(d.exportVersion, 1);
       expect(d.counters, isEmpty);

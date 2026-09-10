@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../utils/mala.dart';
-import 'app_providers.dart';
-import 'counters_provider.dart';
+import 'package:mantra_japa_counter/core/utils/mala.dart';
+import 'package:mantra_japa_counter/providers/app_providers.dart';
+import 'package:mantra_japa_counter/providers/counters_provider.dart';
 
 class CounterStats {
   final int totalCount;

@@ -34,8 +34,6 @@ MantraJapaCounter/
 │   ├── architecture.md
 │   ├── dependencies.md
 │   ├── features.md
-│   ├── flutter_build_flavors_guide.md
-│   ├── flutter_project_engineering_standard.md
 │   ├── guidelines/                    ← Git submodule for shared guidelines
 │   ├── implementation_plan.md
 │   ├── implementation_progress.md
@@ -44,16 +42,24 @@ MantraJapaCounter/
 │   ├── security.md
 │   └── workflow_rules.md
 ├── lib/                               ← Application source code
-│   ├── config/                        ← Router, theme, locale config, app constants
 │   ├── core/                          ← Core framework utilities & config
-│   │   └── config/                    ← AppConfig model & ConfigService loader
+│   │   ├── config/                    ← AppConfig model & ConfigService loader
+│   │   ├── constants/                 ← App constants (values only)
+│   │   ├── flavor/                    ← Build flavor config (dev / prod)
+│   │   ├── locale/                    ← Locale policy (en / ml)
+│   │   ├── routing/                   ← go_router route definitions
+│   │   └── utils/                     ← Mala maths & generated build metadata
 │   ├── l10n/                          ← Localization arb files & generated code
 │   ├── models/                        ← Pure Dart domain models
 │   ├── providers/                     ← Riverpod state management providers
 │   ├── repositories/                  ← Local database (sqflite) & preferences access
 │   ├── screens/                       ← UI screens (CounterList, Counting, History, etc.)
+│   │   ├── counter_list/              ← Home screen and its private parts
+│   │   ├── history/                   ← History screen and its private parts
+│   │   ├── settings/                  ← Settings screen and its private parts
+│   │   └── help/                      ← Help home and help topic screens
 │   ├── services/                      ← Platform services (Notification, Export, Audio)
-│   ├── utils/                         ← Helper functions & extensions
+│   ├── theme/                         ← Colors, text styles, ThemeData
 │   ├── widgets/                       ← Reusable UI widgets
 │   └── main.dart                      ← App initialization entry point
 ├── plans/                             ← Implementation plans
@@ -70,5 +76,5 @@ MantraJapaCounter/
 - **`lib/repositories/`**: Handles sqflite SQLite operations and `shared_preferences` storage for crash recovery.
 - **`lib/services/`**: Encapsulates platform capabilities (local notifications, export/import file parsing, audio player).
 - **`lib/providers/`**: Riverpod providers exposing state to UI components.
-- **`lib/screens/`**: High-level page widgets (`CounterListScreen`, `CountingScreen`, `HistoryScreen`, `AboutCounterScreen`, `SettingsScreen`, `AboutScreen`).
+- **`lib/screens/`**: High-level page widgets (`CounterListScreen`, `CountingScreen`, `HistoryScreen`, `AboutCounterScreen`, `SettingsScreen`, `AboutScreen`). A screen with many parts gets its own feature folder (`counter_list/`, `history/`, `settings/`, `help/`); the parts are used only by that screen. Widgets shared by several screens belong in `lib/widgets/` instead.
 - **`lib/widgets/`**: Reusable component widgets (stat cards, counter cards, dialogs).

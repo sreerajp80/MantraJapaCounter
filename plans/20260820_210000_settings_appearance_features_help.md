@@ -1,6 +1,6 @@
 # Implementation Plan — Settings Appearance, Features, and Help Cards
 
-**Status:** Completed
+**Status:** completed
 
 ## Overview
 

@@ -54,3 +54,17 @@ android/*.keystore
 
 # Debug symbols — archive separately, never commit
 build/symbols/
+
+# Machine-local Android/Flutter config — never commit (engineering standard §20.2)
+local.properties
+android/local.properties
+.flutter-plugins
+
+# Release artifacts — never commit (engineering standard §20.4)
+*.apk
+*.aab
+*.ipa
+*.msix
+
+# Debug symbol archives from --split-debug-info
+*.symbols/

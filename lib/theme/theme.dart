@@ -119,7 +119,7 @@ class AppTheme {
   );
 
   static ThemeData light() {
-    final scheme = ColorScheme(
+    const scheme = ColorScheme(
       brightness: Brightness.light,
       primary: TempleColors.vermillion,
       onPrimary: Colors.white,
@@ -173,11 +173,7 @@ class AppTheme {
         foregroundColor: TempleColors.ink,
         elevation: 0,
         centerTitle: true,
-        titleTextStyle: serif(
-          fontSize: 22,
-          fontWeight: FontWeight.w500,
-          color: TempleColors.ink,
-        ),
+        titleTextStyle: serif(fontSize: 22),
       ),
       cardTheme: const CardThemeData(
         color: TempleColors.card,
@@ -231,7 +227,7 @@ class AppTheme {
           borderRadius: BorderRadius.circular(16),
           side: const BorderSide(color: TempleColors.line),
         ),
-        titleTextStyle: serif(fontSize: 20, color: TempleColors.ink),
+        titleTextStyle: serif(fontSize: 20),
         contentTextStyle: sans(
           fontSize: 14,
           fontWeight: FontWeight.w400,
@@ -250,7 +246,7 @@ class AppTheme {
       popupMenuTheme: PopupMenuThemeData(
         color: TempleColors.card,
         surfaceTintColor: Colors.transparent,
-        textStyle: sans(fontSize: 14, color: TempleColors.ink),
+        textStyle: sans(fontSize: 14),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
           side: const BorderSide(color: TempleColors.line),
@@ -259,11 +255,7 @@ class AppTheme {
       listTileTheme: ListTileThemeData(
         iconColor: TempleColors.ink2,
         textColor: TempleColors.ink,
-        titleTextStyle: sans(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: TempleColors.ink,
-        ),
+        titleTextStyle: sans(fontSize: 14),
         subtitleTextStyle: serif(
           fontSize: 12,
           color: TempleColors.ink3,

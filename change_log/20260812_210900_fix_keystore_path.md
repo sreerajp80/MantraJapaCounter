@@ -1,6 +1,6 @@
 # Change Log: Fix Keystore Path Configuration
 
-**Plan Reference:** [plans/20260812_210810_fix_keystore_path.md](file:///l:/Android/MantraJapaCounter/plans/20260812_210810_fix_keystore_path.md)
+**Plan Reference:** [plans/20260812_210810_fix_keystore_path.md](../plans/20260812_210810_fix_keystore_path.md)
 
 ## Summary of Changes
 Updated `android/key.properties` to fix `storeFile` relative path resolution for Gradle signing.

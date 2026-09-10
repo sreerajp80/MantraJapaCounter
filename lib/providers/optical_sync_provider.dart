@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
-import '../models/optical_sync_frame.dart';
-import '../services/optical_sync_service.dart';
-import 'app_providers.dart';
-import 'counters_provider.dart';
+import 'package:mantra_japa_counter/models/optical_sync_frame.dart';
+import 'package:mantra_japa_counter/services/optical_sync_service.dart';
+import 'package:mantra_japa_counter/providers/app_providers.dart';
+import 'package:mantra_japa_counter/providers/counters_provider.dart';
 
 // ────────────────────────── Transmit State & Notifier ──────────────────────────
 
@@ -62,7 +62,7 @@ class OpticalSyncTransmitNotifier extends Notifier<OpticalSyncTransmitState> {
   }
 
   Future<void> initializeTransmitter() async {
-    state = state.copyWith(isLoading: true, errorMessage: null);
+    state = state.copyWith(isLoading: true);
     try {
       final repo = ref.read(japaCounterRepositoryProvider);
       final exportData = await repo.exportData();

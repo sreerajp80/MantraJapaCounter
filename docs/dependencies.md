@@ -14,7 +14,7 @@ Read [AGENTS.md](../AGENTS.md) and [security.md](security.md) before modifying `
 | Localization | `flutter_localizations`, `intl` | SDK / any | English and Malayalam l10n support |
 | State Management | `flutter_riverpod` | `^3.3.1` | Reactive dependency injection & state management |
 | Navigation | `go_router` | `^17.2.2` | Declarative route management |
-| Database | `sqflite`, `path` | `^2.4.2` / `^1.9.1` | Local SQLite database storage (Schema v3) |
+| Database | `sqflite`, `path` | `^2.4.2` / `^1.9.1` | Local SQLite database storage (Schema v4) |
 | Key-Value Storage | `shared_preferences` | `^2.5.3` | Session crash recovery and user preferences |
 | Notifications | `flutter_local_notifications` | `^21.0.0` | Local daily practice reminders |
 | File Selection | `file_picker` | `^11.0.2` | Custom notification tone selection |

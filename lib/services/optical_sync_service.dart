@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
-import '../models/optical_sync_frame.dart';
+import 'package:mantra_japa_counter/models/optical_sync_frame.dart';
 
 /// Progress state of receiving and reconstructing an optical QR stream.
 class OpticalSyncReceiveProgress {

@@ -41,8 +41,8 @@ val generateBuildMetadata = tasks.register("generateBuildMetadata") {
     inputs.file(projectRootDir.resolve("tool/generate_app_version.dart"))
     inputs.file(projectRootDir.resolve("tool/generate_build_date.dart"))
     inputs.property("metadataBuildDate", LocalDate.now().toString())
-    outputs.file(projectRootDir.resolve("lib/utils/app_version.g.dart"))
-    outputs.file(projectRootDir.resolve("lib/utils/build_date.g.dart"))
+    outputs.file(projectRootDir.resolve("lib/core/utils/app_version.g.dart"))
+    outputs.file(projectRootDir.resolve("lib/core/utils/build_date.g.dart"))
 
     doLast {
         if (!dartExecutable.exists()) {
@@ -149,7 +149,7 @@ afterEvaluate {
                     "══════════════════════════════════════════════════════════\n" +
                     "  android/key.properties not found.                       \n" +
                     "  Create the file with your release keystore credentials. \n" +
-                    "  See docs/flutter_build_flavors_guide.md                 \n" +
+                    "  See docs/guidelines/flutter_build_flavors_guide.md     \n" +
                     "══════════════════════════════════════════════════════════\n"
                 )
             }

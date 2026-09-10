@@ -1,5 +1,7 @@
 # Plan: Multilingual support (English + Malayalam)
 
+**Status:** completed
+
 Date: 2026-06-24 08:05:37
 Slug: multilingual-en-ml
 

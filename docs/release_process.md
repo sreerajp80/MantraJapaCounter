@@ -96,7 +96,7 @@ Without it, stack traces from that release are permanently unreadable.
 Always perform a full release build test after adding a new dependency; R8 can silently strip
 classes accessed only via reflection. Symptoms: `ClassNotFoundException` in release builds only.
 
-Reference: `android/app/proguard-rules.pro` and `docs/flutter_build_flavors_guide.md`.
+Reference: `android/app/proguard-rules.pro` and `docs/guidelines/flutter_build_flavors_guide.md`.
 
 ### 6.3 App Size Analysis
 
@@ -135,7 +135,7 @@ Expected output: no lines (attribute absent = false by default). If it appears, 
 
 ## 7. Signing And Secret Handling
 
-- Signing strategy: Strategy A — local file-based signing (single developer; see `docs/flutter_build_flavors_guide.md`)
+- Signing strategy: Strategy A — local file-based signing (single developer; see `docs/guidelines/flutter_build_flavors_guide.md`)
 - Config location: `android/key.properties` — gitignored; never committed
 - Keystore files: kept in `android/` and git-ignored; backed up in two separate locations outside the repository
 - Keystore ownership: sreerajp
@@ -145,7 +145,7 @@ Expected output: no lines (attribute absent = false by default). If it appears, 
   - Signing material MUST NOT be committed to source control.
   - `android/key.properties` MUST be listed in `.gitignore`.
   - Keystore files (`android/*.jks`, `android/*.keystore`) MUST be listed in `.gitignore`.
-  - The build MUST fail clearly for `prod --release` if `android/key.properties` is absent (enforced via Gradle guard — see `docs/flutter_build_flavors_guide.md`).
+  - The build MUST fail clearly for `prod --release` if `android/key.properties` is absent (enforced via Gradle guard — see `docs/guidelines/flutter_build_flavors_guide.md`).
 
 ---
 
