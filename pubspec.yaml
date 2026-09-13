@@ -1,7 +1,7 @@
 name: mantra_japa_counter
 description: SreerajP MantraJapa Counter — track your mantra recitation practice.
 publish_to: 'none'
-version: 6.11.4+27
+version: 6.12.0+28
 
 environment:
   sdk: ^3.12.2
@@ -52,6 +52,9 @@ dependencies:
   # UUID generation (RFC 4122 v4)
   uuid: ^4.5.1
 
+  # Optional export encryption (AES-256-GCM + PBKDF2) — pure Dart, no network
+  cryptography: ^2.7.0
+
   # Icons
   cupertino_icons: ^1.0.8
 
@@ -70,6 +73,7 @@ flutter:
 
   assets:
     - assets/config/
+    - assets/audio/
 
   fonts:
     - family: EBGaramond

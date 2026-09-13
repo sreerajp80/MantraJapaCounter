@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
+import 'package:mantra_japa_counter/models/export_data.dart';
 import 'package:mantra_japa_counter/models/optical_sync_frame.dart';
 import 'package:mantra_japa_counter/services/optical_sync_service.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
@@ -18,6 +19,12 @@ class OpticalSyncTransmitState {
   final bool isPlaying;
   final String? errorMessage;
 
+  /// If set, only these counter IDs are included in the export.
+  final List<String>? selectedCounterIds;
+
+  /// True when the counter selection is done and frames are ready.
+  final bool isInitialized;
+
   const OpticalSyncTransmitState({
     this.isLoading = true,
     this.sessionId = '',
@@ -26,6 +33,8 @@ class OpticalSyncTransmitState {
     this.fps = 12,
     this.isPlaying = true,
     this.errorMessage,
+    this.selectedCounterIds,
+    this.isInitialized = false,
   });
 
   OpticalSyncTransmitState copyWith({
@@ -36,6 +45,8 @@ class OpticalSyncTransmitState {
     int? fps,
     bool? isPlaying,
     String? errorMessage,
+    List<String>? selectedCounterIds,
+    bool? isInitialized,
   }) {
     return OpticalSyncTransmitState(
       isLoading: isLoading ?? this.isLoading,
@@ -45,6 +56,8 @@ class OpticalSyncTransmitState {
       fps: fps ?? this.fps,
       isPlaying: isPlaying ?? this.isPlaying,
       errorMessage: errorMessage,
+      selectedCounterIds: selectedCounterIds ?? this.selectedCounterIds,
+      isInitialized: isInitialized ?? this.isInitialized,
     );
   }
 
@@ -57,15 +70,26 @@ class OpticalSyncTransmitState {
 class OpticalSyncTransmitNotifier extends Notifier<OpticalSyncTransmitState> {
   @override
   OpticalSyncTransmitState build() {
-    initializeTransmitter();
-    return const OpticalSyncTransmitState();
+    // Do NOT auto-initialize — wait for counter selection.
+    return const OpticalSyncTransmitState(isLoading: false);
   }
 
-  Future<void> initializeTransmitter() async {
-    state = state.copyWith(isLoading: true);
+  /// Sets the selected counter IDs and starts building frames.
+  Future<void> initializeWithSelectedCounters(
+    List<String> counterIds,
+  ) async {
+    state = state.copyWith(
+      isLoading: true,
+      selectedCounterIds: counterIds,
+    );
     try {
       final repo = ref.read(japaCounterRepositoryProvider);
-      final exportData = await repo.exportData();
+      final ExportData exportData;
+      if (counterIds.isEmpty) {
+        exportData = await repo.exportData();
+      } else {
+        exportData = await repo.exportSelectedData(counterIds);
+      }
       final jsonPayload = exportData.toJsonString();
 
       final sessionId = const Uuid().v4().substring(0, 8);
@@ -81,6 +105,7 @@ class OpticalSyncTransmitNotifier extends Notifier<OpticalSyncTransmitState> {
         frames: frames,
         currentFrameIndex: 0,
         isPlaying: true,
+        isInitialized: true,
       );
     } catch (e) {
       state = state.copyWith(
@@ -122,6 +147,9 @@ class OpticalSyncReceiveState {
   final String? errorMessage;
   final Map<String, dynamic>? decodedJsonMap;
 
+  /// Counter IDs selected by the user for import. If empty, import all.
+  final List<String> selectedCounterIds;
+
   const OpticalSyncReceiveState({
     this.isScanning = true,
     this.progress = const OpticalSyncReceiveProgress(
@@ -134,6 +162,7 @@ class OpticalSyncReceiveState {
     ),
     this.errorMessage,
     this.decodedJsonMap,
+    this.selectedCounterIds = const [],
   });
 
   OpticalSyncReceiveState copyWith({
@@ -141,12 +170,14 @@ class OpticalSyncReceiveState {
     OpticalSyncReceiveProgress? progress,
     String? errorMessage,
     Map<String, dynamic>? decodedJsonMap,
+    List<String>? selectedCounterIds,
   }) {
     return OpticalSyncReceiveState(
       isScanning: isScanning ?? this.isScanning,
       progress: progress ?? this.progress,
       errorMessage: errorMessage,
       decodedJsonMap: decodedJsonMap ?? this.decodedJsonMap,
+      selectedCounterIds: selectedCounterIds ?? this.selectedCounterIds,
     );
   }
 
@@ -198,11 +229,27 @@ class OpticalSyncReceiveNotifier extends Notifier<OpticalSyncReceiveState> {
     );
   }
 
+  /// Sets the selected counter IDs for selective import.
+  void setSelectedCounterIds(List<String> ids) {
+    state = state.copyWith(selectedCounterIds: ids);
+  }
+
+  /// Imports data. If [selectedCounterIds] is non-empty, imports only those
+  /// counters using merge strategy.
   Future<bool> importData() async {
     if (state.progress.decodedJsonPayload == null) return false;
     try {
       final exportSvc = ref.read(exportServiceProvider);
-      await exportSvc.importFromJson(state.progress.decodedJsonPayload!);
+      final selectedIds = state.selectedCounterIds;
+
+      if (selectedIds.isNotEmpty) {
+        await exportSvc.importSelectedFromJson(
+          state.progress.decodedJsonPayload!,
+          selectedIds,
+        );
+      } else {
+        await exportSvc.importFromJson(state.progress.decodedJsonPayload!);
+      }
       ref.invalidate(countersNotifierProvider);
       return true;
     } catch (e) {

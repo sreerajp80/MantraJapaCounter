@@ -700,6 +700,38 @@
   "@enableMalaSoundSub": {
     "description": "Subtitle describing mala completion sound"
   },
+  "malaSoundTitle": "Mala sound",
+  "@malaSoundTitle": {
+    "description": "Setting label for mala completion soundscape"
+  },
+  "malaSoundSub": "Sacred sound played when completing 108 beads",
+  "@malaSoundSub": {
+    "description": "Subtitle describing mala completion soundscape setting"
+  },
+  "soundTempleBell": "Temple Bronze Bell",
+  "@soundTempleBell": {
+    "description": "Name of Temple Bronze Bell (Ghanta) soundscape"
+  },
+  "soundTempleBellSub": "Deep, tranquil bronze resonance (Ghanta)",
+  "@soundTempleBellSub": {
+    "description": "Description of Temple Bronze Bell soundscape"
+  },
+  "soundSingingBowl": "Tibetan Singing Bowl",
+  "@soundSingingBowl": {
+    "description": "Name of Tibetan Singing Bowl soundscape"
+  },
+  "soundSingingBowlSub": "Soothing harmonic overtone for quiet mindfulness",
+  "@soundSingingBowlSub": {
+    "description": "Description of Tibetan Singing Bowl soundscape"
+  },
+  "soundSynthesizedTone": "Synthesized Tone",
+  "@soundSynthesizedTone": {
+    "description": "Name of legacy synthesized tone soundscape"
+  },
+  "soundSynthesizedToneSub": "Classic 100ms electronic beep (DTMF)",
+  "@soundSynthesizedToneSub": {
+    "description": "Description of synthesized electronic beep"
+  },
   "sectionStillness": "Stillness",
   "@sectionStillness": {
     "description": "Settings section title for screen brightness control"
@@ -2034,5 +2066,87 @@
   "opticalStreamCompleteSub": "100% offline payload reconstructed via camera scanner.",
   "@opticalStreamCompleteSub": {
     "description": "Subtitle of the sheet shown when a QR stream has been fully received"
+  },
+
+  "selectCountersTitle": "Select Counters",
+  "@selectCountersTitle": {
+    "description": "Title of the counter selection sheet"
+  },
+  "selectCountersSub": "Choose which counters to include",
+  "@selectCountersSub": {
+    "description": "Subtitle of the counter selection sheet"
+  },
+  "selectAll": "Select All",
+  "@selectAll": {
+    "description": "Label for select all action"
+  },
+  "deselectAll": "Deselect All",
+  "@deselectAll": {
+    "description": "Label for deselect all action"
+  },
+  "selectedCountersCount": "{count} selected",
+  "@selectedCountersCount": {
+    "description": "Count badge showing number of selected counters",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "continueAction": "Continue",
+  "@continueAction": {
+    "description": "Label for continue button"
+  },
+  "noCountersSelected": "Please select at least one counter",
+  "@noCountersSelected": {
+    "description": "Warning shown when no counters are selected"
+  },
+  "encryptBackup": "Encrypt Backup",
+  "@encryptBackup": {
+    "description": "Toggle label and dialog title for encrypting a backup export"
+  },
+  "encryptBackupSub": "Protect with a passphrase (AES-256-GCM)",
+  "@encryptBackupSub": {
+    "description": "Subtitle explaining the encryption option"
+  },
+  "enterPassphrase": "Enter passphrase",
+  "@enterPassphrase": {
+    "description": "Text field label for passphrase entry"
+  },
+  "confirmPassphrase": "Confirm passphrase",
+  "@confirmPassphrase": {
+    "description": "Text field label for confirming the passphrase"
+  },
+  "passphraseMismatch": "Passphrases do not match",
+  "@passphraseMismatch": {
+    "description": "Error message when two passphrase entries do not match"
+  },
+  "passphraseTooShort": "Passphrase must be at least 6 characters",
+  "@passphraseTooShort": {
+    "description": "Error message when the passphrase is too short"
+  },
+  "decryptBackup": "Decrypt & Import",
+  "@decryptBackup": {
+    "description": "Button and dialog title for decrypting an encrypted backup"
+  },
+  "decryptPassphrasePrompt": "This backup is encrypted. Enter the passphrase to decrypt.",
+  "@decryptPassphrasePrompt": {
+    "description": "Explanation shown in the decrypt passphrase dialog"
+  },
+  "decryptFailed": "Decryption failed. Wrong passphrase or corrupted file.",
+  "@decryptFailed": {
+    "description": "Error message when decryption fails"
+  },
+  "skipEncryption": "Skip (export unencrypted)",
+  "@skipEncryption": {
+    "description": "Button to skip encryption and export as plain JSON"
+  },
+  "opticalSelectCountersHint": "Select which counters to transmit via optical sync",
+  "@opticalSelectCountersHint": {
+    "description": "Hint text on the counter selection sheet before optical sync transmit"
+  },
+  "opticalImportSelectHint": "Choose which counters to import from the received data",
+  "@opticalImportSelectHint": {
+    "description": "Hint text on the import preview sheet for selecting counters to import"
   }
 }

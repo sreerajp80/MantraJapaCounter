@@ -6,6 +6,8 @@ import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/providers/counters_provider.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
+import 'package:mantra_japa_counter/services/export_service.dart';
+import 'package:mantra_japa_counter/widgets/passphrase_dialog.dart';
 
 // ─── Import / Export dialog ───────────────────────────────────────────────────
 
@@ -63,12 +65,20 @@ class _ImportExportDialogState extends State<ImportExportDialog> {
 
   Future<void> _doExport() async {
     final l = AppLocalizations.of(context);
+
+    // Show passphrase dialog (user can skip encryption)
+    final passphraseResult = await showExportPassphraseDialog(context);
+    if (passphraseResult == null) return; // dismissed
+
     setState(() {
       _busy = true;
       _error = null;
     });
     try {
-      await widget.ref.read(exportServiceProvider).exportAndShare();
+      await widget.ref.read(exportServiceProvider).exportAndShare(
+        passphrase:
+            passphraseResult.encrypt ? passphraseResult.passphrase : null,
+      );
       if (mounted) Navigator.pop(context);
     } catch (e) {
       setState(() {
@@ -82,7 +92,7 @@ class _ImportExportDialogState extends State<ImportExportDialog> {
     final l = AppLocalizations.of(context);
     final result = await FilePicker.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['json'],
+      allowedExtensions: ['json', 'enc'],
     );
     if (result == null || result.files.single.path == null) return;
 
@@ -93,7 +103,30 @@ class _ImportExportDialogState extends State<ImportExportDialog> {
 
     try {
       final content = await File(result.files.single.path!).readAsString();
-      await widget.ref.read(exportServiceProvider).importFromJson(content);
+      final exportSvc = widget.ref.read(exportServiceProvider);
+
+      try {
+        await exportSvc.importFromJson(content);
+      } on EncryptedExportException {
+        // File is encrypted — prompt for passphrase
+        if (!mounted) return;
+        setState(() => _busy = false);
+
+        final passphrase = await showImportPassphraseDialog(context);
+        if (passphrase == null || !mounted) return;
+
+        setState(() => _busy = true);
+        try {
+          await exportSvc.importEncryptedFromJson(content, passphrase);
+        } catch (_) {
+          setState(() {
+            _busy = false;
+            _error = l.decryptFailed;
+          });
+          return;
+        }
+      }
+
       widget.ref.invalidate(countersNotifierProvider);
       if (mounted) {
         Navigator.pop(context);

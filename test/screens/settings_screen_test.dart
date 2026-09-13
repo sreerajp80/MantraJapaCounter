@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/models/counter.dart';
+import 'package:mantra_japa_counter/models/mala_sound.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/settings_provider.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
@@ -99,6 +100,26 @@ void main() {
 
       expect(find.text('Select language'), findsNothing);
       expect(settingsOf(tester).languageCode, equals('sa'));
+    },
+  );
+
+  testWidgets(
+    'tapping mala sound row opens picker and selecting singing bowl updates malaSound',
+    (tester) async {
+      await pumpSettings(tester);
+      expect(settingsOf(tester).malaSound, equals(MalaSound.templeBell));
+
+      await tester.tap(find.text('Mala sound'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Temple Bronze Bell'), findsWidgets);
+      expect(find.text('Tibetan Singing Bowl'), findsOneWidget);
+      expect(find.text('Synthesized Tone'), findsOneWidget);
+
+      await tester.tap(find.text('Tibetan Singing Bowl'));
+      await tester.pumpAndSettle();
+
+      expect(settingsOf(tester).malaSound, equals(MalaSound.singingBowl));
     },
   );
 

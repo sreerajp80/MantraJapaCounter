@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
+import 'package:mantra_japa_counter/models/mala_sound.dart';
 import 'package:mantra_japa_counter/providers/settings_provider.dart';
 
 void main() {
@@ -72,6 +73,67 @@ void main() {
       await notifier.setLanguageCode('system');
       expect(notifier.state.languageCode, isNull);
       expect(repo.languageCode, isNull);
+    });
+  });
+
+  group('SettingsRepository - malaSound', () {
+    late SharedPreferences prefs;
+    late SettingsRepository repo;
+
+    setUp(() async {
+      SharedPreferences.setMockInitialValues({});
+      prefs = await SharedPreferences.getInstance();
+      repo = SettingsRepository(prefs);
+    });
+
+    test('defaults to templeBell when no preference is stored', () {
+      expect(repo.malaSound, equals(MalaSound.templeBell));
+    });
+
+    test('saves and retrieves chosen mala soundscapes', () async {
+      await repo.setMalaSound(MalaSound.singingBowl);
+      expect(repo.malaSound, equals(MalaSound.singingBowl));
+      expect(
+        prefs.getString(AppConstants.prefsMalaSoundKey),
+        equals('singing_bowl'),
+      );
+
+      await repo.setMalaSound(MalaSound.synthesizedTone);
+      expect(repo.malaSound, equals(MalaSound.synthesizedTone));
+      expect(
+        prefs.getString(AppConstants.prefsMalaSoundKey),
+        equals('synthesized_tone'),
+      );
+
+      await repo.setMalaSound(MalaSound.templeBell);
+      expect(repo.malaSound, equals(MalaSound.templeBell));
+      expect(
+        prefs.getString(AppConstants.prefsMalaSoundKey),
+        equals('temple_bell'),
+      );
+    });
+  });
+
+  group('SettingsNotifier - malaSound', () {
+    late SharedPreferences prefs;
+    late SettingsRepository repo;
+    late SettingsNotifier notifier;
+
+    setUp(() async {
+      SharedPreferences.setMockInitialValues({});
+      prefs = await SharedPreferences.getInstance();
+      repo = SettingsRepository(prefs);
+      notifier = SettingsNotifier(repo);
+    });
+
+    test('initial state has templeBell malaSound', () {
+      expect(notifier.state.malaSound, equals(MalaSound.templeBell));
+    });
+
+    test('setMalaSound updates state and repository', () async {
+      await notifier.setMalaSound(MalaSound.singingBowl);
+      expect(notifier.state.malaSound, equals(MalaSound.singingBowl));
+      expect(repo.malaSound, equals(MalaSound.singingBowl));
     });
   });
 }

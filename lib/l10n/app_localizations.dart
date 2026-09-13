@@ -1030,6 +1030,54 @@ abstract class AppLocalizations {
   /// **'A soft tick on each full mala'**
   String get enableMalaSoundSub;
 
+  /// Setting label for mala completion soundscape
+  ///
+  /// In en, this message translates to:
+  /// **'Mala sound'**
+  String get malaSoundTitle;
+
+  /// Subtitle describing mala completion soundscape setting
+  ///
+  /// In en, this message translates to:
+  /// **'Sacred sound played when completing 108 beads'**
+  String get malaSoundSub;
+
+  /// Name of Temple Bronze Bell (Ghanta) soundscape
+  ///
+  /// In en, this message translates to:
+  /// **'Temple Bronze Bell'**
+  String get soundTempleBell;
+
+  /// Description of Temple Bronze Bell soundscape
+  ///
+  /// In en, this message translates to:
+  /// **'Deep, tranquil bronze resonance (Ghanta)'**
+  String get soundTempleBellSub;
+
+  /// Name of Tibetan Singing Bowl soundscape
+  ///
+  /// In en, this message translates to:
+  /// **'Tibetan Singing Bowl'**
+  String get soundSingingBowl;
+
+  /// Description of Tibetan Singing Bowl soundscape
+  ///
+  /// In en, this message translates to:
+  /// **'Soothing harmonic overtone for quiet mindfulness'**
+  String get soundSingingBowlSub;
+
+  /// Name of legacy synthesized tone soundscape
+  ///
+  /// In en, this message translates to:
+  /// **'Synthesized Tone'**
+  String get soundSynthesizedTone;
+
+  /// Description of synthesized electronic beep
+  ///
+  /// In en, this message translates to:
+  /// **'Classic 100ms electronic beep (DTMF)'**
+  String get soundSynthesizedToneSub;
+
   /// Settings section title for screen brightness control
   ///
   /// In en, this message translates to:
@@ -2913,6 +2961,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'100% offline payload reconstructed via camera scanner.'**
   String get opticalStreamCompleteSub;
+
+  /// Title of the counter selection sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Select Counters'**
+  String get selectCountersTitle;
+
+  /// Subtitle of the counter selection sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Choose which counters to include'**
+  String get selectCountersSub;
+
+  /// Label for select all action
+  ///
+  /// In en, this message translates to:
+  /// **'Select All'**
+  String get selectAll;
+
+  /// Label for deselect all action
+  ///
+  /// In en, this message translates to:
+  /// **'Deselect All'**
+  String get deselectAll;
+
+  /// Count badge showing number of selected counters
+  ///
+  /// In en, this message translates to:
+  /// **'{count} selected'**
+  String selectedCountersCount(int count);
+
+  /// Label for continue button
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueAction;
+
+  /// Warning shown when no counters are selected
+  ///
+  /// In en, this message translates to:
+  /// **'Please select at least one counter'**
+  String get noCountersSelected;
+
+  /// Toggle label and dialog title for encrypting a backup export
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypt Backup'**
+  String get encryptBackup;
+
+  /// Subtitle explaining the encryption option
+  ///
+  /// In en, this message translates to:
+  /// **'Protect with a passphrase (AES-256-GCM)'**
+  String get encryptBackupSub;
+
+  /// Text field label for passphrase entry
+  ///
+  /// In en, this message translates to:
+  /// **'Enter passphrase'**
+  String get enterPassphrase;
+
+  /// Text field label for confirming the passphrase
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm passphrase'**
+  String get confirmPassphrase;
+
+  /// Error message when two passphrase entries do not match
+  ///
+  /// In en, this message translates to:
+  /// **'Passphrases do not match'**
+  String get passphraseMismatch;
+
+  /// Error message when the passphrase is too short
+  ///
+  /// In en, this message translates to:
+  /// **'Passphrase must be at least 6 characters'**
+  String get passphraseTooShort;
+
+  /// Button and dialog title for decrypting an encrypted backup
+  ///
+  /// In en, this message translates to:
+  /// **'Decrypt & Import'**
+  String get decryptBackup;
+
+  /// Explanation shown in the decrypt passphrase dialog
+  ///
+  /// In en, this message translates to:
+  /// **'This backup is encrypted. Enter the passphrase to decrypt.'**
+  String get decryptPassphrasePrompt;
+
+  /// Error message when decryption fails
+  ///
+  /// In en, this message translates to:
+  /// **'Decryption failed. Wrong passphrase or corrupted file.'**
+  String get decryptFailed;
+
+  /// Button to skip encryption and export as plain JSON
+  ///
+  /// In en, this message translates to:
+  /// **'Skip (export unencrypted)'**
+  String get skipEncryption;
+
+  /// Hint text on the counter selection sheet before optical sync transmit
+  ///
+  /// In en, this message translates to:
+  /// **'Select which counters to transmit via optical sync'**
+  String get opticalSelectCountersHint;
+
+  /// Hint text on the import preview sheet for selecting counters to import
+  ///
+  /// In en, this message translates to:
+  /// **'Choose which counters to import from the received data'**
+  String get opticalImportSelectHint;
 }
 
 class _AppLocalizationsDelegate

@@ -5,6 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/services/counting_service.dart';
+import 'package:mantra_japa_counter/services/encryption_service.dart';
 import 'package:mantra_japa_counter/services/export_service.dart';
 import 'package:mantra_japa_counter/services/haptic_feedback_service.dart';
 import 'package:mantra_japa_counter/services/notification_service.dart';
@@ -54,8 +55,15 @@ final countingServiceProvider = Provider<CountingService>((ref) {
   );
 });
 
+final encryptionServiceProvider = Provider<EncryptionService>((ref) {
+  return EncryptionService();
+});
+
 final exportServiceProvider = Provider<ExportService>((ref) {
-  return ExportService(ref.watch(japaCounterRepositoryProvider));
+  return ExportService(
+    ref.watch(japaCounterRepositoryProvider),
+    ref.watch(encryptionServiceProvider),
+  );
 });
 
 final notificationServiceProvider = Provider<NotificationService>((ref) {

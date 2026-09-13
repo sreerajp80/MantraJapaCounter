@@ -65,7 +65,7 @@ class AppLocalizationsSa extends AppLocalizations {
   String get menuSettings => 'संयोजनानि';
 
   @override
-  String get menuAbout => 'विषये';
+  String get menuAbout => 'विषयपरिचयः';
 
   @override
   String get todayChants => 'जपाः';
@@ -352,7 +352,7 @@ class AppLocalizationsSa extends AppLocalizations {
   String get statusCompleted => 'सिद्धम्';
 
   @override
-  String get aboutTitle => 'विषये';
+  String get aboutTitle => 'विषयपरिचयः';
 
   @override
   String versionLabel(String version) {
@@ -524,6 +524,31 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get enableMalaSoundSub => 'प्रत्येकमालापूर्तौ सौम्यध्वनिं जनयतु';
+
+  @override
+  String get malaSoundTitle => 'मालाध्वनिप्रकारः';
+
+  @override
+  String get malaSoundSub => '१०८ जपानन्तरं पवित्रध्वनिवरणम्';
+
+  @override
+  String get soundTempleBell => 'कांस्यमन्दिरघण्टा';
+
+  @override
+  String get soundTempleBellSub => 'गम्भीरशान्तकांस्यनादः (घण्टा)';
+
+  @override
+  String get soundSingingBowl => 'तिब्बतीनादपात्रम्';
+
+  @override
+  String get soundSingingBowlSub => 'शान्तध्यानाय सुखदसंवादीनादः';
+
+  @override
+  String get soundSynthesizedTone => 'कृत्रिमध्वनिः';
+
+  @override
+  String get soundSynthesizedToneSub =>
+      'पारम्परिकः १००मि.से. विद्युत्-ध्वनिः (DTMF)';
 
   @override
   String get sectionStillness => 'प्रशान्तिः';
@@ -1551,4 +1576,67 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get opticalStreamCompleteSub => 'सर्वे खण्डाः साफल्येन प्राप्ताः।';
+
+  @override
+  String get selectCountersTitle => 'गणकान् चिनुत';
+
+  @override
+  String get selectCountersSub => 'समाविष्टव्यान् गणकान् चिनुत';
+
+  @override
+  String get selectAll => 'सर्वान् चिनुत';
+
+  @override
+  String get deselectAll => 'सर्वान् अपनयत';
+
+  @override
+  String selectedCountersCount(int count) {
+    return '$count चितम्';
+  }
+
+  @override
+  String get continueAction => 'अग्रे गच्छतु';
+
+  @override
+  String get noCountersSelected => 'कृपया एकं गणकमपि चिनुत';
+
+  @override
+  String get encryptBackup => 'सञ्चिकां कूटीकुरुत';
+
+  @override
+  String get encryptBackupSub => 'गुप्तवाक्येन सुरक्षा (AES-256-GCM)';
+
+  @override
+  String get enterPassphrase => 'गुप्तवाक्यं लिखतु';
+
+  @override
+  String get confirmPassphrase => 'गुप्तवाक्यं पुष्टीकुरुत';
+
+  @override
+  String get passphraseMismatch => 'गुप्तवाक्ये न सम्मतौ';
+
+  @override
+  String get passphraseTooShort =>
+      'गुप्तवाक्यं न्यूनातिन्यूनं ६ अक्षराणि भवेत्';
+
+  @override
+  String get decryptBackup => 'विकूटीकृत्य आनयतु';
+
+  @override
+  String get decryptPassphrasePrompt =>
+      'इयं सञ्चिका कूटिता अस्ति। विकूटीकरणाय गुप्तवाक्यं लिखतु।';
+
+  @override
+  String get decryptFailed =>
+      'विकूटीकरणं विफलम्। अशुद्धं गुप्तवाक्यं वा भ्रष्टा सञ्चिका।';
+
+  @override
+  String get skipEncryption => 'अतिक्रम्य (अकूटितम्)';
+
+  @override
+  String get opticalSelectCountersHint => 'प्रकाशसञ्चाराय गणकान् चिनुत';
+
+  @override
+  String get opticalImportSelectHint =>
+      'प्राप्तदत्तांशात् आनेतव्यान् गणकान् चिनुत';
 }

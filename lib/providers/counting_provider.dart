@@ -600,9 +600,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
       final prevMalas = (session.tapCount - session.incrementStep) ~/ 108;
       final newMalas = session.tapCount ~/ 108;
       if (newMalas > prevMalas) {
-        // Built-in beep + vibration via native ToneGenerator / VibrationEffect.
-        // Both use USAGE_ALARM-style attributes so they bypass silent / DND.
-        haptic.playMalaTone();
+        sound.playMalaSound(settings.malaSound);
         if (settings.vibrationEnabled) haptic.vibrateMala();
       }
     }

@@ -534,6 +534,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enableMalaSoundSub => 'A soft tick on each full mala';
 
   @override
+  String get malaSoundTitle => 'Mala sound';
+
+  @override
+  String get malaSoundSub => 'Sacred sound played when completing 108 beads';
+
+  @override
+  String get soundTempleBell => 'Temple Bronze Bell';
+
+  @override
+  String get soundTempleBellSub => 'Deep, tranquil bronze resonance (Ghanta)';
+
+  @override
+  String get soundSingingBowl => 'Tibetan Singing Bowl';
+
+  @override
+  String get soundSingingBowlSub =>
+      'Soothing harmonic overtone for quiet mindfulness';
+
+  @override
+  String get soundSynthesizedTone => 'Synthesized Tone';
+
+  @override
+  String get soundSynthesizedToneSub => 'Classic 100ms electronic beep (DTMF)';
+
+  @override
   String get sectionStillness => 'Stillness';
 
   @override
@@ -1607,4 +1632,67 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get opticalStreamCompleteSub =>
       '100% offline payload reconstructed via camera scanner.';
+
+  @override
+  String get selectCountersTitle => 'Select Counters';
+
+  @override
+  String get selectCountersSub => 'Choose which counters to include';
+
+  @override
+  String get selectAll => 'Select All';
+
+  @override
+  String get deselectAll => 'Deselect All';
+
+  @override
+  String selectedCountersCount(int count) {
+    return '$count selected';
+  }
+
+  @override
+  String get continueAction => 'Continue';
+
+  @override
+  String get noCountersSelected => 'Please select at least one counter';
+
+  @override
+  String get encryptBackup => 'Encrypt Backup';
+
+  @override
+  String get encryptBackupSub => 'Protect with a passphrase (AES-256-GCM)';
+
+  @override
+  String get enterPassphrase => 'Enter passphrase';
+
+  @override
+  String get confirmPassphrase => 'Confirm passphrase';
+
+  @override
+  String get passphraseMismatch => 'Passphrases do not match';
+
+  @override
+  String get passphraseTooShort => 'Passphrase must be at least 6 characters';
+
+  @override
+  String get decryptBackup => 'Decrypt & Import';
+
+  @override
+  String get decryptPassphrasePrompt =>
+      'This backup is encrypted. Enter the passphrase to decrypt.';
+
+  @override
+  String get decryptFailed =>
+      'Decryption failed. Wrong passphrase or corrupted file.';
+
+  @override
+  String get skipEncryption => 'Skip (export unencrypted)';
+
+  @override
+  String get opticalSelectCountersHint =>
+      'Select which counters to transmit via optical sync';
+
+  @override
+  String get opticalImportSelectHint =>
+      'Choose which counters to import from the received data';
 }

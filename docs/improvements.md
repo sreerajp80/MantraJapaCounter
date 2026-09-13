@@ -67,16 +67,15 @@ In Sanatana Dharma and contemplative spiritual traditions, *Japa* (sacred repeti
 
 ### B. Audio, Sonic Resonance & Haptic Feedback
 
-#### 6. Authentic Sacred Acoustic Soundscapes
-- **Current State:** Mala completion uses a synthesized 100ms DTMF tone (Android `ToneGenerator`) or standard device notification beeps.
-- **Limitation:** Synthetic electronic beeps feel like office alarms or microwave timers, jarring the meditator out of stillness.
-- **Proposed Improvement:**
-  - Include built-in, high-fidelity offline audio recordings of authentic sacred instruments:
-    - **Temple Bronze Bell (*Ghanta*)**: Deep, rich resonance with a long, tranquil acoustic decay.
-    - **Tibetan Singing Bowl**: Soothing harmonic overtone for quiet mindfulness.
-    - **Conch Shell (*Shankha*)**: Auspicious ceremonial blow for major goal completions.
-    - **Organic Wood Bead Click**: A very faint, warm wooden click on every single bead for blind chanting confirmation without looking.
-  - All audio assets bundled locally in `assets/audio/` (zero internet required).
+#### 6. Authentic Sacred Acoustic Soundscapes ✅
+- **Status:** **Completed ✅**
+- **Implementation:**
+  - Built-in, high-fidelity offline audio recordings of authentic sacred instruments are bundled locally in `assets/audio/` (zero internet required):
+    - **Temple Bronze Bell (*Ghanta*)**: Deep, rich resonance with a long, tranquil acoustic decay (`temple_bell.wav`).
+    - **Tibetan Singing Bowl**: Soothing harmonic overtone for quiet mindfulness (`singing_bowl.wav`).
+    - **Conch Shell (*Shankha*)**: Auspicious ceremonial blow for major goal completions (`shankha.wav`).
+    - **Organic Wood Bead Click**: A very faint, warm wooden click on every single bead for blind chanting confirmation without looking (`bead_click.wav`).
+  - In Settings under Mala completion, practitioners can configure their preferred soundscape between **Temple Bronze Bell (*Ghanta*)**, **Tibetan Singing Bowl**, or the classic **Synthesized DTMF Tone**, with inline audio preview.
 
 #### 7. Natural Wood & Seed Haptic Sensations
 - **Current State:** Basic standard Android vibration pulses.
@@ -108,17 +107,21 @@ In Sanatana Dharma and contemplative spiritual traditions, *Japa* (sacred repeti
 
 ### D. Data Protection & Optical Air-Gap Sync
 
-#### 10. Selective Counter Merging
-- **Current State:** Optical QR sync replaces or merges all counters in bulk.
-- **Proposed Improvement:**
-  - Allow the user to select specific counters to export or import via the animated QR stream.
-  - Useful for sadhakas who want to migrate a single completed sankalpa counter to another device without altering other counters.
+#### 10. Selective Counter Merging ✅
+- **Status:** **Completed ✅**
+- **Implementation:**
+  - Before initiating optical QR transmission or file export, users can choose specific counters via a reusable `CounterSelectionSheet` modal with checkboxes and a "Select All / Deselect All" toggle.
+  - On the receiving device (optical QR sync and JSON file import), practitioners are presented with an interactive checklist of counters contained in the payload before committing changes.
+  - Utilizes a non-destructive database merge strategy via SQLite upsert (`ConflictAlgorithm.replace`) in `JapaCounterRepository.importSelectedData`, ensuring unselected counters and existing sadhana sessions remain completely untouched.
 
-#### 11. Optional Local Export Encryption
-- **Current State:** JSON exports are plain text for transparent data portability.
-- **Proposed Improvement:**
-  - Provide an optional toggle to protect export JSON files with a user-chosen passphrase using standard AES-GCM encryption.
-  - Ensures notes, custom mantra names, and vows remain strictly confidential even when backups are moved to USB drives or external cards.
+#### 11. Optional Local Export Encryption ✅
+- **Status:** **Completed ✅**
+- **Implementation:**
+  - Introduced pure-Dart `EncryptionService` implementing authenticated AES-256-GCM encryption with key derivation via PBKDF2 (100,000 iterations, HMAC-SHA256, 16-byte random salt, 12-byte IV).
+  - During JSON backup export from Settings or Counter List, users are prompted with an optional `PassphraseDialog` to encrypt the file (outputting `.json.enc` files).
+  - Unencrypted plain JSON export remains the default option for seamless portability.
+  - When importing a `.json.enc` backup, the app auto-detects the encrypted envelope and securely prompts for the passphrase to decrypt before restoring.
+  - 100% offline-compliant with zero network dependencies (using the pure-Dart `cryptography` package).
 
 ---
 
@@ -223,7 +226,7 @@ In Sanatana Dharma and contemplative spiritual traditions, *Japa* (sacred repeti
 
 | Phase | Category | Enhancements / Features | Complexity | Architectural Impact |
 |---|---|---|---|---|
-| **Phase 1** | **Ergonomics & Immersion** | • Dhyana Mode (Numberless immersion)<br>• Full-Screen Edge-to-Edge Pocket Tap Mode<br>• Physical Volume Button Counting<br>• Authentic Bronze Temple Bell & Bowl audio | Medium | UI layer (`CountingScreen`), new audio assets in `assets/audio/`, native key handler in `MainActivity.kt`. |
+| **Phase 1** | **Ergonomics & Immersion** | • Dhyana Mode (Numberless immersion)<br>• Full-Screen Edge-to-Edge Pocket Tap Mode<br>• Physical Volume Button Counting<br>• Authentic Bronze Temple Bell & Bowl audio ✅ | Medium | UI layer (`CountingScreen`), new audio assets in `assets/audio/`, native key handler in `MainActivity.kt`. |
 | **Phase 2** | **Bhavana & Contemplation** | • Mantra Meaning, Translation & Dhyana Shloka<br>• Pre-session reflection card<br>• Meru Bead Mindful Pause<br>• Anti-Rushing Pacing Indicator | Low–Medium | Database migration (schema v5) to add optional `meaning`, `dhyanaShloka`, and `scriptText` fields to `counters` table. |
 | **Phase 3** | **Sacred Sound & Reflection** | • Offline Tanpura / Acoustic Drone player<br>• Post-session Stillness Timer<br>• Private Sadhana Diary<br>• Tactile Bead-Rolling Drag gesture | Medium | Audio looping engine (`audioplayers`), new `sadhana_notes` table in SQLite, custom drag gesture recognizer. |
 | **Phase 4** | **Holistic Sadhana** | • Sacred Sankalpa Setup Ceremony<br>• 100% Offline Astronomical Panchanga calculation<br>• Custom Bead Textures (Rudraksha, Tulsi, Sphatika)<br>• Selective Counter QR Sync | Medium–High | Offline solar/lunar math library in Dart, custom canvas shaders for bead materials, air-gap sync protocol extensions. |

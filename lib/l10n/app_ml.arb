@@ -18,7 +18,7 @@
   "mantraCounters": "മന്ത്ര കൗണ്ടറുകൾ",
   "menuImportExport": "ഇംപോർട്ട് / എക്സ്പോർട്ട്",
   "menuSettings": "ക്രമീകരണങ്ങൾ",
-  "menuAbout": "കുറിച്ച്",
+  "menuAbout": "ആപ്പിനെക്കുറിച്ച്",
   "todayChants": "ജപങ്ങൾ",
   "todayMalas": "മാലകൾ",
   "todayActive": "സജീവം",
@@ -101,7 +101,7 @@
   "infoDisabled": "പ്രവർത്തനരഹിതമാക്കിയത്",
   "statusActive": "സജീവം",
   "statusCompleted": "പൂർത്തിയായി",
-  "aboutTitle": "കുറിച്ച്",
+  "aboutTitle": "ആപ്പിനെക്കുറിച്ച്",
   "versionLabel": "പതിപ്പ് {version}",
   "aboutBuildDate": "ബിൽഡ് തീയതി: {date}",
   "aboutPurposeTitle": "ഉദ്ദേശ്യം",
@@ -155,6 +155,14 @@
   "sectionMalaSub": "ഓരോ 108 മണികളുടെയും സമാപനം",
   "enableMalaSound": "മാല ശബ്ദം പ്രവർത്തനക്ഷമമാക്കുക",
   "enableMalaSoundSub": "ഓരോ പൂർണ്ണ മാലയിലും ഒരു മൃദു ടിക്ക്",
+  "malaSoundTitle": "മാല നാദം",
+  "malaSoundSub": "108 മണികൾ പൂർത്തിയാകുമ്പോൾ കേൾക്കേണ്ട പവിത്ര നാദം",
+  "soundTempleBell": "ക്ഷേത്ര വെങ്കല മണി",
+  "soundTempleBellSub": "ആഴമേറിയ ശാന്ത വെങ്കല നാദം (ഘണ്ട)",
+  "soundSingingBowl": "തിബറ്റൻ സിംഗിംഗ് ബൗൾ",
+  "soundSingingBowlSub": "ധ്യാനപൂർണ്ണമായ ശാന്ത ഹാർമോണിക് സ്വരം",
+  "soundSynthesizedTone": "സിന്തറ്റിക് ടോൺ",
+  "soundSynthesizedToneSub": "പരമ്പരാഗത 100ms ഇലക്ട്രോണിക് ബീപ്പ് (DTMF)",
   "sectionStillness": "നിശ്ചലത",
   "sectionStillnessSub": "ദൈർഘ്യമേറിയ സെഷനുകൾക്ക്",
   "brightnessLevel": "തെളിച്ച നില",
@@ -841,5 +849,87 @@
   "opticalStreamCompleteSub": "ക്യാമറ സ്കാനർ വഴി 100% ഓഫ്‌ലൈനായി ഡാറ്റ പുനർനിർമ്മിച്ചു.",
   "@opticalStreamCompleteSub": {
     "description": "Subtitle of the sheet shown when a QR stream has been fully received"
+  },
+
+  "selectCountersTitle": "കൗണ്ടറുകൾ തിരഞ്ഞെടുക്കുക",
+  "@selectCountersTitle": {
+    "description": "Title of the counter selection sheet"
+  },
+  "selectCountersSub": "ഉൾപ്പെടുത്താനുള്ള കൗണ്ടറുകൾ തിരഞ്ഞെടുക്കുക",
+  "@selectCountersSub": {
+    "description": "Subtitle of the counter selection sheet"
+  },
+  "selectAll": "എല്ലാം തിരഞ്ഞെടുക്കുക",
+  "@selectAll": {
+    "description": "Label for select all action"
+  },
+  "deselectAll": "എല്ലാം ഒഴിവാക്കുക",
+  "@deselectAll": {
+    "description": "Label for deselect all action"
+  },
+  "selectedCountersCount": "{count} തിരഞ്ഞെടുത്തു",
+  "@selectedCountersCount": {
+    "description": "Count badge showing number of selected counters",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "continueAction": "തുടരുക",
+  "@continueAction": {
+    "description": "Label for continue button"
+  },
+  "noCountersSelected": "ദയവായി ഒരു കൗണ്ടറെങ്കിലും തിരഞ്ഞെടുക്കുക",
+  "@noCountersSelected": {
+    "description": "Warning shown when no counters are selected"
+  },
+  "encryptBackup": "ബാക്കപ്പ് എൻക്രിപ്റ്റ് ചെയ്യുക",
+  "@encryptBackup": {
+    "description": "Toggle label and dialog title for encrypting a backup export"
+  },
+  "encryptBackupSub": "പാസ്‌ഫ്രെയ്‌സ് ഉപയോഗിച്ച് സംരക്ഷിക്കുക (AES-256-GCM)",
+  "@encryptBackupSub": {
+    "description": "Subtitle explaining the encryption option"
+  },
+  "enterPassphrase": "പാസ്‌ഫ്രെയ്‌സ് നൽകുക",
+  "@enterPassphrase": {
+    "description": "Text field label for passphrase entry"
+  },
+  "confirmPassphrase": "പാസ്‌ഫ്രെയ്‌സ് സ്ഥിരീകരിക്കുക",
+  "@confirmPassphrase": {
+    "description": "Text field label for confirming the passphrase"
+  },
+  "passphraseMismatch": "പാസ്‌ഫ്രെയ്‌സുകൾ പൊരുത്തപ്പെടുന്നില്ല",
+  "@passphraseMismatch": {
+    "description": "Error message when two passphrase entries do not match"
+  },
+  "passphraseTooShort": "പാസ്‌ഫ്രെയ്‌സ് കുറഞ്ഞത് 6 അക്ഷരങ്ങളെങ്കിലും ആയിരിക്കണം",
+  "@passphraseTooShort": {
+    "description": "Error message when the passphrase is too short"
+  },
+  "decryptBackup": "ഡീക്രിപ്റ്റ് ചെയ്ത് ഇമ്പോർട്ട് ചെയ്യുക",
+  "@decryptBackup": {
+    "description": "Button and dialog title for decrypting an encrypted backup"
+  },
+  "decryptPassphrasePrompt": "ഈ ബാക്കപ്പ് എൻക്രിപ്റ്റ് ചെയ്തതാണ്. ഡീക്രിപ്റ്റ് ചെയ്യാൻ പാസ്‌ഫ്രെയ്‌സ് നൽകുക.",
+  "@decryptPassphrasePrompt": {
+    "description": "Explanation shown in the decrypt passphrase dialog"
+  },
+  "decryptFailed": "ഡീക്രിപ്ഷൻ പരാജയപ്പെട്ടു. തെറ്റായ പാസ്‌ഫ്രെയ്‌സ് അല്ലെങ്കിൽ കേടായ ഫയൽ.",
+  "@decryptFailed": {
+    "description": "Error message when decryption fails"
+  },
+  "skipEncryption": "ഒഴിവാക്കുക (എൻക്രിപ്റ്റ് ചെയ്യാതെ)",
+  "@skipEncryption": {
+    "description": "Button to skip encryption and export as plain JSON"
+  },
+  "opticalSelectCountersHint": "ഓപ്റ്റിക്കൽ സിങ്ക് വഴി അയയ്ക്കാൻ കൗണ്ടറുകൾ തിരഞ്ഞെടുക്കുക",
+  "@opticalSelectCountersHint": {
+    "description": "Hint text on the counter selection sheet before optical sync transmit"
+  },
+  "opticalImportSelectHint": "ലഭിച്ച ഡാറ്റയിൽ നിന്ന് ഇമ്പോർട്ട് ചെയ്യാൻ കൗണ്ടറുകൾ തിരഞ്ഞെടുക്കുക",
+  "@opticalImportSelectHint": {
+    "description": "Hint text on the import preview sheet for selecting counters to import"
   }
 }

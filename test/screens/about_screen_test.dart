@@ -70,6 +70,14 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
+    PackageInfo.setMockInitialValues(
+      appName: 'SreerajP MantraJapa Counter',
+      packageName: 'com.sreerajp.mantrajapacounter',
+      version: '6.11.0',
+      buildNumber: '23',
+      buildSignature: '',
+    );
+
     final configService = ConfigService(
       loadAsset: (path) async => '''
       {
@@ -122,7 +130,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('विषये'), findsOneWidget);
+    expect(find.text('विषयपरिचयः'), findsOneWidget);
     expect(find.text('मन्त्रजपगणकः'), findsOneWidget);
     expect(
       find.text(
@@ -155,6 +163,14 @@ void main() {
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
+
+    PackageInfo.setMockInitialValues(
+      appName: 'SreerajP MantraJapa Counter',
+      packageName: 'com.sreerajp.mantrajapacounter',
+      version: '6.11.0',
+      buildNumber: '23',
+      buildSignature: '',
+    );
 
     final configService = ConfigService(
       loadAsset: (path) async => '''
@@ -204,7 +220,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('കുറിച്ച്'), findsOneWidget);
+    expect(find.text('ആപ്പിനെക്കുറിച്ച്'), findsOneWidget);
     expect(find.text('മന്ത്ര ജപ കൗണ്ടർ'), findsOneWidget);
     expect(find.text('രചയിതാവ്'), findsOneWidget);
     expect(find.text('ശ്രീരാജ് പി'), findsOneWidget);
@@ -225,6 +241,13 @@ void main() {
   testWidgets('AboutScreen renders DEV badge when flavor is dev', (
     tester,
   ) async {
+    PackageInfo.setMockInitialValues(
+      appName: 'SreerajP MantraJapa Counter',
+      packageName: 'com.sreerajp.mantrajapacounter',
+      version: '6.11.0',
+      buildNumber: '23',
+      buildSignature: '',
+    );
     AppFlavorConfig.setFlavorForTesting(AppFlavor.dev);
     addTearDown(() => AppFlavorConfig.setFlavorForTesting(AppFlavor.prod));
 
@@ -261,6 +284,13 @@ void main() {
   testWidgets('AboutScreen does not render DEV badge when flavor is prod', (
     tester,
   ) async {
+    PackageInfo.setMockInitialValues(
+      appName: 'SreerajP MantraJapa Counter',
+      packageName: 'com.sreerajp.mantrajapacounter',
+      version: '6.11.0',
+      buildNumber: '23',
+      buildSignature: '',
+    );
     AppFlavorConfig.setFlavorForTesting(AppFlavor.prod);
 
     final configService = ConfigService(

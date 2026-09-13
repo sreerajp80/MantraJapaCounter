@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/services.dart';
+import 'package:mantra_japa_counter/models/mala_sound.dart';
 
 /// One entry in the device's notification ringtone list.
 class RingtoneOption {
@@ -31,9 +32,9 @@ class SoundService {
     'com.sreerajp.mantrajapacounter/haptic',
   );
 
-  final AudioPlayer _player = AudioPlayer();
+  final AudioPlayer _player;
 
-  SoundService() {
+  SoundService({AudioPlayer? player}) : _player = player ?? AudioPlayer() {
     _player.setReleaseMode(ReleaseMode.stop);
     _player.setAudioContext(
       AudioContext(
@@ -45,6 +46,46 @@ class SoundService {
         iOS: AudioContextIOS(),
       ),
     );
+  }
+
+  /// Plays the configured mala soundscape.
+  /// For [MalaSound.synthesizedTone], invokes native ToneGenerator.
+  /// For acoustic soundscapes, plays the bundled asset with volume boost.
+  Future<void> playMalaSound(MalaSound sound) async {
+    try {
+      await _player.stop();
+      if (sound == MalaSound.synthesizedTone) {
+        await _channel.invokeMethod<void>('playMalaTone');
+      } else {
+        try {
+          await _channel.invokeMethod<void>('boostAlarmVolume');
+        } catch (_) {}
+        await _player.play(AssetSource(sound.assetPath));
+      }
+    } catch (_) {
+      // Tone playback is best-effort; the counter must keep working.
+    }
+  }
+
+  /// Plays a bundled sacred audio asset with volume boost.
+  Future<void> playSacredAsset(String assetPath) async {
+    try {
+      await _player.stop();
+      try {
+        await _channel.invokeMethod<void>('boostAlarmVolume');
+      } catch (_) {}
+      await _player.play(AssetSource(assetPath));
+    } catch (_) {
+      // Best-effort.
+    }
+  }
+
+  /// Stops any currently playing audio tone or ringtone preview.
+  Future<void> stop() async {
+    try {
+      await _player.stop();
+      await _channel.invokeMethod<void>('stopPreviewTone');
+    } catch (_) {}
   }
 
   /// Plays the user's configured tone, or the device default when [uri] is null.

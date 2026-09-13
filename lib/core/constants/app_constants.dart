@@ -32,6 +32,7 @@ class AppConstants {
   static const String prefsBrightnessKey = 'screen_brightness';
   static const String prefsDailyGoalNotifKey = 'daily_goal_notifications';
   static const String prefsMalaNotifKey = 'mala_notifications';
+  static const String prefsMalaSoundKey = 'mala_sound';
   static const String prefsNotifSoundUriKey = 'notification_sound_uri';
   static const String prefsNotifSoundNameKey = 'notification_sound_name';
   static const String prefsVibrationKey = 'notification_vibration';

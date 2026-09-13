@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:mantra_japa_counter/models/mala_sound.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 
@@ -7,6 +8,7 @@ class AppSettings {
   final double screenBrightness;
   final bool dailyGoalNotificationsEnabled;
   final bool malaNotificationsEnabled;
+  final MalaSound malaSound;
   final String? notificationSoundUri;
   final String? notificationSoundName;
   final bool vibrationEnabled;
@@ -16,6 +18,7 @@ class AppSettings {
     required this.screenBrightness,
     required this.dailyGoalNotificationsEnabled,
     required this.malaNotificationsEnabled,
+    this.malaSound = MalaSound.templeBell,
     this.notificationSoundUri,
     this.notificationSoundName,
     required this.vibrationEnabled,
@@ -26,6 +29,7 @@ class AppSettings {
     double? screenBrightness,
     bool? dailyGoalNotificationsEnabled,
     bool? malaNotificationsEnabled,
+    MalaSound? malaSound,
     String? notificationSoundUri,
     String? notificationSoundName,
     bool clearNotificationSound = false,
@@ -39,6 +43,7 @@ class AppSettings {
           dailyGoalNotificationsEnabled ?? this.dailyGoalNotificationsEnabled,
       malaNotificationsEnabled:
           malaNotificationsEnabled ?? this.malaNotificationsEnabled,
+      malaSound: malaSound ?? this.malaSound,
       notificationSoundUri: clearNotificationSound
           ? null
           : (notificationSoundUri ?? this.notificationSoundUri),
@@ -62,6 +67,7 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
           screenBrightness: _repo.screenBrightness,
           dailyGoalNotificationsEnabled: _repo.dailyGoalNotificationsEnabled,
           malaNotificationsEnabled: _repo.malaNotificationsEnabled,
+          malaSound: _repo.malaSound,
           notificationSoundUri: _repo.notificationSoundUri,
           notificationSoundName: _repo.notificationSoundName,
           vibrationEnabled: _repo.vibrationEnabled,
@@ -82,6 +88,11 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
   Future<void> setMalaNotificationsEnabled(bool value) async {
     await _repo.setMalaNotificationsEnabled(value);
     state = state.copyWith(malaNotificationsEnabled: value);
+  }
+
+  Future<void> setMalaSound(MalaSound sound) async {
+    await _repo.setMalaSound(sound);
+    state = state.copyWith(malaSound: sound);
   }
 
   Future<void> setNotificationSound(String? uri, String? name) async {

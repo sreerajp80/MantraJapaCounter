@@ -80,7 +80,7 @@ lib/
 |   |-- history/      # History screen + its hero, day group, session row
 |   |-- settings/     # Settings screen + its tiles, brightness row, info cards, notification sound picker
 |   `-- help/         # Help home + one screen per help topic
-|-- services/         # Business logic: CountingService, ExportService, NotificationService, SessionRecoveryService
+|-- services/         # Business logic: CountingService, ExportService, EncryptionService, OpticalSyncService, SoundService, NotificationService, SessionRecoveryService
 |-- theme/            # Colors, text styles, ThemeData
 |-- widgets/          # Shared reusable widgets: CounterCard, ProgressBar, MalaDisplay, GoalProgressBar, etc.
 `-- main.dart
@@ -205,6 +205,7 @@ Intentional layer omissions:
 | `StorageException` | JapaCounterRepository | sqflite read or write failure |
 | `ValidationException` | ExportService | Import JSON failed schema validation |
 | `ImportParseException` | ExportService | JSON malformed or unexpected top-level structure |
+| `EncryptedExportException` | ExportService | Import JSON is encrypted with AES-256-GCM and requires passphrase decryption |
 
 - **Error escalation policy**: transient DB write errors during counting are retried once silently; persistent failures show a SnackBar; session data is never silently discarded (SharedPreferences copy always available for recovery).
 - **Fatal error screen**: if the database cannot be opened on startup, show a simple error screen with a "clear app data and restart" option.

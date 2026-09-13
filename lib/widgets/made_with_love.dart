@@ -6,7 +6,6 @@ import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 class MadeWithLove extends StatelessWidget {
   const MadeWithLove({super.key});
 
-  static const String _heart = '❤';
   static const Color _heartColor = Color(0xFFE53935);
 
   @override
@@ -32,9 +31,13 @@ class MadeWithLove extends StatelessWidget {
             TextSpan(
               children: [
                 TextSpan(text: parts.first, style: base),
-                TextSpan(
-                  text: _heart,
-                  style: base.copyWith(color: _heartColor),
+                WidgetSpan(
+                  alignment: PlaceholderAlignment.middle,
+                  child: Icon(
+                    Icons.favorite,
+                    size: (base.fontSize ?? 12) * 1.1,
+                    color: _heartColor,
+                  ),
                 ),
                 TextSpan(text: parts.length > 1 ? parts[1] : '', style: base),
               ],

@@ -8,12 +8,16 @@ import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/counters_provider.dart';
 import 'package:mantra_japa_counter/providers/settings_provider.dart';
+import 'package:mantra_japa_counter/models/mala_sound.dart';
 import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
 import 'package:mantra_japa_counter/screens/settings/notification_sound_picker.dart';
+import 'package:mantra_japa_counter/screens/settings/mala_sound_picker.dart';
 import 'package:mantra_japa_counter/screens/settings/language_picker.dart';
 import 'package:mantra_japa_counter/screens/settings/settings_tiles.dart';
 import 'package:mantra_japa_counter/screens/settings/settings_brightness_row.dart';
 import 'package:mantra_japa_counter/screens/settings/settings_info_cards.dart';
+import 'package:mantra_japa_counter/services/export_service.dart';
+import 'package:mantra_japa_counter/widgets/passphrase_dialog.dart';
 
 /// App settings — Temple variation. Sectioned cards with a lotus icon header,
 /// vermillion toggles, and a serif "still / full" brightness slider.
@@ -161,6 +165,22 @@ class SettingsScreen extends ConsumerWidget {
                         toggle: settings.malaNotificationsEnabled,
                         onToggle: notifier.setMalaNotificationsEnabled,
                       ),
+                      SettingsRow(
+                        leading: const Icon(
+                          Icons.music_note_outlined,
+                          size: 15,
+                          color: TempleColors.ink2,
+                        ),
+                        title: l.malaSoundTitle,
+                        sub: _malaSoundSubtitle(l, settings.malaSound),
+                        right: _malaSoundShortLabel(l, settings.malaSound),
+                        onTap: () => showMalaSoundPicker(
+                          context,
+                          ref,
+                          settings,
+                          notifier,
+                        ),
+                      ),
                     ],
                   ),
                   SettingsSection(
@@ -214,19 +234,7 @@ class SettingsScreen extends ConsumerWidget {
                         ),
                         title: l.settingsExportTitle,
                         sub: l.settingsExportSub,
-                        onTap: () async {
-                          try {
-                            await ref
-                                .read(exportServiceProvider)
-                                .exportAndShare();
-                          } catch (e) {
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(l.exportFailed('$e'))),
-                              );
-                            }
-                          }
-                        },
+                        onTap: () => _doSettingsExport(context, ref),
                       ),
                       SettingsRow(
                         leading: const Icon(
@@ -236,38 +244,7 @@ class SettingsScreen extends ConsumerWidget {
                         ),
                         title: l.settingsImportTitle,
                         sub: l.settingsImportSub,
-                        onTap: () async {
-                          try {
-                            final result = await FilePicker.pickFiles(
-                              type: FileType.custom,
-                              allowedExtensions: ['json'],
-                            );
-                            final pickedPath = result?.files.single.path;
-                            if (pickedPath != null) {
-                              final jsonString = await File(
-                                pickedPath,
-                              ).readAsString();
-                              await ref
-                                  .read(exportServiceProvider)
-                                  .importFromJson(jsonString);
-                              ref.invalidate(countersNotifierProvider);
-                              if (context.mounted) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(l.dataRestoredSuccess),
-                                    backgroundColor: TempleColors.tulsi,
-                                  ),
-                                );
-                              }
-                            }
-                          } catch (e) {
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(l.importFailed('$e'))),
-                              );
-                            }
-                          }
-                        },
+                        onTap: () => _doSettingsImport(context, ref),
                       ),
                     ],
                   ),
@@ -354,6 +331,28 @@ class SettingsScreen extends ConsumerWidget {
     return l.soundCustomTapToChange;
   }
 
+  String _malaSoundShortLabel(AppLocalizations l, MalaSound sound) {
+    switch (sound) {
+      case MalaSound.templeBell:
+        return l.soundTempleBell;
+      case MalaSound.singingBowl:
+        return l.soundSingingBowl;
+      case MalaSound.synthesizedTone:
+        return l.soundSynthesizedTone;
+    }
+  }
+
+  String _malaSoundSubtitle(AppLocalizations l, MalaSound sound) {
+    switch (sound) {
+      case MalaSound.templeBell:
+        return l.soundTempleBellSub;
+      case MalaSound.singingBowl:
+        return l.soundSingingBowlSub;
+      case MalaSound.synthesizedTone:
+        return l.soundSynthesizedToneSub;
+    }
+  }
+
   void _confirmClearAll(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     showDialog(
@@ -387,5 +386,89 @@ class SettingsScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  // ──────────────────── Export with optional encryption ────────────────────
+
+  Future<void> _doSettingsExport(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    final l = AppLocalizations.of(context);
+
+    // Show passphrase dialog (user can skip encryption)
+    final result = await showExportPassphraseDialog(context);
+    if (result == null) return; // dismissed
+
+    try {
+      await ref.read(exportServiceProvider).exportAndShare(
+        passphrase: result.encrypt ? result.passphrase : null,
+      );
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l.exportFailed('$e'))),
+        );
+      }
+    }
+  }
+
+  // ──────────────────── Import with encryption detection ───────────────────
+
+  Future<void> _doSettingsImport(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    final l = AppLocalizations.of(context);
+    try {
+      final result = await FilePicker.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['json', 'enc'],
+      );
+      final pickedPath = result?.files.single.path;
+      if (pickedPath == null) return;
+
+      final content = await File(pickedPath).readAsString();
+      final exportSvc = ref.read(exportServiceProvider);
+
+      try {
+        await exportSvc.importFromJson(content);
+      } on EncryptedExportException {
+        // File is encrypted — prompt for passphrase
+        if (!context.mounted) return;
+        final passphrase = await showImportPassphraseDialog(context);
+        if (passphrase == null || !context.mounted) return;
+
+        try {
+          await exportSvc.importEncryptedFromJson(content, passphrase);
+        } catch (_) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(l.decryptFailed),
+                backgroundColor: TempleColors.vermillionDeep,
+              ),
+            );
+          }
+          return;
+        }
+      }
+
+      ref.invalidate(countersNotifierProvider);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(l.dataRestoredSuccess),
+            backgroundColor: TempleColors.tulsi,
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l.importFailed('$e'))),
+        );
+      }
+    }
   }
 }

@@ -3,15 +3,79 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:mantra_japa_counter/core/locale/locale_config.dart';
+import 'package:mantra_japa_counter/models/counter.dart';
+import 'package:mantra_japa_counter/models/export_data.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+
 import 'package:mantra_japa_counter/providers/optical_sync_provider.dart';
 
-class OpticalSyncImportPreviewSheet extends ConsumerWidget {
+class OpticalSyncImportPreviewSheet extends ConsumerStatefulWidget {
   const OpticalSyncImportPreviewSheet({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<OpticalSyncImportPreviewSheet> createState() =>
+      _OpticalSyncImportPreviewSheetState();
+}
+
+class _OpticalSyncImportPreviewSheetState
+    extends ConsumerState<OpticalSyncImportPreviewSheet> {
+  late Set<String> _selectedIds;
+  List<Counter>? _parsedCounters;
+  bool _initialized = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      _initialized = true;
+      _parseCounters();
+    }
+  }
+
+  void _parseCounters() {
+    final receiveState = ref.read(opticalSyncReceiveProvider);
+    if (receiveState.decodedJsonMap != null) {
+      try {
+        final data = ExportData.fromJson(receiveState.decodedJsonMap!);
+        _parsedCounters = data.counters;
+        _selectedIds = data.counters.map((c) => c.id).toSet();
+      } catch (_) {
+        _parsedCounters = [];
+        _selectedIds = {};
+      }
+    } else {
+      _parsedCounters = [];
+      _selectedIds = {};
+    }
+  }
+
+  bool get _allSelected =>
+      _parsedCounters != null &&
+      _selectedIds.length == _parsedCounters!.length;
+
+  void _toggleAll() {
+    setState(() {
+      if (_allSelected) {
+        _selectedIds.clear();
+      } else {
+        _selectedIds = _parsedCounters!.map((c) => c.id).toSet();
+      }
+    });
+  }
+
+  void _toggle(String id) {
+    setState(() {
+      if (_selectedIds.contains(id)) {
+        _selectedIds.remove(id);
+      } else {
+        _selectedIds.add(id);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final receiveState = ref.watch(opticalSyncReceiveProvider);
     final theme = Theme.of(context);
@@ -20,6 +84,9 @@ class OpticalSyncImportPreviewSheet extends ConsumerWidget {
     final sessionCount = receiveState.sessionCount;
 
     return Container(
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.8,
+      ),
       padding: const EdgeInsets.all(24.0),
       decoration: const BoxDecoration(
         color: TempleColors.bg,
@@ -94,10 +161,116 @@ class OpticalSyncImportPreviewSheet extends ConsumerWidget {
               ],
             ),
           ),
+          // ──── Selective Counter List ────
+          if (_parsedCounters != null && _parsedCounters!.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            Text(
+              l.opticalImportSelectHint,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: TempleColors.ink2,
+              ),
+            ),
+            const SizedBox(height: 8),
+            // Select All / Deselect All row
+            InkWell(
+              onTap: _toggleAll,
+              borderRadius: BorderRadius.circular(8),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Row(
+                  children: [
+                    Icon(
+                      _allSelected
+                          ? Icons.check_box
+                          : Icons.check_box_outline_blank,
+                      color: TempleColors.vermillion,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      _allSelected ? l.deselectAll : l.selectAll,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: TempleColors.vermillion,
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      l.selectedCountersCount(_selectedIds.length),
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: TempleColors.ink3,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const Divider(height: 1, color: TempleColors.line),
+            // Counter checklist
+            Flexible(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: _parsedCounters!.length,
+                itemBuilder: (context, index) {
+                  final counter = _parsedCounters![index];
+                  final isSelected = _selectedIds.contains(counter.id);
+                  return InkWell(
+                    onTap: () => _toggle(counter.id),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Row(
+                        children: [
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            width: 20,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? TempleColors.vermillion
+                                  : Colors.transparent,
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                color: isSelected
+                                    ? TempleColors.vermillion
+                                    : TempleColors.ink3,
+                                width: 1.5,
+                              ),
+                            ),
+                            child: isSelected
+                                ? const Icon(
+                                    Icons.check,
+                                    color: Colors.white,
+                                    size: 14,
+                                  )
+                                : null,
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              counter.name,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: TempleColors.ink,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
           const SizedBox(height: 24),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              backgroundColor: TempleColors.vermillion,
+              backgroundColor: _selectedIds.isEmpty
+                  ? TempleColors.ink3.withValues(alpha: 0.3)
+                  : TempleColors.vermillion,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
@@ -109,33 +282,54 @@ class OpticalSyncImportPreviewSheet extends ConsumerWidget {
               l.opticalImportRestore,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            onPressed: () async {
-              final success = await ref
-                  .read(opticalSyncReceiveProvider.notifier)
-                  .importData();
-              if (context.mounted) {
-                context.pop(); // Close sheet
-                if (success) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(l.opticalImportSuccess),
-                      backgroundColor: TempleColors.tulsi,
-                    ),
-                  );
-                  context.pop(); // Exit scanner screen
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        receiveState.errorMessage ?? l.opticalImportFailed,
-                      ),
-                      backgroundColor: TempleColors.vermillion,
-                    ),
-                  );
-                }
-              }
-            },
+            onPressed: _selectedIds.isEmpty
+                ? null
+                : () async {
+                    // Set selected counter IDs before importing
+                    ref
+                        .read(opticalSyncReceiveProvider.notifier)
+                        .setSelectedCounterIds(_selectedIds.toList());
+
+                    final success = await ref
+                        .read(opticalSyncReceiveProvider.notifier)
+                        .importData();
+                    if (context.mounted) {
+                      context.pop(); // Close sheet
+                      if (success) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(l.opticalImportSuccess),
+                            backgroundColor: TempleColors.tulsi,
+                          ),
+                        );
+                        context.pop(); // Exit scanner screen
+                      } else {
+                        final receiveState =
+                            ref.read(opticalSyncReceiveProvider);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              receiveState.errorMessage ??
+                                  l.opticalImportFailed,
+                            ),
+                            backgroundColor: TempleColors.vermillion,
+                          ),
+                        );
+                      }
+                    }
+                  },
           ),
+          if (_selectedIds.isEmpty) ...[
+            const SizedBox(height: 6),
+            Text(
+              l.noCountersSelected,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: TempleColors.vermillionDeep,
+                fontSize: 12,
+              ),
+            ),
+          ],
           const SizedBox(height: 10),
           TextButton(
             onPressed: () => context.pop(),

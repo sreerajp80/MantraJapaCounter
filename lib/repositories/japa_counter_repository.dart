@@ -305,6 +305,25 @@ class JapaCounterRepository {
     );
   }
 
+  /// Exports only the counters with the given [counterIds] and their sessions.
+  Future<ExportData> exportSelectedData(List<String> counterIds) async {
+    if (counterIds.isEmpty) return exportData();
+
+    final idSet = counterIds.toSet();
+    final allCounters = await getAllCounters();
+    final selectedCounters = allCounters.where((c) => idSet.contains(c.id)).toList();
+
+    final allSessions = await getAllSessions();
+    final selectedSessions =
+        allSessions.where((s) => idSet.contains(s.counterId)).toList();
+
+    return ExportData(
+      exportDate: DateTime.now().millisecondsSinceEpoch,
+      counters: selectedCounters,
+      sessions: selectedSessions,
+    );
+  }
+
   Future<void> importData(ExportData data) async {
     await _db.transaction((txn) async {
       await txn.delete('japa_sessions');
@@ -323,6 +342,46 @@ class JapaCounterRepository {
       }
 
       for (final s in data.sessions) {
+        await txn.insert(
+          'japa_sessions',
+          s.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      }
+    });
+  }
+
+  /// Imports only the selected counters (by [counterIds]) and their sessions.
+  ///
+  /// Uses upsert (replace on conflict) so existing counters with matching IDs
+  /// are updated, while other counters remain untouched. This is the "merge"
+  /// strategy — no existing data is deleted.
+  Future<void> importSelectedData(
+    ExportData data,
+    List<String> counterIds,
+  ) async {
+    if (counterIds.isEmpty) return;
+
+    final idSet = counterIds.toSet();
+    final selectedCounters =
+        data.counters.where((c) => idSet.contains(c.id)).toList();
+    final selectedSessions =
+        data.sessions.where((s) => idSet.contains(s.counterId)).toList();
+
+    await _db.transaction((txn) async {
+      final now = DateTime.now().millisecondsSinceEpoch;
+      for (final c in selectedCounters) {
+        final fixed = c.startDate == 0
+            ? c.copyWith(startDate: c.createdAt > 0 ? c.createdAt : now)
+            : c;
+        await txn.insert(
+          'counters',
+          fixed.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      }
+
+      for (final s in selectedSessions) {
         await txn.insert(
           'japa_sessions',
           s.toMap(),

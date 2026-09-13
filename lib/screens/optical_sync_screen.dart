@@ -6,7 +6,9 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/optical_sync_provider.dart';
+import 'package:mantra_japa_counter/widgets/counter_selection_sheet.dart';
 import 'package:mantra_japa_counter/widgets/optical_sync_import_preview_sheet.dart';
 
 class OpticalSyncScreen extends ConsumerStatefulWidget {
@@ -21,13 +23,61 @@ class OpticalSyncScreen extends ConsumerStatefulWidget {
 class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
   Timer? _streamTimer;
   bool _sheetShown = false;
+  bool _counterSelectionShown = false;
 
   @override
   void initState() {
     super.initState();
     if (widget.isTransmitter) {
-      _startStreamTimer();
+      // Show counter selection after first frame renders.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showCounterSelectionForTransmit();
+      });
     }
+  }
+
+  /// Shows the counter selection sheet before starting QR stream.
+  Future<void> _showCounterSelectionForTransmit() async {
+    if (_counterSelectionShown) return;
+    _counterSelectionShown = true;
+
+    final repo = ref.read(japaCounterRepositoryProvider);
+    final counters = await repo.getAllCounters();
+
+    if (!mounted) return;
+
+    if (counters.isEmpty) {
+      // No counters — nothing to transmit.
+      final l = AppLocalizations.of(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l.noCountersSelected),
+          backgroundColor: TempleColors.vermillion,
+        ),
+      );
+      return;
+    }
+
+    final l = AppLocalizations.of(context);
+    await showModalBottomSheet(
+      context: context,
+      isDismissible: false,
+      enableDrag: false,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => CounterSelectionSheet(
+        counters: counters,
+        title: l.selectCountersTitle,
+        subtitle: l.opticalSelectCountersHint,
+        onConfirm: (selectedIds) {
+          Navigator.pop(context);
+          ref
+              .read(opticalSyncTransmitProvider.notifier)
+              .initializeWithSelectedCounters(selectedIds);
+          _startStreamTimer();
+        },
+      ),
+    );
   }
 
   void _startStreamTimer() {
@@ -67,6 +117,29 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
     final l = AppLocalizations.of(context);
     final state = ref.watch(opticalSyncTransmitProvider);
     final theme = Theme.of(context);
+
+    if (!state.isInitialized && !state.isLoading) {
+      // Waiting for counter selection
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.checklist_rounded,
+              size: 48,
+              color: TempleColors.sandal,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              l.selectCountersTitle,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: TempleColors.ink2,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
 
     if (state.isLoading) {
       return const Center(
@@ -252,6 +325,8 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
           context: context,
           isDismissible: false,
           enableDrag: false,
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
           builder: (_) => const OpticalSyncImportPreviewSheet(),
         );
       });

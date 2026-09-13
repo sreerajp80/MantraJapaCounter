@@ -83,10 +83,15 @@ stored or transmitted by this app.
 
 ## 6. Cryptography Design
 
-Not applicable. The app stores no sensitive data that requires encryption.
+### 6.1 Optional Export Encryption
+Export backups support optional user-configured AES-256-GCM encryption with password-based key derivation. Plaintext JSON remains the default for transparent data portability.
 
-Export files are plaintext JSON. The export UX informs users that the exported file is
-unencrypted before they save or share it.
+- **Algorithm**: AES-256-GCM (Galois/Counter Mode with 128-bit authentication tag).
+- **Key Derivation**: PBKDF2 with HMAC-SHA256, 100,000 iterations, 16-byte random salt, generating a 256-bit key.
+- **IV / Nonce**: 12 bytes generated per export using `Random.secure()`.
+- **Envelope Structure**: JSON wrapper containing `encrypted: true`, `version: 1`, `salt` (Base64), `iv` (Base64), and `ciphertext` (Base64). The ciphertext includes the 16-byte GCM tag appended.
+- **Offline Compliance**: Pure-Dart cryptographic engine via the `cryptography` package (`^2.7.0`) — zero platform dependencies, zero native code, and zero network access.
+- **Import Behavior**: Import routines auto-detect the envelope format; if encrypted, the user is prompted for their passphrase to decrypt before merging or restoring.
 
 ---
 
@@ -313,7 +318,7 @@ and deleted after the share action completes, or cleaned up on the next `resumed
   Hardening option: add opt-in biometric or PIN lock in Settings (low priority; data sensitivity does not require it).
 
 - Risk: Export file is plaintext JSON; user may share it inadvertently without realizing it reveals their practice history.
-  Hardening option: add optional password-protected ZIP export as a future enhancement.
+  Status: Mitigated. Users can optionally encrypt their export backup files with a custom passphrase using AES-256-GCM. Unencrypted export remains available for users preferring simple JSON text portability.
 
 - Risk: `android:allowBackup=true` means practice data is included in Android cloud backup. Users who do not want this have no in-app opt-out.
   Hardening option: add a backup opt-out toggle in Settings that modifies the backup scope (complex; low priority for a low-sensitivity app).

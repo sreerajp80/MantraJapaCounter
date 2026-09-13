@@ -65,7 +65,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get menuSettings => 'ക്രമീകരണങ്ങൾ';
 
   @override
-  String get menuAbout => 'കുറിച്ച്';
+  String get menuAbout => 'ആപ്പിനെക്കുറിച്ച്';
 
   @override
   String get todayChants => 'ജപങ്ങൾ';
@@ -363,7 +363,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get statusCompleted => 'പൂർത്തിയായി';
 
   @override
-  String get aboutTitle => 'കുറിച്ച്';
+  String get aboutTitle => 'ആപ്പിനെക്കുറിച്ച്';
 
   @override
   String versionLabel(String version) {
@@ -535,6 +535,32 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get enableMalaSoundSub => 'ഓരോ പൂർണ്ണ മാലയിലും ഒരു മൃദു ടിക്ക്';
+
+  @override
+  String get malaSoundTitle => 'മാല നാദം';
+
+  @override
+  String get malaSoundSub =>
+      '108 മണികൾ പൂർത്തിയാകുമ്പോൾ കേൾക്കേണ്ട പവിത്ര നാദം';
+
+  @override
+  String get soundTempleBell => 'ക്ഷേത്ര വെങ്കല മണി';
+
+  @override
+  String get soundTempleBellSub => 'ആഴമേറിയ ശാന്ത വെങ്കല നാദം (ഘണ്ട)';
+
+  @override
+  String get soundSingingBowl => 'തിബറ്റൻ സിംഗിംഗ് ബൗൾ';
+
+  @override
+  String get soundSingingBowlSub => 'ധ്യാനപൂർണ്ണമായ ശാന്ത ഹാർമോണിക് സ്വരം';
+
+  @override
+  String get soundSynthesizedTone => 'സിന്തറ്റിക് ടോൺ';
+
+  @override
+  String get soundSynthesizedToneSub =>
+      'പരമ്പരാഗത 100ms ഇലക്ട്രോണിക് ബീപ്പ് (DTMF)';
 
   @override
   String get sectionStillness => 'നിശ്ചലത';
@@ -1609,4 +1635,69 @@ class AppLocalizationsMl extends AppLocalizations {
   @override
   String get opticalStreamCompleteSub =>
       'ക്യാമറ സ്കാനർ വഴി 100% ഓഫ്‌ലൈനായി ഡാറ്റ പുനർനിർമ്മിച്ചു.';
+
+  @override
+  String get selectCountersTitle => 'കൗണ്ടറുകൾ തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get selectCountersSub => 'ഉൾപ്പെടുത്താനുള്ള കൗണ്ടറുകൾ തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get selectAll => 'എല്ലാം തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get deselectAll => 'എല്ലാം ഒഴിവാക്കുക';
+
+  @override
+  String selectedCountersCount(int count) {
+    return '$count തിരഞ്ഞെടുത്തു';
+  }
+
+  @override
+  String get continueAction => 'തുടരുക';
+
+  @override
+  String get noCountersSelected => 'ദയവായി ഒരു കൗണ്ടറെങ്കിലും തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get encryptBackup => 'ബാക്കപ്പ് എൻക്രിപ്റ്റ് ചെയ്യുക';
+
+  @override
+  String get encryptBackupSub =>
+      'പാസ്‌ഫ്രെയ്‌സ് ഉപയോഗിച്ച് സംരക്ഷിക്കുക (AES-256-GCM)';
+
+  @override
+  String get enterPassphrase => 'പാസ്‌ഫ്രെയ്‌സ് നൽകുക';
+
+  @override
+  String get confirmPassphrase => 'പാസ്‌ഫ്രെയ്‌സ് സ്ഥിരീകരിക്കുക';
+
+  @override
+  String get passphraseMismatch => 'പാസ്‌ഫ്രെയ്‌സുകൾ പൊരുത്തപ്പെടുന്നില്ല';
+
+  @override
+  String get passphraseTooShort =>
+      'പാസ്‌ഫ്രെയ്‌സ് കുറഞ്ഞത് 6 അക്ഷരങ്ങളെങ്കിലും ആയിരിക്കണം';
+
+  @override
+  String get decryptBackup => 'ഡീക്രിപ്റ്റ് ചെയ്ത് ഇമ്പോർട്ട് ചെയ്യുക';
+
+  @override
+  String get decryptPassphrasePrompt =>
+      'ഈ ബാക്കപ്പ് എൻക്രിപ്റ്റ് ചെയ്തതാണ്. ഡീക്രിപ്റ്റ് ചെയ്യാൻ പാസ്‌ഫ്രെയ്‌സ് നൽകുക.';
+
+  @override
+  String get decryptFailed =>
+      'ഡീക്രിപ്ഷൻ പരാജയപ്പെട്ടു. തെറ്റായ പാസ്‌ഫ്രെയ്‌സ് അല്ലെങ്കിൽ കേടായ ഫയൽ.';
+
+  @override
+  String get skipEncryption => 'ഒഴിവാക്കുക (എൻക്രിപ്റ്റ് ചെയ്യാതെ)';
+
+  @override
+  String get opticalSelectCountersHint =>
+      'ഓപ്റ്റിക്കൽ സിങ്ക് വഴി അയയ്ക്കാൻ കൗണ്ടറുകൾ തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get opticalImportSelectHint =>
+      'ലഭിച്ച ഡാറ്റയിൽ നിന്ന് ഇമ്പോർട്ട് ചെയ്യാൻ കൗണ്ടറുകൾ തിരഞ്ഞെടുക്കുക';
 }

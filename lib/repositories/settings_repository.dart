@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/models/active_session.dart';
+import 'package:mantra_japa_counter/models/mala_sound.dart';
 
 /// All SharedPreferences access: user settings and active-session crash recovery.
 ///
@@ -99,6 +100,13 @@ class SettingsRepository {
 
   Future<void> setMalaNotificationsEnabled(bool value) async {
     await _prefs.setBool(AppConstants.prefsMalaNotifKey, value);
+  }
+
+  MalaSound get malaSound =>
+      MalaSound.fromId(_prefs.getString(AppConstants.prefsMalaSoundKey));
+
+  Future<void> setMalaSound(MalaSound sound) async {
+    await _prefs.setString(AppConstants.prefsMalaSoundKey, sound.id);
   }
 
   String? get notificationSoundUri =>
