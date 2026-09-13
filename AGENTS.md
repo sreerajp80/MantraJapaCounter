@@ -109,7 +109,8 @@ flutter build appbundle --flavor prod --release \
 
 ## Localization rules
 
-- All user-visible text comes from `lib/l10n/*.arb` via `AppLocalizations` — never a raw string literal in a widget. This applies even though the app ships only `en` and `ml`.
+- All user-visible text comes from `lib/l10n/*.arb` via `AppLocalizations` — never a raw string literal in a widget. The app ships all three mandatory languages: English (`en`), Malayalam (`ml`), and Sanskrit (`sa`).
+- Key parity is mandatory across `app_en.arb`, `app_ml.arb`, and `app_sa.arb` (verified by `test/l10n/arb_parity_test.dart`).
 - `l10n.yaml` (project root) and `lib/l10n/app_<base>.arb` must exist. Run `flutter gen-l10n` after editing any `.arb` file.
 - Every ARB key needs an `@key` description entry.
 - Literals are allowed only for logs, non-UI exception messages, asset paths, route names, and map/JSON keys.

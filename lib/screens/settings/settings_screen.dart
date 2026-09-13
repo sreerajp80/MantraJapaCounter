@@ -10,6 +10,7 @@ import 'package:mantra_japa_counter/providers/counters_provider.dart';
 import 'package:mantra_japa_counter/providers/settings_provider.dart';
 import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
 import 'package:mantra_japa_counter/screens/settings/notification_sound_picker.dart';
+import 'package:mantra_japa_counter/screens/settings/language_picker.dart';
 import 'package:mantra_japa_counter/screens/settings/settings_tiles.dart';
 import 'package:mantra_japa_counter/screens/settings/settings_brightness_row.dart';
 import 'package:mantra_japa_counter/screens/settings/settings_info_cards.dart';
@@ -64,6 +65,29 @@ class SettingsScreen extends ConsumerWidget {
                     onTap: () => context.push('/about'),
                   ),
                   const SizedBox(height: 12),
+                  SettingsSection(
+                    title: l.sectionLanguage,
+                    sub: l.sectionLanguageSub,
+                    iconBuilder: (s, c) =>
+                        Icon(Icons.language, size: s, color: c),
+                    children: [
+                      SettingsRow(
+                        leading: const Icon(
+                          Icons.translate,
+                          size: 15,
+                          color: TempleColors.ink2,
+                        ),
+                        title: l.appLanguage,
+                        sub: _languageSubtitle(l, settings.languageCode),
+                        right: _languageShortLabel(l, settings.languageCode),
+                        onTap: () => showLanguagePicker(
+                          context,
+                          settings.languageCode,
+                          notifier,
+                        ),
+                      ),
+                    ],
+                  ),
                   SettingsSection(
                     title: l.sectionDailyGoal,
                     sub: l.sectionDailyGoalSub,
@@ -302,6 +326,21 @@ class SettingsScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  String _languageSubtitle(AppLocalizations l, String? code) {
+    if (code == null || code == 'system') return l.systemDefault;
+    if (code == 'en') return l.englishLanguage;
+    if (code == 'ml') return l.malayalamLanguage;
+    if (code == 'sa') return l.sanskritLanguage;
+    return l.systemDefault;
+  }
+
+  String _languageShortLabel(AppLocalizations l, String? code) {
+    if (code == 'en') return 'English';
+    if (code == 'ml') return 'മലയാളം';
+    if (code == 'sa') return 'संस्कृतम्';
+    return l.systemDefault;
   }
 
   String _notificationSoundSubtitle(AppLocalizations l, AppSettings s) {

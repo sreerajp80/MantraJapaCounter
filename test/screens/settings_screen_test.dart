@@ -69,6 +69,7 @@ void main() {
     expect(find.text('Features'), findsOneWidget);
     expect(find.text('Help & User Guides'), findsOneWidget);
     expect(find.text('About'), findsOneWidget);
+    expect(find.text('Language'), findsOneWidget);
     expect(find.text('Daily goal'), findsOneWidget);
     expect(find.text('Mala completion'), findsOneWidget);
     expect(find.text('Stillness'), findsOneWidget);
@@ -77,6 +78,29 @@ void main() {
     await scrollTo(tester, find.text('Data Backup & Optical Sync'));
     expect(find.text('Data Backup & Optical Sync'), findsOneWidget);
   });
+
+  testWidgets(
+    'tapping language row opens picker and selecting Sanskrit updates languageCode',
+    (tester) async {
+      await pumpSettings(tester);
+      expect(settingsOf(tester).languageCode, isNull);
+
+      await tester.tap(find.text('App language'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Select language'), findsOneWidget);
+      expect(find.text('Sanskrit'), findsOneWidget);
+      expect(find.text('Malayalam'), findsOneWidget);
+      expect(find.text('English'), findsOneWidget);
+      expect(find.text('System default'), findsAtLeastNWidgets(1));
+
+      await tester.tap(find.text('Sanskrit'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Select language'), findsNothing);
+      expect(settingsOf(tester).languageCode, equals('sa'));
+    },
+  );
 
   testWidgets('tapping the vibration row flips the setting', (tester) async {
     await pumpSettings(tester);

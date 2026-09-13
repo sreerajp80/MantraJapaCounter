@@ -127,11 +127,9 @@ android {
             dimension = "environment"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            resValue("string", "app_name", "SreerajP MantraJapa Counter Dev")
         }
         create("prod") {
             dimension = "environment"
-            resValue("string", "app_name", "SreerajP MantraJapa Counter")
         }
     }
 }

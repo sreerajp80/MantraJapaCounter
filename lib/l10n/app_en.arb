@@ -1,11 +1,9 @@
 {
   "@@locale": "en",
-
   "appTitle": "SreerajP MantraJapa Counter",
   "@appTitle": {
     "description": "Application title displayed across the app"
   },
-
   "cancel": "Cancel",
   "@cancel": {
     "description": "Generic cancel button label"
@@ -61,9 +59,12 @@
   "errorWithMessage": "Error: {message}",
   "@errorWithMessage": {
     "description": "Error message with dynamic error details",
-    "placeholders": { "message": { "type": "String" } }
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
   },
-
   "mantraCounters": "Mantra Counters",
   "@mantraCounters": {
     "description": "Title of the home screen showing the list of mantra counters"
@@ -127,7 +128,11 @@
   "deleteCounterMessage": "Delete \"{name}\" and all its history? This cannot be undone.",
   "@deleteCounterMessage": {
     "description": "Message for delete counter confirmation dialog",
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "disableAsCompletedTitle": "Disable as completed?",
   "@disableAsCompletedTitle": {
@@ -192,22 +197,33 @@
   "exportFailed": "Export failed: {message}",
   "@exportFailed": {
     "description": "Error notification when export operation fails",
-    "placeholders": { "message": { "type": "String" } }
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
   },
   "importFailed": "Import failed: {message}",
   "@importFailed": {
     "description": "Error notification when import operation fails",
-    "placeholders": { "message": { "type": "String" } }
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
   },
   "importSuccessful": "Import successful",
   "@importSuccessful": {
     "description": "Notification message when data import succeeds"
   },
-
   "pausedWithTime": "PAUSED · {time}",
   "@pausedWithTime": {
     "description": "Status banner text showing elapsed time when counting session is paused",
-    "placeholders": { "time": { "type": "String" } }
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
   },
   "resetSession": "Reset session",
   "@resetSession": {
@@ -232,12 +248,20 @@
   "beadsRemainCaps": "{count} BEADS REMAIN",
   "@beadsRemainCaps": {
     "description": "Text showing beads remaining in current mala",
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "malaThisSession": "+{count} mala this session",
   "@malaThisSession": {
     "description": "Indicator of malas completed in current session",
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "footerLifetime": "Lifetime",
   "@footerLifetime": {
@@ -267,7 +291,6 @@
   "@resetCounterMessage": {
     "description": "Confirmation message explaining effect of resetting a counter"
   },
-
   "noSessionsRecorded": "No sessions recorded yet.",
   "@noSessionsRecorded": {
     "description": "Empty state text on history screen when no sessions exist"
@@ -283,7 +306,11 @@
   "sessionCount": "{count, plural, =1{1 session} other{{count} sessions}}",
   "@sessionCount": {
     "description": "Pluralized count of sessions",
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "labelChants": "chants",
   "@labelChants": {
@@ -316,12 +343,20 @@
   "chantsOfferedDays": "CHANTS OFFERED · {count, plural, =1{1 DAY} other{{count} DAYS}}",
   "@chantsOfferedDays": {
     "description": "Header statistic showing total days chants were offered",
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "chantsOfferedPercent": "CHANTS OFFERED · {percent}% OF VOW",
   "@chantsOfferedPercent": {
     "description": "Header statistic showing percentage progress of lifetime vow",
-    "placeholders": { "percent": { "type": "String" } }
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
   },
   "deleteSessionTitle": "Delete session?",
   "@deleteSessionTitle": {
@@ -330,7 +365,11 @@
   "deleteSessionMessage": "{count, plural, =1{This session of 1 chant will be permanently removed.} other{This session of {count} chants will be permanently removed.}}",
   "@deleteSessionMessage": {
     "description": "Confirmation message for deleting a single session",
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "deleteSessionTooltip": "Delete session",
   "@deleteSessionTooltip": {
@@ -339,14 +378,21 @@
   "chantsCount": "{count} chants",
   "@chantsCount": {
     "description": "Formatted number of chants with unit label",
-    "placeholders": { "count": { "type": "String" } }
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   },
   "malaCount": "{count} mala",
   "@malaCount": {
     "description": "Formatted number of malas with unit label",
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
-
   "counterDetailsTitle": "Counter Details",
   "@counterDetailsTitle": {
     "description": "Screen title for Counter Details"
@@ -423,7 +469,6 @@
   "@statusCompleted": {
     "description": "Status text for completed counter"
   },
-
   "aboutTitle": "About",
   "@aboutTitle": {
     "description": "Screen title for About screen"
@@ -431,12 +476,20 @@
   "versionLabel": "Version {version}",
   "@versionLabel": {
     "description": "App version label on the about screen",
-    "placeholders": { "version": { "type": "String" } }
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
   },
   "aboutBuildDate": "Build date: {date}",
   "@aboutBuildDate": {
     "description": "Build date label on the about screen",
-    "placeholders": { "date": { "type": "String" } }
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "aboutPurposeTitle": "Purpose",
   "@aboutPurposeTitle": {
@@ -470,7 +523,7 @@
   "@aboutBackupBody": {
     "description": "Description of backup functionality in About screen"
   },
-  "aboutMantraQuote": "Om Namah Shivaya",
+  "aboutMantraQuote": "Ganeshaya Namah, Hare Krishna, Durgayei Namah",
   "@aboutMantraQuote": {
     "description": "Devotional mantra quote shown on About screen"
   },
@@ -482,7 +535,79 @@
   "@aboutMadeWithSuffix": {
     "description": "Suffix for Made with love from India footer in About screen"
   },
-
+  "madeWithLove": "Made with {heart} from India",
+  "@madeWithLove": {
+    "description": "About-screen signature badge. {heart} is a red heart glyph.",
+    "placeholders": {
+      "heart": {
+        "type": "String"
+      }
+    }
+  },
+  "madeWithLoveA11y": "Made with love from India",
+  "@madeWithLoveA11y": {
+    "description": "Screen-reader text for the About badge"
+  },
+  "aboutDetailAuthor": "Author",
+  "@aboutDetailAuthor": {
+    "description": "About screen author detail row label"
+  },
+  "aboutDetailEmail": "Email",
+  "@aboutDetailEmail": {
+    "description": "About screen email detail row label"
+  },
+  "aboutDetailLicense": "License",
+  "@aboutDetailLicense": {
+    "description": "About screen license detail row label"
+  },
+  "aboutDetailAiUsed": "AI used",
+  "@aboutDetailAiUsed": {
+    "description": "About screen AI used detail row label"
+  },
+  "aboutDetailIdeUsed": "IDE used",
+  "@aboutDetailIdeUsed": {
+    "description": "About screen IDE used detail row label"
+  },
+  "aboutDescription": "Offline-first application for tracking mantra recitation practice with customizable counters and session history.",
+  "@aboutDescription": {
+    "description": "App description shown under version on About screen"
+  },
+  "aboutAuthor": "Author",
+  "@aboutAuthor": {
+    "description": "Label for author row on About screen"
+  },
+  "aboutAuthorValue": "Sreeraj P",
+  "@aboutAuthorValue": {
+    "description": "Author name on About screen"
+  },
+  "aboutEmail": "Email",
+  "@aboutEmail": {
+    "description": "Label for email row on About screen"
+  },
+  "aboutLicense": "License",
+  "@aboutLicense": {
+    "description": "Label for license row on About screen"
+  },
+  "aboutLicenseValue": "All libraries used are open source.",
+  "@aboutLicenseValue": {
+    "description": "License description value on About screen"
+  },
+  "aboutAiUsed": "AI used",
+  "@aboutAiUsed": {
+    "description": "Label for AI used row on About screen"
+  },
+  "aboutAiUsedValue": "Google Gemini / Anthropic Claude",
+  "@aboutAiUsedValue": {
+    "description": "AI models used on About screen"
+  },
+  "aboutIdeUsed": "IDE used",
+  "@aboutIdeUsed": {
+    "description": "Label for IDE used row on About screen"
+  },
+  "aboutIdeUsedValue": "VS Code / Antigravity IDE",
+  "@aboutIdeUsedValue": {
+    "description": "IDE tools used on About screen"
+  },
   "settingsTitle": "Settings",
   "@settingsTitle": {
     "description": "Screen title for Settings screen"
@@ -490,6 +615,38 @@
   "practiceEyebrow": "PRACTICE",
   "@practiceEyebrow": {
     "description": "Eyebrow header on settings screen"
+  },
+  "sectionLanguage": "Language",
+  "@sectionLanguage": {
+    "description": "Settings section title for language options"
+  },
+  "sectionLanguageSub": "App display language",
+  "@sectionLanguageSub": {
+    "description": "Subtitle for language settings section"
+  },
+  "appLanguage": "App language",
+  "@appLanguage": {
+    "description": "Setting label for selecting app language"
+  },
+  "systemDefault": "System default",
+  "@systemDefault": {
+    "description": "Option to follow device system language"
+  },
+  "englishLanguage": "English",
+  "@englishLanguage": {
+    "description": "English language display name"
+  },
+  "malayalamLanguage": "Malayalam",
+  "@malayalamLanguage": {
+    "description": "Malayalam language display name"
+  },
+  "sanskritLanguage": "Sanskrit",
+  "@sanskritLanguage": {
+    "description": "Sanskrit language display name"
+  },
+  "selectLanguageTitle": "Select language",
+  "@selectLanguageTitle": {
+    "description": "Title of the language picker dialog or sheet"
   },
   "sectionDailyGoal": "Daily goal",
   "@sectionDailyGoal": {
@@ -610,7 +767,11 @@
   "soundNamedTapToChange": "{name} — tap to change",
   "@soundNamedTapToChange": {
     "description": "Subtitle when named custom sound is active",
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "soundCustomTapToChange": "Custom audio — tap to change",
   "@soundCustomTapToChange": {
@@ -640,7 +801,6 @@
   "@allDataCleared": {
     "description": "Confirmation snackbar when all app data is cleared"
   },
-
   "helpTitle": "Help",
   "@helpTitle": {
     "description": "Screen title for Help guide"
@@ -677,11 +837,14 @@
   "@helpResetBody": {
     "description": "Instructions for resetting sessions and counters in Help screen"
   },
-
   "cardChantsMala": "chants · {malas} mala",
   "@cardChantsMala": {
     "description": "Compact card metric format showing chants and malas",
-    "placeholders": { "malas": { "type": "int" } }
+    "placeholders": {
+      "malas": {
+        "type": "int"
+      }
+    }
   },
   "cardComplete": "✓ complete",
   "@cardComplete": {
@@ -690,7 +853,11 @@
   "cardPercentDaily": "{percent}% daily",
   "@cardPercentDaily": {
     "description": "Card badge showing daily progress percentage",
-    "placeholders": { "percent": { "type": "int" } }
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
   },
   "cardNoDaily": "—",
   "@cardNoDaily": {
@@ -703,32 +870,51 @@
   "cardChants": "{count} chants",
   "@cardChants": {
     "description": "Chant count with label on counter card",
-    "placeholders": { "count": { "type": "String" } }
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   },
   "cardMala": "{count} mala",
   "@cardMala": {
     "description": "Mala count with label on counter card",
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "cardMalaProgress": "{current} / {target} mala",
   "@cardMalaProgress": {
     "description": "Mala progress format showing current vs target malas",
     "placeholders": {
-      "current": { "type": "int" },
-      "target": { "type": "int" }
+      "current": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
     }
   },
   "cardLifetimePercent": "lifetime · {percent}%",
   "@cardLifetimePercent": {
     "description": "Lifetime percentage progress on counter card",
-    "placeholders": { "percent": { "type": "String" } }
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
   },
   "cardLifetimePercentComplete": "lifetime · {percent}% ✓",
   "@cardLifetimePercentComplete": {
     "description": "Completed lifetime percentage progress on counter card",
-    "placeholders": { "percent": { "type": "String" } }
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
   },
-
   "notifDailyGoalTitle": "Daily Goal Achieved",
   "@notifDailyGoalTitle": {
     "description": "Notification title fired when daily goal is reached"
@@ -737,12 +923,10 @@
   "@notifDailyGoalBody": {
     "description": "Notification body fired when daily goal is reached"
   },
-
   "backupShareSubject": "SreerajP MantraJapa Counter Backup",
   "@backupShareSubject": {
     "description": "Email/share subject line when sharing exported backup file"
   },
-
   "settingsAppearanceTitle": "Appearance",
   "@settingsAppearanceTitle": {
     "description": "Title for the Appearance card in settings"
@@ -771,7 +955,6 @@
   "@settingsAboutSub": {
     "description": "Subtitle for the About card in settings"
   },
-
   "appearanceTitle": "Appearance",
   "@appearanceTitle": {
     "description": "Title for Appearance screen"
@@ -796,7 +979,6 @@
   "@appearanceTypographySection": {
     "description": "Typography section header on Appearance screen"
   },
-
   "paletteVermillionName": "Vermillion (Sindoor)",
   "@paletteVermillionName": {
     "description": "Vermillion color name"
@@ -837,7 +1019,6 @@
   "@paletteCreamRole": {
     "description": "Cream background color role description"
   },
-
   "typographySerifTitle": "EB Garamond (Devotional Serif)",
   "@typographySerifTitle": {
     "description": "Serif font title"
@@ -862,7 +1043,6 @@
   "@typographyMalSub": {
     "description": "Malayalam font subtitle"
   },
-
   "featuresTitle": "Features",
   "@featuresTitle": {
     "description": "Title for Features screen"
@@ -875,7 +1055,6 @@
   "@featuresHeaderSub": {
     "description": "Header subtitle on Features screen"
   },
-
   "helpHeaderTitle": "Help & User Guides",
   "@helpHeaderTitle": {
     "description": "Header title on Help hub screen"
@@ -884,7 +1063,6 @@
   "@helpHeaderSub": {
     "description": "Header subtitle on Help hub screen"
   },
-
   "helpCategoryCounting": "Counting & Meditation Practice",
   "@helpCategoryCounting": {
     "description": "Counting category header in help"
@@ -901,7 +1079,6 @@
   "@helpCategoryPrivacy": {
     "description": "Privacy category header in help"
   },
-
   "helpTopicCountingTitle": "Counting & Gestures Guide",
   "@helpTopicCountingTitle": {
     "description": "Counting topic title in help"
@@ -958,7 +1135,6 @@
   "@helpTopicFaqSub": {
     "description": "FAQ topic subtitle in help"
   },
-
   "helpCountingIntro": "The counting screen is intentionally designed for quiet, mindful focus. You do not need to look at the screen while chanting.",
   "@helpCountingIntro": {
     "description": "Intro text on Counting Help screen"
@@ -1031,7 +1207,6 @@
   "@helpCountingTimerBullet2": {
     "description": "Bullet 2"
   },
-
   "helpMalaIntro": "In traditional Vedic and Buddhist practices, a Japa Mala consists of 108 beads. The app faithfully calculates rounds and progress based on this sacred principle.",
   "@helpMalaIntro": {
     "description": "Intro text on Mala Help screen"
@@ -1084,7 +1259,6 @@
   "@helpMalaGoalsBullet2": {
     "description": "Bullet 2"
   },
-
   "helpOpticalIntro": "Optical Air-Gap Sync allows you to migrate all your counters and history between two phones without Wi-Fi, Bluetooth, or cloud servers.",
   "@helpOpticalIntro": {
     "description": "Intro text on Optical Sync Help screen"
@@ -1145,7 +1319,6 @@
   "@helpOpticalTipsBullet3": {
     "description": "Bullet 3"
   },
-
   "helpAudioIntro": "Personalize the soundscape of your practice with gentle bells, temple chimes, and haptic vibrations.",
   "@helpAudioIntro": {
     "description": "Intro text on Audio Help screen"
@@ -1198,7 +1371,6 @@
   "@helpAudioVibrationBullet2": {
     "description": "Bullet 2"
   },
-
   "helpBackupIntro": "Your practice data is 100% owned by you. You can export complete backups to JSON files at any time.",
   "@helpBackupIntro": {
     "description": "Intro text on Backup Help screen"
@@ -1259,7 +1431,6 @@
   "@helpBackupImportBullet3": {
     "description": "Bullet 3"
   },
-
   "helpPrivacyIntro": "SreerajP MantraJapa Counter is built with a strict privacy-first and offline-first ethos.",
   "@helpPrivacyIntro": {
     "description": "Intro text on Privacy Help screen"
@@ -1312,7 +1483,6 @@
   "@helpPrivacyStorageBullet2": {
     "description": "Bullet 2"
   },
-
   "helpFaqIntro": "Quick answers to common questions about SreerajP MantraJapa Counter.",
   "@helpFaqIntro": {
     "description": "Intro text on FAQ Help screen"
@@ -1360,7 +1530,11 @@
   "counterLockedNotice": "\"{name}\" is locked. Unlock to start chanting.",
   "@counterLockedNotice": {
     "description": "Notice shown when tapping a locked counter card",
-    "placeholders": { "name": { "type": "String" } }
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "counterLockedTooltip": "Locked — tap to unlock",
   "@counterLockedTooltip": {
@@ -1374,233 +1548,491 @@
   "@statusLocked": {
     "description": "Status text indicating counter is locked"
   },
-
   "settingsBackupTitle": "Data Backup & Optical Sync",
-  "@settingsBackupTitle": {"description": "Settings section title for backup and optical sync"},
+  "@settingsBackupTitle": {
+    "description": "Settings section title for backup and optical sync"
+  },
   "settingsBackupSub": "100% offline device-to-device sync and backup",
-  "@settingsBackupSub": {"description": "Settings section subtitle for backup and optical sync"},
+  "@settingsBackupSub": {
+    "description": "Settings section subtitle for backup and optical sync"
+  },
   "settingsOpticalSendTitle": "Optical Air-Gap Sync (Send)",
-  "@settingsOpticalSendTitle": {"description": "Settings row title to start an optical sync transmission"},
+  "@settingsOpticalSendTitle": {
+    "description": "Settings row title to start an optical sync transmission"
+  },
   "settingsOpticalSendSub": "Transmit counters & history via animated QR stream",
-  "@settingsOpticalSendSub": {"description": "Settings row subtitle for optical sync send"},
+  "@settingsOpticalSendSub": {
+    "description": "Settings row subtitle for optical sync send"
+  },
   "settingsOpticalReceiveTitle": "Optical Air-Gap Sync (Receive)",
-  "@settingsOpticalReceiveTitle": {"description": "Settings row title to start an optical sync reception"},
+  "@settingsOpticalReceiveTitle": {
+    "description": "Settings row title to start an optical sync reception"
+  },
   "settingsOpticalReceiveSub": "Scan animated QR stream from another phone camera",
-  "@settingsOpticalReceiveSub": {"description": "Settings row subtitle for optical sync receive"},
+  "@settingsOpticalReceiveSub": {
+    "description": "Settings row subtitle for optical sync receive"
+  },
   "settingsExportTitle": "Export Backup File (JSON)",
-  "@settingsExportTitle": {"description": "Settings row title to export a JSON backup"},
+  "@settingsExportTitle": {
+    "description": "Settings row title to export a JSON backup"
+  },
   "settingsExportSub": "Export all data to a local JSON file & share sheet",
-  "@settingsExportSub": {"description": "Settings row subtitle for JSON export"},
+  "@settingsExportSub": {
+    "description": "Settings row subtitle for JSON export"
+  },
   "settingsImportTitle": "Import Backup File (JSON)",
-  "@settingsImportTitle": {"description": "Settings row title to import a JSON backup"},
+  "@settingsImportTitle": {
+    "description": "Settings row title to import a JSON backup"
+  },
   "settingsImportSub": "Restore counters and history from a backup file",
-  "@settingsImportSub": {"description": "Settings row subtitle for JSON import"},
+  "@settingsImportSub": {
+    "description": "Settings row subtitle for JSON import"
+  },
   "dataRestoredSuccess": "Data restored successfully!",
-  "@dataRestoredSuccess": {"description": "Snackbar shown after a backup file is imported successfully"},
+  "@dataRestoredSuccess": {
+    "description": "Snackbar shown after a backup file is imported successfully"
+  },
   "opticalSendTitle": "Optical Sync Stream (Send)",
-  "@opticalSendTitle": {"description": "App bar title on the optical sync transmit screen"},
+  "@opticalSendTitle": {
+    "description": "App bar title on the optical sync transmit screen"
+  },
   "opticalReceiveTitle": "Optical Sync Receiver (Scan)",
-  "@opticalReceiveTitle": {"description": "App bar title on the optical sync receive screen"},
+  "@opticalReceiveTitle": {
+    "description": "App bar title on the optical sync receive screen"
+  },
   "opticalNoFrames": "No data frames generated.",
-  "@opticalNoFrames": {"description": "Empty state shown when no QR frames could be generated"},
+  "@opticalNoFrames": {
+    "description": "Empty state shown when no QR frames could be generated"
+  },
   "opticalSessionId": "SESSION ID: {id}",
-  "@opticalSessionId": {"description": "Label showing the optical sync session identifier", "placeholders": {"id": {"type": "String"}}},
+  "@opticalSessionId": {
+    "description": "Label showing the optical sync session identifier",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
   "opticalFrameProgress": "Frame {current} / {total}",
-  "@opticalFrameProgress": {"description": "Progress label showing the current QR frame out of the total", "placeholders": {"current": {"type": "int"}, "total": {"type": "int"}}},
+  "@opticalFrameProgress": {
+    "description": "Progress label showing the current QR frame out of the total",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "opticalSystematicChunk": "Systematic Data Chunk #{index}",
-  "@opticalSystematicChunk": {"description": "Label for a systematic (original) data frame", "placeholders": {"index": {"type": "int"}}},
+  "@opticalSystematicChunk": {
+    "description": "Label for a systematic (original) data frame",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
   "opticalParityFrame": "Fountain Parity Frame #{index}",
-  "@opticalParityFrame": {"description": "Label for a fountain-code parity frame", "placeholders": {"index": {"type": "int"}}},
+  "@opticalParityFrame": {
+    "description": "Label for a fountain-code parity frame",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
   "opticalStreamRate": "Stream Rate (FPS)",
-  "@opticalStreamRate": {"description": "Label for the QR stream frames-per-second slider"},
+  "@opticalStreamRate": {
+    "description": "Label for the QR stream frames-per-second slider"
+  },
   "opticalSendHint": "Point the receiving device's camera at this screen. The animated QR stream will transmit all counters and session history 100% offline.",
-  "@opticalSendHint": {"description": "Instruction text on the optical sync transmit screen"},
+  "@opticalSendHint": {
+    "description": "Instruction text on the optical sync transmit screen"
+  },
   "opticalReconstructing": "Reconstructing: {done} / {total} chunks",
-  "@opticalReconstructing": {"description": "Progress text while rebuilding data from scanned QR frames", "placeholders": {"done": {"type": "int"}, "total": {"type": "int"}}},
+  "@opticalReconstructing": {
+    "description": "Progress text while rebuilding data from scanned QR frames",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "opticalAlignCamera": "Align camera with animated QR stream...",
-  "@opticalAlignCamera": {"description": "Hint shown while the receiver is waiting to detect QR frames"},
+  "@opticalAlignCamera": {
+    "description": "Hint shown while the receiver is waiting to detect QR frames"
+  },
   "opticalStreamComplete": "Optical Sync Stream Complete",
-  "@opticalStreamComplete": {"description": "Title of the sheet shown when a QR stream has been fully received"},
+  "@opticalStreamComplete": {
+    "description": "Title of the sheet shown when a QR stream has been fully received"
+  },
   "opticalStatCounters": "Counters",
-  "@opticalStatCounters": {"description": "Stat label for the number of counters received"},
+  "@opticalStatCounters": {
+    "description": "Stat label for the number of counters received"
+  },
   "opticalStatSessionLogs": "Session Logs",
-  "@opticalStatSessionLogs": {"description": "Stat label for the number of session logs received"},
+  "@opticalStatSessionLogs": {
+    "description": "Stat label for the number of session logs received"
+  },
   "opticalImportRestore": "Import & Restore Data",
-  "@opticalImportRestore": {"description": "Button that imports the received optical sync data"},
+  "@opticalImportRestore": {
+    "description": "Button that imports the received optical sync data"
+  },
   "opticalImportSuccess": "Optical sync import successful! Data restored.",
-  "@opticalImportSuccess": {"description": "Snackbar shown after optical sync data is imported"},
+  "@opticalImportSuccess": {
+    "description": "Snackbar shown after optical sync data is imported"
+  },
   "opticalImportFailed": "Failed to import data.",
-  "@opticalImportFailed": {"description": "Snackbar shown when optical sync import fails"},
+  "@opticalImportFailed": {
+    "description": "Snackbar shown when optical sync import fails"
+  },
   "featCat1Name": "Sacred Japa & Mala Counting",
-  "@featCat1Name": {"description": "Features screen category name: japa and mala counting"},
+  "@featCat1Name": {
+    "description": "Features screen category name: japa and mala counting"
+  },
   "featCat1Sub": "Distraction-free chanting, 108 mala mathematics, and fluid gestures",
-  "@featCat1Sub": {"description": "Features screen category subtitle: japa and mala counting"},
+  "@featCat1Sub": {
+    "description": "Features screen category subtitle: japa and mala counting"
+  },
   "featCat2Name": "Optical Air-Gap Sync & Data Safety",
-  "@featCat2Name": {"description": "Features screen category name: optical sync and data safety"},
+  "@featCat2Name": {
+    "description": "Features screen category name: optical sync and data safety"
+  },
   "featCat2Sub": "100% offline device-to-device synchronization via camera & QR streaming",
-  "@featCat2Sub": {"description": "Features screen category subtitle: optical sync and data safety"},
+  "@featCat2Sub": {
+    "description": "Features screen category subtitle: optical sync and data safety"
+  },
   "featCat3Name": "Practice Insights & History",
-  "@featCat3Name": {"description": "Features screen category name: practice insights and history"},
+  "@featCat3Name": {
+    "description": "Features screen category name: practice insights and history"
+  },
   "featCat3Sub": "Comprehensive daily logs, streak counters, and per-counter breakdowns",
-  "@featCat3Sub": {"description": "Features screen category subtitle: practice insights and history"},
+  "@featCat3Sub": {
+    "description": "Features screen category subtitle: practice insights and history"
+  },
   "featCat4Name": "Temple Aesthetics, Audio & Haptics",
-  "@featCat4Name": {"description": "Features screen category name: aesthetics, audio and haptics"},
+  "@featCat4Name": {
+    "description": "Features screen category name: aesthetics, audio and haptics"
+  },
   "featCat4Sub": "Peaceful devotional palette, resonant bell tones, and Malayalam support",
-  "@featCat4Sub": {"description": "Features screen category subtitle: aesthetics, audio and haptics"},
+  "@featCat4Sub": {
+    "description": "Features screen category subtitle: aesthetics, audio and haptics"
+  },
   "featCat5Name": "Privacy & Offline-First Core",
-  "@featCat5Name": {"description": "Features screen category name: privacy and offline-first core"},
+  "@featCat5Name": {
+    "description": "Features screen category name: privacy and offline-first core"
+  },
   "featCat5Sub": "Zero cloud tracking, zero network requests, and absolute data privacy",
-  "@featCat5Sub": {"description": "Features screen category subtitle: privacy and offline-first core"},
+  "@featCat5Sub": {
+    "description": "Features screen category subtitle: privacy and offline-first core"
+  },
   "featMalaTitle": "108 Mala Beads Calculation",
-  "@featMalaTitle": {"description": "Features screen feature title: 108 Mala Beads Calculation"},
+  "@featMalaTitle": {
+    "description": "Features screen feature title: 108 Mala Beads Calculation"
+  },
   "featMalaDesc": "Automatically calculates completed malas (1 mala = 108 chants) and keeps track of excess counts and progress rings.",
-  "@featMalaDesc": {"description": "Features screen feature description: 108 Mala Beads Calculation"},
+  "@featMalaDesc": {
+    "description": "Features screen feature description: 108 Mala Beads Calculation"
+  },
   "featMalaH1": "108 beads formula",
-  "@featMalaH1": {"description": "Features screen highlight 1 for: 108 Mala Beads Calculation"},
+  "@featMalaH1": {
+    "description": "Features screen highlight 1 for: 108 Mala Beads Calculation"
+  },
   "featMalaH2": "Excess counts counter",
-  "@featMalaH2": {"description": "Features screen highlight 2 for: 108 Mala Beads Calculation"},
+  "@featMalaH2": {
+    "description": "Features screen highlight 2 for: 108 Mala Beads Calculation"
+  },
   "featMalaH3": "Mala completion chime",
-  "@featMalaH3": {"description": "Features screen highlight 3 for: 108 Mala Beads Calculation"},
+  "@featMalaH3": {
+    "description": "Features screen highlight 3 for: 108 Mala Beads Calculation"
+  },
   "featImmersionTitle": "Full-Screen Immersion & Tap Area",
-  "@featImmersionTitle": {"description": "Features screen feature title: Full-Screen Immersion & Tap Area"},
+  "@featImmersionTitle": {
+    "description": "Features screen feature title: Full-Screen Immersion & Tap Area"
+  },
   "featImmersionDesc": "Tap anywhere on the large sacred ring to increment your count effortlessly without needing to look at specific buttons.",
-  "@featImmersionDesc": {"description": "Features screen feature description: Full-Screen Immersion & Tap Area"},
+  "@featImmersionDesc": {
+    "description": "Features screen feature description: Full-Screen Immersion & Tap Area"
+  },
   "featImmersionH1": "Large touch zone",
-  "@featImmersionH1": {"description": "Features screen highlight 1 for: Full-Screen Immersion & Tap Area"},
+  "@featImmersionH1": {
+    "description": "Features screen highlight 1 for: Full-Screen Immersion & Tap Area"
+  },
   "featImmersionH2": "Subtle haptic pulse",
-  "@featImmersionH2": {"description": "Features screen highlight 2 for: Full-Screen Immersion & Tap Area"},
+  "@featImmersionH2": {
+    "description": "Features screen highlight 2 for: Full-Screen Immersion & Tap Area"
+  },
   "featImmersionH3": "Distraction-free focus",
-  "@featImmersionH3": {"description": "Features screen highlight 3 for: Full-Screen Immersion & Tap Area"},
+  "@featImmersionH3": {
+    "description": "Features screen highlight 3 for: Full-Screen Immersion & Tap Area"
+  },
   "featUndoTitle": "Two-Finger Swipe Undo",
-  "@featUndoTitle": {"description": "Features screen feature title: Two-Finger Swipe Undo"},
+  "@featUndoTitle": {
+    "description": "Features screen feature title: Two-Finger Swipe Undo"
+  },
   "featUndoDesc": "Made an accidental count? Simply swipe left or right with two fingers on the ring to decrement the count cleanly.",
-  "@featUndoDesc": {"description": "Features screen feature description: Two-Finger Swipe Undo"},
+  "@featUndoDesc": {
+    "description": "Features screen feature description: Two-Finger Swipe Undo"
+  },
   "featUndoH1": "Horizontal swipe gesture",
-  "@featUndoH1": {"description": "Features screen highlight 1 for: Two-Finger Swipe Undo"},
+  "@featUndoH1": {
+    "description": "Features screen highlight 1 for: Two-Finger Swipe Undo"
+  },
   "featUndoH2": "Instant count reversal",
-  "@featUndoH2": {"description": "Features screen highlight 2 for: Two-Finger Swipe Undo"},
+  "@featUndoH2": {
+    "description": "Features screen highlight 2 for: Two-Finger Swipe Undo"
+  },
   "featUndoH3": "Prevents over-counting",
-  "@featUndoH3": {"description": "Features screen highlight 3 for: Two-Finger Swipe Undo"},
+  "@featUndoH3": {
+    "description": "Features screen highlight 3 for: Two-Finger Swipe Undo"
+  },
   "featTimerTitle": "Persistent Session Timer & Goals",
-  "@featTimerTitle": {"description": "Features screen feature title: Persistent Session Timer & Goals"},
+  "@featTimerTitle": {
+    "description": "Features screen feature title: Persistent Session Timer & Goals"
+  },
   "featTimerDesc": "Tracks active sitting duration with automatic background pause. Configure daily goals and lifetime dedication targets per mantra.",
-  "@featTimerDesc": {"description": "Features screen feature description: Persistent Session Timer & Goals"},
+  "@featTimerDesc": {
+    "description": "Features screen feature description: Persistent Session Timer & Goals"
+  },
   "featTimerH1": "Active duration timer",
-  "@featTimerH1": {"description": "Features screen highlight 1 for: Persistent Session Timer & Goals"},
+  "@featTimerH1": {
+    "description": "Features screen highlight 1 for: Persistent Session Timer & Goals"
+  },
   "featTimerH2": "Per-mantra daily goals",
-  "@featTimerH2": {"description": "Features screen highlight 2 for: Persistent Session Timer & Goals"},
+  "@featTimerH2": {
+    "description": "Features screen highlight 2 for: Persistent Session Timer & Goals"
+  },
   "featTimerH3": "Lifetime dedication target",
-  "@featTimerH3": {"description": "Features screen highlight 3 for: Persistent Session Timer & Goals"},
+  "@featTimerH3": {
+    "description": "Features screen highlight 3 for: Persistent Session Timer & Goals"
+  },
   "featQrStreamTitle": "High-Density Animated QR Stream",
-  "@featQrStreamTitle": {"description": "Features screen feature title: High-Density Animated QR Stream"},
+  "@featQrStreamTitle": {
+    "description": "Features screen feature title: High-Density Animated QR Stream"
+  },
   "featQrStreamDesc": "Transfer complete practice records, counters, and history between phones in seconds using a high-speed optical QR code stream.",
-  "@featQrStreamDesc": {"description": "Features screen feature description: High-Density Animated QR Stream"},
+  "@featQrStreamDesc": {
+    "description": "Features screen feature description: High-Density Animated QR Stream"
+  },
   "featQrStreamH1": "Zero Wi-Fi / Bluetooth",
-  "@featQrStreamH1": {"description": "Features screen highlight 1 for: High-Density Animated QR Stream"},
+  "@featQrStreamH1": {
+    "description": "Features screen highlight 1 for: High-Density Animated QR Stream"
+  },
   "featQrStreamH2": "10-15 FPS animated stream",
-  "@featQrStreamH2": {"description": "Features screen highlight 2 for: High-Density Animated QR Stream"},
+  "@featQrStreamH2": {
+    "description": "Features screen highlight 2 for: High-Density Animated QR Stream"
+  },
   "featQrStreamH3": "Instant phone transfer",
-  "@featQrStreamH3": {"description": "Features screen highlight 3 for: High-Density Animated QR Stream"},
+  "@featQrStreamH3": {
+    "description": "Features screen highlight 3 for: High-Density Animated QR Stream"
+  },
   "featFountainTitle": "Luby Transform Fountain Code Recovery",
-  "@featFountainTitle": {"description": "Features screen feature title: Luby Transform Fountain Code Recovery"},
+  "@featFountainTitle": {
+    "description": "Features screen feature title: Luby Transform Fountain Code Recovery"
+  },
   "featFountainDesc": "Transfers data using mathematical fountain codes and CRC32 verification so dropped camera frames are recovered automatically.",
-  "@featFountainDesc": {"description": "Features screen feature description: Luby Transform Fountain Code Recovery"},
+  "@featFountainDesc": {
+    "description": "Features screen feature description: Luby Transform Fountain Code Recovery"
+  },
   "featFountainH1": "Loss-tolerant recovery",
-  "@featFountainH1": {"description": "Features screen highlight 1 for: Luby Transform Fountain Code Recovery"},
+  "@featFountainH1": {
+    "description": "Features screen highlight 1 for: Luby Transform Fountain Code Recovery"
+  },
   "featFountainH2": "CRC32 checksums",
-  "@featFountainH2": {"description": "Features screen highlight 2 for: Luby Transform Fountain Code Recovery"},
+  "@featFountainH2": {
+    "description": "Features screen highlight 2 for: Luby Transform Fountain Code Recovery"
+  },
   "featFountainH3": "Out-of-order frame assembly",
-  "@featFountainH3": {"description": "Features screen highlight 3 for: Luby Transform Fountain Code Recovery"},
+  "@featFountainH3": {
+    "description": "Features screen highlight 3 for: Luby Transform Fountain Code Recovery"
+  },
   "featJsonExportTitle": "Offline JSON Export & Restore",
-  "@featJsonExportTitle": {"description": "Features screen feature title: Offline JSON Export & Restore"},
+  "@featJsonExportTitle": {
+    "description": "Features screen feature title: Offline JSON Export & Restore"
+  },
   "featJsonExportDesc": "Export full database backups to a plain JSON file to save on your local storage, share sheet, or restore anytime.",
-  "@featJsonExportDesc": {"description": "Features screen feature description: Offline JSON Export & Restore"},
+  "@featJsonExportDesc": {
+    "description": "Features screen feature description: Offline JSON Export & Restore"
+  },
   "featJsonExportH1": "Standard JSON schema",
-  "@featJsonExportH1": {"description": "Features screen highlight 1 for: Offline JSON Export & Restore"},
+  "@featJsonExportH1": {
+    "description": "Features screen highlight 1 for: Offline JSON Export & Restore"
+  },
   "featJsonExportH2": "One-tap export/import",
-  "@featJsonExportH2": {"description": "Features screen highlight 2 for: Offline JSON Export & Restore"},
+  "@featJsonExportH2": {
+    "description": "Features screen highlight 2 for: Offline JSON Export & Restore"
+  },
   "featJsonExportH3": "Room/Gson compatibility",
-  "@featJsonExportH3": {"description": "Features screen highlight 3 for: Offline JSON Export & Restore"},
+  "@featJsonExportH3": {
+    "description": "Features screen highlight 3 for: Offline JSON Export & Restore"
+  },
   "featDailyLogTitle": "Daily Practice Log & Breakdown",
-  "@featDailyLogTitle": {"description": "Features screen feature title: Daily Practice Log & Breakdown"},
+  "@featDailyLogTitle": {
+    "description": "Features screen feature title: Daily Practice Log & Breakdown"
+  },
   "featDailyLogDesc": "Review historical sittings grouped by date with start timestamps, sitting duration, counts chanted, and malas completed.",
-  "@featDailyLogDesc": {"description": "Features screen feature description: Daily Practice Log & Breakdown"},
+  "@featDailyLogDesc": {
+    "description": "Features screen feature description: Daily Practice Log & Breakdown"
+  },
   "featDailyLogH1": "Date-wise grouping",
-  "@featDailyLogH1": {"description": "Features screen highlight 1 for: Daily Practice Log & Breakdown"},
+  "@featDailyLogH1": {
+    "description": "Features screen highlight 1 for: Daily Practice Log & Breakdown"
+  },
   "featDailyLogH2": "Sitting duration breakdown",
-  "@featDailyLogH2": {"description": "Features screen highlight 2 for: Daily Practice Log & Breakdown"},
+  "@featDailyLogH2": {
+    "description": "Features screen highlight 2 for: Daily Practice Log & Breakdown"
+  },
   "featDailyLogH3": "Daily mala tally",
-  "@featDailyLogH3": {"description": "Features screen highlight 3 for: Daily Practice Log & Breakdown"},
+  "@featDailyLogH3": {
+    "description": "Features screen highlight 3 for: Daily Practice Log & Breakdown"
+  },
   "featFilterTitle": "Per-Counter Filtering",
-  "@featFilterTitle": {"description": "Features screen feature title: Per-Counter Filtering"},
+  "@featFilterTitle": {
+    "description": "Features screen feature title: Per-Counter Filtering"
+  },
   "featFilterDesc": "Isolate and view history for individual mantras or view the combined sadhana across all active counters.",
-  "@featFilterDesc": {"description": "Features screen feature description: Per-Counter Filtering"},
+  "@featFilterDesc": {
+    "description": "Features screen feature description: Per-Counter Filtering"
+  },
   "featFilterH1": "Specific mantra view",
-  "@featFilterH1": {"description": "Features screen highlight 1 for: Per-Counter Filtering"},
+  "@featFilterH1": {
+    "description": "Features screen highlight 1 for: Per-Counter Filtering"
+  },
   "featFilterH2": "Combined daily view",
-  "@featFilterH2": {"description": "Features screen highlight 2 for: Per-Counter Filtering"},
+  "@featFilterH2": {
+    "description": "Features screen highlight 2 for: Per-Counter Filtering"
+  },
   "featFilterH3": "Lifetime totals",
-  "@featFilterH3": {"description": "Features screen highlight 3 for: Per-Counter Filtering"},
+  "@featFilterH3": {
+    "description": "Features screen highlight 3 for: Per-Counter Filtering"
+  },
   "featPaletteTitle": "Temple Devotional Palette",
-  "@featPaletteTitle": {"description": "Features screen feature title: Temple Devotional Palette"},
+  "@featPaletteTitle": {
+    "description": "Features screen feature title: Temple Devotional Palette"
+  },
   "featPaletteDesc": "Authentic temple palette with sacred cream backgrounds and vermillion, sandal yellow, tulsi green, and rose accents.",
-  "@featPaletteDesc": {"description": "Features screen feature description: Temple Devotional Palette"},
+  "@featPaletteDesc": {
+    "description": "Features screen feature description: Temple Devotional Palette"
+  },
   "featPaletteH1": "Cream & gold background",
-  "@featPaletteH1": {"description": "Features screen highlight 1 for: Temple Devotional Palette"},
+  "@featPaletteH1": {
+    "description": "Features screen highlight 1 for: Temple Devotional Palette"
+  },
   "featPaletteH2": "Vermillion & Tulsi accents",
-  "@featPaletteH2": {"description": "Features screen highlight 2 for: Temple Devotional Palette"},
+  "@featPaletteH2": {
+    "description": "Features screen highlight 2 for: Temple Devotional Palette"
+  },
   "featPaletteH3": "Serif numeral typography",
-  "@featPaletteH3": {"description": "Features screen highlight 3 for: Temple Devotional Palette"},
+  "@featPaletteH3": {
+    "description": "Features screen highlight 3 for: Temple Devotional Palette"
+  },
   "featBellTitle": "Peaceful Bell Tones & Audio Picker",
-  "@featBellTitle": {"description": "Features screen feature title: Peaceful Bell Tones & Audio Picker"},
+  "@featBellTitle": {
+    "description": "Features screen feature title: Peaceful Bell Tones & Audio Picker"
+  },
   "featBellDesc": "Gentle meditation chimes when completing malas or reaching daily goals. Choose system ringtones or pick custom local audio files.",
-  "@featBellDesc": {"description": "Features screen feature description: Peaceful Bell Tones & Audio Picker"},
+  "@featBellDesc": {
+    "description": "Features screen feature description: Peaceful Bell Tones & Audio Picker"
+  },
   "featBellH1": "Mala & goal bell tones",
-  "@featBellH1": {"description": "Features screen highlight 1 for: Peaceful Bell Tones & Audio Picker"},
+  "@featBellH1": {
+    "description": "Features screen highlight 1 for: Peaceful Bell Tones & Audio Picker"
+  },
   "featBellH2": "Custom audio picker",
-  "@featBellH2": {"description": "Features screen highlight 2 for: Peaceful Bell Tones & Audio Picker"},
+  "@featBellH2": {
+    "description": "Features screen highlight 2 for: Peaceful Bell Tones & Audio Picker"
+  },
   "featBellH3": "Tone preview in settings",
-  "@featBellH3": {"description": "Features screen highlight 3 for: Peaceful Bell Tones & Audio Picker"},
+  "@featBellH3": {
+    "description": "Features screen highlight 3 for: Peaceful Bell Tones & Audio Picker"
+  },
   "featBrightnessTitle": "Stillness Brightness Mode",
-  "@featBrightnessTitle": {"description": "Features screen feature title: Stillness Brightness Mode"},
+  "@featBrightnessTitle": {
+    "description": "Features screen feature title: Stillness Brightness Mode"
+  },
   "featBrightnessDesc": "Dim screen brightness to minimal ambient levels for distraction-free early morning, temple, or late-night meditation.",
-  "@featBrightnessDesc": {"description": "Features screen feature description: Stillness Brightness Mode"},
+  "@featBrightnessDesc": {
+    "description": "Features screen feature description: Stillness Brightness Mode"
+  },
   "featBrightnessH1": "Custom brightness slider",
-  "@featBrightnessH1": {"description": "Features screen highlight 1 for: Stillness Brightness Mode"},
+  "@featBrightnessH1": {
+    "description": "Features screen highlight 1 for: Stillness Brightness Mode"
+  },
   "featBrightnessH2": "1-tap system restore",
-  "@featBrightnessH2": {"description": "Features screen highlight 2 for: Stillness Brightness Mode"},
+  "@featBrightnessH2": {
+    "description": "Features screen highlight 2 for: Stillness Brightness Mode"
+  },
   "featBrightnessH3": "OLED battery efficiency",
-  "@featBrightnessH3": {"description": "Features screen highlight 3 for: Stillness Brightness Mode"},
+  "@featBrightnessH3": {
+    "description": "Features screen highlight 3 for: Stillness Brightness Mode"
+  },
   "featBilingualTitle": "Bilingual Malayalam & English UI",
-  "@featBilingualTitle": {"description": "Features screen feature title: Bilingual Malayalam & English UI"},
+  "@featBilingualTitle": {
+    "description": "Features screen feature title: Bilingual Malayalam & English UI"
+  },
   "featBilingualDesc": "Full Malayalam scripture and interface support alongside English with bundled Noto Sans Malayalam fonts.",
-  "@featBilingualDesc": {"description": "Features screen feature description: Bilingual Malayalam & English UI"},
+  "@featBilingualDesc": {
+    "description": "Features screen feature description: Bilingual Malayalam & English UI"
+  },
   "featBilingualH1": "Full Malayalam localization",
-  "@featBilingualH1": {"description": "Features screen highlight 1 for: Bilingual Malayalam & English UI"},
+  "@featBilingualH1": {
+    "description": "Features screen highlight 1 for: Bilingual Malayalam & English UI"
+  },
   "featBilingualH2": "Authentic Indic font glyphs",
-  "@featBilingualH2": {"description": "Features screen highlight 2 for: Bilingual Malayalam & English UI"},
+  "@featBilingualH2": {
+    "description": "Features screen highlight 2 for: Bilingual Malayalam & English UI"
+  },
   "featBilingualH3": "1-tap language switch",
-  "@featBilingualH3": {"description": "Features screen highlight 3 for: Bilingual Malayalam & English UI"},
+  "@featBilingualH3": {
+    "description": "Features screen highlight 3 for: Bilingual Malayalam & English UI"
+  },
   "featOfflineTitle": "100% Offline with Zero INTERNET Permission",
-  "@featOfflineTitle": {"description": "Features screen feature title: 100% Offline with Zero INTERNET Permission"},
+  "@featOfflineTitle": {
+    "description": "Features screen feature title: 100% Offline with Zero INTERNET Permission"
+  },
   "featOfflineDesc": "The application manifest completely lacks internet permissions. No telemetry, ads, or analytics can ever run.",
-  "@featOfflineDesc": {"description": "Features screen feature description: 100% Offline with Zero INTERNET Permission"},
+  "@featOfflineDesc": {
+    "description": "Features screen feature description: 100% Offline with Zero INTERNET Permission"
+  },
   "featOfflineH1": "No INTERNET permission",
-  "@featOfflineH1": {"description": "Features screen highlight 1 for: 100% Offline with Zero INTERNET Permission"},
+  "@featOfflineH1": {
+    "description": "Features screen highlight 1 for: 100% Offline with Zero INTERNET Permission"
+  },
   "featOfflineH2": "Zero cloud telemetry",
-  "@featOfflineH2": {"description": "Features screen highlight 2 for: 100% Offline with Zero INTERNET Permission"},
+  "@featOfflineH2": {
+    "description": "Features screen highlight 2 for: 100% Offline with Zero INTERNET Permission"
+  },
   "featOfflineH3": "No tracking or ads",
-  "@featOfflineH3": {"description": "Features screen highlight 3 for: 100% Offline with Zero INTERNET Permission"},
+  "@featOfflineH3": {
+    "description": "Features screen highlight 3 for: 100% Offline with Zero INTERNET Permission"
+  },
   "featSqliteTitle": "Local SQLite Database & Crash Recovery",
-  "@featSqliteTitle": {"description": "Features screen feature title: Local SQLite Database & Crash Recovery"},
+  "@featSqliteTitle": {
+    "description": "Features screen feature title: Local SQLite Database & Crash Recovery"
+  },
   "featSqliteDesc": "Dual-layer persistence saves active counts every 5 taps/5 seconds to prevent accidental data loss during phone reboots.",
-  "@featSqliteDesc": {"description": "Features screen feature description: Local SQLite Database & Crash Recovery"},
+  "@featSqliteDesc": {
+    "description": "Features screen feature description: Local SQLite Database & Crash Recovery"
+  },
   "featSqliteH1": "ACID-compliant SQLite v3",
-  "@featSqliteH1": {"description": "Features screen highlight 1 for: Local SQLite Database & Crash Recovery"},
+  "@featSqliteH1": {
+    "description": "Features screen highlight 1 for: Local SQLite Database & Crash Recovery"
+  },
   "featSqliteH2": "5-tap crash recovery",
-  "@featSqliteH2": {"description": "Features screen highlight 2 for: Local SQLite Database & Crash Recovery"},
+  "@featSqliteH2": {
+    "description": "Features screen highlight 2 for: Local SQLite Database & Crash Recovery"
+  },
   "featSqliteH3": "Safe data migrations",
-  "@featSqliteH3": {"description": "Features screen highlight 3 for: Local SQLite Database & Crash Recovery"},
+  "@featSqliteH3": {
+    "description": "Features screen highlight 3 for: Local SQLite Database & Crash Recovery"
+  },
   "opticalStreamCompleteSub": "100% offline payload reconstructed via camera scanner.",
-  "@opticalStreamCompleteSub": {"description": "Subtitle of the sheet shown when a QR stream has been fully received"}
+  "@opticalStreamCompleteSub": {
+    "description": "Subtitle of the sheet shown when a QR stream has been fully received"
+  }
 }

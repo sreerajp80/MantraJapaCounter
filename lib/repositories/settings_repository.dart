@@ -127,4 +127,15 @@ class SettingsRepository {
   Future<void> setVibrationEnabled(bool value) async {
     await _prefs.setBool(AppConstants.prefsVibrationKey, value);
   }
+
+  String? get languageCode =>
+      _prefs.getString(AppConstants.prefsLanguageCodeKey);
+
+  Future<void> setLanguageCode(String? code) async {
+    if (code == null || code == 'system') {
+      await _prefs.remove(AppConstants.prefsLanguageCodeKey);
+    } else {
+      await _prefs.setString(AppConstants.prefsLanguageCodeKey, code);
+    }
+  }
 }

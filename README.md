@@ -13,6 +13,33 @@ guidelines.
 
 ---
 
+## App Screenshots
+
+| Home & Daily Offerings | Sacred Mala Counting | Practice History & Logs |
+|:---:|:---:|:---:|
+| <img src="docs/screenshots/01_home_screen.png" width="240" alt="Home Screen" /> | <img src="docs/screenshots/02_counting_screen.png" width="240" alt="Counting Screen" /> | <img src="docs/screenshots/03_history_screen.png" width="240" alt="History Screen" /> |
+
+| Practice Settings | Multilingual Support | Stillness Mode & Backup |
+|:---:|:---:|:---:|
+| <img src="docs/screenshots/04_settings_screen.png" width="240" alt="Settings Screen" /> | <img src="docs/screenshots/05_language_selection.png" width="240" alt="Language Selection" /> | <img src="docs/screenshots/06_stillness_and_backup.png" width="240" alt="Stillness Mode and Backup" /> |
+
+---
+
+## Key Features
+
+- **Sacred 108-Bead Mala Counting**: Central bead circle with dynamic progress ring, bead countdown, and active duration timer.
+- **Ergonomic Gestures & Lock**: Single-tap counting within the medallion, two-finger horizontal swipe to undo, and counter lock toggle to prevent accidental taps.
+- **Multi-Counter Management**: Track unlimited mantra counters with customizable daily goals (offerings), lifetime vows (sankalpas), initial counts, and custom step sizes.
+- **Visual Progress Indicators**: 27-segment prayer-bead daily progress strip, lotus watermarks, goal completion checkmarks, and today's summary pill.
+- **Practice History & Analytics**: Date-grouped session logs, sitting duration, counts, malas, and vow completion progress with interactive Diya lamp track.
+- **Stillness Meditation Mode**: Custom in-app display brightness control for extended meditation sittings.
+- **Audio & Haptic Feedback**: Soft synthesized mala DTMF tones, ringtone picker, custom audio files, and native alarms that work in silent mode.
+- **Optical Air-Gap Sync**: 100% offline device-to-device synchronization using animated QR streams (Luby Transform fountain codes).
+- **Multilingual Support**: Fully localized in English, Malayalam (മലയാളം), and Sanskrit (संस्कृतम्).
+- **100% Offline & Private**: Zero internet permissions, zero telemetry, zero analytics, zero data leaving the device.
+
+---
+
 ## 1. Prerequisites
 
 | Tool | Version |
@@ -113,8 +140,9 @@ flutter gen-l10n
 ```
 
 Reads `l10n.yaml` and the ARB files in `lib/l10n/`, and writes
-`lib/l10n/app_localizations*.dart`. Every ARB key needs a matching `@key` description entry,
-and `app_ml.arb` must carry the same keys as `app_en.arb`.
+`lib/l10n/app_localizations*.dart`. Supported languages are English (`en`), Malayalam (`ml`),
+and Sanskrit (`sa`). Every ARB key needs a matching `@key` description entry, and `app_ml.arb`
+and `app_sa.arb` must carry the same keys as `app_en.arb`.
 
 ### 5.2 About-screen build metadata
 
@@ -134,13 +162,13 @@ build date.
 Production builds **must** use `--release`, `--obfuscate`, and `--split-debug-info`. Leaving
 any of them out ships an unhardened, easily reverse-engineered artifact.
 
-Replace `v6.10.4` below with the version in `pubspec.yaml`.
+Replace `v6.11.0` below with the version in `pubspec.yaml`.
 
 ### Split APKs (direct install / sideloading)
 
 ```bash
 flutter build apk --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-v6.10.4/ --split-per-abi
+  --obfuscate --split-debug-info=build/symbols/android-prod-v6.11.0/ --split-per-abi
 ```
 
 Output: `build/app/outputs/apk/prod/release/app-arm64-v8a-prod-release.apk` and friends.
@@ -149,7 +177,7 @@ Output: `build/app/outputs/apk/prod/release/app-arm64-v8a-prod-release.apk` and 
 
 ```bash
 flutter build appbundle --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-v6.10.4/
+  --obfuscate --split-debug-info=build/symbols/android-prod-v6.11.0/
 ```
 
 Output: `build/app/outputs/bundle/prodRelease/app-prod-release.aab`.
@@ -207,15 +235,20 @@ To add version N:
 
 ```
 lib/
-  config/         router, theme, locale config, app constants
-  core/config/    AppConfig + ConfigService (About-screen metadata)
+  core/
+    config/       AppConfig + ConfigService (About-screen metadata)
+    constants/    app constants & database version
+    flavor/       build flavor detection
+    locale/       supported locales & preferences
+    routing/      GoRouter navigation configuration
+    utils/        helpers & build metadata
   l10n/           ARB string files and generated localizations
   models/         pure Dart data models
   providers/      Riverpod state
   repositories/   sqflite and SharedPreferences access
   screens/        full-page screens
   services/       platform and business services
-  utils/          small helpers and generated build metadata
+  theme/          colors, typography, temple design system
   widgets/        reusable UI widgets
 docs/             architecture, security, release process, guidelines submodule
 plans/            one plan per change, written before the change

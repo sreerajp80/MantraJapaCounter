@@ -6,7 +6,10 @@ import 'package:mantra_japa_counter/core/config/config_service.dart';
 void main() {
   group('AppConfig', () {
     test('fallback contains safe default values', () {
-      expect(AppConfig.fallback.appName, equals('SreerajP MantraJapa Counter'));
+      expect(
+        AppConfig.fallback.appName.resolve('en'),
+        equals('SreerajP MantraJapa Counter'),
+      );
       expect(AppConfig.fallback.version, equals('0.0.0'));
       expect(AppConfig.fallback.build, equals('0'));
       expect(AppConfig.fallback.details, isNotEmpty);
@@ -22,12 +25,30 @@ void main() {
       };
 
       final config = AppConfig.fromJson(jsonMap);
-      expect(config.appName, equals('Test App'));
-      expect(config.description, equals('A test app description'));
+      expect(config.appName.resolve('en'), equals('Test App'));
+      expect(
+        config.description.resolve('en'),
+        equals('A test app description'),
+      );
       expect(config.version, equals('1.2.3'));
       expect(config.build, equals('45'));
-      expect(config.details['Author'], equals('Test Author'));
-      expect(config.details['License'], equals('MIT'));
+      expect(config.details['Author']?.resolve('en'), equals('Test Author'));
+      expect(config.details['License']?.resolve('en'), equals('MIT'));
+    });
+
+    test('fromJson parses localized appName map correctly', () {
+      final jsonMap = {
+        'appName': {
+          'en': 'English App',
+          'ml': 'മലയാളം ആപ്പ്',
+          'sa': 'संस्कृत-अनुप्रयोगः',
+        },
+      };
+
+      final config = AppConfig.fromJson(jsonMap);
+      expect(config.appName.resolve('en'), equals('English App'));
+      expect(config.appName.resolve('ml'), equals('മലയാളം ആപ്പ്'));
+      expect(config.appName.resolve('sa'), equals('संस्कृत-अनुप्रयोगः'));
     });
 
     test('fromJson falls back safely on missing or invalid types', () {
@@ -37,7 +58,10 @@ void main() {
       };
 
       final config = AppConfig.fromJson(jsonMap);
-      expect(config.appName, equals(AppConfig.fallback.appName));
+      expect(
+        config.appName.resolve('en'),
+        equals(AppConfig.fallback.appName.resolve('en')),
+      );
       expect(config.version, equals(AppConfig.fallback.version));
       expect(config.details, isEmpty);
     });
@@ -56,10 +80,10 @@ void main() {
       final service = ConfigService(loadAsset: (path) async => validJsonText);
 
       final config = await service.load();
-      expect(config.appName, equals('Mock App'));
+      expect(config.appName.resolve('en'), equals('Mock App'));
       expect(config.version, equals('2.0.0'));
       expect(config.build, equals('10'));
-      expect(config.details['Developer'], equals('Test Dev'));
+      expect(config.details['Developer']?.resolve('en'), equals('Test Dev'));
     });
 
     test(
@@ -70,14 +94,20 @@ void main() {
         );
 
         final config1 = await serviceWithError.load();
-        expect(config1.appName, equals(AppConfig.fallback.appName));
+        expect(
+          config1.appName.resolve('en'),
+          equals(AppConfig.fallback.appName.resolve('en')),
+        );
 
         final serviceWithBadJson = ConfigService(
           loadAsset: (path) async => 'invalid json {',
         );
 
         final config2 = await serviceWithBadJson.load();
-        expect(config2.appName, equals(AppConfig.fallback.appName));
+        expect(
+          config2.appName.resolve('en'),
+          equals(AppConfig.fallback.appName.resolve('en')),
+        );
       },
     );
   });

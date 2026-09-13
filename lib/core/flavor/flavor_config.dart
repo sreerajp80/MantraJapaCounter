@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 /// Runtime flavor configuration. Flutter (>= 3.19) auto-populates the
 /// `FLUTTER_APP_FLAVOR` dart-define from the `--flavor <flavor>` build arg.
 enum AppFlavor { dev, prod }
@@ -11,6 +13,11 @@ class AppFlavorConfig {
       defaultValue: 'prod',
     );
     _flavor = flavorStr == 'dev' ? AppFlavor.dev : AppFlavor.prod;
+  }
+
+  @visibleForTesting
+  static void setFlavorForTesting(AppFlavor flavor) {
+    _flavor = flavor;
   }
 
   static AppFlavor get flavor => _flavor;

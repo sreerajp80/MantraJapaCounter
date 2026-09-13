@@ -29,7 +29,7 @@ docs/guidelines/
 
 | Core documents | Relative path | What it is |
 |---|---|---|
-| Folder-structure guideline | `docs/guidelines/guideline.md` | My personal cross-app conventions: About-screen JSON config, the release keystore rules, and the baseline `lib/` folder layout. **Source of truth for keystore rules.** |
+| Folder-structure guideline | `docs/guidelines/guideline.md` | My personal cross-app conventions: About-screen JSON config and its fixed "Made with ❤️ from India" badge, the three mandatory app languages (English / Malayalam / Sanskrit), the release keystore rules, and the baseline `lib/` folder layout. **Source of truth for keystore rules.** |
 | Engineering standard | `docs/guidelines/flutter_project_engineering_standard.md` | The master, project-agnostic rulebook — rules that apply to *every* app (structure, UI, accessibility, performance, database, logging, security, CI, git, Definition of Done). |
 | Architecture blueprint | `docs/guidelines/architecture.md` | A per-project architecture blueprint template. Fill it in with one app's actual decisions. |
 | Build flavors guide | `docs/guidelines/flutter_build_flavors_guide.md` | Platform-by-platform technical reference for setting up build flavors on Android, iOS, and Windows. |

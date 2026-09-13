@@ -12,6 +12,7 @@ import 'package:mantra_japa_counter/core/routing/router.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
+import 'package:mantra_japa_counter/providers/settings_provider.dart';
 import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/services/notification_service.dart';
@@ -73,11 +74,34 @@ class MantraJapaCounterApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final settings = ref.watch(settingsNotifierProvider);
+    final selectedCode = settings.languageCode;
+    final explicitLocale = (selectedCode == null || selectedCode == 'system')
+        ? null
+        : Locale(selectedCode);
+
+    // Keep LocaleConfig cached activeLocale updated for context-free lookups
+    if (explicitLocale != null) {
+      LocaleConfig.activeLocale = explicitLocale;
+    } else {
+      final device = WidgetsBinding.instance.platformDispatcher.locale;
+      LocaleConfig.activeLocale = LocaleConfig.resolve(device);
+    }
+
     return MaterialApp.router(
-      title: AppFlavorConfig.appName,
+      onGenerateTitle: (context) {
+        final title = AppLocalizations.of(context).appTitle;
+        return AppFlavorConfig.isDev ? '$title Dev' : title;
+      },
       theme: AppTheme.light(),
       themeMode: ThemeMode.light,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      locale: explicitLocale,
+      localizationsDelegates: const [
+        SaMaterialLocalizationsDelegate(),
+        SaCupertinoLocalizationsDelegate(),
+        SaWidgetsLocalizationsDelegate(),
+        ...AppLocalizations.localizationsDelegates,
+      ],
       supportedLocales: AppLocalizations.supportedLocales,
       localeResolutionCallback: LocaleConfig.localeResolution,
       routerConfig: appRouter,

@@ -401,7 +401,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Use Import / Export to back up your data to a JSON file.';
 
   @override
-  String get aboutMantraQuote => 'Om Namah Shivaya';
+  String get aboutMantraQuote =>
+      'Ganeshaya Namah, Hare Krishna, Durgayei Namah';
 
   @override
   String get aboutMadeWithPrefix => 'Made with ';
@@ -410,10 +411,88 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutMadeWithSuffix => ' from India';
 
   @override
+  String madeWithLove(String heart) {
+    return 'Made with $heart from India';
+  }
+
+  @override
+  String get madeWithLoveA11y => 'Made with love from India';
+
+  @override
+  String get aboutDetailAuthor => 'Author';
+
+  @override
+  String get aboutDetailEmail => 'Email';
+
+  @override
+  String get aboutDetailLicense => 'License';
+
+  @override
+  String get aboutDetailAiUsed => 'AI used';
+
+  @override
+  String get aboutDetailIdeUsed => 'IDE used';
+
+  @override
+  String get aboutDescription =>
+      'Offline-first application for tracking mantra recitation practice with customizable counters and session history.';
+
+  @override
+  String get aboutAuthor => 'Author';
+
+  @override
+  String get aboutAuthorValue => 'Sreeraj P';
+
+  @override
+  String get aboutEmail => 'Email';
+
+  @override
+  String get aboutLicense => 'License';
+
+  @override
+  String get aboutLicenseValue => 'All libraries used are open source.';
+
+  @override
+  String get aboutAiUsed => 'AI used';
+
+  @override
+  String get aboutAiUsedValue => 'Google Gemini / Anthropic Claude';
+
+  @override
+  String get aboutIdeUsed => 'IDE used';
+
+  @override
+  String get aboutIdeUsedValue => 'VS Code / Antigravity IDE';
+
+  @override
   String get settingsTitle => 'Settings';
 
   @override
   String get practiceEyebrow => 'PRACTICE';
+
+  @override
+  String get sectionLanguage => 'Language';
+
+  @override
+  String get sectionLanguageSub => 'App display language';
+
+  @override
+  String get appLanguage => 'App language';
+
+  @override
+  String get systemDefault => 'System default';
+
+  @override
+  String get englishLanguage => 'English';
+
+  @override
+  String get malayalamLanguage => 'Malayalam';
+
+  @override
+  String get sanskritLanguage => 'Sanskrit';
+
+  @override
+  String get selectLanguageTitle => 'Select language';
 
   @override
   String get sectionDailyGoal => 'Daily goal';

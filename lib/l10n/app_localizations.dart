@@ -7,6 +7,7 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
 import 'app_localizations_ml.dart';
+import 'app_localizations_sa.dart';
 
 // ignore_for_file: type=lint
 
@@ -96,6 +97,7 @@ abstract class AppLocalizations {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
     Locale('ml'),
+    Locale('sa'),
   ];
 
   /// Application title displayed across the app
@@ -773,7 +775,7 @@ abstract class AppLocalizations {
   /// Devotional mantra quote shown on About screen
   ///
   /// In en, this message translates to:
-  /// **'Om Namah Shivaya'**
+  /// **'Ganeshaya Namah, Hare Krishna, Durgayei Namah'**
   String get aboutMantraQuote;
 
   /// Prefix for Made with love footer in About screen
@@ -788,6 +790,108 @@ abstract class AppLocalizations {
   /// **' from India'**
   String get aboutMadeWithSuffix;
 
+  /// About-screen signature badge. {heart} is a red heart glyph.
+  ///
+  /// In en, this message translates to:
+  /// **'Made with {heart} from India'**
+  String madeWithLove(String heart);
+
+  /// Screen-reader text for the About badge
+  ///
+  /// In en, this message translates to:
+  /// **'Made with love from India'**
+  String get madeWithLoveA11y;
+
+  /// About screen author detail row label
+  ///
+  /// In en, this message translates to:
+  /// **'Author'**
+  String get aboutDetailAuthor;
+
+  /// About screen email detail row label
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get aboutDetailEmail;
+
+  /// About screen license detail row label
+  ///
+  /// In en, this message translates to:
+  /// **'License'**
+  String get aboutDetailLicense;
+
+  /// About screen AI used detail row label
+  ///
+  /// In en, this message translates to:
+  /// **'AI used'**
+  String get aboutDetailAiUsed;
+
+  /// About screen IDE used detail row label
+  ///
+  /// In en, this message translates to:
+  /// **'IDE used'**
+  String get aboutDetailIdeUsed;
+
+  /// App description shown under version on About screen
+  ///
+  /// In en, this message translates to:
+  /// **'Offline-first application for tracking mantra recitation practice with customizable counters and session history.'**
+  String get aboutDescription;
+
+  /// Label for author row on About screen
+  ///
+  /// In en, this message translates to:
+  /// **'Author'**
+  String get aboutAuthor;
+
+  /// Author name on About screen
+  ///
+  /// In en, this message translates to:
+  /// **'Sreeraj P'**
+  String get aboutAuthorValue;
+
+  /// Label for email row on About screen
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get aboutEmail;
+
+  /// Label for license row on About screen
+  ///
+  /// In en, this message translates to:
+  /// **'License'**
+  String get aboutLicense;
+
+  /// License description value on About screen
+  ///
+  /// In en, this message translates to:
+  /// **'All libraries used are open source.'**
+  String get aboutLicenseValue;
+
+  /// Label for AI used row on About screen
+  ///
+  /// In en, this message translates to:
+  /// **'AI used'**
+  String get aboutAiUsed;
+
+  /// AI models used on About screen
+  ///
+  /// In en, this message translates to:
+  /// **'Google Gemini / Anthropic Claude'**
+  String get aboutAiUsedValue;
+
+  /// Label for IDE used row on About screen
+  ///
+  /// In en, this message translates to:
+  /// **'IDE used'**
+  String get aboutIdeUsed;
+
+  /// IDE tools used on About screen
+  ///
+  /// In en, this message translates to:
+  /// **'VS Code / Antigravity IDE'**
+  String get aboutIdeUsedValue;
+
   /// Screen title for Settings screen
   ///
   /// In en, this message translates to:
@@ -799,6 +903,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'PRACTICE'**
   String get practiceEyebrow;
+
+  /// Settings section title for language options
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get sectionLanguage;
+
+  /// Subtitle for language settings section
+  ///
+  /// In en, this message translates to:
+  /// **'App display language'**
+  String get sectionLanguageSub;
+
+  /// Setting label for selecting app language
+  ///
+  /// In en, this message translates to:
+  /// **'App language'**
+  String get appLanguage;
+
+  /// Option to follow device system language
+  ///
+  /// In en, this message translates to:
+  /// **'System default'**
+  String get systemDefault;
+
+  /// English language display name
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get englishLanguage;
+
+  /// Malayalam language display name
+  ///
+  /// In en, this message translates to:
+  /// **'Malayalam'**
+  String get malayalamLanguage;
+
+  /// Sanskrit language display name
+  ///
+  /// In en, this message translates to:
+  /// **'Sanskrit'**
+  String get sanskritLanguage;
+
+  /// Title of the language picker dialog or sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Select language'**
+  String get selectLanguageTitle;
 
   /// Settings section title for daily goal notification options
   ///
@@ -2774,7 +2926,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en', 'ml'].contains(locale.languageCode);
+      <String>['en', 'ml', 'sa'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -2787,6 +2939,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsEn();
     case 'ml':
       return AppLocalizationsMl();
+    case 'sa':
+      return AppLocalizationsSa();
   }
 
   throw FlutterError(

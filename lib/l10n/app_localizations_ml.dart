@@ -404,7 +404,7 @@ class AppLocalizationsMl extends AppLocalizations {
       'നിങ്ങളുടെ ഡാറ്റ ഒരു JSON ഫയലിലേക്ക് ബാക്കപ്പ് ചെയ്യാൻ ഇംപോർട്ട് / എക്സ്പോർട്ട് ഉപയോഗിക്കുക.';
 
   @override
-  String get aboutMantraQuote => 'ഓം നമഃ ശിവായ';
+  String get aboutMantraQuote => 'ഗണേശായ നമഃ · ഹരേ കൃഷ്ണ · ദുർഗായൈ നമഃ';
 
   @override
   String get aboutMadeWithPrefix => 'സ്നേഹത്തോടെ ';
@@ -413,10 +413,89 @@ class AppLocalizationsMl extends AppLocalizations {
   String get aboutMadeWithSuffix => ' ഇന്ത്യയിൽ നിന്ന്';
 
   @override
+  String madeWithLove(String heart) {
+    return 'സ്നേഹത്തോടെ $heart ഇന്ത്യയിൽ നിന്ന്';
+  }
+
+  @override
+  String get madeWithLoveA11y => 'സ്നേഹത്തോടെ ഇന്ത്യയിൽ നിന്ന്';
+
+  @override
+  String get aboutDetailAuthor => 'രചയിതാവ്';
+
+  @override
+  String get aboutDetailEmail => 'ഇമെയിൽ';
+
+  @override
+  String get aboutDetailLicense => 'ലൈസൻസ്';
+
+  @override
+  String get aboutDetailAiUsed => 'ഉപയോഗിച്ച AI';
+
+  @override
+  String get aboutDetailIdeUsed => 'ഉപയോഗിച്ച IDE';
+
+  @override
+  String get aboutDescription =>
+      'മാല (108-മണി വട്ടം) എണ്ണൽ, ക്രമീകരിക്കാവുന്ന കൗണ്ടറുകൾ, സെഷൻ ചരിത്രം എന്നിവയോടെ മന്ത്രജപാഭ്യാസം ട്രാക്ക് ചെയ്യാനുള്ള ഓഫ്‌ലൈൻ ആപ്പ്.';
+
+  @override
+  String get aboutAuthor => 'രചയിതാവ്';
+
+  @override
+  String get aboutAuthorValue => 'ശ്രീരാജ് പി';
+
+  @override
+  String get aboutEmail => 'ഇമെയിൽ';
+
+  @override
+  String get aboutLicense => 'ലൈസൻസ്';
+
+  @override
+  String get aboutLicenseValue =>
+      'ഉപയോഗിച്ചിരിക്കുന്ന എല്ലാ ലൈബ്രറികളും ഓപ്പൺ സോഴ്സ് ആണ്.';
+
+  @override
+  String get aboutAiUsed => 'ഉപയോഗിച്ച AI';
+
+  @override
+  String get aboutAiUsedValue => 'ഗൂഗിൾ ജെമിനി / ആന്ത്രോപിക് ക്ലോഡ്';
+
+  @override
+  String get aboutIdeUsed => 'ഉപയോഗിച്ച IDE';
+
+  @override
+  String get aboutIdeUsedValue => 'വിഎസ് കോഡ് / ആന്റിഗ്രാവിറ്റി ഐഡിഇ';
+
+  @override
   String get settingsTitle => 'ക്രമീകരണങ്ങൾ';
 
   @override
   String get practiceEyebrow => 'അഭ്യാസം';
+
+  @override
+  String get sectionLanguage => 'ഭാഷ';
+
+  @override
+  String get sectionLanguageSub => 'ആപ്പിന്റെ പ്രദർശന ഭാഷ';
+
+  @override
+  String get appLanguage => 'ആപ്പ് ഭാഷ';
+
+  @override
+  String get systemDefault => 'സിസ്റ്റം സ്ഥിരസ്ഥിതി';
+
+  @override
+  String get englishLanguage => 'English';
+
+  @override
+  String get malayalamLanguage => 'മലയാളം';
+
+  @override
+  String get sanskritLanguage => 'संस्कृतम्';
+
+  @override
+  String get selectLanguageTitle => 'ഭാഷ തിരഞ്ഞെടുക്കുക';
 
   @override
   String get sectionDailyGoal => 'ദൈനംദിന ലക്ഷ്യം';

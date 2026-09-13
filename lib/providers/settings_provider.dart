@@ -10,6 +10,7 @@ class AppSettings {
   final String? notificationSoundUri;
   final String? notificationSoundName;
   final bool vibrationEnabled;
+  final String? languageCode;
 
   const AppSettings({
     required this.screenBrightness,
@@ -18,6 +19,7 @@ class AppSettings {
     this.notificationSoundUri,
     this.notificationSoundName,
     required this.vibrationEnabled,
+    this.languageCode,
   });
 
   AppSettings copyWith({
@@ -28,6 +30,8 @@ class AppSettings {
     String? notificationSoundName,
     bool clearNotificationSound = false,
     bool? vibrationEnabled,
+    String? languageCode,
+    bool clearLanguageCode = false,
   }) {
     return AppSettings(
       screenBrightness: screenBrightness ?? this.screenBrightness,
@@ -42,6 +46,9 @@ class AppSettings {
           ? null
           : (notificationSoundName ?? this.notificationSoundName),
       vibrationEnabled: vibrationEnabled ?? this.vibrationEnabled,
+      languageCode: clearLanguageCode
+          ? null
+          : (languageCode ?? this.languageCode),
     );
   }
 }
@@ -58,6 +65,7 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
           notificationSoundUri: _repo.notificationSoundUri,
           notificationSoundName: _repo.notificationSoundName,
           vibrationEnabled: _repo.vibrationEnabled,
+          languageCode: _repo.languageCode,
         ),
       );
 
@@ -89,6 +97,13 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
   Future<void> setVibrationEnabled(bool value) async {
     await _repo.setVibrationEnabled(value);
     state = state.copyWith(vibrationEnabled: value);
+  }
+
+  Future<void> setLanguageCode(String? code) async {
+    await _repo.setLanguageCode(code);
+    state = (code == null || code == 'system')
+        ? state.copyWith(clearLanguageCode: true)
+        : state.copyWith(languageCode: code);
   }
 }
 

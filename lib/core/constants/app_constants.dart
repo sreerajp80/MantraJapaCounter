@@ -35,6 +35,7 @@ class AppConstants {
   static const String prefsNotifSoundUriKey = 'notification_sound_uri';
   static const String prefsNotifSoundNameKey = 'notification_sound_name';
   static const String prefsVibrationKey = 'notification_vibration';
+  static const String prefsLanguageCodeKey = 'app_language_code';
 
   // Export
   static const int exportFormatVersion = 1;
