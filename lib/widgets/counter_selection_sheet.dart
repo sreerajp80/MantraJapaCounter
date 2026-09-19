@@ -302,9 +302,7 @@ class _CounterCheckTile extends StatelessWidget {
                   ? Icons.radio_button_checked
                   : Icons.radio_button_off,
               size: 14,
-              color: counter.isActive
-                  ? TempleColors.tulsi
-                  : TempleColors.ink3,
+              color: counter.isActive ? TempleColors.tulsi : TempleColors.ink3,
             ),
           ],
         ),

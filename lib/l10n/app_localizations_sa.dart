@@ -557,6 +557,29 @@ class AppLocalizationsSa extends AppLocalizations {
   String get sectionStillnessSub => 'रात्रौ नेत्रसौख्याय मन्दप्रकाशः';
 
   @override
+  String get dndTitle => 'शान्तिप्रणाली (Do Not Disturb)';
+
+  @override
+  String get dndSub => 'जपकाले सूचनाः ध्वनींश्च विरमयति';
+
+  @override
+  String get dndPermissionTitle => 'शान्तिप्रणाल्यै अनुमतिः';
+
+  @override
+  String get dndPermissionMessage =>
+      'जपकाले विघ्ननिवारणाय यन्त्रस्य शान्तिप्रणाल्यै (DND) अनुमतिं ददातु।';
+
+  @override
+  String get dndOpenSettings => 'संयोजनानि उद्घाटयतु';
+
+  @override
+  String get dimmedModeTitle => 'मन्दप्रकाशजपविधिः';
+
+  @override
+  String get dimmedModeSub =>
+      'ऊर्जासंरक्षणाय पृष्ठभूमिं तिमिरीकृत्य जपमालां प्रकाशयति';
+
+  @override
   String get brightnessLevel => 'प्रकाशस्तरः';
 
   @override
@@ -1639,4 +1662,178 @@ class AppLocalizationsSa extends AppLocalizations {
   @override
   String get opticalImportSelectHint =>
       'प्राप्तदत्तांशात् आनेतव्यान् गणकान् चिनुत';
+
+  @override
+  String get notifLifetimeGoalTitle => 'जीवनलक्ष्यं सम्पन्नम्!';
+
+  @override
+  String get notifLifetimeGoalBody =>
+      'शुभं लक्ष्यं सम्पन्नम्। भवदीयसाधना शान्तिं मुक्तिं च यच्छतु।';
+
+  @override
+  String get lifetimeSoundTitle => 'जीवनलक्ष्यध्वनिः';
+
+  @override
+  String get lifetimeSoundSub => 'जीवनलक्ष्यप्राप्तौ वाद्यमाना पवित्रा ध्वनिः';
+
+  @override
+  String get enableLifetimeNotification => 'जीवनलक्ष्यसूचना';
+
+  @override
+  String get enableLifetimeNotificationSub =>
+      'जीवनलक्ष्ये प्राप्ते सूचनां प्रदर्शयतु';
+
+  @override
+  String get soundSacredShankha => 'पवित्रशङ्खध्वनिः';
+
+  @override
+  String get soundSacredShankhaSub => 'साधनाविजयसूचकः दिव्यः शङ्खनादः';
+
+  @override
+  String get settingsSoundTitle => 'ध्वनिः स्पन्दनं च';
+
+  @override
+  String get settingsSoundSub => 'मालाघण्टा, लक्ष्यपूर्तेः ध्वनिः, स्पन्दनं च';
+
+  @override
+  String get settingsDisplayTitle => 'प्रदर्शनं स्थिरता च';
+
+  @override
+  String get settingsDisplaySub => 'पटप्रकाशः ध्यानस्थिरता च';
+
+  @override
+  String get settingsLanguageTitle => 'भाषा';
+
+  @override
+  String get settingsLanguageSub => 'अनुप्रयोगस्य भाषा लिपिः सङ्ख्यापद्धतिः च';
+
+  @override
+  String get settingsPermissionsTitle => 'अनुमतयः';
+
+  @override
+  String get settingsPermissionsSub =>
+      'अनुप्रयोगे उपयुक्ताः अनुमतयः तन्निमित्तानि च';
+
+  @override
+  String get settingsClearDataTitle => 'सर्वदत्तांशमलोकनम्';
+
+  @override
+  String get settingsClearDataSub => 'सर्वान् गणकान् जपविवरणं च सर्वथा अपनयतु';
+
+  @override
+  String get permissionsExplicitHeader => 'प्रत्यक्षानुमतयः (Explicit)';
+
+  @override
+  String get permissionsExplicitSub =>
+      'विशिष्टसुविधासमये एव उपयोक्त्रनुमतिः याच्यते';
+
+  @override
+  String get permissionsImplicitHeader => 'अप्रत्यक्षानुमतयः (Implicit)';
+
+  @override
+  String get permissionsImplicitSub =>
+      'जालसम्पर्कं विना कार्याय तन्त्रज्ञानेन स्वयमेव दीयते';
+
+  @override
+  String get permissionsPrivacyHeader => 'पूर्णगोपनीयताप्रतिज्ञा';
+
+  @override
+  String get permissionsPrivacySub => 'साधनागोपनीयतायै काश्चिदनुमतयः त्यक्ताः';
+
+  @override
+  String get permCameraTitle => 'दृश्यकम् (Camera)';
+
+  @override
+  String get permCameraDesc =>
+      'प्रकाशीयसङ्क्रमणे चलचित्रित-QR-सङ्केतपठनाय एव उपयुज्यते। चित्राणि न सङ्गृह्यन्ते।';
+
+  @override
+  String get permNotificationTitle => 'सूचनाः (Notifications)';
+
+  @override
+  String get permNotificationDesc =>
+      'दैनिके जीवनलक्ष्ये वा प्राप्ते सूचनापट्टे विजयवार्ताप्रदर्शनाय।';
+
+  @override
+  String get permVibrationTitle => 'स्पन्दनम् (Vibration)';
+
+  @override
+  String get permVibrationDesc =>
+      'प्रत्येकजपे मालापूर्तौ मौनावस्थायामपि ज्ञानार्थं मृदुस्पन्दनम्।';
+
+  @override
+  String get permAudioTitle => 'ध्वनिनियमनम्';
+
+  @override
+  String get permAudioDesc =>
+      'ध्यानावस्थायां घण्टानादस्य श्रवणाय विशेषध्वनिसम्पर्कः।';
+
+  @override
+  String get permNoInternetTitle => 'अन्तर्जालरहितम्';
+
+  @override
+  String get permNoInternetDesc =>
+      'अत्र अन्तर्जालानुमतिः नास्ति। कोऽपि दत्तांशः बहिः न प्रेष्यते।';
+
+  @override
+  String get permNoStorageTitle => 'कोशप्रवेशरहितम्';
+
+  @override
+  String get permNoStorageDesc =>
+      'व्यक्तिगतसञ्चिकानां रक्षणाय तन्त्रस्य सुरक्षितान्वेषकः उपयुज्यते।';
+
+  @override
+  String get tutorialTitle => 'अनुप्रयोगप्रशिक्षणम्';
+
+  @override
+  String get tutorialSub => 'सर्वसुविधानां सोपानशः परिदर्शनम्';
+
+  @override
+  String get tutorialStep1Title => '१. प्रथमगणकनिर्माणम्';
+
+  @override
+  String get tutorialStep1Desc =>
+      'मुख्यपुटे धनचिह्नं (+) स्पृशतु। मन्त्रनाम, जपवृद्धिं, दैनिक-जीवनलक्ष्यं च व्यवस्थापयतु।';
+
+  @override
+  String get tutorialStep2Title => '२. सर्वाङ्गपटे जपगणनम्';
+
+  @override
+  String get tutorialStep2Desc =>
+      'गणनाय पटे यत्र कुत्रापि स्पृशतु। भ्रमे जाते अधः आकर्ष्य अपनयतु। प्रकाशं मन्दं कर्तुं शक्यते।';
+
+  @override
+  String get tutorialStep3Title => '३. अष्टोत्तरशत (१०८) मणिरचिता माला';
+
+  @override
+  String get tutorialStep3Desc =>
+      'प्रति १०८ जपैः एका माला सिध्यति। घण्टानादेन सह मालागणना रक्षिता भवति।';
+
+  @override
+  String get tutorialStep4Title => '४. दैनिक-जीवनलक्ष्यसिद्धिः';
+
+  @override
+  String get tutorialStep4Desc =>
+      'दैनिके जीवनलक्ष्ये वा सिद्धे दिव्यध्वनिभिः मुद्राभिः च साफल्यं प्राप्यते।';
+
+  @override
+  String get tutorialStep5Title => '५. कीलनं समर्पणं च';
+
+  @override
+  String get tutorialStep5Desc =>
+      'अकाण्डस्पर्शरक्षणाय गणकं कीलयतु; सम्पूर्णां साधनां स्वर्णमुद्रया सङ्गृह्यताम्।';
+
+  @override
+  String get tutorialStep6Title => '६. प्रकाशीयं QR-सङ्क्रमणम्';
+
+  @override
+  String get tutorialStep6Desc =>
+      'अन्तर्जालं विना चलचित्रित-QR-माध्यमेन अन्ययन्त्रे दत्तांशं प्रेषयतु।';
+
+  @override
+  String get tutorialStep7Title => '७. गूढीकृतरक्षणम् (Encrypted Backup)';
+
+  @override
+  String get tutorialStep7Desc =>
+      'रहस्यसङ्केतं प्रदाय AES-256 सुरक्षापद्धत्या सर्वं विवरणं रक्षितुं शक्यते।';
 }

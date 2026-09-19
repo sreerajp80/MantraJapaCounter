@@ -21,6 +21,8 @@ class AppConstants {
   // Notification channel IDs
   static const String dailyGoalChannelId = 'daily_goal_channel';
   static const String dailyGoalChannelName = 'Daily Goal';
+  static const String lifetimeGoalChannelId = 'lifetime_goal_channel';
+  static const String lifetimeGoalChannelName = 'Lifetime Goal';
   static const String malaChannelId = 'mala_channel';
   static const String malaChannelName = 'Mala Completion';
 
@@ -31,12 +33,17 @@ class AppConstants {
   static const String prefsLegacyActiveSessionKey = 'active_session';
   static const String prefsBrightnessKey = 'screen_brightness';
   static const String prefsDailyGoalNotifKey = 'daily_goal_notifications';
+  static const String prefsLifetimeGoalNotifKey = 'lifetime_goal_notifications';
   static const String prefsMalaNotifKey = 'mala_notifications';
   static const String prefsMalaSoundKey = 'mala_sound';
   static const String prefsNotifSoundUriKey = 'notification_sound_uri';
   static const String prefsNotifSoundNameKey = 'notification_sound_name';
+  static const String prefsLifetimeSoundUriKey = 'lifetime_sound_uri';
+  static const String prefsLifetimeSoundNameKey = 'lifetime_sound_name';
   static const String prefsVibrationKey = 'notification_vibration';
   static const String prefsLanguageCodeKey = 'app_language_code';
+  static const String prefsDndKey = 'dnd_enabled';
+  static const String prefsDimmedChantingKey = 'dimmed_chanting_mode';
 
   // Export
   static const int exportFormatVersion = 1;

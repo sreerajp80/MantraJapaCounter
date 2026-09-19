@@ -5,6 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/services/counting_service.dart';
+import 'package:mantra_japa_counter/services/dnd_service.dart';
 import 'package:mantra_japa_counter/services/encryption_service.dart';
 import 'package:mantra_japa_counter/services/export_service.dart';
 import 'package:mantra_japa_counter/services/haptic_feedback_service.dart';
@@ -85,4 +86,8 @@ final sessionRecoveryServiceProvider = Provider<SessionRecoveryService>((ref) {
     ref.watch(japaCounterRepositoryProvider),
     ref.watch(settingsRepositoryProvider),
   );
+});
+
+final dndServiceProvider = Provider<DndService>((ref) {
+  return DndService();
 });

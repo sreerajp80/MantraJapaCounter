@@ -311,11 +311,14 @@ class JapaCounterRepository {
 
     final idSet = counterIds.toSet();
     final allCounters = await getAllCounters();
-    final selectedCounters = allCounters.where((c) => idSet.contains(c.id)).toList();
+    final selectedCounters = allCounters
+        .where((c) => idSet.contains(c.id))
+        .toList();
 
     final allSessions = await getAllSessions();
-    final selectedSessions =
-        allSessions.where((s) => idSet.contains(s.counterId)).toList();
+    final selectedSessions = allSessions
+        .where((s) => idSet.contains(s.counterId))
+        .toList();
 
     return ExportData(
       exportDate: DateTime.now().millisecondsSinceEpoch,
@@ -363,10 +366,12 @@ class JapaCounterRepository {
     if (counterIds.isEmpty) return;
 
     final idSet = counterIds.toSet();
-    final selectedCounters =
-        data.counters.where((c) => idSet.contains(c.id)).toList();
-    final selectedSessions =
-        data.sessions.where((s) => idSet.contains(s.counterId)).toList();
+    final selectedCounters = data.counters
+        .where((c) => idSet.contains(c.id))
+        .toList();
+    final selectedSessions = data.sessions
+        .where((s) => idSet.contains(s.counterId))
+        .toList();
 
     await _db.transaction((txn) async {
       final now = DateTime.now().millisecondsSinceEpoch;

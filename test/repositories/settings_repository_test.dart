@@ -136,4 +136,46 @@ void main() {
       expect(repo.malaSound, equals(MalaSound.singingBowl));
     });
   });
+
+  group('SettingsRepository - dndEnabled & dimmedChantingMode', () {
+    late SharedPreferences prefs;
+    late SettingsRepository repo;
+    late SettingsNotifier notifier;
+
+    setUp(() async {
+      SharedPreferences.setMockInitialValues({});
+      prefs = await SharedPreferences.getInstance();
+      repo = SettingsRepository(prefs);
+      notifier = SettingsNotifier(repo);
+    });
+
+    test('defaults to false for dnd and dimmed mode', () {
+      expect(repo.dndEnabled, isFalse);
+      expect(repo.dimmedChantingMode, isFalse);
+      expect(notifier.state.dndEnabled, isFalse);
+      expect(notifier.state.dimmedChantingMode, isFalse);
+    });
+
+    test('setDndEnabled updates state and repository', () async {
+      await notifier.setDndEnabled(true);
+      expect(notifier.state.dndEnabled, isTrue);
+      expect(repo.dndEnabled, isTrue);
+      expect(prefs.getBool(AppConstants.prefsDndKey), isTrue);
+
+      await notifier.setDndEnabled(false);
+      expect(notifier.state.dndEnabled, isFalse);
+      expect(repo.dndEnabled, isFalse);
+    });
+
+    test('setDimmedChantingMode updates state and repository', () async {
+      await notifier.setDimmedChantingMode(true);
+      expect(notifier.state.dimmedChantingMode, isTrue);
+      expect(repo.dimmedChantingMode, isTrue);
+      expect(prefs.getBool(AppConstants.prefsDimmedChantingKey), isTrue);
+
+      await notifier.setDimmedChantingMode(false);
+      expect(notifier.state.dimmedChantingMode, isFalse);
+      expect(repo.dimmedChantingMode, isFalse);
+    });
+  });
 }

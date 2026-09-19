@@ -1090,6 +1090,48 @@ abstract class AppLocalizations {
   /// **'For longer sessions'**
   String get sectionStillnessSub;
 
+  /// Title for Do Not Disturb setting toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Silence notifications (Do Not Disturb)'**
+  String get dndTitle;
+
+  /// Subtitle for Do Not Disturb setting toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Silence incoming alerts and calls while chanting'**
+  String get dndSub;
+
+  /// Title for DND permission dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Do Not Disturb Permission'**
+  String get dndPermissionTitle;
+
+  /// Message explaining why DND permission is needed
+  ///
+  /// In en, this message translates to:
+  /// **'To automatically silence incoming calls and notifications during chanting, please allow Do Not Disturb access in Android settings.'**
+  String get dndPermissionMessage;
+
+  /// Button to open system DND settings
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get dndOpenSettings;
+
+  /// Title for dimmed chanting mode
+  ///
+  /// In en, this message translates to:
+  /// **'Dimmed Chanting Mode'**
+  String get dimmedModeTitle;
+
+  /// Subtitle for dimmed chanting mode
+  ///
+  /// In en, this message translates to:
+  /// **'Darkens the background while keeping the mala circle clearly visible to save battery'**
+  String get dimmedModeSub;
+
   /// Setting label for screen brightness adjustment
   ///
   /// In en, this message translates to:
@@ -3075,6 +3117,318 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose which counters to import from the received data'**
   String get opticalImportSelectHint;
+
+  /// Status bar notification title when lifetime goal is reached
+  ///
+  /// In en, this message translates to:
+  /// **'Lifetime Goal Achieved!'**
+  String get notifLifetimeGoalTitle;
+
+  /// Status bar notification body when lifetime goal is reached
+  ///
+  /// In en, this message translates to:
+  /// **'Auspicious milestone reached. May your sadhana bring peace and liberation.'**
+  String get notifLifetimeGoalBody;
+
+  /// Setting title for lifetime goal completion tone
+  ///
+  /// In en, this message translates to:
+  /// **'Lifetime goal tone'**
+  String get lifetimeSoundTitle;
+
+  /// Setting subtitle explaining lifetime goal chime
+  ///
+  /// In en, this message translates to:
+  /// **'Sacred chime played when lifetime target is reached'**
+  String get lifetimeSoundSub;
+
+  /// Toggle title for lifetime goal milestone notification
+  ///
+  /// In en, this message translates to:
+  /// **'Lifetime goal notification'**
+  String get enableLifetimeNotification;
+
+  /// Toggle subtitle for lifetime goal milestone notification
+  ///
+  /// In en, this message translates to:
+  /// **'Show notification when lifetime milestone is reached'**
+  String get enableLifetimeNotificationSub;
+
+  /// Name of the sacred conch shell audio tone
+  ///
+  /// In en, this message translates to:
+  /// **'Sacred Shankha'**
+  String get soundSacredShankha;
+
+  /// Description of the sacred conch shell audio tone
+  ///
+  /// In en, this message translates to:
+  /// **'Conch shell resonance sounding spiritual victory'**
+  String get soundSacredShankhaSub;
+
+  /// Title of sound settings card
+  ///
+  /// In en, this message translates to:
+  /// **'Sound & Haptics'**
+  String get settingsSoundTitle;
+
+  /// Subtitle of sound settings card
+  ///
+  /// In en, this message translates to:
+  /// **'Mala chimes, goal completion tones, and vibration'**
+  String get settingsSoundSub;
+
+  /// Title of display settings card
+  ///
+  /// In en, this message translates to:
+  /// **'Display & Stillness'**
+  String get settingsDisplayTitle;
+
+  /// Subtitle of display settings card
+  ///
+  /// In en, this message translates to:
+  /// **'Screen brightness and sacred stillness mode'**
+  String get settingsDisplaySub;
+
+  /// Title of language settings card
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settingsLanguageTitle;
+
+  /// Subtitle of language settings card
+  ///
+  /// In en, this message translates to:
+  /// **'App language, script, and numbering'**
+  String get settingsLanguageSub;
+
+  /// Title of permissions card in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Permissions'**
+  String get settingsPermissionsTitle;
+
+  /// Subtitle of permissions card in settings
+  ///
+  /// In en, this message translates to:
+  /// **'What device capabilities the app uses and why'**
+  String get settingsPermissionsSub;
+
+  /// Title for data clear action card
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all data'**
+  String get settingsClearDataTitle;
+
+  /// Subtitle for data clear action card
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all counters and chanting sessions'**
+  String get settingsClearDataSub;
+
+  /// Header for explicit runtime permissions
+  ///
+  /// In en, this message translates to:
+  /// **'Explicit Permissions'**
+  String get permissionsExplicitHeader;
+
+  /// Subtitle explaining explicit permissions
+  ///
+  /// In en, this message translates to:
+  /// **'Permissions requested at runtime only when you invoke specific features'**
+  String get permissionsExplicitSub;
+
+  /// Header for implicit normal permissions
+  ///
+  /// In en, this message translates to:
+  /// **'Implicit Permissions'**
+  String get permissionsImplicitHeader;
+
+  /// Subtitle explaining implicit permissions
+  ///
+  /// In en, this message translates to:
+  /// **'Normal permissions granted automatically by Android to deliver core offline functions'**
+  String get permissionsImplicitSub;
+
+  /// Header for excluded permissions highlighting privacy
+  ///
+  /// In en, this message translates to:
+  /// **'Zero-Trust Privacy Guarantee'**
+  String get permissionsPrivacyHeader;
+
+  /// Subtitle for privacy section
+  ///
+  /// In en, this message translates to:
+  /// **'Permissions deliberately omitted to safeguard your spiritual practice'**
+  String get permissionsPrivacySub;
+
+  /// Title for camera permission
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get permCameraTitle;
+
+  /// Description of camera permission
+  ///
+  /// In en, this message translates to:
+  /// **'Used exclusively to scan animated QR fountain codes when receiving data via air-gapped Optical Sync. Never captures photos or videos.'**
+  String get permCameraDesc;
+
+  /// Title for notification permission
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get permNotificationTitle;
+
+  /// Description of notification permission
+  ///
+  /// In en, this message translates to:
+  /// **'Used on Android 13+ to show milestone banners in the status bar when daily or lifetime mantra targets are completed.'**
+  String get permNotificationDesc;
+
+  /// Title for vibration permission
+  ///
+  /// In en, this message translates to:
+  /// **'Vibration'**
+  String get permVibrationTitle;
+
+  /// Description of vibration permission
+  ///
+  /// In en, this message translates to:
+  /// **'Delivers gentle haptic feedback on each chant tap, mala completion, and goal achievement, remaining tactile even in silent mode.'**
+  String get permVibrationDesc;
+
+  /// Title for audio settings permission
+  ///
+  /// In en, this message translates to:
+  /// **'Audio Management'**
+  String get permAudioTitle;
+
+  /// Description of audio settings permission
+  ///
+  /// In en, this message translates to:
+  /// **'Temporarily routes completion chimes through the alarm audio stream so sacred bells remain audible during meditation.'**
+  String get permAudioDesc;
+
+  /// Title explaining absence of internet permission
+  ///
+  /// In en, this message translates to:
+  /// **'Zero Internet Access'**
+  String get permNoInternetTitle;
+
+  /// Description explaining absence of internet permission
+  ///
+  /// In en, this message translates to:
+  /// **'The app contains no internet permission. It cannot transmit data, connect to cloud servers, or track analytics.'**
+  String get permNoInternetDesc;
+
+  /// Title explaining storage access privacy
+  ///
+  /// In en, this message translates to:
+  /// **'No Broad Storage Access'**
+  String get permNoStorageTitle;
+
+  /// Description explaining storage access privacy
+  ///
+  /// In en, this message translates to:
+  /// **'Instead of accessing your personal files, exports and imports use Android\'s native system picker with user consent.'**
+  String get permNoStorageDesc;
+
+  /// Title for app tutorial screen
+  ///
+  /// In en, this message translates to:
+  /// **'App Tutorial'**
+  String get tutorialTitle;
+
+  /// Subtitle for app tutorial screen
+  ///
+  /// In en, this message translates to:
+  /// **'Step-by-step visual walkthrough of all app features'**
+  String get tutorialSub;
+
+  /// Tutorial step 1 title
+  ///
+  /// In en, this message translates to:
+  /// **'1. Create Your First Counter'**
+  String get tutorialStep1Title;
+
+  /// Tutorial step 1 description
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the add button (+) on the home screen. Enter the mantra name, choose an increment step, and set daily and lifetime goals.'**
+  String get tutorialStep1Desc;
+
+  /// Tutorial step 2 title
+  ///
+  /// In en, this message translates to:
+  /// **'2. Sacred Fullscreen Counting'**
+  String get tutorialStep2Title;
+
+  /// Tutorial step 2 description
+  ///
+  /// In en, this message translates to:
+  /// **'Tap anywhere on the large counting surface to advance counts. Swipe downwards to undo an accidental tap. Use the stillness slider to dim the screen.'**
+  String get tutorialStep2Desc;
+
+  /// Tutorial step 3 title
+  ///
+  /// In en, this message translates to:
+  /// **'3. 108 Beads Mala System'**
+  String get tutorialStep3Title;
+
+  /// Tutorial step 3 description
+  ///
+  /// In en, this message translates to:
+  /// **'Every 108 chants automatically complete one mala. The app chimes sacred temple bells and records your completed malas with precision.'**
+  String get tutorialStep3Desc;
+
+  /// Tutorial step 4 title
+  ///
+  /// In en, this message translates to:
+  /// **'4. Daily & Lifetime Milestones'**
+  String get tutorialStep4Title;
+
+  /// Tutorial step 4 description
+  ///
+  /// In en, this message translates to:
+  /// **'When your daily or lifetime target is met, custom sacred tones and auspicious badges celebrate your spiritual milestone.'**
+  String get tutorialStep4Desc;
+
+  /// Tutorial step 5 title
+  ///
+  /// In en, this message translates to:
+  /// **'5. Locking & Archiving'**
+  String get tutorialStep5Title;
+
+  /// Tutorial step 5 description
+  ///
+  /// In en, this message translates to:
+  /// **'Long-press any counter card to lock it against accidental touches, or retire completed mantras with a completion status.'**
+  String get tutorialStep5Desc;
+
+  /// Tutorial step 6 title
+  ///
+  /// In en, this message translates to:
+  /// **'6. Air-Gapped Optical QR Sync'**
+  String get tutorialStep6Title;
+
+  /// Tutorial step 6 description
+  ///
+  /// In en, this message translates to:
+  /// **'Migrate your japa counters between devices without internet, Bluetooth, or cables using animated QR camera streaming.'**
+  String get tutorialStep6Desc;
+
+  /// Tutorial step 7 title
+  ///
+  /// In en, this message translates to:
+  /// **'7. Encrypted Backups'**
+  String get tutorialStep7Title;
+
+  /// Tutorial step 7 description
+  ///
+  /// In en, this message translates to:
+  /// **'Export your entire sadhana history to a file protected by AES-256-GCM encryption with your personal passphrase.'**
+  String get tutorialStep7Desc;
 }
 
 class _AppLocalizationsDelegate

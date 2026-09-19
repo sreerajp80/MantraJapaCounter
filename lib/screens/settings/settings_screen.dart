@@ -1,26 +1,15 @@
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
-import 'package:mantra_japa_counter/providers/app_providers.dart';
-import 'package:mantra_japa_counter/providers/counters_provider.dart';
 import 'package:mantra_japa_counter/providers/settings_provider.dart';
-import 'package:mantra_japa_counter/models/mala_sound.dart';
 import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
-import 'package:mantra_japa_counter/screens/settings/notification_sound_picker.dart';
-import 'package:mantra_japa_counter/screens/settings/mala_sound_picker.dart';
-import 'package:mantra_japa_counter/screens/settings/language_picker.dart';
 import 'package:mantra_japa_counter/screens/settings/settings_tiles.dart';
-import 'package:mantra_japa_counter/screens/settings/settings_brightness_row.dart';
 import 'package:mantra_japa_counter/screens/settings/settings_info_cards.dart';
-import 'package:mantra_japa_counter/services/export_service.dart';
-import 'package:mantra_japa_counter/widgets/passphrase_dialog.dart';
 
-/// App settings — Temple variation. Sectioned cards with a lotus icon header,
-/// vermillion toggles, and a serif "still / full" brightness slider.
+/// App settings hub — Temple variation. Every setting is presented as a
+/// card that navigates to its dedicated sub-settings screen.
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
@@ -28,7 +17,6 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final settings = ref.watch(settingsNotifierProvider);
-    final notifier = ref.read(settingsNotifierProvider.notifier);
 
     return Scaffold(
       backgroundColor: TempleColors.bg,
@@ -39,8 +27,9 @@ class SettingsScreen extends ConsumerWidget {
             _topBar(context, l),
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.fromLTRB(18, 8, 18, 28),
+                padding: const EdgeInsets.fromLTRB(18, 12, 18, 28),
                 children: [
+                  // Appearance Card
                   SettingsCard(
                     icon: Icons.palette_outlined,
                     title: l.settingsAppearanceTitle,
@@ -48,6 +37,44 @@ class SettingsScreen extends ConsumerWidget {
                     onTap: () => context.push('/settings/appearance'),
                   ),
                   const SizedBox(height: 10),
+
+                  // Sound & Haptics Card
+                  SettingsCard(
+                    icon: Icons.volume_up_outlined,
+                    title: l.settingsSoundTitle,
+                    subtitle: l.settingsSoundSub,
+                    onTap: () => context.push('/settings/sound'),
+                  ),
+                  const SizedBox(height: 10),
+
+                  // Display & Stillness Card
+                  SettingsCard(
+                    icon: Icons.brightness_medium_outlined,
+                    title: l.settingsDisplayTitle,
+                    subtitle: l.settingsDisplaySub,
+                    onTap: () => context.push('/settings/display'),
+                  ),
+                  const SizedBox(height: 10),
+
+                  // Language Card
+                  SettingsCard(
+                    icon: Icons.translate_outlined,
+                    title: l.settingsLanguageTitle,
+                    subtitle: _languageSubtitle(l, settings.languageCode),
+                    onTap: () => context.push('/settings/language'),
+                  ),
+                  const SizedBox(height: 10),
+
+                  // Backup & Restore Card
+                  SettingsCard(
+                    icon: Icons.backup_outlined,
+                    title: l.settingsBackupTitle,
+                    subtitle: l.settingsBackupSub,
+                    onTap: () => context.push('/settings/backup'),
+                  ),
+                  const SizedBox(height: 10),
+
+                  // Features Card
                   SettingsCard(
                     icon: Icons.stars_outlined,
                     title: l.settingsFeaturesTitle,
@@ -55,6 +82,17 @@ class SettingsScreen extends ConsumerWidget {
                     onTap: () => context.push('/settings/features'),
                   ),
                   const SizedBox(height: 10),
+
+                  // Permissions Card
+                  SettingsCard(
+                    icon: Icons.shield_outlined,
+                    title: l.settingsPermissionsTitle,
+                    subtitle: l.settingsPermissionsSub,
+                    onTap: () => context.push('/settings/permissions'),
+                  ),
+                  const SizedBox(height: 10),
+
+                  // Help & Tutorial Card
                   SettingsCard(
                     icon: Icons.help_outline,
                     title: l.settingsHelpTitle,
@@ -62,198 +100,18 @@ class SettingsScreen extends ConsumerWidget {
                     onTap: () => context.push('/help'),
                   ),
                   const SizedBox(height: 10),
+
+                  // About Card
                   SettingsCard(
                     icon: Icons.info_outline,
                     title: l.aboutTitle,
                     subtitle: l.settingsAboutSub,
                     onTap: () => context.push('/about'),
                   ),
-                  const SizedBox(height: 12),
-                  SettingsSection(
-                    title: l.sectionLanguage,
-                    sub: l.sectionLanguageSub,
-                    iconBuilder: (s, c) =>
-                        Icon(Icons.language, size: s, color: c),
-                    children: [
-                      SettingsRow(
-                        leading: const Icon(
-                          Icons.translate,
-                          size: 15,
-                          color: TempleColors.ink2,
-                        ),
-                        title: l.appLanguage,
-                        sub: _languageSubtitle(l, settings.languageCode),
-                        right: _languageShortLabel(l, settings.languageCode),
-                        onTap: () => showLanguagePicker(
-                          context,
-                          settings.languageCode,
-                          notifier,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SettingsSection(
-                    title: l.sectionDailyGoal,
-                    sub: l.sectionDailyGoalSub,
-                    iconBuilder: (s, c) => TempleDiyaIcon(size: s, color: c),
-                    children: [
-                      SettingsRow(
-                        leading: const Icon(
-                          Icons.notifications_outlined,
-                          size: 15,
-                          color: TempleColors.ink2,
-                        ),
-                        title: l.enableNotification,
-                        sub: l.enableNotificationSub,
-                        toggle: settings.dailyGoalNotificationsEnabled,
-                        onToggle: notifier.setDailyGoalNotificationsEnabled,
-                      ),
-                      SettingsRow(
-                        leading: const Icon(
-                          Icons.vibration,
-                          size: 15,
-                          color: TempleColors.ink2,
-                        ),
-                        title: l.vibration,
-                        sub: l.vibrationSub,
-                        toggle: settings.vibrationEnabled,
-                        onToggle: notifier.setVibrationEnabled,
-                      ),
-                      SettingsRow(
-                        leading: const Icon(
-                          Icons.volume_up_outlined,
-                          size: 15,
-                          color: TempleColors.ink2,
-                        ),
-                        title: l.notificationSound,
-                        sub: _notificationSoundSubtitle(l, settings),
-                        onTap: () => showNotificationSoundPicker(
-                          context,
-                          ref,
-                          settings,
-                          notifier,
-                        ),
-                      ),
-                      SettingsRow(
-                        leading: const Icon(
-                          Icons.play_arrow_outlined,
-                          size: 15,
-                          color: TempleColors.ink2,
-                        ),
-                        title: l.previewTone,
-                        sub: l.previewToneSub,
-                        right: l.play,
-                        onTap: () => ref
-                            .read(soundServiceProvider)
-                            .playTone(settings.notificationSoundUri),
-                      ),
-                    ],
-                  ),
-                  SettingsSection(
-                    title: l.sectionMala,
-                    sub: l.sectionMalaSub,
-                    iconBuilder: (s, c) => TempleLotusIcon(size: s, color: c),
-                    children: [
-                      SettingsRow(
-                        leading: const Icon(
-                          Icons.access_time,
-                          size: 15,
-                          color: TempleColors.ink2,
-                        ),
-                        title: l.enableMalaSound,
-                        sub: l.enableMalaSoundSub,
-                        toggle: settings.malaNotificationsEnabled,
-                        onToggle: notifier.setMalaNotificationsEnabled,
-                      ),
-                      SettingsRow(
-                        leading: const Icon(
-                          Icons.music_note_outlined,
-                          size: 15,
-                          color: TempleColors.ink2,
-                        ),
-                        title: l.malaSoundTitle,
-                        sub: _malaSoundSubtitle(l, settings.malaSound),
-                        right: _malaSoundShortLabel(l, settings.malaSound),
-                        onTap: () => showMalaSoundPicker(
-                          context,
-                          ref,
-                          settings,
-                          notifier,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SettingsSection(
-                    title: l.sectionStillness,
-                    sub: l.sectionStillnessSub,
-                    iconBuilder: (s, c) =>
-                        Icon(Icons.brightness_5_outlined, size: s, color: c),
-                    children: [
-                      SettingsBrightnessRow(
-                        value: settings.screenBrightness < 0
-                            ? 0.5
-                            : settings.screenBrightness,
-                        usingSystem: settings.screenBrightness < 0,
-                        onChanged: notifier.setScreenBrightness,
-                        onReset: () => notifier.setScreenBrightness(-1.0),
-                      ),
-                    ],
-                  ),
-                  SettingsSection(
-                    title: l.settingsBackupTitle,
-                    sub: l.settingsBackupSub,
-                    iconBuilder: (s, c) => Icon(Icons.sync, size: s, color: c),
-                    children: [
-                      SettingsRow(
-                        leading: const Icon(
-                          Icons.qr_code_2_outlined,
-                          size: 15,
-                          color: TempleColors.ink2,
-                        ),
-                        title: l.settingsOpticalSendTitle,
-                        sub: l.settingsOpticalSendSub,
-                        onTap: () =>
-                            context.push('/backup/optical-sync/transmit'),
-                      ),
-                      SettingsRow(
-                        leading: const Icon(
-                          Icons.qr_code_scanner_outlined,
-                          size: 15,
-                          color: TempleColors.ink2,
-                        ),
-                        title: l.settingsOpticalReceiveTitle,
-                        sub: l.settingsOpticalReceiveSub,
-                        onTap: () =>
-                            context.push('/backup/optical-sync/receive'),
-                      ),
-                      SettingsRow(
-                        leading: const Icon(
-                          Icons.upload_file_outlined,
-                          size: 15,
-                          color: TempleColors.ink2,
-                        ),
-                        title: l.settingsExportTitle,
-                        sub: l.settingsExportSub,
-                        onTap: () => _doSettingsExport(context, ref),
-                      ),
-                      SettingsRow(
-                        leading: const Icon(
-                          Icons.download_for_offline_outlined,
-                          size: 15,
-                          color: TempleColors.ink2,
-                        ),
-                        title: l.settingsImportTitle,
-                        sub: l.settingsImportSub,
-                        onTap: () => _doSettingsImport(context, ref),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 16),
+
+                  // Guidance Card
                   const SettingsGuidanceCard(),
-                  const SizedBox(height: 18),
-                  SettingsDangerCard(
-                    onTap: () => _confirmClearAll(context, ref),
-                  ),
                 ],
               ),
             ),
@@ -311,164 +169,5 @@ class SettingsScreen extends ConsumerWidget {
     if (code == 'ml') return l.malayalamLanguage;
     if (code == 'sa') return l.sanskritLanguage;
     return l.systemDefault;
-  }
-
-  String _languageShortLabel(AppLocalizations l, String? code) {
-    if (code == 'en') return 'English';
-    if (code == 'ml') return 'മലയാളം';
-    if (code == 'sa') return 'संस्कृतम्';
-    return l.systemDefault;
-  }
-
-  String _notificationSoundSubtitle(AppLocalizations l, AppSettings s) {
-    if (s.notificationSoundUri == null) {
-      return l.soundSystemDefaultTapToChange;
-    }
-    final name = s.notificationSoundName;
-    if (name != null && name.isNotEmpty) {
-      return l.soundNamedTapToChange(name);
-    }
-    return l.soundCustomTapToChange;
-  }
-
-  String _malaSoundShortLabel(AppLocalizations l, MalaSound sound) {
-    switch (sound) {
-      case MalaSound.templeBell:
-        return l.soundTempleBell;
-      case MalaSound.singingBowl:
-        return l.soundSingingBowl;
-      case MalaSound.synthesizedTone:
-        return l.soundSynthesizedTone;
-    }
-  }
-
-  String _malaSoundSubtitle(AppLocalizations l, MalaSound sound) {
-    switch (sound) {
-      case MalaSound.templeBell:
-        return l.soundTempleBellSub;
-      case MalaSound.singingBowl:
-        return l.soundSingingBowlSub;
-      case MalaSound.synthesizedTone:
-        return l.soundSynthesizedToneSub;
-    }
-  }
-
-  void _confirmClearAll(BuildContext context, WidgetRef ref) {
-    final l = AppLocalizations.of(context);
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text(l.clearAllDataTitle),
-        content: Text(l.clearAllDataMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(l.cancel),
-          ),
-          TextButton(
-            onPressed: () async {
-              Navigator.pop(context);
-              final repo = ref.read(japaCounterRepositoryProvider);
-              await repo.deleteAllSessions();
-              await repo.deleteAllCounters();
-              ref.invalidate(countersNotifierProvider);
-              if (context.mounted) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(l.allDataCleared)));
-              }
-            },
-            child: Text(
-              l.clearAllButton,
-              style: const TextStyle(color: TempleColors.vermillionDeep),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ──────────────────── Export with optional encryption ────────────────────
-
-  Future<void> _doSettingsExport(
-    BuildContext context,
-    WidgetRef ref,
-  ) async {
-    final l = AppLocalizations.of(context);
-
-    // Show passphrase dialog (user can skip encryption)
-    final result = await showExportPassphraseDialog(context);
-    if (result == null) return; // dismissed
-
-    try {
-      await ref.read(exportServiceProvider).exportAndShare(
-        passphrase: result.encrypt ? result.passphrase : null,
-      );
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l.exportFailed('$e'))),
-        );
-      }
-    }
-  }
-
-  // ──────────────────── Import with encryption detection ───────────────────
-
-  Future<void> _doSettingsImport(
-    BuildContext context,
-    WidgetRef ref,
-  ) async {
-    final l = AppLocalizations.of(context);
-    try {
-      final result = await FilePicker.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['json', 'enc'],
-      );
-      final pickedPath = result?.files.single.path;
-      if (pickedPath == null) return;
-
-      final content = await File(pickedPath).readAsString();
-      final exportSvc = ref.read(exportServiceProvider);
-
-      try {
-        await exportSvc.importFromJson(content);
-      } on EncryptedExportException {
-        // File is encrypted — prompt for passphrase
-        if (!context.mounted) return;
-        final passphrase = await showImportPassphraseDialog(context);
-        if (passphrase == null || !context.mounted) return;
-
-        try {
-          await exportSvc.importEncryptedFromJson(content, passphrase);
-        } catch (_) {
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(l.decryptFailed),
-                backgroundColor: TempleColors.vermillionDeep,
-              ),
-            );
-          }
-          return;
-        }
-      }
-
-      ref.invalidate(countersNotifierProvider);
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(l.dataRestoredSuccess),
-            backgroundColor: TempleColors.tulsi,
-          ),
-        );
-      }
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l.importFailed('$e'))),
-        );
-      }
-    }
   }
 }

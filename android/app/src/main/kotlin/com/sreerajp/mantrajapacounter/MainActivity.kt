@@ -1,6 +1,8 @@
 package com.sreerajp.mantrajapacounter
 
+import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.Ringtone
@@ -14,6 +16,7 @@ import android.os.VibrationAttributes
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import android.provider.Settings
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -37,6 +40,8 @@ class MainActivity : FlutterActivity() {
     // Saved STREAM_ALARM volume captured on the first boost call. Null when
     // nothing is currently boosted. Restored by [scheduleAlarmVolumeRestore].
     private var savedAlarmVolume: Int? = null
+    // Saved interruption filter captured before enabling DND. Restored by [restoreDndNow].
+    private var savedInterruptionFilter: Int? = null
     private val volumeHandler = Handler(Looper.getMainLooper())
     private val restoreAlarmVolumeRunnable = Runnable { restoreAlarmVolumeNow() }
 
@@ -92,6 +97,21 @@ class MainActivity : FlutterActivity() {
                     restoreAlarmVolumeNow()
                     result.success(null)
                 }
+                "isDndAccessGranted" -> {
+                    result.success(isDndAccessGranted())
+                }
+                "openDndSettings" -> {
+                    openDndSettings()
+                    result.success(null)
+                }
+                "setDndEnabled" -> {
+                    val enabled = call.argument<Boolean>("enabled") ?: false
+                    result.success(setDndEnabled(enabled))
+                }
+                "restoreDnd" -> {
+                    restoreDndNow()
+                    result.success(null)
+                }
                 else -> result.notImplemented()
             }
         }
@@ -102,14 +122,70 @@ class MainActivity : FlutterActivity() {
         // background mid-boost. Restore immediately on pause; the next play
         // call will re-boost.
         restoreAlarmVolumeNow()
+        restoreDndNow()
         super.onPause()
     }
 
     override fun onDestroy() {
         volumeHandler.removeCallbacks(restoreAlarmVolumeRunnable)
         restoreAlarmVolumeNow()
+        restoreDndNow()
         stopPreviewTone()
         super.onDestroy()
+    }
+
+    private fun isDndAccessGranted(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val nm = getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+            nm?.isNotificationPolicyAccessGranted ?: false
+        } else {
+            true
+        }
+    }
+
+    private fun openDndSettings() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                val intent = Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+                startActivity(intent)
+            } catch (_: Exception) {}
+        }
+    }
+
+    private fun setDndEnabled(enabled: Boolean): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val nm = getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager ?: return false
+            if (!nm.isNotificationPolicyAccessGranted) return false
+            return try {
+                if (enabled) {
+                    if (savedInterruptionFilter == null) {
+                        savedInterruptionFilter = nm.currentInterruptionFilter
+                    }
+                    nm.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY)
+                } else {
+                    restoreDndNow()
+                }
+                true
+            } catch (_: Exception) {
+                false
+            }
+        }
+        return false
+    }
+
+    private fun restoreDndNow() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val filter = savedInterruptionFilter ?: return
+            val nm = getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+            if (nm?.isNotificationPolicyAccessGranted == true) {
+                try {
+                    nm.setInterruptionFilter(filter)
+                } catch (_: Exception) {}
+            }
+            savedInterruptionFilter = null
+        }
     }
 
     /**

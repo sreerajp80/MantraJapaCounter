@@ -161,8 +161,7 @@ class _ExportPassphraseDialogState extends State<_ExportPassphraseDialog> {
                     icon: Icon(
                       _obscure1 ? Icons.visibility_off : Icons.visibility,
                     ),
-                    onPressed: () =>
-                        setState(() => _obscure1 = !_obscure1),
+                    onPressed: () => setState(() => _obscure1 = !_obscure1),
                   ),
                 ),
                 onChanged: (_) {
@@ -188,8 +187,7 @@ class _ExportPassphraseDialogState extends State<_ExportPassphraseDialog> {
                     icon: Icon(
                       _obscure2 ? Icons.visibility_off : Icons.visibility,
                     ),
-                    onPressed: () =>
-                        setState(() => _obscure2 = !_obscure2),
+                    onPressed: () => setState(() => _obscure2 = !_obscure2),
                   ),
                 ),
                 onChanged: (_) {
@@ -312,9 +310,7 @@ class _ImportPassphraseDialogState extends State<_ImportPassphraseDialog> {
                 borderSide: const BorderSide(color: TempleColors.vermillion),
               ),
               suffixIcon: IconButton(
-                icon: Icon(
-                  _obscure ? Icons.visibility_off : Icons.visibility,
-                ),
+                icon: Icon(_obscure ? Icons.visibility_off : Icons.visibility),
                 onPressed: () => setState(() => _obscure = !_obscure),
               ),
             ),

@@ -165,6 +165,13 @@
   "soundSynthesizedToneSub": "പരമ്പരാഗത 100ms ഇലക്ട്രോണിക് ബീപ്പ് (DTMF)",
   "sectionStillness": "നിശ്ചലത",
   "sectionStillnessSub": "ദൈർഘ്യമേറിയ സെഷനുകൾക്ക്",
+  "dndTitle": "അറിയിപ്പുകൾ നിശബ്ദമാക്കുക (DND)",
+  "dndSub": "ജപിക്കുമ്പോൾ വരുന്ന സന്ദേശങ്ങളും കോളുകളും നിശബ്ദമാക്കുന്നു",
+  "dndPermissionTitle": "ഡു നോട്ട് ഡിസ്റ്റർബ് അനുമതി",
+  "dndPermissionMessage": "ജപിക്കുമ്പോൾ കോളുകളും അറിയിപ്പുകളും സ്വയം നിശബ്ദമാക്കാൻ, ആൻഡ്രോയിഡ് ക്രമീകരണങ്ങളിൽ Do Not Disturb അനുമതി നൽകുക.",
+  "dndOpenSettings": "ക്രമീകരണങ്ങൾ തുറക്കുക",
+  "dimmedModeTitle": "മങ്ങിയ ജപ രീതി",
+  "dimmedModeSub": "ബാറ്ററി ലാഭിക്കാൻ മാല വൃത്തം മാത്രം കാണിച്ച് പശ്ചാത്തലം ഇരുണ്ടതാക്കുന്നു",
   "brightnessLevel": "തെളിച്ച നില",
   "followingSystem": "സിസ്റ്റം പിന്തുടരുന്നു",
   "overrideActive": "ഓവർറൈഡ് സജീവം",
@@ -931,5 +938,213 @@
   "opticalImportSelectHint": "ലഭിച്ച ഡാറ്റയിൽ നിന്ന് ഇമ്പോർട്ട് ചെയ്യാൻ കൗണ്ടറുകൾ തിരഞ്ഞെടുക്കുക",
   "@opticalImportSelectHint": {
     "description": "Hint text on the import preview sheet for selecting counters to import"
+  },
+  "notifLifetimeGoalTitle": "ജീവിതകാല ലക്ഷ്യം നേടി!",
+  "@notifLifetimeGoalTitle": {
+    "description": "Status bar notification title when lifetime goal is reached"
+  },
+  "notifLifetimeGoalBody": "പുണ്യമായ ലക്ഷ്യം പൂർത്തിയായി. അങ്ങയുടെ സാധന ശാന്തിയും മോക്ഷവും നൽകട്ടെ.",
+  "@notifLifetimeGoalBody": {
+    "description": "Status bar notification body when lifetime goal is reached"
+  },
+  "lifetimeSoundTitle": "ജീവിതകാല ലക്ഷ്യ ധ്വനി",
+  "@lifetimeSoundTitle": {
+    "description": "Setting title for lifetime goal completion tone"
+  },
+  "lifetimeSoundSub": "ജീവിതകാല ലക്ഷ്യം നേടുമ്പോൾ കേൾപ്പിക്കുന്ന വിശുദ്ധ ശബ്ദം",
+  "@lifetimeSoundSub": {
+    "description": "Setting subtitle explaining lifetime goal chime"
+  },
+  "enableLifetimeNotification": "ജീവിതകാല ലക്ഷ്യ അറിയിപ്പ്",
+  "@enableLifetimeNotification": {
+    "description": "Toggle title for lifetime goal milestone notification"
+  },
+  "enableLifetimeNotificationSub": "ജീവിതകാല ലക്ഷ്യം നേടുമ്പോൾ വിജ്ഞാപനം നൽകുക",
+  "@enableLifetimeNotificationSub": {
+    "description": "Toggle subtitle for lifetime goal milestone notification"
+  },
+  "soundSacredShankha": "വിശുദ്ധ ശംഖനാദം",
+  "@soundSacredShankha": {
+    "description": "Name of the sacred conch shell audio tone"
+  },
+  "soundSacredShankhaSub": "വിജയവും പുണ്യവും പകരുന്ന ദിവ്യ ശംഖധ്വനി",
+  "@soundSacredShankhaSub": {
+    "description": "Description of the sacred conch shell audio tone"
+  },
+  "settingsSoundTitle": "ശബ്ദവും സ്പന്ദനവും",
+  "@settingsSoundTitle": {
+    "description": "Title of sound settings card"
+  },
+  "settingsSoundSub": "മാല മണിനാദങ്ങൾ, ലക്ഷ്യ പൂർത്തീകരണ ധ്വനികൾ, വൈബ്രേഷൻ",
+  "@settingsSoundSub": {
+    "description": "Subtitle of sound settings card"
+  },
+  "settingsDisplayTitle": "പ്രദർശനവും നിശ്ശബ്ദതയും",
+  "@settingsDisplayTitle": {
+    "description": "Title of display settings card"
+  },
+  "settingsDisplaySub": "സ്ക്രീൻ പ്രകാശവും ധ്യാന നിശ്ശബ്ദതാ രീതിയും",
+  "@settingsDisplaySub": {
+    "description": "Subtitle of display settings card"
+  },
+  "settingsLanguageTitle": "ഭാഷ",
+  "@settingsLanguageTitle": {
+    "description": "Title of language settings card"
+  },
+  "settingsLanguageSub": "ആപ്ലിക്കേഷൻ ഭാഷയും ലിപിയും സംഖ്യാരീതിയും",
+  "@settingsLanguageSub": {
+    "description": "Subtitle of language settings card"
+  },
+  "settingsPermissionsTitle": "അനുമതികൾ",
+  "@settingsPermissionsTitle": {
+    "description": "Title of permissions card in settings"
+  },
+  "settingsPermissionsSub": "ആപ്പ് ഉപകരണത്തിൽ ഉപയോഗിക്കുന്ന അനുമതികളും അവയുടെ ആവശ്യകതയും",
+  "@settingsPermissionsSub": {
+    "description": "Subtitle of permissions card in settings"
+  },
+  "settingsClearDataTitle": "ഡാറ്റ മുഴുവൻ മായ്ക്കുക",
+  "@settingsClearDataTitle": {
+    "description": "Title for data clear action card"
+  },
+  "settingsClearDataSub": "എല്ലാ കൗണ്ടറുകളും ജപ ചരിത്രവും പൂർണ്ണമായി ഒഴിവാക്കുക",
+  "@settingsClearDataSub": {
+    "description": "Subtitle for data clear action card"
+  },
+  "permissionsExplicitHeader": "നേരിട്ടുള്ള അനുമതികൾ (Explicit)",
+  "@permissionsExplicitHeader": {
+    "description": "Header for explicit runtime permissions"
+  },
+  "permissionsExplicitSub": "നിങ്ങൾ നിർദ്ദിഷ്ട ഫീച്ചർ ഉപയോഗിക്കുമ്പോൾ മാത്രം ഉപയോക്താവിനോട് ചോദിക്കുന്നവ",
+  "@permissionsExplicitSub": {
+    "description": "Subtitle explaining explicit permissions"
+  },
+  "permissionsImplicitHeader": "ആന്തരിക അനുമതികൾ (Implicit)",
+  "@permissionsImplicitHeader": {
+    "description": "Header for implicit normal permissions"
+  },
+  "permissionsImplicitSub": "ഇന്റർനെറ്റില്ലാതെ ഓഫ്ലൈൻ പ്രവർത്തനം നൽകാൻ ആൻഡ്രോയിഡ് സ്വയം അനുവദിക്കുന്നവ",
+  "@permissionsImplicitSub": {
+    "description": "Subtitle explaining implicit permissions"
+  },
+  "permissionsPrivacyHeader": "പൂർണ്ണ സ്വകാര്യതാ ഉറപ്പ്",
+  "@permissionsPrivacyHeader": {
+    "description": "Header for excluded permissions highlighting privacy"
+  },
+  "permissionsPrivacySub": "അങ്ങയുടെ സാധനാ സ്വകാര്യതയ്ക്കായി ഒഴിവാക്കപ്പെട്ട അനുമതികൾ",
+  "@permissionsPrivacySub": {
+    "description": "Subtitle for privacy section"
+  },
+  "permCameraTitle": "ക്യാമറ",
+  "@permCameraTitle": {
+    "description": "Title for camera permission"
+  },
+  "permCameraDesc": "ഓപ്റ്റിക്കൽ എയർ-ഗ്യാപ് വഴി വിവരങ്ങൾ സ്വീകരിക്കുമ്പോൾ ആനിമേറ്റഡ് ക്യുആർ കോഡ് സ്കാൻ ചെയ്യാൻ മാത്രം ഉപയോഗിക്കുന്നു. ഫോട്ടോകളോ വീഡിയോകളോ എടുക്കുന്നില്ല.",
+  "@permCameraDesc": {
+    "description": "Description of camera permission"
+  },
+  "permNotificationTitle": "അറിയിപ്പുകൾ (Notifications)",
+  "@permNotificationTitle": {
+    "description": "Title for notification permission"
+  },
+  "permNotificationDesc": "ആൻഡ്രോയിഡ് 13+ ഉപകരണങ്ങളിൽ പ്രതിദിന അല്ലെങ്കിൽ ജീവിതകാല ലക്ഷ്യം പൂർത്തിയാകുമ്പോൾ സ്റ്റാറ്റസ് ബാറിൽ അറിയിപ്പ് നൽകാൻ.",
+  "@permNotificationDesc": {
+    "description": "Description of notification permission"
+  },
+  "permVibrationTitle": "സ്പന്ദനം (Vibration)",
+  "@permVibrationTitle": {
+    "description": "Title for vibration permission"
+  },
+  "permVibrationDesc": "ഓരോ ജപത്തിലും മാല പൂർത്തിയാകുമ്പോഴും നിശ്ശബ്ദ മോഡിലും അറിയാൻ മൃദുവായ സ്പന്ദനം നൽകുന്നു.",
+  "@permVibrationDesc": {
+    "description": "Description of vibration permission"
+  },
+  "permAudioTitle": "ശബ്ദ ക്രമീകരണം",
+  "@permAudioTitle": {
+    "description": "Title for audio settings permission"
+  },
+  "permAudioDesc": "ധ്യാനത്തിലിരിക്കുമ്പോഴും മണിനാദങ്ങൾ വ്യക്തമായി കേൾക്കാൻ അലാറം സ്ട്രീമിലൂടെ താൽക്കാലികമായി ശബ്ദം ലഭ്യമാക്കുന്നു.",
+  "@permAudioDesc": {
+    "description": "Description of audio settings permission"
+  },
+  "permNoInternetTitle": "ഇന്റർനെറ്റ് പൂർണ്ണമായി ഇല്ല",
+  "@permNoInternetTitle": {
+    "description": "Title explaining absence of internet permission"
+  },
+  "permNoInternetDesc": "ആപ്പിന് ഇന്റർനെറ്റ് അനുമതിയില്ല. വിവരങ്ങൾ പുറത്തുവിടുകയോ ക്ലൗഡിലേക്ക് അയക്കുകയോ ട്രാക്ക് ചെയ്യുകയോ ചെയ്യുന്നില്ല.",
+  "@permNoInternetDesc": {
+    "description": "Description explaining absence of internet permission"
+  },
+  "permNoStorageTitle": "സ്റ്റോറേജ് അനുമതി ആവശ്യമില്ല",
+  "@permNoStorageTitle": {
+    "description": "Title explaining storage access privacy"
+  },
+  "permNoStorageDesc": "ഫയലുകൾ സുരക്ഷിതമായി എക്സ്പോർട്ട് ചെയ്യാനും ഇംപോർട്ട് ചെയ്യാനും സിസ്റ്റത്തിന്റെ സുരക്ഷിത പിക്കർ ഉപയോഗിക്കുന്നു.",
+  "@permNoStorageDesc": {
+    "description": "Description explaining storage access privacy"
+  },
+  "tutorialTitle": "ആപ്പ് ട്യൂട്ടോറിയൽ",
+  "@tutorialTitle": {
+    "description": "Title for app tutorial screen"
+  },
+  "tutorialSub": "ആപ്പിലെ എല്ലാ സവിശേഷതകളും എളുപ്പത്തിൽ പഠിക്കാം",
+  "@tutorialSub": {
+    "description": "Subtitle for app tutorial screen"
+  },
+  "tutorialStep1Title": "1. പുതിയ കൗണ്ടർ നിർമ്മിക്കുക",
+  "@tutorialStep1Title": {
+    "description": "Tutorial step 1 title"
+  },
+  "tutorialStep1Desc": "ഹോം സ്ക്രീനിലെ പ്ലസ് (+) ബട്ടൺ അമർത്തുക. മന്ത്രത്തിന്റെ പേര് നൽകി, ഘട്ടവും പ്രതിദിന-ജീവിതകാല ലക്ഷ്യങ്ങളും നിശ്ചയിക്കുക.",
+  "@tutorialStep1Desc": {
+    "description": "Tutorial step 1 description"
+  },
+  "tutorialStep2Title": "2. പൂർണ്ണ സ്ക്രീൻ ജപം",
+  "@tutorialStep2Title": {
+    "description": "Tutorial step 2 title"
+  },
+  "tutorialStep2Desc": "എണ്ണാൻ സ്ക്രീനിൽ എവിടെയും തൊടാം. തെറ്റിയാൽ താഴോട്ട് സ്വൈപ്പ് ചെയ്തു ഒഴിവാക്കാം. ഏകാഗ്രതയ്ക്ക് സ്ക്രീൻ മങ്ങിക്കാം.",
+  "@tutorialStep2Desc": {
+    "description": "Tutorial step 2 description"
+  },
+  "tutorialStep3Title": "3. 108 മണികളുടെ മാല",
+  "@tutorialStep3Title": {
+    "description": "Tutorial step 3 title"
+  },
+  "tutorialStep3Desc": "ഓരോ 108 ജപത്തിലും ഒരു മാല പൂർത്തിയാകുന്നു. പവിത്രമായ മണിനാദത്തോടെ മാലയുടെ കണക്കുകൾ രേഖപ്പെടുത്തുന്നു.",
+  "@tutorialStep3Desc": {
+    "description": "Tutorial step 3 description"
+  },
+  "tutorialStep4Title": "4. ലക്ഷ്യ നേട്ടങ്ങൾ",
+  "@tutorialStep4Title": {
+    "description": "Tutorial step 4 title"
+  },
+  "tutorialStep4Desc": "പ്രതിദിന അല്ലെങ്കിൽ ജീവിതകാല ലക്ഷ്യം കൈവരിക്കുമ്പോൾ പ്രത്യേക ധ്വനികളും മുദ്രകളും കൊണ്ട് അനുഗ്രഹീത നിമിഷം ആഘോഷിക്കാം.",
+  "@tutorialStep4Desc": {
+    "description": "Tutorial step 4 description"
+  },
+  "tutorialStep5Title": "5. ലോക്കും പൂർത്തീകരണവും",
+  "@tutorialStep5Title": {
+    "description": "Tutorial step 5 title"
+  },
+  "tutorialStep5Desc": "സ്പർശനം ഒഴിവാക്കാൻ കൗണ്ടർ ലോക്ക് ചെയ്യാം; പൂർത്തിയായ സാധനകൾ സുവർണ്ണ ചിഹ്നത്തോടെ ഭദ്രമായി സൂക്ഷിക്കാം.",
+  "@tutorialStep5Desc": {
+    "description": "Tutorial step 5 description"
+  },
+  "tutorialStep6Title": "6. എയർ-ഗ്യാപ്ഡ് ഒപ്റ്റിക്കൽ സിങ്ക്",
+  "@tutorialStep6Title": {
+    "description": "Tutorial step 6 title"
+  },
+  "tutorialStep6Desc": "ഇന്റർനെറ്റോ ബ്ലൂടൂത്തോ ഇല്ലാതെ ക്യാമറ ക്യുആർ ആനിമേഷൻ വഴി മറ്റൊരു ഉപകരണത്തിലേക്ക് വിവരങ്ങൾ കൈമാറാം.",
+  "@tutorialStep6Desc": {
+    "description": "Tutorial step 6 description"
+  },
+  "tutorialStep7Title": "7. എൻക്രിപ്റ്റഡ് ബാക്കപ്പ്",
+  "@tutorialStep7Title": {
+    "description": "Tutorial step 7 title"
+  },
+  "tutorialStep7Desc": "രഹസ്യ പാസ്സ്‌ഫ്രെയ്‌സ് നൽകി എഇഎസ്-256 സുരക്ഷയോടെ മുഴുവൻ സാധനാ ചരിത്രവും ഫയലായി സംരക്ഷിക്കാം.",
+  "@tutorialStep7Desc": {
+    "description": "Tutorial step 7 description"
   }
 }

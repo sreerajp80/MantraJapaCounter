@@ -166,7 +166,8 @@ class ExportService {
   // ──────────────────────────── Parsing helpers ─────────────────────────────
 
   /// Parses an ExportData from a plain JSON string. Returns the parsed data.
-  ExportData parseExportData(String jsonString) => _parseAndValidate(jsonString);
+  ExportData parseExportData(String jsonString) =>
+      _parseAndValidate(jsonString);
 
   ExportData _parseAndValidate(String jsonString) {
     final dynamic decoded;

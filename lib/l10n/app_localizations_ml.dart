@@ -569,6 +569,30 @@ class AppLocalizationsMl extends AppLocalizations {
   String get sectionStillnessSub => 'ദൈർഘ്യമേറിയ സെഷനുകൾക്ക്';
 
   @override
+  String get dndTitle => 'അറിയിപ്പുകൾ നിശബ്ദമാക്കുക (DND)';
+
+  @override
+  String get dndSub =>
+      'ജപിക്കുമ്പോൾ വരുന്ന സന്ദേശങ്ങളും കോളുകളും നിശബ്ദമാക്കുന്നു';
+
+  @override
+  String get dndPermissionTitle => 'ഡു നോട്ട് ഡിസ്റ്റർബ് അനുമതി';
+
+  @override
+  String get dndPermissionMessage =>
+      'ജപിക്കുമ്പോൾ കോളുകളും അറിയിപ്പുകളും സ്വയം നിശബ്ദമാക്കാൻ, ആൻഡ്രോയിഡ് ക്രമീകരണങ്ങളിൽ Do Not Disturb അനുമതി നൽകുക.';
+
+  @override
+  String get dndOpenSettings => 'ക്രമീകരണങ്ങൾ തുറക്കുക';
+
+  @override
+  String get dimmedModeTitle => 'മങ്ങിയ ജപ രീതി';
+
+  @override
+  String get dimmedModeSub =>
+      'ബാറ്ററി ലാഭിക്കാൻ മാല വൃത്തം മാത്രം കാണിച്ച് പശ്ചാത്തലം ഇരുണ്ടതാക്കുന്നു';
+
+  @override
   String get brightnessLevel => 'തെളിച്ച നില';
 
   @override
@@ -1700,4 +1724,182 @@ class AppLocalizationsMl extends AppLocalizations {
   @override
   String get opticalImportSelectHint =>
       'ലഭിച്ച ഡാറ്റയിൽ നിന്ന് ഇമ്പോർട്ട് ചെയ്യാൻ കൗണ്ടറുകൾ തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get notifLifetimeGoalTitle => 'ജീവിതകാല ലക്ഷ്യം നേടി!';
+
+  @override
+  String get notifLifetimeGoalBody =>
+      'പുണ്യമായ ലക്ഷ്യം പൂർത്തിയായി. അങ്ങയുടെ സാധന ശാന്തിയും മോക്ഷവും നൽകട്ടെ.';
+
+  @override
+  String get lifetimeSoundTitle => 'ജീവിതകാല ലക്ഷ്യ ധ്വനി';
+
+  @override
+  String get lifetimeSoundSub =>
+      'ജീവിതകാല ലക്ഷ്യം നേടുമ്പോൾ കേൾപ്പിക്കുന്ന വിശുദ്ധ ശബ്ദം';
+
+  @override
+  String get enableLifetimeNotification => 'ജീവിതകാല ലക്ഷ്യ അറിയിപ്പ്';
+
+  @override
+  String get enableLifetimeNotificationSub =>
+      'ജീവിതകാല ലക്ഷ്യം നേടുമ്പോൾ വിജ്ഞാപനം നൽകുക';
+
+  @override
+  String get soundSacredShankha => 'വിശുദ്ധ ശംഖനാദം';
+
+  @override
+  String get soundSacredShankhaSub => 'വിജയവും പുണ്യവും പകരുന്ന ദിവ്യ ശംഖധ്വനി';
+
+  @override
+  String get settingsSoundTitle => 'ശബ്ദവും സ്പന്ദനവും';
+
+  @override
+  String get settingsSoundSub =>
+      'മാല മണിനാദങ്ങൾ, ലക്ഷ്യ പൂർത്തീകരണ ധ്വനികൾ, വൈബ്രേഷൻ';
+
+  @override
+  String get settingsDisplayTitle => 'പ്രദർശനവും നിശ്ശബ്ദതയും';
+
+  @override
+  String get settingsDisplaySub => 'സ്ക്രീൻ പ്രകാശവും ധ്യാന നിശ്ശബ്ദതാ രീതിയും';
+
+  @override
+  String get settingsLanguageTitle => 'ഭാഷ';
+
+  @override
+  String get settingsLanguageSub => 'ആപ്ലിക്കേഷൻ ഭാഷയും ലിപിയും സംഖ്യാരീതിയും';
+
+  @override
+  String get settingsPermissionsTitle => 'അനുമതികൾ';
+
+  @override
+  String get settingsPermissionsSub =>
+      'ആപ്പ് ഉപകരണത്തിൽ ഉപയോഗിക്കുന്ന അനുമതികളും അവയുടെ ആവശ്യകതയും';
+
+  @override
+  String get settingsClearDataTitle => 'ഡാറ്റ മുഴുവൻ മായ്ക്കുക';
+
+  @override
+  String get settingsClearDataSub =>
+      'എല്ലാ കൗണ്ടറുകളും ജപ ചരിത്രവും പൂർണ്ണമായി ഒഴിവാക്കുക';
+
+  @override
+  String get permissionsExplicitHeader => 'നേരിട്ടുള്ള അനുമതികൾ (Explicit)';
+
+  @override
+  String get permissionsExplicitSub =>
+      'നിങ്ങൾ നിർദ്ദിഷ്ട ഫീച്ചർ ഉപയോഗിക്കുമ്പോൾ മാത്രം ഉപയോക്താവിനോട് ചോദിക്കുന്നവ';
+
+  @override
+  String get permissionsImplicitHeader => 'ആന്തരിക അനുമതികൾ (Implicit)';
+
+  @override
+  String get permissionsImplicitSub =>
+      'ഇന്റർനെറ്റില്ലാതെ ഓഫ്ലൈൻ പ്രവർത്തനം നൽകാൻ ആൻഡ്രോയിഡ് സ്വയം അനുവദിക്കുന്നവ';
+
+  @override
+  String get permissionsPrivacyHeader => 'പൂർണ്ണ സ്വകാര്യതാ ഉറപ്പ്';
+
+  @override
+  String get permissionsPrivacySub =>
+      'അങ്ങയുടെ സാധനാ സ്വകാര്യതയ്ക്കായി ഒഴിവാക്കപ്പെട്ട അനുമതികൾ';
+
+  @override
+  String get permCameraTitle => 'ക്യാമറ';
+
+  @override
+  String get permCameraDesc =>
+      'ഓപ്റ്റിക്കൽ എയർ-ഗ്യാപ് വഴി വിവരങ്ങൾ സ്വീകരിക്കുമ്പോൾ ആനിമേറ്റഡ് ക്യുആർ കോഡ് സ്കാൻ ചെയ്യാൻ മാത്രം ഉപയോഗിക്കുന്നു. ഫോട്ടോകളോ വീഡിയോകളോ എടുക്കുന്നില്ല.';
+
+  @override
+  String get permNotificationTitle => 'അറിയിപ്പുകൾ (Notifications)';
+
+  @override
+  String get permNotificationDesc =>
+      'ആൻഡ്രോയിഡ് 13+ ഉപകരണങ്ങളിൽ പ്രതിദിന അല്ലെങ്കിൽ ജീവിതകാല ലക്ഷ്യം പൂർത്തിയാകുമ്പോൾ സ്റ്റാറ്റസ് ബാറിൽ അറിയിപ്പ് നൽകാൻ.';
+
+  @override
+  String get permVibrationTitle => 'സ്പന്ദനം (Vibration)';
+
+  @override
+  String get permVibrationDesc =>
+      'ഓരോ ജപത്തിലും മാല പൂർത്തിയാകുമ്പോഴും നിശ്ശബ്ദ മോഡിലും അറിയാൻ മൃദുവായ സ്പന്ദനം നൽകുന്നു.';
+
+  @override
+  String get permAudioTitle => 'ശബ്ദ ക്രമീകരണം';
+
+  @override
+  String get permAudioDesc =>
+      'ധ്യാനത്തിലിരിക്കുമ്പോഴും മണിനാദങ്ങൾ വ്യക്തമായി കേൾക്കാൻ അലാറം സ്ട്രീമിലൂടെ താൽക്കാലികമായി ശബ്ദം ലഭ്യമാക്കുന്നു.';
+
+  @override
+  String get permNoInternetTitle => 'ഇന്റർനെറ്റ് പൂർണ്ണമായി ഇല്ല';
+
+  @override
+  String get permNoInternetDesc =>
+      'ആപ്പിന് ഇന്റർനെറ്റ് അനുമതിയില്ല. വിവരങ്ങൾ പുറത്തുവിടുകയോ ക്ലൗഡിലേക്ക് അയക്കുകയോ ട്രാക്ക് ചെയ്യുകയോ ചെയ്യുന്നില്ല.';
+
+  @override
+  String get permNoStorageTitle => 'സ്റ്റോറേജ് അനുമതി ആവശ്യമില്ല';
+
+  @override
+  String get permNoStorageDesc =>
+      'ഫയലുകൾ സുരക്ഷിതമായി എക്സ്പോർട്ട് ചെയ്യാനും ഇംപോർട്ട് ചെയ്യാനും സിസ്റ്റത്തിന്റെ സുരക്ഷിത പിക്കർ ഉപയോഗിക്കുന്നു.';
+
+  @override
+  String get tutorialTitle => 'ആപ്പ് ട്യൂട്ടോറിയൽ';
+
+  @override
+  String get tutorialSub => 'ആപ്പിലെ എല്ലാ സവിശേഷതകളും എളുപ്പത്തിൽ പഠിക്കാം';
+
+  @override
+  String get tutorialStep1Title => '1. പുതിയ കൗണ്ടർ നിർമ്മിക്കുക';
+
+  @override
+  String get tutorialStep1Desc =>
+      'ഹോം സ്ക്രീനിലെ പ്ലസ് (+) ബട്ടൺ അമർത്തുക. മന്ത്രത്തിന്റെ പേര് നൽകി, ഘട്ടവും പ്രതിദിന-ജീവിതകാല ലക്ഷ്യങ്ങളും നിശ്ചയിക്കുക.';
+
+  @override
+  String get tutorialStep2Title => '2. പൂർണ്ണ സ്ക്രീൻ ജപം';
+
+  @override
+  String get tutorialStep2Desc =>
+      'എണ്ണാൻ സ്ക്രീനിൽ എവിടെയും തൊടാം. തെറ്റിയാൽ താഴോട്ട് സ്വൈപ്പ് ചെയ്തു ഒഴിവാക്കാം. ഏകാഗ്രതയ്ക്ക് സ്ക്രീൻ മങ്ങിക്കാം.';
+
+  @override
+  String get tutorialStep3Title => '3. 108 മണികളുടെ മാല';
+
+  @override
+  String get tutorialStep3Desc =>
+      'ഓരോ 108 ജപത്തിലും ഒരു മാല പൂർത്തിയാകുന്നു. പവിത്രമായ മണിനാദത്തോടെ മാലയുടെ കണക്കുകൾ രേഖപ്പെടുത്തുന്നു.';
+
+  @override
+  String get tutorialStep4Title => '4. ലക്ഷ്യ നേട്ടങ്ങൾ';
+
+  @override
+  String get tutorialStep4Desc =>
+      'പ്രതിദിന അല്ലെങ്കിൽ ജീവിതകാല ലക്ഷ്യം കൈവരിക്കുമ്പോൾ പ്രത്യേക ധ്വനികളും മുദ്രകളും കൊണ്ട് അനുഗ്രഹീത നിമിഷം ആഘോഷിക്കാം.';
+
+  @override
+  String get tutorialStep5Title => '5. ലോക്കും പൂർത്തീകരണവും';
+
+  @override
+  String get tutorialStep5Desc =>
+      'സ്പർശനം ഒഴിവാക്കാൻ കൗണ്ടർ ലോക്ക് ചെയ്യാം; പൂർത്തിയായ സാധനകൾ സുവർണ്ണ ചിഹ്നത്തോടെ ഭദ്രമായി സൂക്ഷിക്കാം.';
+
+  @override
+  String get tutorialStep6Title => '6. എയർ-ഗ്യാപ്ഡ് ഒപ്റ്റിക്കൽ സിങ്ക്';
+
+  @override
+  String get tutorialStep6Desc =>
+      'ഇന്റർനെറ്റോ ബ്ലൂടൂത്തോ ഇല്ലാതെ ക്യാമറ ക്യുആർ ആനിമേഷൻ വഴി മറ്റൊരു ഉപകരണത്തിലേക്ക് വിവരങ്ങൾ കൈമാറാം.';
+
+  @override
+  String get tutorialStep7Title => '7. എൻക്രിപ്റ്റഡ് ബാക്കപ്പ്';
+
+  @override
+  String get tutorialStep7Desc =>
+      'രഹസ്യ പാസ്സ്‌ഫ്രെയ്‌സ് നൽകി എഇഎസ്-256 സുരക്ഷയോടെ മുഴുവൻ സാധനാ ചരിത്രവും ഫയലായി സംരക്ഷിക്കാം.';
 }

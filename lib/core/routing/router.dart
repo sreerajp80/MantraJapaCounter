@@ -7,7 +7,13 @@ import 'package:mantra_japa_counter/screens/about_counter_screen.dart';
 import 'package:mantra_japa_counter/screens/settings/settings_screen.dart';
 import 'package:mantra_japa_counter/screens/appearance_screen.dart';
 import 'package:mantra_japa_counter/screens/features_screen.dart';
+import 'package:mantra_japa_counter/screens/settings/sound_settings_screen.dart';
+import 'package:mantra_japa_counter/screens/settings/display_settings_screen.dart';
+import 'package:mantra_japa_counter/screens/settings/language_settings_screen.dart';
+import 'package:mantra_japa_counter/screens/settings/backup_settings_screen.dart';
+import 'package:mantra_japa_counter/screens/settings/permissions_screen.dart';
 import 'package:mantra_japa_counter/screens/help/help_home_screen.dart';
+import 'package:mantra_japa_counter/screens/help/tutorial_help_screen.dart';
 import 'package:mantra_japa_counter/screens/help/counting_help_screen.dart';
 import 'package:mantra_japa_counter/screens/help/mala_math_help_screen.dart';
 import 'package:mantra_japa_counter/screens/help/optical_sync_help_screen.dart';
@@ -55,7 +61,31 @@ final appRouter = GoRouter(
       path: '/settings/features',
       builder: (context, state) => const FeaturesScreen(),
     ),
+    GoRoute(
+      path: '/settings/sound',
+      builder: (context, state) => const SoundSettingsScreen(),
+    ),
+    GoRoute(
+      path: '/settings/display',
+      builder: (context, state) => const DisplaySettingsScreen(),
+    ),
+    GoRoute(
+      path: '/settings/language',
+      builder: (context, state) => const LanguageSettingsScreen(),
+    ),
+    GoRoute(
+      path: '/settings/backup',
+      builder: (context, state) => const BackupSettingsScreen(),
+    ),
+    GoRoute(
+      path: '/settings/permissions',
+      builder: (context, state) => const PermissionsScreen(),
+    ),
     GoRoute(path: '/help', builder: (context, state) => const HelpHomeScreen()),
+    GoRoute(
+      path: '/help/tutorial',
+      builder: (context, state) => const TutorialHelpScreen(),
+    ),
     GoRoute(
       path: '/help/counting',
       builder: (context, state) => const CountingHelpScreen(),

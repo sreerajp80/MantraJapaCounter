@@ -109,6 +109,13 @@ class SettingsRepository {
     await _prefs.setString(AppConstants.prefsMalaSoundKey, sound.id);
   }
 
+  bool get lifetimeGoalNotificationsEnabled =>
+      _prefs.getBool(AppConstants.prefsLifetimeGoalNotifKey) ?? true;
+
+  Future<void> setLifetimeGoalNotificationsEnabled(bool value) async {
+    await _prefs.setBool(AppConstants.prefsLifetimeGoalNotifKey, value);
+  }
+
   String? get notificationSoundUri =>
       _prefs.getString(AppConstants.prefsNotifSoundUriKey);
 
@@ -129,6 +136,26 @@ class SettingsRepository {
     }
   }
 
+  String? get lifetimeSoundUri =>
+      _prefs.getString(AppConstants.prefsLifetimeSoundUriKey);
+
+  String? get lifetimeSoundName =>
+      _prefs.getString(AppConstants.prefsLifetimeSoundNameKey);
+
+  Future<void> setLifetimeSound(String? uri, String? name) async {
+    if (uri == null) {
+      await _prefs.remove(AppConstants.prefsLifetimeSoundUriKey);
+      await _prefs.remove(AppConstants.prefsLifetimeSoundNameKey);
+    } else {
+      await _prefs.setString(AppConstants.prefsLifetimeSoundUriKey, uri);
+      if (name == null || name.isEmpty) {
+        await _prefs.remove(AppConstants.prefsLifetimeSoundNameKey);
+      } else {
+        await _prefs.setString(AppConstants.prefsLifetimeSoundNameKey, name);
+      }
+    }
+  }
+
   bool get vibrationEnabled =>
       _prefs.getBool(AppConstants.prefsVibrationKey) ?? true;
 
@@ -145,5 +172,18 @@ class SettingsRepository {
     } else {
       await _prefs.setString(AppConstants.prefsLanguageCodeKey, code);
     }
+  }
+
+  bool get dndEnabled => _prefs.getBool(AppConstants.prefsDndKey) ?? false;
+
+  Future<void> setDndEnabled(bool value) async {
+    await _prefs.setBool(AppConstants.prefsDndKey, value);
+  }
+
+  bool get dimmedChantingMode =>
+      _prefs.getBool(AppConstants.prefsDimmedChantingKey) ?? false;
+
+  Future<void> setDimmedChantingMode(bool value) async {
+    await _prefs.setBool(AppConstants.prefsDimmedChantingKey, value);
   }
 }

@@ -50,6 +50,15 @@ class NotificationService {
           enableVibration: false,
         ),
       );
+      await android.createNotificationChannel(
+        const AndroidNotificationChannel(
+          AppConstants.lifetimeGoalChannelId,
+          AppConstants.lifetimeGoalChannelName,
+          description: 'Alerts when you reach your lifetime mantra goal',
+          playSound: false,
+          enableVibration: false,
+        ),
+      );
     }
   }
 
@@ -63,6 +72,23 @@ class NotificationService {
         android: AndroidNotificationDetails(
           AppConstants.dailyGoalChannelId,
           AppConstants.dailyGoalChannelName,
+          enableVibration: false,
+          playSound: false,
+        ),
+      ),
+    );
+  }
+
+  Future<void> notifyLifetimeGoalReached() async {
+    final l10n = LocaleConfig.strings();
+    await _plugin.show(
+      id: 2,
+      title: l10n.notifLifetimeGoalTitle,
+      body: l10n.notifLifetimeGoalBody,
+      notificationDetails: const NotificationDetails(
+        android: AndroidNotificationDetails(
+          AppConstants.lifetimeGoalChannelId,
+          AppConstants.lifetimeGoalChannelName,
           enableVibration: false,
           playSound: false,
         ),

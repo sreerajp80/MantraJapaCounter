@@ -95,13 +95,19 @@ class SoundService {
       await _player.stop();
       if (uri == null) {
         await _channel.invokeMethod<void>('previewDefaultNotificationTone');
+      } else if (uri == 'sacred:synthesized_tone') {
+        await _channel.invokeMethod<void>('playMalaTone');
+      } else if (uri == 'sacred:temple_bell') {
+        await playSacredAsset('audio/temple_bell.wav');
+      } else if (uri == 'sacred:singing_bowl') {
+        await playSacredAsset('audio/singing_bowl.wav');
+      } else if (uri == 'sacred:shankha') {
+        await playSacredAsset('audio/shankha.wav');
+      } else if (uri.startsWith('asset://')) {
+        await playSacredAsset(uri.replaceFirst('asset://', ''));
       } else if (uri.startsWith('content://')) {
         await _channel.invokeMethod<void>('playRingtoneUri', {'uri': uri});
       } else {
-        // Native side boosts STREAM_ALARM volume; the audioplayers context
-        // above routes the file through USAGE_ALARM so the boost applies.
-        // Boost has a built-in auto-restore timer so we don't need to pair
-        // it with an explicit restore for arbitrary-length user files.
         try {
           await _channel.invokeMethod<void>('boostAlarmVolume');
         } catch (_) {}

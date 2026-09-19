@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/models/counter.dart';
+import 'package:mantra_japa_counter/models/counter_status.dart';
 import 'package:mantra_japa_counter/widgets/counter_card.dart';
 
 void main() {
@@ -106,4 +108,51 @@ void main() {
       expect(lockToggled, true);
     },
   );
+
+  testWidgets('CounterCard applies thin borders based on CounterStatus', (
+    tester,
+  ) async {
+    for (final (status, expectedColor) in [
+      (CounterStatus.active, TempleColors.vermillion),
+      (CounterStatus.disabledSuccess, const Color(0xFF1B5E20)),
+      (CounterStatus.disabledFailure, Colors.black),
+    ]) {
+      final counter = Counter(
+        id: 'test-status',
+        name: 'Om',
+        startDate: 1000,
+        createdAt: 1000,
+        status: status,
+      );
+
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: CounterCard(
+              counter: counter,
+              totalCount: 108,
+              todayCount: 54,
+              onTap: () {},
+              onLongPress: () {},
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final material = tester.widget<Material>(
+        find
+            .descendant(
+              of: find.byType(CounterCard),
+              matching: find.byType(Material),
+            )
+            .first,
+      );
+      final border = (material.shape as RoundedRectangleBorder).side;
+      expect(border.color, expectedColor);
+      expect(border.width, 1.0);
+    }
+  });
 }

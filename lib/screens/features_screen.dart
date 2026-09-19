@@ -68,6 +68,16 @@ class FeaturesScreen extends StatelessWidget {
           icon: Icons.timer_outlined,
           highlights: [l.featTimerH1, l.featTimerH2, l.featTimerH3],
         ),
+        _AppFeature(
+          title: l.lifetimeGoalCaps,
+          description: l.lifetimeSoundSub,
+          icon: Icons.stars_outlined,
+          highlights: [
+            l.notifDailyGoalTitle,
+            l.notifLifetimeGoalTitle,
+            l.soundTempleBell,
+          ],
+        ),
       ],
     ),
     _FeatureCategory(
@@ -96,6 +106,12 @@ class FeaturesScreen extends StatelessWidget {
             l.featJsonExportH2,
             l.featJsonExportH3,
           ],
+        ),
+        _AppFeature(
+          title: l.encryptBackup,
+          description: l.encryptBackupSub,
+          icon: Icons.lock_outline,
+          highlights: ['AES-256-GCM', 'PBKDF2', l.enterPassphrase],
         ),
       ],
     ),

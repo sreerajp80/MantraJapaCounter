@@ -565,6 +565,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sectionStillnessSub => 'For longer sessions';
 
   @override
+  String get dndTitle => 'Silence notifications (Do Not Disturb)';
+
+  @override
+  String get dndSub => 'Silence incoming alerts and calls while chanting';
+
+  @override
+  String get dndPermissionTitle => 'Do Not Disturb Permission';
+
+  @override
+  String get dndPermissionMessage =>
+      'To automatically silence incoming calls and notifications during chanting, please allow Do Not Disturb access in Android settings.';
+
+  @override
+  String get dndOpenSettings => 'Open Settings';
+
+  @override
+  String get dimmedModeTitle => 'Dimmed Chanting Mode';
+
+  @override
+  String get dimmedModeSub =>
+      'Darkens the background while keeping the mala circle clearly visible to save battery';
+
+  @override
   String get brightnessLevel => 'Brightness level';
 
   @override
@@ -1695,4 +1718,185 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get opticalImportSelectHint =>
       'Choose which counters to import from the received data';
+
+  @override
+  String get notifLifetimeGoalTitle => 'Lifetime Goal Achieved!';
+
+  @override
+  String get notifLifetimeGoalBody =>
+      'Auspicious milestone reached. May your sadhana bring peace and liberation.';
+
+  @override
+  String get lifetimeSoundTitle => 'Lifetime goal tone';
+
+  @override
+  String get lifetimeSoundSub =>
+      'Sacred chime played when lifetime target is reached';
+
+  @override
+  String get enableLifetimeNotification => 'Lifetime goal notification';
+
+  @override
+  String get enableLifetimeNotificationSub =>
+      'Show notification when lifetime milestone is reached';
+
+  @override
+  String get soundSacredShankha => 'Sacred Shankha';
+
+  @override
+  String get soundSacredShankhaSub =>
+      'Conch shell resonance sounding spiritual victory';
+
+  @override
+  String get settingsSoundTitle => 'Sound & Haptics';
+
+  @override
+  String get settingsSoundSub =>
+      'Mala chimes, goal completion tones, and vibration';
+
+  @override
+  String get settingsDisplayTitle => 'Display & Stillness';
+
+  @override
+  String get settingsDisplaySub =>
+      'Screen brightness and sacred stillness mode';
+
+  @override
+  String get settingsLanguageTitle => 'Language';
+
+  @override
+  String get settingsLanguageSub => 'App language, script, and numbering';
+
+  @override
+  String get settingsPermissionsTitle => 'Permissions';
+
+  @override
+  String get settingsPermissionsSub =>
+      'What device capabilities the app uses and why';
+
+  @override
+  String get settingsClearDataTitle => 'Clear all data';
+
+  @override
+  String get settingsClearDataSub =>
+      'Delete all counters and chanting sessions';
+
+  @override
+  String get permissionsExplicitHeader => 'Explicit Permissions';
+
+  @override
+  String get permissionsExplicitSub =>
+      'Permissions requested at runtime only when you invoke specific features';
+
+  @override
+  String get permissionsImplicitHeader => 'Implicit Permissions';
+
+  @override
+  String get permissionsImplicitSub =>
+      'Normal permissions granted automatically by Android to deliver core offline functions';
+
+  @override
+  String get permissionsPrivacyHeader => 'Zero-Trust Privacy Guarantee';
+
+  @override
+  String get permissionsPrivacySub =>
+      'Permissions deliberately omitted to safeguard your spiritual practice';
+
+  @override
+  String get permCameraTitle => 'Camera';
+
+  @override
+  String get permCameraDesc =>
+      'Used exclusively to scan animated QR fountain codes when receiving data via air-gapped Optical Sync. Never captures photos or videos.';
+
+  @override
+  String get permNotificationTitle => 'Notifications';
+
+  @override
+  String get permNotificationDesc =>
+      'Used on Android 13+ to show milestone banners in the status bar when daily or lifetime mantra targets are completed.';
+
+  @override
+  String get permVibrationTitle => 'Vibration';
+
+  @override
+  String get permVibrationDesc =>
+      'Delivers gentle haptic feedback on each chant tap, mala completion, and goal achievement, remaining tactile even in silent mode.';
+
+  @override
+  String get permAudioTitle => 'Audio Management';
+
+  @override
+  String get permAudioDesc =>
+      'Temporarily routes completion chimes through the alarm audio stream so sacred bells remain audible during meditation.';
+
+  @override
+  String get permNoInternetTitle => 'Zero Internet Access';
+
+  @override
+  String get permNoInternetDesc =>
+      'The app contains no internet permission. It cannot transmit data, connect to cloud servers, or track analytics.';
+
+  @override
+  String get permNoStorageTitle => 'No Broad Storage Access';
+
+  @override
+  String get permNoStorageDesc =>
+      'Instead of accessing your personal files, exports and imports use Android\'s native system picker with user consent.';
+
+  @override
+  String get tutorialTitle => 'App Tutorial';
+
+  @override
+  String get tutorialSub =>
+      'Step-by-step visual walkthrough of all app features';
+
+  @override
+  String get tutorialStep1Title => '1. Create Your First Counter';
+
+  @override
+  String get tutorialStep1Desc =>
+      'Tap the add button (+) on the home screen. Enter the mantra name, choose an increment step, and set daily and lifetime goals.';
+
+  @override
+  String get tutorialStep2Title => '2. Sacred Fullscreen Counting';
+
+  @override
+  String get tutorialStep2Desc =>
+      'Tap anywhere on the large counting surface to advance counts. Swipe downwards to undo an accidental tap. Use the stillness slider to dim the screen.';
+
+  @override
+  String get tutorialStep3Title => '3. 108 Beads Mala System';
+
+  @override
+  String get tutorialStep3Desc =>
+      'Every 108 chants automatically complete one mala. The app chimes sacred temple bells and records your completed malas with precision.';
+
+  @override
+  String get tutorialStep4Title => '4. Daily & Lifetime Milestones';
+
+  @override
+  String get tutorialStep4Desc =>
+      'When your daily or lifetime target is met, custom sacred tones and auspicious badges celebrate your spiritual milestone.';
+
+  @override
+  String get tutorialStep5Title => '5. Locking & Archiving';
+
+  @override
+  String get tutorialStep5Desc =>
+      'Long-press any counter card to lock it against accidental touches, or retire completed mantras with a completion status.';
+
+  @override
+  String get tutorialStep6Title => '6. Air-Gapped Optical QR Sync';
+
+  @override
+  String get tutorialStep6Desc =>
+      'Migrate your japa counters between devices without internet, Bluetooth, or cables using animated QR camera streaming.';
+
+  @override
+  String get tutorialStep7Title => '7. Encrypted Backups';
+
+  @override
+  String get tutorialStep7Desc =>
+      'Export your entire sadhana history to a file protected by AES-256-GCM encryption with your personal passphrase.';
 }

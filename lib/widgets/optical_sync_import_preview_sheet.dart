@@ -51,8 +51,7 @@ class _OpticalSyncImportPreviewSheetState
   }
 
   bool get _allSelected =>
-      _parsedCounters != null &&
-      _selectedIds.length == _parsedCounters!.length;
+      _parsedCounters != null && _selectedIds.length == _parsedCounters!.length;
 
   void _toggleAll() {
     setState(() {
@@ -304,8 +303,9 @@ class _OpticalSyncImportPreviewSheetState
                         );
                         context.pop(); // Exit scanner screen
                       } else {
-                        final receiveState =
-                            ref.read(opticalSyncReceiveProvider);
+                        final receiveState = ref.read(
+                          opticalSyncReceiveProvider,
+                        );
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(

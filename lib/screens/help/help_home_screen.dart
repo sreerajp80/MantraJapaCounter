@@ -27,6 +27,13 @@ class HelpHomeScreen extends StatelessWidget {
                     title: l.helpHeaderTitle,
                     subtitle: l.helpHeaderSub,
                   ),
+                  const SizedBox(height: 16),
+                  _TopicCard(
+                    icon: Icons.auto_stories_outlined,
+                    title: l.tutorialTitle,
+                    subtitle: l.tutorialSub,
+                    onTap: () => context.push('/help/tutorial'),
+                  ),
                   const SizedBox(height: 20),
 
                   _sectionHeader(

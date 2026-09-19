@@ -75,10 +75,13 @@ class _ImportExportDialogState extends State<ImportExportDialog> {
       _error = null;
     });
     try {
-      await widget.ref.read(exportServiceProvider).exportAndShare(
-        passphrase:
-            passphraseResult.encrypt ? passphraseResult.passphrase : null,
-      );
+      await widget.ref
+          .read(exportServiceProvider)
+          .exportAndShare(
+            passphrase: passphraseResult.encrypt
+                ? passphraseResult.passphrase
+                : null,
+          );
       if (mounted) Navigator.pop(context);
     } catch (e) {
       setState(() {

@@ -85,9 +85,10 @@ class CountingNotifier extends StateNotifier<CountingState> {
   bool _isSessionInDb = false; // has the row been inserted yet?
   int _lastDbWrittenCount = 0; // count value last persisted to DB
 
-  // Captured at init() so the daily-goal threshold check stays cheap.
+  // Captured at init() so the daily/lifetime goal threshold checks stay cheap.
   // Editing the counter mid-session does not retroactively change the goal.
   int _dailyGoal = 0;
+  int _lifetimeGoal = 0;
 
   // Batching state
   Timer? _prefsTimer;
@@ -110,6 +111,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
     final counter = await repo.getCounterById(_counterId);
     if (counter == null) return;
     _dailyGoal = counter.dailyGoal;
+    _lifetimeGoal = counter.goal;
 
     final saved = settings.getActiveSession(_counterId);
     final now = DateTime.now().millisecondsSinceEpoch;
@@ -366,7 +368,9 @@ class CountingNotifier extends StateNotifier<CountingState> {
   Future<void> _flushDbIfNeeded() async {
     final session = state.session;
     if (session == null || session.tapCount == 0) return;
-    if (session.tapCount == _lastDbWrittenCount) return;
+    if (_tapsSinceLastDbFlush == 0 || session.tapCount == _lastDbWrittenCount) {
+      return;
+    }
     await _updateSessionRow(session);
     _invalidateStatsAndHistory();
   }
@@ -402,7 +406,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
 
   Future<void> _flushPrefsIfNeeded() async {
     final session = state.session;
-    if (session == null) return;
+    if (session == null || _tapsSinceLastPrefsFlush == 0) return;
     await _writePrefsImmediately(session);
   }
 
@@ -528,15 +532,26 @@ class CountingNotifier extends StateNotifier<CountingState> {
     _invalidateStatsAndHistory();
   }
 
-  /// Lifecycle: flush pending writes when the app goes background.
+  /// Lifecycle: flush pending writes and stop timers when the app goes background.
   Future<void> onPause() async {
+    _stopTimers();
     final session = state.session;
     if (session == null) return;
-    await _writePrefsImmediately(session);
+    if (_tapsSinceLastPrefsFlush > 0) {
+      await _writePrefsImmediately(session);
+    }
     if (session.tapCount > _lastDbWrittenCount) {
       await _updateSessionRow(session);
     }
     _invalidateStatsAndHistory();
+  }
+
+  /// Lifecycle: restart periodic batching timers when returning to foreground.
+  void onResume() {
+    final session = state.session;
+    if (session != null && !session.isPaused) {
+      _startTimers();
+    }
   }
 
   // ───────────────────────────── internals ────────────────────────────────
@@ -580,6 +595,19 @@ class CountingNotifier extends StateNotifier<CountingState> {
     final notif = _ref.read(notificationServiceProvider);
     final sound = _ref.read(soundServiceProvider);
     final haptic = _ref.read(hapticFeedbackServiceProvider);
+
+    // Lifetime-goal threshold: fire only on the tap that crosses the goal.
+    if (_lifetimeGoal > 0 && settings.lifetimeGoalNotificationsEnabled) {
+      final newLifetimeTotal = state.liveLifetimeTotal;
+      final prevLifetimeTotal = newLifetimeTotal - session.incrementStep;
+      if (prevLifetimeTotal < _lifetimeGoal &&
+          newLifetimeTotal >= _lifetimeGoal) {
+        notif.notifyLifetimeGoalReached();
+        if (settings.vibrationEnabled) haptic.vibrateDailyGoal();
+        sound.playTone(settings.lifetimeSoundUri);
+        return; // Skip daily goal and mala chime — lifetime milestone supersedes.
+      }
+    }
 
     // Daily-goal threshold: fire only on the tap that crosses the goal. If the
     // user already met the goal earlier today, [liveTodayTotal] starts above

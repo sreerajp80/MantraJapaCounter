@@ -49,12 +49,22 @@ class CounterCard extends StatelessWidget {
     final lifetimePercent = lifetimeRatio * 100;
     final lifetimeComplete = counter.isLifetimeGoalAchieved(totalCount);
 
+    final Color cardBorder;
+    switch (counter.status) {
+      case CounterStatus.active:
+        cardBorder = TempleColors.vermillion;
+        break;
+      case CounterStatus.disabledSuccess:
+        cardBorder = const Color(0xFF1B5E20);
+        break;
+      case CounterStatus.disabledFailure:
+        cardBorder = Colors.black;
+        break;
+    }
+
     final cardColor = lifetimeComplete && !isDisabled
         ? TempleColors.cardSoft
         : TempleColors.card;
-    final cardBorder = lifetimeComplete && !isDisabled
-        ? TempleColors.sandal
-        : TempleColors.line;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
@@ -62,10 +72,7 @@ class CounterCard extends StatelessWidget {
         color: cardColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(
-            color: cardBorder,
-            width: lifetimeComplete ? 1.2 : 1,
-          ),
+          side: BorderSide(color: cardBorder),
         ),
         clipBehavior: Clip.antiAlias,
         child: InkWell(

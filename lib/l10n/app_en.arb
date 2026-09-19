@@ -740,6 +740,34 @@
   "@sectionStillnessSub": {
     "description": "Subtitle for screen stillness settings section"
   },
+  "dndTitle": "Silence notifications (Do Not Disturb)",
+  "@dndTitle": {
+    "description": "Title for Do Not Disturb setting toggle"
+  },
+  "dndSub": "Silence incoming alerts and calls while chanting",
+  "@dndSub": {
+    "description": "Subtitle for Do Not Disturb setting toggle"
+  },
+  "dndPermissionTitle": "Do Not Disturb Permission",
+  "@dndPermissionTitle": {
+    "description": "Title for DND permission dialog"
+  },
+  "dndPermissionMessage": "To automatically silence incoming calls and notifications during chanting, please allow Do Not Disturb access in Android settings.",
+  "@dndPermissionMessage": {
+    "description": "Message explaining why DND permission is needed"
+  },
+  "dndOpenSettings": "Open Settings",
+  "@dndOpenSettings": {
+    "description": "Button to open system DND settings"
+  },
+  "dimmedModeTitle": "Dimmed Chanting Mode",
+  "@dimmedModeTitle": {
+    "description": "Title for dimmed chanting mode"
+  },
+  "dimmedModeSub": "Darkens the background while keeping the mala circle clearly visible to save battery",
+  "@dimmedModeSub": {
+    "description": "Subtitle for dimmed chanting mode"
+  },
   "brightnessLevel": "Brightness level",
   "@brightnessLevel": {
     "description": "Setting label for screen brightness adjustment"
@@ -2148,5 +2176,213 @@
   "opticalImportSelectHint": "Choose which counters to import from the received data",
   "@opticalImportSelectHint": {
     "description": "Hint text on the import preview sheet for selecting counters to import"
+  },
+  "notifLifetimeGoalTitle": "Lifetime Goal Achieved!",
+  "@notifLifetimeGoalTitle": {
+    "description": "Status bar notification title when lifetime goal is reached"
+  },
+  "notifLifetimeGoalBody": "Auspicious milestone reached. May your sadhana bring peace and liberation.",
+  "@notifLifetimeGoalBody": {
+    "description": "Status bar notification body when lifetime goal is reached"
+  },
+  "lifetimeSoundTitle": "Lifetime goal tone",
+  "@lifetimeSoundTitle": {
+    "description": "Setting title for lifetime goal completion tone"
+  },
+  "lifetimeSoundSub": "Sacred chime played when lifetime target is reached",
+  "@lifetimeSoundSub": {
+    "description": "Setting subtitle explaining lifetime goal chime"
+  },
+  "enableLifetimeNotification": "Lifetime goal notification",
+  "@enableLifetimeNotification": {
+    "description": "Toggle title for lifetime goal milestone notification"
+  },
+  "enableLifetimeNotificationSub": "Show notification when lifetime milestone is reached",
+  "@enableLifetimeNotificationSub": {
+    "description": "Toggle subtitle for lifetime goal milestone notification"
+  },
+  "soundSacredShankha": "Sacred Shankha",
+  "@soundSacredShankha": {
+    "description": "Name of the sacred conch shell audio tone"
+  },
+  "soundSacredShankhaSub": "Conch shell resonance sounding spiritual victory",
+  "@soundSacredShankhaSub": {
+    "description": "Description of the sacred conch shell audio tone"
+  },
+  "settingsSoundTitle": "Sound & Haptics",
+  "@settingsSoundTitle": {
+    "description": "Title of sound settings card"
+  },
+  "settingsSoundSub": "Mala chimes, goal completion tones, and vibration",
+  "@settingsSoundSub": {
+    "description": "Subtitle of sound settings card"
+  },
+  "settingsDisplayTitle": "Display & Stillness",
+  "@settingsDisplayTitle": {
+    "description": "Title of display settings card"
+  },
+  "settingsDisplaySub": "Screen brightness and sacred stillness mode",
+  "@settingsDisplaySub": {
+    "description": "Subtitle of display settings card"
+  },
+  "settingsLanguageTitle": "Language",
+  "@settingsLanguageTitle": {
+    "description": "Title of language settings card"
+  },
+  "settingsLanguageSub": "App language, script, and numbering",
+  "@settingsLanguageSub": {
+    "description": "Subtitle of language settings card"
+  },
+  "settingsPermissionsTitle": "Permissions",
+  "@settingsPermissionsTitle": {
+    "description": "Title of permissions card in settings"
+  },
+  "settingsPermissionsSub": "What device capabilities the app uses and why",
+  "@settingsPermissionsSub": {
+    "description": "Subtitle of permissions card in settings"
+  },
+  "settingsClearDataTitle": "Clear all data",
+  "@settingsClearDataTitle": {
+    "description": "Title for data clear action card"
+  },
+  "settingsClearDataSub": "Delete all counters and chanting sessions",
+  "@settingsClearDataSub": {
+    "description": "Subtitle for data clear action card"
+  },
+  "permissionsExplicitHeader": "Explicit Permissions",
+  "@permissionsExplicitHeader": {
+    "description": "Header for explicit runtime permissions"
+  },
+  "permissionsExplicitSub": "Permissions requested at runtime only when you invoke specific features",
+  "@permissionsExplicitSub": {
+    "description": "Subtitle explaining explicit permissions"
+  },
+  "permissionsImplicitHeader": "Implicit Permissions",
+  "@permissionsImplicitHeader": {
+    "description": "Header for implicit normal permissions"
+  },
+  "permissionsImplicitSub": "Normal permissions granted automatically by Android to deliver core offline functions",
+  "@permissionsImplicitSub": {
+    "description": "Subtitle explaining implicit permissions"
+  },
+  "permissionsPrivacyHeader": "Zero-Trust Privacy Guarantee",
+  "@permissionsPrivacyHeader": {
+    "description": "Header for excluded permissions highlighting privacy"
+  },
+  "permissionsPrivacySub": "Permissions deliberately omitted to safeguard your spiritual practice",
+  "@permissionsPrivacySub": {
+    "description": "Subtitle for privacy section"
+  },
+  "permCameraTitle": "Camera",
+  "@permCameraTitle": {
+    "description": "Title for camera permission"
+  },
+  "permCameraDesc": "Used exclusively to scan animated QR fountain codes when receiving data via air-gapped Optical Sync. Never captures photos or videos.",
+  "@permCameraDesc": {
+    "description": "Description of camera permission"
+  },
+  "permNotificationTitle": "Notifications",
+  "@permNotificationTitle": {
+    "description": "Title for notification permission"
+  },
+  "permNotificationDesc": "Used on Android 13+ to show milestone banners in the status bar when daily or lifetime mantra targets are completed.",
+  "@permNotificationDesc": {
+    "description": "Description of notification permission"
+  },
+  "permVibrationTitle": "Vibration",
+  "@permVibrationTitle": {
+    "description": "Title for vibration permission"
+  },
+  "permVibrationDesc": "Delivers gentle haptic feedback on each chant tap, mala completion, and goal achievement, remaining tactile even in silent mode.",
+  "@permVibrationDesc": {
+    "description": "Description of vibration permission"
+  },
+  "permAudioTitle": "Audio Management",
+  "@permAudioTitle": {
+    "description": "Title for audio settings permission"
+  },
+  "permAudioDesc": "Temporarily routes completion chimes through the alarm audio stream so sacred bells remain audible during meditation.",
+  "@permAudioDesc": {
+    "description": "Description of audio settings permission"
+  },
+  "permNoInternetTitle": "Zero Internet Access",
+  "@permNoInternetTitle": {
+    "description": "Title explaining absence of internet permission"
+  },
+  "permNoInternetDesc": "The app contains no internet permission. It cannot transmit data, connect to cloud servers, or track analytics.",
+  "@permNoInternetDesc": {
+    "description": "Description explaining absence of internet permission"
+  },
+  "permNoStorageTitle": "No Broad Storage Access",
+  "@permNoStorageTitle": {
+    "description": "Title explaining storage access privacy"
+  },
+  "permNoStorageDesc": "Instead of accessing your personal files, exports and imports use Android's native system picker with user consent.",
+  "@permNoStorageDesc": {
+    "description": "Description explaining storage access privacy"
+  },
+  "tutorialTitle": "App Tutorial",
+  "@tutorialTitle": {
+    "description": "Title for app tutorial screen"
+  },
+  "tutorialSub": "Step-by-step visual walkthrough of all app features",
+  "@tutorialSub": {
+    "description": "Subtitle for app tutorial screen"
+  },
+  "tutorialStep1Title": "1. Create Your First Counter",
+  "@tutorialStep1Title": {
+    "description": "Tutorial step 1 title"
+  },
+  "tutorialStep1Desc": "Tap the add button (+) on the home screen. Enter the mantra name, choose an increment step, and set daily and lifetime goals.",
+  "@tutorialStep1Desc": {
+    "description": "Tutorial step 1 description"
+  },
+  "tutorialStep2Title": "2. Sacred Fullscreen Counting",
+  "@tutorialStep2Title": {
+    "description": "Tutorial step 2 title"
+  },
+  "tutorialStep2Desc": "Tap anywhere on the large counting surface to advance counts. Swipe downwards to undo an accidental tap. Use the stillness slider to dim the screen.",
+  "@tutorialStep2Desc": {
+    "description": "Tutorial step 2 description"
+  },
+  "tutorialStep3Title": "3. 108 Beads Mala System",
+  "@tutorialStep3Title": {
+    "description": "Tutorial step 3 title"
+  },
+  "tutorialStep3Desc": "Every 108 chants automatically complete one mala. The app chimes sacred temple bells and records your completed malas with precision.",
+  "@tutorialStep3Desc": {
+    "description": "Tutorial step 3 description"
+  },
+  "tutorialStep4Title": "4. Daily & Lifetime Milestones",
+  "@tutorialStep4Title": {
+    "description": "Tutorial step 4 title"
+  },
+  "tutorialStep4Desc": "When your daily or lifetime target is met, custom sacred tones and auspicious badges celebrate your spiritual milestone.",
+  "@tutorialStep4Desc": {
+    "description": "Tutorial step 4 description"
+  },
+  "tutorialStep5Title": "5. Locking & Archiving",
+  "@tutorialStep5Title": {
+    "description": "Tutorial step 5 title"
+  },
+  "tutorialStep5Desc": "Long-press any counter card to lock it against accidental touches, or retire completed mantras with a completion status.",
+  "@tutorialStep5Desc": {
+    "description": "Tutorial step 5 description"
+  },
+  "tutorialStep6Title": "6. Air-Gapped Optical QR Sync",
+  "@tutorialStep6Title": {
+    "description": "Tutorial step 6 title"
+  },
+  "tutorialStep6Desc": "Migrate your japa counters between devices without internet, Bluetooth, or cables using animated QR camera streaming.",
+  "@tutorialStep6Desc": {
+    "description": "Tutorial step 6 description"
+  },
+  "tutorialStep7Title": "7. Encrypted Backups",
+  "@tutorialStep7Title": {
+    "description": "Tutorial step 7 title"
+  },
+  "tutorialStep7Desc": "Export your entire sadhana history to a file protected by AES-256-GCM encryption with your personal passphrase.",
+  "@tutorialStep7Desc": {
+    "description": "Tutorial step 7 description"
   }
 }

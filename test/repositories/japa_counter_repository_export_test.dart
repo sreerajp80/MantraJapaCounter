@@ -72,22 +72,25 @@ void main() {
       chants: 54,
     );
 
-    test('exportSelectedData returns only specified counters and their sessions', () async {
-      await repo.insertCounter(counter1);
-      await repo.insertCounter(counter2);
-      await repo.insertSession(session1);
-      await repo.insertSession(session2);
+    test(
+      'exportSelectedData returns only specified counters and their sessions',
+      () async {
+        await repo.insertCounter(counter1);
+        await repo.insertCounter(counter2);
+        await repo.insertSession(session1);
+        await repo.insertSession(session2);
 
-      final exported = await repo.exportSelectedData(['c1']);
+        final exported = await repo.exportSelectedData(['c1']);
 
-      expect(exported.counters.length, equals(1));
-      expect(exported.counters.first.id, equals('c1'));
-      expect(exported.counters.first.name, equals('Gayatri Mantra'));
+        expect(exported.counters.length, equals(1));
+        expect(exported.counters.first.id, equals('c1'));
+        expect(exported.counters.first.name, equals('Gayatri Mantra'));
 
-      expect(exported.sessions.length, equals(1));
-      expect(exported.sessions.first.id, equals('s1'));
-      expect(exported.sessions.first.counterId, equals('c1'));
-    });
+        expect(exported.sessions.length, equals(1));
+        expect(exported.sessions.first.id, equals('s1'));
+        expect(exported.sessions.first.counterId, equals('c1'));
+      },
+    );
 
     test('exportSelectedData with empty list returns all data', () async {
       await repo.insertCounter(counter1);
@@ -97,41 +100,49 @@ void main() {
       expect(exported.counters.length, equals(2));
     });
 
-    test('importSelectedData merges selected counters without deleting existing counters', () async {
-      // Existing state on device: has c1
-      await repo.insertCounter(counter1);
-      await repo.insertSession(session1);
+    test(
+      'importSelectedData merges selected counters without deleting existing counters',
+      () async {
+        // Existing state on device: has c1
+        await repo.insertCounter(counter1);
+        await repo.insertSession(session1);
 
-      // Incoming payload: has c2 and an updated c1
-      final updatedCounter1 = counter1.copyWith(name: 'Gayatri Mantra Updated', initialCount: 216);
-      final importPayload = ExportData(
-        exportDate: 5000,
-        counters: [updatedCounter1, counter2],
-        sessions: [session1, session2],
-      );
+        // Incoming payload: has c2 and an updated c1
+        final updatedCounter1 = counter1.copyWith(
+          name: 'Gayatri Mantra Updated',
+          initialCount: 216,
+        );
+        final importPayload = ExportData(
+          exportDate: 5000,
+          counters: [updatedCounter1, counter2],
+          sessions: [session1, session2],
+        );
 
-      // Selectively import only c2
-      await repo.importSelectedData(importPayload, ['c2']);
+        // Selectively import only c2
+        await repo.importSelectedData(importPayload, ['c2']);
 
-      final allCounters = await repo.getAllCounters();
-      expect(allCounters.length, equals(2));
-      // c1 should remain untouched with original name
-      final foundC1 = allCounters.firstWhere((c) => c.id == 'c1');
-      expect(foundC1.name, equals('Gayatri Mantra'));
-      expect(foundC1.initialCount, equals(108));
+        final allCounters = await repo.getAllCounters();
+        expect(allCounters.length, equals(2));
+        // c1 should remain untouched with original name
+        final foundC1 = allCounters.firstWhere((c) => c.id == 'c1');
+        expect(foundC1.name, equals('Gayatri Mantra'));
+        expect(foundC1.initialCount, equals(108));
 
-      // c2 was imported
-      final foundC2 = allCounters.firstWhere((c) => c.id == 'c2');
-      expect(foundC2.name, equals('Maha Mrityunjaya'));
+        // c2 was imported
+        final foundC2 = allCounters.firstWhere((c) => c.id == 'c2');
+        expect(foundC2.name, equals('Maha Mrityunjaya'));
 
-      final allSessions = await repo.getAllSessions();
-      expect(allSessions.length, equals(2));
-    });
+        final allSessions = await repo.getAllSessions();
+        expect(allSessions.length, equals(2));
+      },
+    );
 
     test('importSelectedData updates existing counter when selected', () async {
       await repo.insertCounter(counter1);
 
-      final updatedCounter1 = counter1.copyWith(name: 'Gayatri Mantra New Name');
+      final updatedCounter1 = counter1.copyWith(
+        name: 'Gayatri Mantra New Name',
+      );
       final importPayload = ExportData(
         exportDate: 5000,
         counters: [updatedCounter1],

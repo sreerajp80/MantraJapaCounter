@@ -33,7 +33,7 @@ guidelines.
 - **Visual Progress Indicators**: 27-segment prayer-bead daily progress strip, lotus watermarks, goal completion checkmarks, and today's summary pill.
 - **Practice History & Analytics**: Date-grouped session logs, sitting duration, counts, malas, and vow completion progress with interactive Diya lamp track.
 - **Stillness Meditation Mode**: Custom in-app display brightness control for extended meditation sittings.
-- **Audio & Haptic Feedback**: Soft synthesized mala DTMF tones, ringtone picker, custom audio files, and native alarms that work in silent mode.
+- **Audio & Haptic Feedback**: Authentic Temple Bronze Bell, Sacred Shankha, soft synthesized mala tones, ringtone picker, custom audio files, and native alarms that work in silent mode.
 - **Optical Air-Gap Sync**: 100% offline device-to-device synchronization using animated QR streams (Luby Transform fountain codes).
 - **Multilingual Support**: Fully localized in English, Malayalam (മലയാളം), and Sanskrit (संस्कृतम्).
 - **100% Offline & Private**: Zero internet permissions, zero telemetry, zero analytics, zero data leaving the device.
@@ -162,13 +162,13 @@ build date.
 Production builds **must** use `--release`, `--obfuscate`, and `--split-debug-info`. Leaving
 any of them out ships an unhardened, easily reverse-engineered artifact.
 
-Replace `v6.11.0` below with the version in `pubspec.yaml`.
+Replace `v6.12.1` below with the version in `pubspec.yaml`.
 
 ### Split APKs (direct install / sideloading)
 
 ```bash
 flutter build apk --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-v6.11.0/ --split-per-abi
+  --obfuscate --split-debug-info=build/symbols/android-prod-v6.12.1/ --split-per-abi
 ```
 
 Output: `build/app/outputs/apk/prod/release/app-arm64-v8a-prod-release.apk` and friends.
@@ -177,7 +177,7 @@ Output: `build/app/outputs/apk/prod/release/app-arm64-v8a-prod-release.apk` and 
 
 ```bash
 flutter build appbundle --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-v6.11.0/
+  --obfuscate --split-debug-info=build/symbols/android-prod-v6.12.1/
 ```
 
 Output: `build/app/outputs/bundle/prodRelease/app-prod-release.aab`.

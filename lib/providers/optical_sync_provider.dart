@@ -75,13 +75,8 @@ class OpticalSyncTransmitNotifier extends Notifier<OpticalSyncTransmitState> {
   }
 
   /// Sets the selected counter IDs and starts building frames.
-  Future<void> initializeWithSelectedCounters(
-    List<String> counterIds,
-  ) async {
-    state = state.copyWith(
-      isLoading: true,
-      selectedCounterIds: counterIds,
-    );
+  Future<void> initializeWithSelectedCounters(List<String> counterIds) async {
+    state = state.copyWith(isLoading: true, selectedCounterIds: counterIds);
     try {
       final repo = ref.read(japaCounterRepositoryProvider);
       final ExportData exportData;

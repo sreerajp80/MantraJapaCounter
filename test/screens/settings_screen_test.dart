@@ -11,6 +11,12 @@ import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/settings_provider.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/screens/settings/settings_screen.dart';
+import 'package:mantra_japa_counter/screens/settings/settings_tiles.dart';
+import 'package:mantra_japa_counter/screens/settings/sound_settings_screen.dart';
+import 'package:mantra_japa_counter/screens/settings/display_settings_screen.dart';
+import 'package:mantra_japa_counter/screens/settings/language_settings_screen.dart';
+import 'package:mantra_japa_counter/screens/settings/backup_settings_screen.dart';
+import 'package:mantra_japa_counter/screens/settings/permissions_screen.dart';
 
 import '../helpers/fake_japa_counter_repository.dart';
 
@@ -22,7 +28,7 @@ void main() {
     repo = FakeJapaCounterRepository();
   });
 
-  Future<void> pumpSettings(WidgetTester tester) async {
+  Future<void> pumpScreen(WidgetTester tester, Widget screen) async {
     tester.view.physicalSize = const Size(1080, 2400);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
@@ -37,19 +43,19 @@ void main() {
           ),
           japaCounterRepositoryProvider.overrideWithValue(repo),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: SettingsScreen(),
+          home: screen,
         ),
       ),
     );
     await tester.pumpAndSettle();
   }
 
-  AppSettings settingsOf(WidgetTester tester) {
+  AppSettings settingsOf(WidgetTester tester, Type screenType) {
     final container = ProviderScope.containerOf(
-      tester.element(find.byType(SettingsScreen)),
+      tester.element(find.byType(screenType)),
     );
     return container.read(settingsNotifierProvider);
   }
@@ -63,51 +69,48 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('renders navigation cards and sections', (tester) async {
-    await pumpSettings(tester);
+  testWidgets('renders all settings cards on SettingsScreen', (tester) async {
+    await pumpScreen(tester, const SettingsScreen());
 
     expect(find.text('Appearance'), findsOneWidget);
+    expect(find.text('Sound & Haptics'), findsOneWidget);
+    expect(find.text('Display & Stillness'), findsOneWidget);
+    expect(find.text('Language'), findsOneWidget);
+    expect(find.text('Data Backup & Optical Sync'), findsOneWidget);
     expect(find.text('Features'), findsOneWidget);
+    expect(find.text('Permissions'), findsOneWidget);
     expect(find.text('Help & User Guides'), findsOneWidget);
     expect(find.text('About'), findsOneWidget);
-    expect(find.text('Language'), findsOneWidget);
-    expect(find.text('Daily goal'), findsOneWidget);
-    expect(find.text('Mala completion'), findsOneWidget);
-    expect(find.text('Stillness'), findsOneWidget);
-    expect(find.byType(Slider), findsOneWidget);
+  });
 
-    await scrollTo(tester, find.text('Data Backup & Optical Sync'));
-    expect(find.text('Data Backup & Optical Sync'), findsOneWidget);
+  testWidgets('LanguageSettingsScreen: tapping Sanskrit updates languageCode', (
+    tester,
+  ) async {
+    await pumpScreen(tester, const LanguageSettingsScreen());
+    expect(settingsOf(tester, LanguageSettingsScreen).languageCode, isNull);
+
+    expect(find.text('Sanskrit'), findsOneWidget);
+    expect(find.text('Malayalam'), findsOneWidget);
+    expect(find.text('English'), findsOneWidget);
+    expect(find.text('System default'), findsAtLeastNWidgets(1));
+
+    await tester.tap(find.text('Sanskrit'));
+    await tester.pumpAndSettle();
+
+    expect(
+      settingsOf(tester, LanguageSettingsScreen).languageCode,
+      equals('sa'),
+    );
   });
 
   testWidgets(
-    'tapping language row opens picker and selecting Sanskrit updates languageCode',
+    'SoundSettingsScreen: tapping mala sound opens picker and updates malaSound',
     (tester) async {
-      await pumpSettings(tester);
-      expect(settingsOf(tester).languageCode, isNull);
-
-      await tester.tap(find.text('App language'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Select language'), findsOneWidget);
-      expect(find.text('Sanskrit'), findsOneWidget);
-      expect(find.text('Malayalam'), findsOneWidget);
-      expect(find.text('English'), findsOneWidget);
-      expect(find.text('System default'), findsAtLeastNWidgets(1));
-
-      await tester.tap(find.text('Sanskrit'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Select language'), findsNothing);
-      expect(settingsOf(tester).languageCode, equals('sa'));
-    },
-  );
-
-  testWidgets(
-    'tapping mala sound row opens picker and selecting singing bowl updates malaSound',
-    (tester) async {
-      await pumpSettings(tester);
-      expect(settingsOf(tester).malaSound, equals(MalaSound.templeBell));
+      await pumpScreen(tester, const SoundSettingsScreen());
+      expect(
+        settingsOf(tester, SoundSettingsScreen).malaSound,
+        equals(MalaSound.templeBell),
+      );
 
       await tester.tap(find.text('Mala sound'));
       await tester.pumpAndSettle();
@@ -119,59 +122,86 @@ void main() {
       await tester.tap(find.text('Tibetan Singing Bowl'));
       await tester.pumpAndSettle();
 
-      expect(settingsOf(tester).malaSound, equals(MalaSound.singingBowl));
+      expect(
+        settingsOf(tester, SoundSettingsScreen).malaSound,
+        equals(MalaSound.singingBowl),
+      );
     },
   );
 
-  testWidgets('tapping the vibration row flips the setting', (tester) async {
-    await pumpSettings(tester);
-    expect(settingsOf(tester).vibrationEnabled, isTrue);
-
-    await tester.tap(find.text('Vibration'));
-    await tester.pumpAndSettle();
-    expect(settingsOf(tester).vibrationEnabled, isFalse);
-
-    await tester.tap(find.text('Vibration'));
-    await tester.pumpAndSettle();
-    expect(settingsOf(tester).vibrationEnabled, isTrue);
-  });
-
-  testWidgets('"use system" resets a brightness override', (tester) async {
-    SharedPreferences.setMockInitialValues({
-      AppConstants.prefsBrightnessKey: 0.7,
-    });
-    await pumpSettings(tester);
-
-    expect(find.text('Override active'), findsOneWidget);
-    expect(find.text('70'), findsOneWidget);
-
-    await tester.tap(find.text('use system'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Following system'), findsOneWidget);
-    expect(settingsOf(tester).screenBrightness, -1.0);
-  });
-
-  testWidgets('clear-all card asks first and Cancel deletes nothing', (
+  testWidgets('SoundSettingsScreen: tapping vibration row flips the setting', (
     tester,
   ) async {
-    repo = FakeJapaCounterRepository(
-      counters: const [
-        Counter(id: 'c1', name: 'Om', startDate: 1000, createdAt: 1000),
-      ],
-    );
-    await pumpSettings(tester);
+    await pumpScreen(tester, const SoundSettingsScreen());
+    expect(settingsOf(tester, SoundSettingsScreen).vibrationEnabled, isTrue);
 
-    await scrollTo(tester, find.text('Clear all data'));
-    await tester.tap(find.text('Clear all data'));
+    await tester.tap(find.widgetWithText(SettingsRow, 'Vibration'));
     await tester.pumpAndSettle();
+    expect(settingsOf(tester, SoundSettingsScreen).vibrationEnabled, isFalse);
 
-    expect(find.text('Clear all data?'), findsOneWidget);
-
-    await tester.tap(find.text('Cancel'));
+    await tester.tap(find.widgetWithText(SettingsRow, 'Vibration'));
     await tester.pumpAndSettle();
-
-    expect(find.text('Clear all data?'), findsNothing);
-    expect(repo.counters, hasLength(1));
+    expect(settingsOf(tester, SoundSettingsScreen).vibrationEnabled, isTrue);
   });
+
+  testWidgets(
+    'DisplaySettingsScreen: "use system" resets a brightness override',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({
+        AppConstants.prefsBrightnessKey: 0.7,
+      });
+      await pumpScreen(tester, const DisplaySettingsScreen());
+
+      expect(find.text('Override active'), findsOneWidget);
+      expect(find.text('70'), findsOneWidget);
+
+      await tester.tap(find.text('use system'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Following system'), findsOneWidget);
+      expect(settingsOf(tester, DisplaySettingsScreen).screenBrightness, -1.0);
+    },
+  );
+
+  testWidgets(
+    'BackupSettingsScreen: clear-all card asks first and Cancel deletes nothing',
+    (tester) async {
+      repo = FakeJapaCounterRepository(
+        counters: const [
+          Counter(id: 'c1', name: 'Om', startDate: 1000, createdAt: 1000),
+        ],
+      );
+      await pumpScreen(tester, const BackupSettingsScreen());
+
+      await scrollTo(tester, find.text('Clear all data?'));
+      await tester.tap(find.text('Clear all data?'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Cancel'), findsOneWidget);
+
+      await tester.tap(find.text('Cancel'));
+      await tester.pumpAndSettle();
+
+      expect(repo.counters, hasLength(1));
+    },
+  );
+
+  testWidgets(
+    'PermissionsScreen: renders explicit, implicit, and privacy sections',
+    (tester) async {
+      await pumpScreen(tester, const PermissionsScreen());
+
+      expect(find.text('Explicit Permissions'), findsOneWidget);
+      expect(find.text('Camera'), findsOneWidget);
+      expect(find.text('Notifications'), findsOneWidget);
+
+      expect(find.text('Implicit Permissions'), findsOneWidget);
+      expect(find.text('Vibration'), findsOneWidget);
+      expect(find.text('Audio Management'), findsOneWidget);
+
+      expect(find.text('Zero-Trust Privacy Guarantee'), findsOneWidget);
+      expect(find.text('Zero Internet Access'), findsOneWidget);
+      expect(find.text('No Broad Storage Access'), findsOneWidget);
+    },
+  );
 }
