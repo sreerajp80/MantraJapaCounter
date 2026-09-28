@@ -176,6 +176,8 @@ Complete these items before every release.
 - [ ] ProGuard rules verified — release build launches; counting flow and import/export work end-to-end.
 - [ ] `android:debuggable=false` confirmed in merged release manifest.
 - [ ] INTERNET permission confirmed absent from merged release manifest.
+- [ ] No `mlkit`, `datatransport` or `firebase` entries in the merged release manifest
+      (`build/app/intermediates/merged_manifest/prodRelease/processProdReleaseMainManifest/AndroidManifest.xml`).
 - [ ] Permissions in manifest reviewed — only VIBRATE, POST_NOTIFICATIONS (Android 13+), READ_MEDIA_AUDIO (Android 13+), READ_EXTERNAL_STORAGE (maxSdkVersion=32).
 - [ ] Security checklist in `docs/security.md` section 18 completed.
 
@@ -184,6 +186,8 @@ Complete these items before every release.
 - [ ] Version in `pubspec.yaml` updated (`version: X.Y.Z+N`).
 - [ ] `CHANGELOG.md` updated with user-visible changes.
 - [ ] Play Store listing metadata reviewed (description, screenshots, feature graphic if changed).
+- [ ] Tablets and Chromebooks are excluded in Play Console → Device catalog (the app is portrait-only, phone-only).
+- [ ] Before raising `targetSdk` to 37: handle landscape on large screens. The Android 16 portrait-lock opt-out (`PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY`) is ignored from API 37.
 
 ### Artifact Validation
 

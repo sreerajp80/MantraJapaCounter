@@ -87,7 +87,7 @@ android {
     defaultConfig {
         applicationId = "com.sreerajp.mantrajapacounter"
         minSdk = 29
-        targetSdk = 35
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
@@ -176,4 +176,8 @@ flutter {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+
+    // QR code decoding for Optical Sync receive. ZXing core is pure Java maths
+    // (Apache 2.0): no network code, no Play Services, no telemetry.
+    implementation("com.google.zxing:core:3.5.3")
 }

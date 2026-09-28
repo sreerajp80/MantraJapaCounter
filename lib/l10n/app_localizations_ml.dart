@@ -1331,8 +1331,13 @@ class AppLocalizationsMl extends AppLocalizations {
   }
 
   @override
-  String opticalFrameProgress(int current, int total) {
-    return 'ഫ്രെയിം $current / $total';
+  String opticalFrameCounter(int current) {
+    return 'ഫ്രെയിം $current';
+  }
+
+  @override
+  String opticalFramesReceived(int count) {
+    return 'ലഭിച്ച ഫ്രെയിമുകൾ: $count';
   }
 
   @override
@@ -1902,4 +1907,28 @@ class AppLocalizationsMl extends AppLocalizations {
   @override
   String get tutorialStep7Desc =>
       'രഹസ്യ പാസ്സ്‌ഫ്രെയ്‌സ് നൽകി എഇഎസ്-256 സുരക്ഷയോടെ മുഴുവൻ സാധനാ ചരിത്രവും ഫയലായി സംരക്ഷിക്കാം.';
+
+  @override
+  String get opticalCameraDenied =>
+      'ക്യാമറ ഉപയോഗിക്കാനുള്ള അനുമതി നിഷേധിച്ചു. ഡാറ്റ സ്വീകരിക്കാൻ Android ക്രമീകരണങ്ങളിൽ ഈ ആപ്പിന് ക്യാമറ അനുമതി നൽകുക.';
+
+  @override
+  String get opticalCameraError =>
+      'ക്യാമറ ആരംഭിക്കാനായില്ല. ക്യാമറ ഉപയോഗിക്കുന്ന മറ്റ് ആപ്പുകൾ അടച്ച് വീണ്ടും ശ്രമിക്കുക.';
+
+  @override
+  String get opticalCameraUnavailable => 'ഈ ഉപകരണത്തിൽ QR സ്കാനർ ലഭ്യമല്ല.';
+
+  @override
+  String get opticalTorchOn => 'ലൈറ്റ് ഓണാക്കുക';
+
+  @override
+  String get opticalTorchOff => 'ലൈറ്റ് ഓഫാക്കുക';
+
+  @override
+  String get opticalZoom => 'സൂം';
+
+  @override
+  String get opticalScanTip =>
+      'ഫോക്കസ് ചെയ്യാൻ കോഡിൽ തൊടുക. മങ്ങിയതായി തോന്നിയാൽ സൂം ഉപയോഗിക്കുക.';
 }

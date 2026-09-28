@@ -1286,8 +1286,13 @@ class AppLocalizationsSa extends AppLocalizations {
   }
 
   @override
-  String opticalFrameProgress(int current, int total) {
-    return 'सङ्केतः $current / $total';
+  String opticalFrameCounter(int current) {
+    return 'सङ्केतः $current';
+  }
+
+  @override
+  String opticalFramesReceived(int count) {
+    return 'प्राप्ताः सङ्केताः: $count';
   }
 
   @override
@@ -1836,4 +1841,28 @@ class AppLocalizationsSa extends AppLocalizations {
   @override
   String get tutorialStep7Desc =>
       'रहस्यसङ्केतं प्रदाय AES-256 सुरक्षापद्धत्या सर्वं विवरणं रक्षितुं शक्यते।';
+
+  @override
+  String get opticalCameraDenied =>
+      'दृश्यकस्य (Camera) अनुमतिः निराकृता। दत्तांशं प्राप्तुं Android-संयोजनेषु अस्मै अनुप्रयोगाय दृश्यक-अनुमतिं ददातु।';
+
+  @override
+  String get opticalCameraError =>
+      'दृश्यकम् (Camera) आरब्धुं न शक्यते। दृश्यकम् उपयुञ्जानान् अन्यान् अनुप्रयोगान् पिधाय पुनः प्रयतताम्।';
+
+  @override
+  String get opticalCameraUnavailable => 'अस्मिन् यन्त्रे QR-पाठकं न उपलभ्यते।';
+
+  @override
+  String get opticalTorchOn => 'दीपं प्रज्वालयतु';
+
+  @override
+  String get opticalTorchOff => 'दीपं शमयतु';
+
+  @override
+  String get opticalZoom => 'विस्तारः';
+
+  @override
+  String get opticalScanTip =>
+      'केन्द्रीकरणाय सङ्केतं स्पृशतु। अस्पष्टं दृश्यते चेत् विस्तारं प्रयुङ्क्ताम्।';
 }

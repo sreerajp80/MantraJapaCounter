@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
+import 'package:mantra_japa_counter/models/active_session.dart';
 import 'package:mantra_japa_counter/models/mala_sound.dart';
 import 'package:mantra_japa_counter/providers/settings_provider.dart';
 
@@ -176,6 +177,42 @@ void main() {
       await notifier.setDimmedChantingMode(false);
       expect(notifier.state.dimmedChantingMode, isFalse);
       expect(repo.dimmedChantingMode, isFalse);
+    });
+  });
+
+  group('SettingsRepository - clearAllActiveSessions', () {
+    ActiveSession session(String counterId) => ActiveSession(
+      sessionId: 's-$counterId',
+      counterId: counterId,
+      counterName: 'Counter $counterId',
+      startTime: 1000,
+      tapCount: 10,
+      incrementStep: 1,
+      lastResumeTimeMs: 1000,
+    );
+
+    test('removes every saved session and keeps other settings', () async {
+      SharedPreferences.setMockInitialValues({AppConstants.prefsDndKey: true});
+      final prefs = await SharedPreferences.getInstance();
+      final repo = SettingsRepository(prefs);
+      await repo.saveActiveSession(session('a'));
+      await repo.saveActiveSession(session('b'));
+
+      await repo.clearAllActiveSessions();
+
+      expect(repo.getAllActiveSessions(), isEmpty);
+      expect(repo.dndEnabled, isTrue);
+    });
+  });
+
+  group('SettingsRepository - notificationPermissionAsked', () {
+    test('is false by default and true once set', () async {
+      SharedPreferences.setMockInitialValues({});
+      final repo = SettingsRepository(await SharedPreferences.getInstance());
+
+      expect(repo.notificationPermissionAsked, isFalse);
+      await repo.setNotificationPermissionAsked();
+      expect(repo.notificationPermissionAsked, isTrue);
     });
   });
 }

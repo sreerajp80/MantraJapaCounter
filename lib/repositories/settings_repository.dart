@@ -27,6 +27,20 @@ class SettingsRepository {
     await _prefs.remove(_keyFor(counterId));
   }
 
+  /// Removes every saved active session (all counters, plus the legacy
+  /// single-slot key). Used when all counters or all history are deleted,
+  /// so startup recovery cannot bring deleted data back.
+  Future<void> clearAllActiveSessions() async {
+    final keys = _prefs
+        .getKeys()
+        .where((k) => k.startsWith(AppConstants.prefsActiveSessionPrefix))
+        .toList();
+    for (final key in keys) {
+      await _prefs.remove(key);
+    }
+    await _prefs.remove(AppConstants.prefsLegacyActiveSessionKey);
+  }
+
   ActiveSession? getActiveSession(String counterId) {
     final migrated = _migrateLegacyIfMatches(counterId);
     if (migrated != null) return migrated;
@@ -93,6 +107,15 @@ class SettingsRepository {
 
   Future<void> setDailyGoalNotificationsEnabled(bool value) async {
     await _prefs.setBool(AppConstants.prefsDailyGoalNotifKey, value);
+  }
+
+  /// True once the app has asked Android for the notification permission,
+  /// so the automatic request is made only one time.
+  bool get notificationPermissionAsked =>
+      _prefs.getBool(AppConstants.prefsNotifPermissionAskedKey) ?? false;
+
+  Future<void> setNotificationPermissionAsked() async {
+    await _prefs.setBool(AppConstants.prefsNotifPermissionAskedKey, true);
   }
 
   bool get malaNotificationsEnabled =>

@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/optical_sync_provider.dart';
+import 'package:mantra_japa_counter/services/screen_service.dart';
 import 'package:mantra_japa_counter/widgets/counter_selection_sheet.dart';
 import 'package:mantra_japa_counter/widgets/optical_sync_import_preview_sheet.dart';
+import 'package:mantra_japa_counter/widgets/qr_camera_view.dart';
 
 class OpticalSyncScreen extends ConsumerStatefulWidget {
   final bool isTransmitter;
@@ -20,14 +21,24 @@ class OpticalSyncScreen extends ConsumerStatefulWidget {
   ConsumerState<OpticalSyncScreen> createState() => _OpticalSyncScreenState();
 }
 
-class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
+class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen>
+    with WidgetsBindingObserver {
   Timer? _streamTimer;
   bool _sheetShown = false;
   bool _counterSelectionShown = false;
 
+  /// Kept here so send mode can be turned off in [dispose], when `ref` can no
+  /// longer be used.
+  late final ScreenService _screenService;
+
+  /// True while frames are streaming (send mode is on).
+  bool _sending = false;
+
   @override
   void initState() {
     super.initState();
+    _screenService = ref.read(screenServiceProvider);
+    WidgetsBinding.instance.addObserver(this);
     if (widget.isTransmitter) {
       // Show counter selection after first frame renders.
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -81,6 +92,10 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
   }
 
   void _startStreamTimer() {
+    if (!_sending) {
+      _sending = true;
+      unawaited(_screenService.setSendMode(true));
+    }
     _streamTimer?.cancel();
     final fps = ref.read(opticalSyncTransmitProvider).fps;
     final intervalMs = (1000 / fps).round();
@@ -90,8 +105,21 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (!_sending) return;
+    // Bright, always-on screen only while the send screen is in front.
+    if (state == AppLifecycleState.paused) {
+      unawaited(_screenService.setSendMode(false));
+    } else if (state == AppLifecycleState.resumed) {
+      unawaited(_screenService.setSendMode(true));
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _streamTimer?.cancel();
+    if (_sending) unawaited(_screenService.setSendMode(false));
     super.dispose();
   }
 
@@ -165,6 +193,13 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
       return Center(child: Text(l.opticalNoFrames));
     }
 
+    // As big as the screen allows (page padding 24, box padding 16, border 2
+    // on each side), up to 320 px. Bigger squares are easier to focus on.
+    final qrSize = (MediaQuery.sizeOf(context).width - 2 * (24 + 16 + 2)).clamp(
+      200.0,
+      320.0,
+    );
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24.0),
       child: Column(
@@ -203,26 +238,18 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
                 ),
               ],
             ),
+            // Pure black on white: coloured corner squares look grey to the
+            // scanner and are often missed.
             child: QrImageView(
               data: currentFrame.serialize(),
-              size: 260.0,
+              size: qrSize,
               backgroundColor: Colors.white,
-              eyeStyle: const QrEyeStyle(
-                eyeShape: QrEyeShape.square,
-                color: TempleColors.vermillion,
-              ),
-              dataModuleStyle: const QrDataModuleStyle(
-                dataModuleShape: QrDataModuleShape.square,
-                color: Colors.black87,
-              ),
+              // Default eye and data styles are plain black squares.
             ),
           ),
           const SizedBox(height: 16),
           Text(
-            l.opticalFrameProgress(
-              state.currentFrameIndex + 1,
-              state.frames.length,
-            ),
+            l.opticalFrameCounter(state.currentFrameIndex + 1),
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: TempleColors.ink,
@@ -230,7 +257,7 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
           ),
           Text(
             currentFrame.isSystematic
-                ? l.opticalSystematicChunk(currentFrame.frameIndex)
+                ? l.opticalSystematicChunk(currentFrame.chunkIndices.first)
                 : l.opticalParityFrame(currentFrame.frameIndex),
             style: theme.textTheme.bodySmall?.copyWith(
               color: TempleColors.ink2,
@@ -320,8 +347,8 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
     // Auto-trigger completion bottom sheet when payload 100% reconstructed
     if (state.progress.isComplete && !_sheetShown) {
       _sheetShown = true;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showModalBottomSheet(
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        final imported = await showModalBottomSheet<bool>(
           context: context,
           isDismissible: false,
           enableDrag: false,
@@ -329,6 +356,11 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
           backgroundColor: Colors.transparent,
           builder: (_) => const OpticalSyncImportPreviewSheet(),
         );
+        // Cancel or a failed import: clear the received data and scan again.
+        // A successful import closes this screen instead.
+        if (imported == true || !mounted) return;
+        ref.read(opticalSyncReceiveProvider.notifier).reset();
+        setState(() => _sheetShown = false);
       });
     }
 
@@ -364,6 +396,16 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
                   ),
                 ],
               ),
+              const SizedBox(height: 4),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  l.opticalFramesReceived(state.progress.framesReceived),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: TempleColors.ink2,
+                  ),
+                ),
+              ),
               const SizedBox(height: 8),
               LinearProgressIndicator(
                 value: state.progress.completionPercentage,
@@ -377,33 +419,12 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen> {
         ),
         // Camera Viewfinder
         Expanded(
-          child: Stack(
-            children: [
-              MobileScanner(
-                onDetect: (capture) {
-                  final barcodes = capture.barcodes;
-                  for (final barcode in barcodes) {
-                    final rawValue = barcode.rawValue;
-                    if (rawValue != null && rawValue.isNotEmpty) {
-                      ref
-                          .read(opticalSyncReceiveProvider.notifier)
-                          .processScannedFrame(rawValue);
-                    }
-                  }
-                },
-              ),
-              // Scanning Frame Guide Overlay
-              Center(
-                child: Container(
-                  width: 250,
-                  height: 250,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: TempleColors.sandal, width: 3),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
-              ),
-            ],
+          child: QrCameraView(
+            onDetect: (rawValue) {
+              ref
+                  .read(opticalSyncReceiveProvider.notifier)
+                  .processScannedFrame(rawValue);
+            },
           ),
         ),
       ],

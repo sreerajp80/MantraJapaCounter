@@ -114,7 +114,6 @@ class CountingNotifier extends StateNotifier<CountingState> {
     _lifetimeGoal = counter.goal;
 
     final saved = settings.getActiveSession(_counterId);
-    final now = DateTime.now().millisecondsSinceEpoch;
 
     ActiveSession session;
     if (saved != null && saved.counterId == _counterId) {
@@ -161,18 +160,11 @@ class CountingNotifier extends StateNotifier<CountingState> {
       }
     } else {
       // Fresh session — no DB row yet (Kotlin inserts on first tap).
-      session = ActiveSession(
-        sessionId: _uuid.v4(),
+      session = _startFreshSession(
         counterId: counter.id,
         counterName: counter.name,
-        startTime: now,
-        tapCount: 0,
         incrementStep: counter.incrementStep,
-        lastResumeTimeMs: now,
       );
-      _sessionDbId = session.sessionId;
-      _isSessionInDb = false;
-      _lastDbWrittenCount = 0;
     }
 
     state = CountingState(
@@ -184,6 +176,29 @@ class CountingNotifier extends StateNotifier<CountingState> {
     _startTimers();
     // Make sure stats and history reflect any DB write we just performed.
     _invalidateStatsAndHistory();
+    await _askNotificationPermissionOnce();
+  }
+
+  /// Goal notifications need the Android 13+ notification permission. Ask
+  /// one time, the first time a counter with a goal is opened while goal
+  /// notifications are on. After that, the Settings switches ask instead.
+  Future<void> _askNotificationPermissionOnce() async {
+    final settings = _ref.read(settingsRepositoryProvider);
+    if (settings.notificationPermissionAsked) return;
+    final wantsGoalAlert =
+        (_dailyGoal > 0 && settings.dailyGoalNotificationsEnabled) ||
+        (_lifetimeGoal > 0 && settings.lifetimeGoalNotificationsEnabled);
+    if (!wantsGoalAlert) return;
+    await settings.setNotificationPermissionAsked();
+    try {
+      // Not awaited: the system dialog waits for the user, and counting
+      // must not wait for it.
+      unawaited(
+        _ref.read(notificationServiceProvider).requestPermissionIfNeeded(),
+      );
+    } catch (_) {
+      // Best-effort — the Settings switches can ask again later.
+    }
   }
 
   /// Refreshes [CountingState.lifetimeTotal] and [CountingState.todayTotal]
@@ -270,8 +285,17 @@ class CountingNotifier extends StateNotifier<CountingState> {
     state = state.copyWith(session: updated);
 
     if (newCount <= 0) {
-      // Reached zero — cancel session (delete DB row, clear prefs).
+      // Reached zero — cancel session (delete DB row, clear prefs), then
+      // start a fresh one. The fresh session's id is used for both the
+      // prefs entry and the DB row, so recovery can never create a second
+      // row for the same taps.
       await _cancelSession();
+      final fresh = _startFreshSession(
+        counterId: updated.counterId,
+        counterName: updated.counterName,
+        incrementStep: updated.incrementStep,
+      );
+      state = state.copyWith(session: fresh);
     } else {
       _tapsSinceLastDbFlush++;
       _tapsSinceLastPrefsFlush++;
@@ -297,7 +321,8 @@ class CountingNotifier extends StateNotifier<CountingState> {
 
   Future<void> _insertSessionRow(ActiveSession session) async {
     final repo = _ref.read(japaCounterRepositoryProvider);
-    final id = _sessionDbId ?? _uuid.v4();
+    // Use the session's own id so the prefs entry and the DB row match.
+    final id = _sessionDbId ?? session.sessionId;
     _sessionDbId = id;
     final row = JapaSession(
       id: id,
@@ -484,19 +509,11 @@ class CountingNotifier extends StateNotifier<CountingState> {
     final counter = await repo.getCounterById(_counterId);
     if (counter == null) return;
 
-    final now = DateTime.now().millisecondsSinceEpoch;
-    final newSession = ActiveSession(
-      sessionId: _uuid.v4(),
+    final newSession = _startFreshSession(
       counterId: counter.id,
       counterName: counter.name,
-      startTime: now,
-      tapCount: 0,
       incrementStep: counter.incrementStep,
-      lastResumeTimeMs: now,
     );
-    _sessionDbId = newSession.sessionId;
-    _isSessionInDb = false;
-    _lastDbWrittenCount = 0;
     state = CountingState(session: newSession);
     await _refreshTotals(counter.initialCount);
     _startTimers();
@@ -513,19 +530,11 @@ class CountingNotifier extends StateNotifier<CountingState> {
 
     final counter = await repo.getCounterById(_counterId);
     if (counter == null) return;
-    final now = DateTime.now().millisecondsSinceEpoch;
-    final newSession = ActiveSession(
-      sessionId: _uuid.v4(),
+    final newSession = _startFreshSession(
       counterId: counter.id,
       counterName: counter.name,
-      startTime: now,
-      tapCount: 0,
       incrementStep: counter.incrementStep,
-      lastResumeTimeMs: now,
     );
-    _sessionDbId = newSession.sessionId;
-    _isSessionInDb = false;
-    _lastDbWrittenCount = 0;
     state = CountingState(session: newSession);
     await _refreshTotals(counter.initialCount);
     _startTimers();
@@ -555,6 +564,29 @@ class CountingNotifier extends StateNotifier<CountingState> {
   }
 
   // ───────────────────────────── internals ────────────────────────────────
+
+  /// Builds a new, empty session and points DB tracking at its id, so the
+  /// saved prefs session and the DB row always share one id.
+  ActiveSession _startFreshSession({
+    required String counterId,
+    required String counterName,
+    required int incrementStep,
+  }) {
+    final now = DateTime.now().millisecondsSinceEpoch;
+    final session = ActiveSession(
+      sessionId: _uuid.v4(),
+      counterId: counterId,
+      counterName: counterName,
+      startTime: now,
+      tapCount: 0,
+      incrementStep: incrementStep,
+      lastResumeTimeMs: now,
+    );
+    _sessionDbId = session.sessionId;
+    _isSessionInDb = false;
+    _lastDbWrittenCount = 0;
+    return session;
+  }
 
   Future<void> _cancelSession() async {
     await _deleteCurrentDbRow();

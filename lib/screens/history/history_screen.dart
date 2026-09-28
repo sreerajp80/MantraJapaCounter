@@ -218,13 +218,9 @@ class HistoryScreen extends ConsumerWidget {
           TextButton(
             onPressed: () async {
               Navigator.pop(context);
-              final repo = ref.read(japaCounterRepositoryProvider);
-              if (filterCounterId == null) {
-                await repo.deleteAllSessions();
-              } else {
-                await repo.deleteSessionsByCounterId(filterCounterId!);
-              }
-              ref.invalidate(historySummariesProvider(filterCounterId));
+              await ref
+                  .read(historyActionsProvider)
+                  .clearHistory(counterId: filterCounterId);
             },
             child: Text(
               l.clear,

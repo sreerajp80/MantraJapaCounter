@@ -385,7 +385,8 @@
   "opticalReceiveTitle": "प्रकाशस्वीकरणम्",
   "opticalNoFrames": "सङ्केता न सज्जाः",
   "opticalSessionId": "सत्रक्रमाङ्कः: {id}",
-  "opticalFrameProgress": "सङ्केतः {current} / {total}",
+  "opticalFrameCounter": "सङ्केतः {current}",
+  "opticalFramesReceived": "प्राप्ताः सङ्केताः: {count}",
   "opticalSystematicChunk": "क्रमबद्धदत्तांशखण्डः #{index}",
   "opticalParityFrame": "समतासङ्केतः {index}",
   "opticalStreamRate": "प्रवाहवेगः (FPS)",
@@ -554,5 +555,33 @@
   "tutorialStep6Title": "६. प्रकाशीयं QR-सङ्क्रमणम्",
   "tutorialStep6Desc": "अन्तर्जालं विना चलचित्रित-QR-माध्यमेन अन्ययन्त्रे दत्तांशं प्रेषयतु।",
   "tutorialStep7Title": "७. गूढीकृतरक्षणम् (Encrypted Backup)",
-  "tutorialStep7Desc": "रहस्यसङ्केतं प्रदाय AES-256 सुरक्षापद्धत्या सर्वं विवरणं रक्षितुं शक्यते।"
+  "tutorialStep7Desc": "रहस्यसङ्केतं प्रदाय AES-256 सुरक्षापद्धत्या सर्वं विवरणं रक्षितुं शक्यते।",
+  "opticalCameraDenied": "दृश्यकस्य (Camera) अनुमतिः निराकृता। दत्तांशं प्राप्तुं Android-संयोजनेषु अस्मै अनुप्रयोगाय दृश्यक-अनुमतिं ददातु।",
+  "@opticalCameraDenied": {
+    "description": "Shown on the Optical Sync receiver when camera permission is denied"
+  },
+  "opticalCameraError": "दृश्यकम् (Camera) आरब्धुं न शक्यते। दृश्यकम् उपयुञ्जानान् अन्यान् अनुप्रयोगान् पिधाय पुनः प्रयतताम्।",
+  "@opticalCameraError": {
+    "description": "Shown on the Optical Sync receiver when the camera fails to start"
+  },
+  "opticalCameraUnavailable": "अस्मिन् यन्त्रे QR-पाठकं न उपलभ्यते।",
+  "@opticalCameraUnavailable": {
+    "description": "Shown on the Optical Sync receiver when no native QR decoder exists"
+  },
+  "opticalTorchOn": "दीपं प्रज्वालयतु",
+  "@opticalTorchOn": {
+    "description": "Tooltip for the button that turns the camera light on in the Optical Sync receiver"
+  },
+  "opticalTorchOff": "दीपं शमयतु",
+  "@opticalTorchOff": {
+    "description": "Tooltip for the button that turns the camera light off in the Optical Sync receiver"
+  },
+  "opticalZoom": "विस्तारः",
+  "@opticalZoom": {
+    "description": "Label for the camera zoom slider in the Optical Sync receiver"
+  },
+  "opticalScanTip": "केन्द्रीकरणाय सङ्केतं स्पृशतु। अस्पष्टं दृश्यते चेत् विस्तारं प्रयुङ्क्ताम्।",
+  "@opticalScanTip": {
+    "description": "Hint shown over the camera in the Optical Sync receiver"
+  }
 }

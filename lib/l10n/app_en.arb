@@ -1673,14 +1673,20 @@
       }
     }
   },
-  "opticalFrameProgress": "Frame {current} / {total}",
-  "@opticalFrameProgress": {
-    "description": "Progress label showing the current QR frame out of the total",
+  "opticalFrameCounter": "Frame {current}",
+  "@opticalFrameCounter": {
+    "description": "Label showing the number of the QR frame now on screen (the stream has no end)",
     "placeholders": {
       "current": {
         "type": "int"
-      },
-      "total": {
+      }
+    }
+  },
+  "opticalFramesReceived": "Frames received: {count}",
+  "@opticalFramesReceived": {
+    "description": "Optical Sync receiver line showing how many different QR frames have been read so far",
+    "placeholders": {
+      "count": {
         "type": "int"
       }
     }
@@ -2384,5 +2390,33 @@
   "tutorialStep7Desc": "Export your entire sadhana history to a file protected by AES-256-GCM encryption with your personal passphrase.",
   "@tutorialStep7Desc": {
     "description": "Tutorial step 7 description"
+  },
+  "opticalCameraDenied": "Camera access was denied. To receive data, allow the camera permission for this app in Android Settings.",
+  "@opticalCameraDenied": {
+    "description": "Shown on the Optical Sync receiver when camera permission is denied"
+  },
+  "opticalCameraError": "The camera could not be started. Close other apps that use the camera and try again.",
+  "@opticalCameraError": {
+    "description": "Shown on the Optical Sync receiver when the camera fails to start"
+  },
+  "opticalCameraUnavailable": "The QR scanner is not available on this device.",
+  "@opticalCameraUnavailable": {
+    "description": "Shown on the Optical Sync receiver when no native QR decoder exists"
+  },
+  "opticalTorchOn": "Turn on light",
+  "@opticalTorchOn": {
+    "description": "Tooltip for the button that turns the camera light on in the Optical Sync receiver"
+  },
+  "opticalTorchOff": "Turn off light",
+  "@opticalTorchOff": {
+    "description": "Tooltip for the button that turns the camera light off in the Optical Sync receiver"
+  },
+  "opticalZoom": "Zoom",
+  "@opticalZoom": {
+    "description": "Label for the camera zoom slider in the Optical Sync receiver"
+  },
+  "opticalScanTip": "Tap the code to focus. Use zoom if it looks blurred.",
+  "@opticalScanTip": {
+    "description": "Hint shown over the camera in the Optical Sync receiver"
   }
 }

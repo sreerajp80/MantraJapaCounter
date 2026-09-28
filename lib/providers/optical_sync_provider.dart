@@ -13,7 +13,9 @@ import 'package:mantra_japa_counter/providers/counters_provider.dart';
 class OpticalSyncTransmitState {
   final bool isLoading;
   final String sessionId;
-  final List<OpticalSyncFrame> frames;
+
+  /// Makes frames on demand; null until the counters are chosen.
+  final OpticalSyncEncoder? encoder;
   final int currentFrameIndex;
   final int fps;
   final bool isPlaying;
@@ -28,9 +30,9 @@ class OpticalSyncTransmitState {
   const OpticalSyncTransmitState({
     this.isLoading = true,
     this.sessionId = '',
-    this.frames = const [],
+    this.encoder,
     this.currentFrameIndex = 0,
-    this.fps = 12,
+    this.fps = 8,
     this.isPlaying = true,
     this.errorMessage,
     this.selectedCounterIds,
@@ -40,7 +42,7 @@ class OpticalSyncTransmitState {
   OpticalSyncTransmitState copyWith({
     bool? isLoading,
     String? sessionId,
-    List<OpticalSyncFrame>? frames,
+    OpticalSyncEncoder? encoder,
     int? currentFrameIndex,
     int? fps,
     bool? isPlaying,
@@ -51,7 +53,7 @@ class OpticalSyncTransmitState {
     return OpticalSyncTransmitState(
       isLoading: isLoading ?? this.isLoading,
       sessionId: sessionId ?? this.sessionId,
-      frames: frames ?? this.frames,
+      encoder: encoder ?? this.encoder,
       currentFrameIndex: currentFrameIndex ?? this.currentFrameIndex,
       fps: fps ?? this.fps,
       isPlaying: isPlaying ?? this.isPlaying,
@@ -61,10 +63,7 @@ class OpticalSyncTransmitState {
     );
   }
 
-  OpticalSyncFrame? get currentFrame {
-    if (frames.isEmpty) return null;
-    return frames[currentFrameIndex % frames.length];
-  }
+  OpticalSyncFrame? get currentFrame => encoder?.frameAt(currentFrameIndex);
 }
 
 class OpticalSyncTransmitNotifier extends Notifier<OpticalSyncTransmitState> {
@@ -88,16 +87,12 @@ class OpticalSyncTransmitNotifier extends Notifier<OpticalSyncTransmitState> {
       final jsonPayload = exportData.toJsonString();
 
       final sessionId = const Uuid().v4().substring(0, 8);
-      final frames = OpticalSyncService.generateFrames(
-        jsonPayload,
-        sessionId: sessionId,
-        maxFramesToGenerate: 120,
-      );
+      final encoder = OpticalSyncEncoder(jsonPayload, sessionId: sessionId);
 
       state = state.copyWith(
         isLoading: false,
         sessionId: sessionId,
-        frames: frames,
+        encoder: encoder,
         currentFrameIndex: 0,
         isPlaying: true,
         isInitialized: true,
@@ -121,18 +116,21 @@ class OpticalSyncTransmitNotifier extends Notifier<OpticalSyncTransmitState> {
   }
 
   void nextFrame() {
-    if (state.frames.isNotEmpty && state.isPlaying) {
+    if (state.encoder != null && state.isPlaying) {
       state = state.copyWith(
-        currentFrameIndex: (state.currentFrameIndex + 1) % state.frames.length,
+        currentFrameIndex:
+            (state.currentFrameIndex + 1) % OpticalSyncEncoder.maxFrameIndex,
       );
     }
   }
 }
 
+/// Auto-dispose: each visit to the send screen starts a fresh session.
 final opticalSyncTransmitProvider =
-    NotifierProvider<OpticalSyncTransmitNotifier, OpticalSyncTransmitState>(
-      OpticalSyncTransmitNotifier.new,
-    );
+    NotifierProvider.autoDispose<
+      OpticalSyncTransmitNotifier,
+      OpticalSyncTransmitState
+    >(OpticalSyncTransmitNotifier.new);
 
 // ────────────────────────── Receive State & Notifier ──────────────────────────
 
@@ -190,7 +188,8 @@ class OpticalSyncReceiveState {
 }
 
 class OpticalSyncReceiveNotifier extends Notifier<OpticalSyncReceiveState> {
-  late final OpticalSyncDecoder _decoder;
+  /// Made again in every [build], so a rebuild never reuses old chunks.
+  OpticalSyncDecoder _decoder = OpticalSyncDecoder();
 
   @override
   OpticalSyncReceiveState build() {
@@ -259,7 +258,10 @@ class OpticalSyncReceiveNotifier extends Notifier<OpticalSyncReceiveState> {
   }
 }
 
+/// Auto-dispose: received chunks are dropped when the scanner screen closes,
+/// so each visit starts at 0.
 final opticalSyncReceiveProvider =
-    NotifierProvider<OpticalSyncReceiveNotifier, OpticalSyncReceiveState>(
-      OpticalSyncReceiveNotifier.new,
-    );
+    NotifierProvider.autoDispose<
+      OpticalSyncReceiveNotifier,
+      OpticalSyncReceiveState
+    >(OpticalSyncReceiveNotifier.new);

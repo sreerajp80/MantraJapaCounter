@@ -9,6 +9,10 @@ class OpticalSyncReceiveProgress {
   final int totalOriginalChunks;
   final int totalPayloadLength;
   final int reconstructedChunksCount;
+
+  /// Number of different frames read so far (shows the scan is working even
+  /// before a chunk is solved).
+  final int framesReceived;
   final double completionPercentage;
   final bool isComplete;
   final String? decodedJsonPayload;
@@ -18,6 +22,7 @@ class OpticalSyncReceiveProgress {
     required this.totalOriginalChunks,
     required this.totalPayloadLength,
     required this.reconstructedChunksCount,
+    this.framesReceived = 0,
     required this.completionPercentage,
     required this.isComplete,
     this.decodedJsonPayload,
@@ -27,83 +32,22 @@ class OpticalSyncReceiveProgress {
 /// Service implementing Luby Transform (LT) Fountain Code encoding and decoding
 /// for 100% offline screen-to-camera optical QR stream synchronization.
 class OpticalSyncService {
-  /// Target chunk size in bytes (clamped to ensure QR codes remain low density and easy to scan)
-  static const int chunkSize = 180;
+  /// Target chunk size in bytes. Kept small so each QR code has fewer,
+  /// larger squares that a phone camera can focus on and read. Receivers read
+  /// the chunk count and length from each frame, so changing this is safe.
+  static const int chunkSize = 120;
 
-  /// Generate continuous frames (systematic first, followed by LT parity combinations).
+  /// Returns the first [maxFramesToGenerate] frames of the endless stream
+  /// made by [OpticalSyncEncoder].
   static List<OpticalSyncFrame> generateFrames(
     String jsonPayload, {
     required String sessionId,
     int maxFramesToGenerate = 100,
   }) {
-    final payloadBytes = utf8.encode(jsonPayload);
-    final totalPayloadLength = payloadBytes.length;
-    final totalOriginalChunks = (totalPayloadLength / chunkSize).ceil();
-
-    if (totalOriginalChunks == 0) return [];
-
-    final originalChunks = <int, List<int>>{};
-    for (int i = 0; i < totalOriginalChunks; i++) {
-      final start = i * chunkSize;
-      final end = min(start + chunkSize, totalPayloadLength);
-      originalChunks[i] = payloadBytes.sublist(start, end);
-    }
-
-    final frames = <OpticalSyncFrame>[];
-
-    // 1. Generate Systematic Frames (0 to totalOriginalChunks - 1)
-    for (int i = 0; i < totalOriginalChunks; i++) {
-      frames.add(
-        OpticalSyncFrame.create(
-          sessionId: sessionId,
-          frameIndex: i,
-          totalOriginalChunks: totalOriginalChunks,
-          totalPayloadLength: totalPayloadLength,
-          chunkIndices: [i],
-          dataBytes: originalChunks[i]!,
-        ),
-      );
-    }
-
-    // 2. Generate LT Parity Fountain Frames (totalOriginalChunks onwards)
-    if (totalOriginalChunks > 1) {
-      final random = Random(sessionId.hashCode);
-      for (
-        int fIndex = totalOriginalChunks;
-        fIndex < maxFramesToGenerate;
-        fIndex++
-      ) {
-        // Pick degree 2 or 3
-        final degree = min(totalOriginalChunks, 2 + random.nextInt(2));
-        final selectedIndices = <int>{};
-        while (selectedIndices.length < degree) {
-          selectedIndices.add(random.nextInt(totalOriginalChunks));
-        }
-
-        final indexList = selectedIndices.toList()..sort();
-        List<int>? parityBytes;
-        for (final idx in indexList) {
-          if (parityBytes == null) {
-            parityBytes = List<int>.from(originalChunks[idx]!);
-          } else {
-            parityBytes = _xorBytes(parityBytes, originalChunks[idx]!);
-          }
-        }
-
-        frames.add(
-          OpticalSyncFrame.create(
-            sessionId: sessionId,
-            frameIndex: fIndex,
-            totalOriginalChunks: totalOriginalChunks,
-            totalPayloadLength: totalPayloadLength,
-            chunkIndices: indexList,
-            dataBytes: parityBytes!,
-          ),
-        );
-      }
-    }
-
-    return frames;
+    if (jsonPayload.isEmpty) return [];
+    final encoder = OpticalSyncEncoder(jsonPayload, sessionId: sessionId);
+    final count = max(maxFramesToGenerate, encoder.totalOriginalChunks);
+    return [for (int i = 0; i < count; i++) encoder.frameAt(i)];
   }
 
   /// Bitwise XOR of two byte lists
@@ -119,6 +63,108 @@ class OpticalSyncService {
   }
 }
 
+/// Makes an endless stream of frames for one payload, on demand.
+///
+/// - Frames `0 … N-1` are the plain ("systematic") chunks, once, in order.
+/// - After that the stream repeats a pattern of 3: one plain chunk (cycling
+///   through all chunks), then two mix ("parity") frames.
+/// - Each mix frame XORs 2 chunks most of the time, sometimes 3 or 4. Its
+///   chunks come from a random generator seeded with the session and the
+///   frame number, so the same frame number always gives the same frame and
+///   every new number gives a new mix.
+///
+/// Every frame lists its own chunk numbers, so any receiver of the
+/// `AIRQR|LT1` format can use it, whichever frame it starts on.
+class OpticalSyncEncoder {
+  /// Frame numbers wrap here, so they can never overflow.
+  static const int maxFrameIndex = 1000000;
+
+  final String sessionId;
+  final int totalPayloadLength;
+  final List<List<int>> _chunks;
+  final int _seed;
+
+  OpticalSyncEncoder._(
+    this.sessionId,
+    this.totalPayloadLength,
+    this._chunks,
+    this._seed,
+  );
+
+  /// Splits [jsonPayload] into chunks. Throws [ArgumentError] when empty.
+  factory OpticalSyncEncoder(String jsonPayload, {required String sessionId}) {
+    final bytes = utf8.encode(jsonPayload);
+    if (bytes.isEmpty) {
+      throw ArgumentError.value(jsonPayload, 'jsonPayload', 'is empty');
+    }
+    final chunks = <List<int>>[
+      for (
+        int start = 0;
+        start < bytes.length;
+        start += OpticalSyncService.chunkSize
+      )
+        bytes.sublist(
+          start,
+          min(start + OpticalSyncService.chunkSize, bytes.length),
+        ),
+    ];
+    return OpticalSyncEncoder._(
+      sessionId,
+      bytes.length,
+      chunks,
+      OpticalSyncFrame.computeCrc32(sessionId),
+    );
+  }
+
+  int get totalOriginalChunks => _chunks.length;
+
+  /// The frame at [index] (wrapped at [maxFrameIndex]).
+  OpticalSyncFrame frameAt(int index) {
+    final i = index % maxFrameIndex;
+    final n = _chunks.length;
+
+    final List<int> indices;
+    if (i < n) {
+      indices = [i];
+    } else if (n == 1) {
+      indices = [0];
+    } else {
+      final k = i - n;
+      if (k % 3 == 0) {
+        indices = [(k ~/ 3) % n];
+      } else {
+        indices = _mixIndices(i, n);
+      }
+    }
+
+    List<int> data = _chunks[indices.first];
+    for (final idx in indices.skip(1)) {
+      data = OpticalSyncService._xorBytes(data, _chunks[idx]);
+    }
+
+    return OpticalSyncFrame.create(
+      sessionId: sessionId,
+      frameIndex: i,
+      totalOriginalChunks: n,
+      totalPayloadLength: totalPayloadLength,
+      chunkIndices: indices,
+      dataBytes: data,
+    );
+  }
+
+  /// Picks 2 chunks (60%), 3 (30%) or 4 (10%), never more than [n].
+  List<int> _mixIndices(int frameIndex, int n) {
+    final random = Random((_seed ^ frameIndex) & 0x7fffffff);
+    final roll = random.nextInt(10);
+    final degree = min(n, roll < 6 ? 2 : (roll < 9 ? 3 : 4));
+    final picked = <int>{};
+    while (picked.length < degree) {
+      picked.add(random.nextInt(n));
+    }
+    return picked.toList()..sort();
+  }
+}
+
 /// State solver for reconstructing payload from incoming LT frames.
 class OpticalSyncDecoder {
   String? sessionId;
@@ -126,6 +172,9 @@ class OpticalSyncDecoder {
   int? totalPayloadLength;
 
   final Map<int, List<int>> _resolvedChunks = {};
+
+  /// Frame numbers seen so far, for the "frames received" count.
+  final Set<int> _seenFrames = {};
 
   /// Pending unresolved parity equations: Map of frameIndex -> (chunkIndices, dataBytes)
   final Map<int, _ParityEquation> _pendingEquations = {};
@@ -152,6 +201,9 @@ class OpticalSyncDecoder {
     }
 
     if (isComplete) return currentProgress();
+
+    // A frame already seen adds nothing new.
+    if (!_seenFrames.add(frame.frameIndex)) return currentProgress();
 
     // 1. Add frame to solver
     _addFrame(frame);
@@ -241,6 +293,7 @@ class OpticalSyncDecoder {
     totalPayloadLength = null;
     _resolvedChunks.clear();
     _pendingEquations.clear();
+    _seenFrames.clear();
   }
 
   OpticalSyncReceiveProgress currentProgress() {
@@ -262,6 +315,7 @@ class OpticalSyncDecoder {
       totalOriginalChunks: totalOriginalChunks ?? 0,
       totalPayloadLength: totalPayloadLength ?? 0,
       reconstructedChunksCount: _resolvedChunks.length,
+      framesReceived: _seenFrames.length,
       completionPercentage: completionPercentage,
       isComplete: isComplete,
       decodedJsonPayload: jsonPayload,

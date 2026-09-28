@@ -79,7 +79,13 @@ class _CounterSelectionSheetState extends State<CounterSelectionSheet> {
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.75,
       ),
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+      // Add the system nav bar height so the button is not drawn under it.
+      padding: EdgeInsets.fromLTRB(
+        20,
+        16,
+        20,
+        24 + MediaQuery.viewPaddingOf(context).bottom,
+      ),
       decoration: const BoxDecoration(
         color: TempleColors.bg,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),

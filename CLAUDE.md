@@ -12,7 +12,7 @@ This file is read by Claude Code at the start of every session in this repositor
 | App name (dev) | `SreerajP MantraJapa Counter Dev` |
 | Package / org id (prod) | `com.sreerajp.mantrajapacounter` |
 | Package / org id (dev) | `com.sreerajp.mantrajapacounter.dev` |
-| Platform(s) | Android (minSdk 29, targetSdk 35) |
+| Platform(s) | Android (minSdk 29, targetSdk 36) |
 | Flutter SDK | `^3.12.2` / 3.44.8 or higher |
 | Dart SDK | `^3.12.2` or higher |
 | State management | `flutter_riverpod` |

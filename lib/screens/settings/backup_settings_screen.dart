@@ -255,10 +255,7 @@ class BackupSettingsScreen extends ConsumerWidget {
           TextButton(
             onPressed: () async {
               Navigator.pop(context);
-              final repo = ref.read(japaCounterRepositoryProvider);
-              await repo.deleteAllSessions();
-              await repo.deleteAllCounters();
-              ref.invalidate(countersNotifierProvider);
+              await ref.read(countersNotifierProvider.notifier).clearAllData();
               if (context.mounted) {
                 ScaffoldMessenger.of(
                   context,

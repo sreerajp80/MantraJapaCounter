@@ -43,6 +43,8 @@ class AppConstants {
   static const String prefsVibrationKey = 'notification_vibration';
   static const String prefsLanguageCodeKey = 'app_language_code';
   static const String prefsDndKey = 'dnd_enabled';
+  static const String prefsNotifPermissionAskedKey =
+      'notification_permission_asked';
   static const String prefsDimmedChantingKey = 'dimmed_chanting_mode';
 
   // Export

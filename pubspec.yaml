@@ -1,7 +1,7 @@
 name: mantra_japa_counter
 description: SreerajP MantraJapa Counter — track your mantra recitation practice.
 publish_to: 'none'
-version: 6.12.1+29
+version: 6.13.3+34
 
 environment:
   sdk: ^3.12.2
@@ -41,10 +41,11 @@ dependencies:
   path_provider: ^2.1.5
   share_plus: ^12.0.2
   qr_flutter: ^4.1.0
-  mobile_scanner: ^7.1.2
 
-  # Logging
-  logger: ^2.5.0
+  # Live camera frames for Optical Sync receive. Frames are decoded on the
+  # device by ZXing core (see android/app/build.gradle.kts). No ML Kit, so no
+  # Google telemetry and no network permission.
+  camera: ^0.12.1
 
   # App version (reads from pubspec.yaml at runtime)
   package_info_plus: ^9.0.1

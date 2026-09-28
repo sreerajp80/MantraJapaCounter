@@ -435,14 +435,20 @@
       }
     }
   },
-  "opticalFrameProgress": "ഫ്രെയിം {current} / {total}",
-  "@opticalFrameProgress": {
-    "description": "Progress label showing the current QR frame out of the total",
+  "opticalFrameCounter": "ഫ്രെയിം {current}",
+  "@opticalFrameCounter": {
+    "description": "Label showing the number of the QR frame now on screen (the stream has no end)",
     "placeholders": {
       "current": {
         "type": "int"
-      },
-      "total": {
+      }
+    }
+  },
+  "opticalFramesReceived": "ലഭിച്ച ഫ്രെയിമുകൾ: {count}",
+  "@opticalFramesReceived": {
+    "description": "Optical Sync receiver line showing how many different QR frames have been read so far",
+    "placeholders": {
+      "count": {
         "type": "int"
       }
     }
@@ -1146,5 +1152,33 @@
   "tutorialStep7Desc": "രഹസ്യ പാസ്സ്‌ഫ്രെയ്‌സ് നൽകി എഇഎസ്-256 സുരക്ഷയോടെ മുഴുവൻ സാധനാ ചരിത്രവും ഫയലായി സംരക്ഷിക്കാം.",
   "@tutorialStep7Desc": {
     "description": "Tutorial step 7 description"
+  },
+  "opticalCameraDenied": "ക്യാമറ ഉപയോഗിക്കാനുള്ള അനുമതി നിഷേധിച്ചു. ഡാറ്റ സ്വീകരിക്കാൻ Android ക്രമീകരണങ്ങളിൽ ഈ ആപ്പിന് ക്യാമറ അനുമതി നൽകുക.",
+  "@opticalCameraDenied": {
+    "description": "Shown on the Optical Sync receiver when camera permission is denied"
+  },
+  "opticalCameraError": "ക്യാമറ ആരംഭിക്കാനായില്ല. ക്യാമറ ഉപയോഗിക്കുന്ന മറ്റ് ആപ്പുകൾ അടച്ച് വീണ്ടും ശ്രമിക്കുക.",
+  "@opticalCameraError": {
+    "description": "Shown on the Optical Sync receiver when the camera fails to start"
+  },
+  "opticalCameraUnavailable": "ഈ ഉപകരണത്തിൽ QR സ്കാനർ ലഭ്യമല്ല.",
+  "@opticalCameraUnavailable": {
+    "description": "Shown on the Optical Sync receiver when no native QR decoder exists"
+  },
+  "opticalTorchOn": "ലൈറ്റ് ഓണാക്കുക",
+  "@opticalTorchOn": {
+    "description": "Tooltip for the button that turns the camera light on in the Optical Sync receiver"
+  },
+  "opticalTorchOff": "ലൈറ്റ് ഓഫാക്കുക",
+  "@opticalTorchOff": {
+    "description": "Tooltip for the button that turns the camera light off in the Optical Sync receiver"
+  },
+  "opticalZoom": "സൂം",
+  "@opticalZoom": {
+    "description": "Label for the camera zoom slider in the Optical Sync receiver"
+  },
+  "opticalScanTip": "ഫോക്കസ് ചെയ്യാൻ കോഡിൽ തൊടുക. മങ്ങിയതായി തോന്നിയാൽ സൂം ഉപയോഗിക്കുക.",
+  "@opticalScanTip": {
+    "description": "Hint shown over the camera in the Optical Sync receiver"
   }
 }

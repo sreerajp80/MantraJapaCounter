@@ -1329,8 +1329,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String opticalFrameProgress(int current, int total) {
-    return 'Frame $current / $total';
+  String opticalFrameCounter(int current) {
+    return 'Frame $current';
+  }
+
+  @override
+  String opticalFramesReceived(int count) {
+    return 'Frames received: $count';
   }
 
   @override
@@ -1899,4 +1904,29 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get tutorialStep7Desc =>
       'Export your entire sadhana history to a file protected by AES-256-GCM encryption with your personal passphrase.';
+
+  @override
+  String get opticalCameraDenied =>
+      'Camera access was denied. To receive data, allow the camera permission for this app in Android Settings.';
+
+  @override
+  String get opticalCameraError =>
+      'The camera could not be started. Close other apps that use the camera and try again.';
+
+  @override
+  String get opticalCameraUnavailable =>
+      'The QR scanner is not available on this device.';
+
+  @override
+  String get opticalTorchOn => 'Turn on light';
+
+  @override
+  String get opticalTorchOff => 'Turn off light';
+
+  @override
+  String get opticalZoom => 'Zoom';
+
+  @override
+  String get opticalScanTip =>
+      'Tap the code to focus. Use zoom if it looks blurred.';
 }

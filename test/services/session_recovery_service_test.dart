@@ -213,6 +213,36 @@ void main() {
     });
   });
 
+  group('counter no longer exists', () {
+    test('drops the saved session instead of inserting a row', () async {
+      // The real app opens the database with foreign keys on.
+      await db.execute('PRAGMA foreign_keys = ON');
+      await savePrefsSession(
+        activeSession(sessionId: 'gone-s', counterId: 'gone', tapCount: 40),
+      );
+
+      await expectLater(
+        service.recoverIfNeeded(),
+        completes,
+        reason: 'a deleted counter must never stop the app from starting',
+      );
+      expect(await repo.getSessionById('gone-s'), isNull);
+      expect(settings.getActiveSession('gone'), isNull);
+    });
+
+    test('still recovers the other counters', () async {
+      await db.execute('PRAGMA foreign_keys = ON');
+      await savePrefsSession(
+        activeSession(sessionId: 'gone-s', counterId: 'gone', tapCount: 40),
+      );
+      await savePrefsSession(activeSession(tapCount: 70));
+
+      await service.recoverIfNeeded();
+
+      expect((await repo.getSessionById('s1'))!.count, 70);
+    });
+  });
+
   group('malformed input', () {
     test('drops unparseable JSON without throwing', () async {
       // Rule 4: never crash on malformed input.

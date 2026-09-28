@@ -12,3 +12,31 @@ final historySummariesProvider = FutureProvider.autoDispose
       final repo = ref.watch(japaCounterRepositoryProvider);
       return repo.getDailySummaries(counterId: counterId);
     });
+
+/// History actions that change data. Screens call these instead of the
+/// repository.
+class HistoryActions {
+  final Ref _ref;
+
+  HistoryActions(this._ref);
+
+  /// Deletes the session history for one counter, or for all counters when
+  /// [counterId] is null. Saved (paused) sessions are cleared as well, so
+  /// startup recovery cannot bring the deleted sessions back.
+  Future<void> clearHistory({String? counterId}) async {
+    final repo = _ref.read(japaCounterRepositoryProvider);
+    final settings = _ref.read(settingsRepositoryProvider);
+    if (counterId == null) {
+      await repo.deleteAllSessions();
+      await settings.clearAllActiveSessions();
+    } else {
+      await repo.deleteSessionsByCounterId(counterId);
+      await settings.clearActiveSession(counterId);
+    }
+    _ref.invalidate(historySummariesProvider(counterId));
+  }
+}
+
+final historyActionsProvider = Provider<HistoryActions>(
+  (ref) => HistoryActions(ref),
+);

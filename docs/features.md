@@ -20,7 +20,7 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 
 | Concern | Details / Package |
 |---|---|
-| **Framework & Engine** | Flutter (`sdk ^3.12.2`), Target SDK 35 (Android 15), Min SDK 29 (Android 10), Java 17 |
+| **Framework & Engine** | Flutter (`sdk ^3.12.2`), Target SDK 36 (Android 16), Min SDK 29 (Android 10), Java 17 |
 | **Desugaring** | `com.android.tools:desugar_jdk_libs:2.1.4` (Core JDK library desugaring for Java 8+ APIs) |
 | **State Management** | `flutter_riverpod` (v3.3.1) with `AsyncNotifier` and `StateNotifier` architecture |
 | **Navigation** | `go_router` (v17.2.2) with declarative routing and parameter passing |
@@ -28,8 +28,9 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 | **Key-Value Storage** | `shared_preferences` (v2.5.3) for settings and crash-recovery session state |
 | **Audio Playback** | `audioplayers` (v6.1.0) + Native Android MethodChannel (`com.sreerajp.mantrajapacounter/haptic`) |
 | **Notifications** | `flutter_local_notifications` (v21.0.0) |
+| **QR Scanning** | `camera` (v0.12.1) live frames + ZXing core (`com.google.zxing:core` 3.5.3) decoding on device — no ML Kit, no Google services |
 | **File Picker & Sharing** | `file_picker` (v11.0.2) + `share_plus` (v12.0.2) + `path_provider` (v2.1.5) |
-| **App Metadata & Utilities** | `package_info_plus` (v9.0.1), `logger` (v2.5.0), `uuid` (v4.5.1), `cupertino_icons` (v1.0.8) |
+| **App Metadata & Utilities** | `package_info_plus` (v9.0.1), `uuid` (v4.5.1), `cupertino_icons` (v1.0.8) |
 | **Localization** | `flutter_localizations` (`intl`) supporting English (`en`) & Malayalam (`ml`) |
 | **Typography** | `EBGaramond` (variable font), `Inter` (variable font), `NotoSansMalayalam` (variable font) |
 | **Native Integration** | `MainActivity.kt` Kotlin plugin implementing native `ToneGenerator` DTMF beeps, `USAGE_ALARM` audio/vibration attributes, ringtone query via `RingtoneManager`, and `STREAM_ALARM` volume boost/auto-restore (`6000ms` window) |
@@ -147,8 +148,10 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 
 ### 6. Data Backup, Restore & Dual-Tier Persistence
 - **Optical Air-Gap Sync (High-Density Animated QR Stream)**:
-  - **100% Offline Device-to-Device Sync**: Transfer all counters, active sitting progress, and practice history between nearby mobile devices using screen-to-camera animated QR streams (10–15 FPS) without Wi-Fi, Bluetooth, NFC, local sockets, or cloud infrastructure.
+  - **100% Offline Device-to-Device Sync**: Transfer all counters, active sitting progress, and practice history between nearby mobile devices using screen-to-camera animated QR streams (8–15 FPS) without Wi-Fi, Bluetooth, NFC, local sockets, or cloud infrastructure.
   - **Fountain Code Engine (Luby Transform / LT)**: Encodes full backup payloads into systematic chunks and LT XOR parity frames (`AIRQR|LT1` format) with IEEE 802.3 CRC32 checksum verification.
+  - **Endless Frame Stream**: The sender shows every plain chunk once, then repeats a pattern of one plain chunk and two new mix frames without end. Every frame caught helps, so the last missing chunks arrive quickly. The sender screen goes to 75% brightness and stays on while sending.
+  - **Scanner Controls**: The receiver starts at 1× zoom and has tap-to-focus (with a focus ring), a zoom slider (up to 4×), and a light (torch) button. Only the area under the guide box is decoded, and a fast search is used first (the slow, thorough search runs on every 4th miss). A "Frames received" line shows the scan is working before chunks are solved. Cancelling the import preview clears the received data and starts a new scan. Auto focus is nudged every 3 seconds while no code is read. The sender shows plain black-on-white codes, as large as the screen allows (up to 320 px), with 120-byte chunks and a default speed of 8 FPS.
   - **Loss-Tolerant Scanning**: Camera frame drops do not block decoding; missing fragments are automatically reconstructed out-of-order via belief propagation / Gaussian elimination over GF(2).
   - **Interactive Import Preview**: Scanned streams trigger an interactive preview sheet detailing counter and session counts before merging atomically into local SQLite storage.
 - **JSON Import / Export Backup System**:

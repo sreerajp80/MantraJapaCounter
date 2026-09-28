@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:mantra_japa_counter/models/mala_sound.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
+import 'package:mantra_japa_counter/services/notification_service.dart';
+import 'package:mantra_japa_counter/services/screen_service.dart';
 
 /// Snapshot of all user settings read from SharedPreferences.
 class AppSettings {
@@ -88,7 +92,15 @@ class AppSettings {
 class SettingsNotifier extends StateNotifier<AppSettings> {
   final SettingsRepository _repo;
 
-  SettingsNotifier(this._repo)
+  /// Read lazily, only when a goal notification switch is turned on, so
+  /// the notification plugin is not needed just to read settings.
+  final NotificationService Function()? _notifications;
+
+  /// Applies the brightness setting to the app window. Null in tests that
+  /// do not need it.
+  final ScreenService? _screen;
+
+  SettingsNotifier(this._repo, [this._notifications, this._screen])
     : super(
         AppSettings(
           screenBrightness: _repo.screenBrightness,
@@ -106,21 +118,37 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
           dndEnabled: _repo.dndEnabled,
           dimmedChantingMode: _repo.dimmedChantingMode,
         ),
-      );
+      ) {
+    // Apply the saved brightness from app start.
+    unawaited(_screen?.setAppBrightness(state.screenBrightness));
+  }
 
+  /// Saves and applies the brightness. A negative value follows the system.
   Future<void> setScreenBrightness(double value) async {
     await _repo.setScreenBrightness(value);
     state = state.copyWith(screenBrightness: value);
+    await _screen?.setAppBrightness(value);
   }
 
   Future<void> setDailyGoalNotificationsEnabled(bool value) async {
     await _repo.setDailyGoalNotificationsEnabled(value);
     state = state.copyWith(dailyGoalNotificationsEnabled: value);
+    if (value) await _requestNotificationPermission();
   }
 
   Future<void> setLifetimeGoalNotificationsEnabled(bool value) async {
     await _repo.setLifetimeGoalNotificationsEnabled(value);
     state = state.copyWith(lifetimeGoalNotificationsEnabled: value);
+    if (value) await _requestNotificationPermission();
+  }
+
+  /// The user just turned a goal notification on, so ask Android for the
+  /// notification permission (Android 13+) if it is still missing.
+  Future<void> _requestNotificationPermission() async {
+    final notifications = _notifications;
+    if (notifications == null) return;
+    await _repo.setNotificationPermissionAsked();
+    await notifications().requestPermissionIfNeeded();
   }
 
   Future<void> setMalaNotificationsEnabled(bool value) async {
@@ -175,5 +203,9 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
 
 final settingsNotifierProvider =
     StateNotifierProvider<SettingsNotifier, AppSettings>((ref) {
-      return SettingsNotifier(ref.watch(settingsRepositoryProvider));
+      return SettingsNotifier(
+        ref.watch(settingsRepositoryProvider),
+        () => ref.read(notificationServiceProvider),
+        ref.read(screenServiceProvider),
+      );
     });

@@ -166,7 +166,8 @@ Expected: no output (attribute absent = false by default). If it appears, invest
 
 ### Logging Controls
 
-- Logger implementation: `logger` package
+- Logger implementation: Flutter `debugPrint` only (no logging package). The few log lines carry
+  operation names and error text only — never counter names, counts, notes, or file paths.
 - Verbose logging gate: `AppFlavorConfig.enableVerboseLogging` — `true` for dev flavor, `false` for prod
 - Log level in production: `info` and above only; debug and verbose calls stripped in prod flavor
 - Redaction strategy: user-provided field values (counter names, file paths) replaced with `[VALUE]` in any log output
@@ -205,6 +206,12 @@ Not in scope for this release.
 Permission review rules:
 
 - `INTERNET` permission MUST be absent from the merged release manifest. Verify before every release.
+- `AndroidManifest.xml` removes `INTERNET` and `ACCESS_NETWORK_STATE` with `tools:node="remove"`, so a
+  plugin or library cannot add them back. Libraries can still add them silently if this is removed:
+  for example Google ML Kit (used by `mobile_scanner`) pulls in `com.google.android.datatransport`,
+  which adds `INTERNET` and a background job that uploads ML Kit usage logs to Google. For this reason
+  QR scanning uses the `camera` plugin plus ZXing core (`com.google.zxing:core`) instead of ML Kit.
+- The merged release manifest must also contain no `mlkit`, `datatransport` or `firebase` entries.
 - No dangerous permissions are requested at app startup; all requested at point of use with a clear rationale.
 - The app functions fully without `POST_NOTIFICATIONS`, `READ_MEDIA_AUDIO`, and `READ_EXTERNAL_STORAGE`; these control optional features only.
 
@@ -220,7 +227,7 @@ Review and sign off each item before every production release.
 | M2 | Inadequate Supply Chain Security | `pubspec.lock` committed; dependency audit performed before each release; licenses verified | verified |
 | M3 | Insecure Authentication | No authentication in app; no lock screen bypasses possible | n/a |
 | M4 | Insufficient Input/Output Validation | Import JSON validated; malformed input rejected without DB corruption; sqflite uses parameterized queries | verified |
-| M5 | Insecure Communication | No network traffic; INTERNET permission absent from release manifest | verified |
+| M5 | Insecure Communication | No network traffic; INTERNET removed via `tools:node="remove"`; no ML Kit / datatransport in release manifest (was present via `mobile_scanner` until 2026-09-28) | verified |
 | M6 | Inadequate Privacy Controls | No PII stored; counter names not logged; backup config explicit in backup_rules.xml | verified |
 | M7 | Insufficient Binary Protections | `--obfuscate` applied to all prod releases; `android:debuggable=false` verified; R8/ProGuard applied | verified |
 | M8 | Security Misconfiguration | Permissions minimal; backup config explicit; debug features disabled in prod flavor | verified |
@@ -334,6 +341,7 @@ Complete before every production release.
 - [ ] Logging reviewed — no counter names or user data appear in any log statement.
 - [ ] Permission usage reviewed — no unnecessary permissions in merged manifest.
 - [ ] INTERNET permission confirmed absent from merged release manifest.
+- [ ] No `mlkit`, `datatransport` or `firebase` entries in the merged release manifest.
 - [ ] `--obfuscate` and `--split-debug-info` confirmed in all prod release build commands.
 - [ ] Debug symbols archived at `releases/v<version>/symbols/` for this version.
 - [ ] `android:debuggable=false` verified in merged release manifest.

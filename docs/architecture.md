@@ -80,7 +80,7 @@ lib/
 |   |-- history/      # History screen + its hero, day group, session row
 |   |-- settings/     # Settings screen + its tiles, brightness row, info cards, notification sound picker
 |   `-- help/         # Help home + one screen per help topic
-|-- services/         # Business logic: CountingService, ExportService, EncryptionService, OpticalSyncService, SoundService, NotificationService, SessionRecoveryService
+|-- services/         # Business logic: CountingService, ExportService, EncryptionService, OpticalSyncService, QrDecoderService, ScreenService, SoundService, NotificationService, SessionRecoveryService
 |-- theme/            # Colors, text styles, ThemeData
 |-- widgets/          # Shared reusable widgets: CounterCard, ProgressBar, MalaDisplay, GoalProgressBar, etc.
 `-- main.dart
@@ -152,6 +152,22 @@ aapt2 dump badging build/app/outputs/apk/prod/release/app-arm64-v8a-prod-release
 
 Expected output: no lines. All dependencies must be audited for transitive network activity before
 each release.
+
+`AndroidManifest.xml` removes `INTERNET` and `ACCESS_NETWORK_STATE` with `tools:node="remove"` as a
+safety net. Optical Sync receive reads QR codes with the `camera` plugin (live YUV frames) and
+ZXing core on the Android side (`QrFrameDecoder.kt`, channel
+`com.sreerajp.mantrajapacounter/qr_decoder`, wrapped by `QrDecoderService`). Google ML Kit is not
+used, because it brings Google's `datatransport` usage-log uploader and the `INTERNET` permission.
+Only the rows under the on-screen guide box are sent to the decoder, with a crop rectangle.
+While sending, `ScreenService` (channel `com.sreerajp.mantrajapacounter/screen`) sets 75%
+brightness and keeps the screen on; the user's brightness setting comes back when sending stops.
+Both Optical Sync providers are auto-dispose, so each visit to the screen starts fresh.
+
+`ScreenService.setAppBrightness` also applies the user's screen brightness setting (Settings →
+Display). `SettingsNotifier` calls it at app start and each time the setting changes. Only this
+app's window brightness changes (no permission needed; the system level is untouched). `-1`
+follows the system; custom levels have a small floor on the Android side so the screen never goes
+fully black.
 
 ---
 
@@ -342,7 +358,7 @@ Migration history:
 
 ## 17. Logging
 
-- Logger implementation: `logger` package
+- Logger implementation: Flutter `debugPrint` only (no logging package)
 - Log file location: console only; no persistent log files in production
 - Log rotation policy: n/a (console-only logging)
 - Verbose logging gate: `AppFlavorConfig.enableVerboseLogging` — `true` for dev, `false` for prod
@@ -408,7 +424,7 @@ test/
 | Navigation | go_router | Type-safe routes; standard Flutter recommendation; supports future deep links | Over-engineered for 6 screens today; Navigator.push would suffice |
 | Structure | Tier 1 layer-first | Single domain, single developer, 6 screens share all models | Would need migration to Tier 2 if major independent feature areas are added |
 | Crash recovery | SharedPreferences + DB batching | Zero data loss guarantee preserved from Android version | Dual-write path adds complexity; justified given spiritual practice context |
-| Screen orientation | Portrait locked | Full-screen tap counting is designed for portrait; landscape offers no benefit | Cannot rotate; acceptable for the use case |
+| Screen orientation | Portrait locked (`main.dart` + `android:screenOrientation="portrait"`); Android 16 large-screen opt-out (`PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY`) in the manifest; tablets and Chromebooks excluded in Play Console | Full-screen tap counting is designed for portrait; landscape offers no benefit | Cannot rotate; acceptable for the use case. Android 16 ignores orientation locks on screens >= 600dp unless opted out; the opt-out is ignored from API 37, so landscape on large screens (e.g. unfolded foldables) must be handled before targeting API 37 |
 | Platform | Android only | Existing Android user base; preserves schema compatibility | No iOS or desktop coverage until a future release |
 
 ---

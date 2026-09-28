@@ -86,7 +86,13 @@ class _OpticalSyncImportPreviewSheetState
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.8,
       ),
-      padding: const EdgeInsets.all(24.0),
+      // Add the system nav bar height so the buttons are not drawn under it.
+      padding: EdgeInsets.fromLTRB(
+        24,
+        24,
+        24,
+        24 + MediaQuery.viewPaddingOf(context).bottom,
+      ),
       decoration: const BoxDecoration(
         color: TempleColors.bg,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24.0)),
@@ -293,7 +299,7 @@ class _OpticalSyncImportPreviewSheetState
                         .read(opticalSyncReceiveProvider.notifier)
                         .importData();
                     if (context.mounted) {
-                      context.pop(); // Close sheet
+                      context.pop(success); // Close sheet
                       if (success) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -332,7 +338,7 @@ class _OpticalSyncImportPreviewSheetState
           ],
           const SizedBox(height: 10),
           TextButton(
-            onPressed: () => context.pop(),
+            onPressed: () => context.pop(false),
             child: Text(
               LocaleConfig.strings().cancel,
               style: const TextStyle(color: TempleColors.ink2),

@@ -58,6 +58,19 @@ class CountersNotifier extends AsyncNotifier<List<Counter>> {
   Future<void> deleteCounter(String id) async {
     final repo = ref.read(japaCounterRepositoryProvider);
     await repo.deleteCounter(id);
+    // Drop any paused session too, or startup recovery would try to write a
+    // session row for a counter that no longer exists.
+    await ref.read(settingsRepositoryProvider).clearActiveSession(id);
+    ref.invalidateSelf();
+  }
+
+  /// Deletes every counter and every session, plus all saved (paused)
+  /// sessions so nothing comes back on the next start.
+  Future<void> clearAllData() async {
+    final repo = ref.read(japaCounterRepositoryProvider);
+    await repo.deleteAllSessions();
+    await repo.deleteAllCounters();
+    await ref.read(settingsRepositoryProvider).clearAllActiveSessions();
     ref.invalidateSelf();
   }
 

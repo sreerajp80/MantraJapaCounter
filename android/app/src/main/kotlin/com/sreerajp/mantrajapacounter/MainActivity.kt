@@ -3,6 +3,7 @@ package com.sreerajp.mantrajapacounter
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.Ringtone
@@ -17,12 +18,40 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import android.provider.Settings
+import android.view.WindowManager
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import java.util.concurrent.Executors
 
 class MainActivity : FlutterActivity() {
     private val channelName = "com.sreerajp.mantrajapacounter/haptic"
+    private val qrDecoderChannelName = "com.sreerajp.mantrajapacounter/qr_decoder"
+    private val screenChannelName = "com.sreerajp.mantrajapacounter/screen"
+
+    // The user's in-app brightness setting (window only; the system level is
+    // never changed). BRIGHTNESS_OVERRIDE_NONE (-1) = follow the system.
+    private var appBrightness: Float = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
+
+    // True while Optical Sync send mode holds the window at [sendModeBrightness].
+    private var sendModeOn = false
+
+    // Window brightness while Optical Sync is sending. Bright enough for the
+    // receiving camera; full brightness is not needed.
+    private val sendModeBrightness = 0.75f
+
+    // Lowest custom level, so "still" at 0% is very dim but never black.
+    private val minAppBrightness = 0.02f
+
+    // QR decoding runs on one background thread so it never blocks the UI.
+    private val qrExecutor = Executors.newSingleThreadExecutor()
+
+    // Private native prefs that keep the user's original alarm volume and
+    // DND mode while the app has changed them. If Android kills the process
+    // before onPause/onDestroy run, the next start restores them from here.
+    private val restorePrefsName = "native_restore_state"
+    private val keySavedAlarmVolume = "saved_alarm_volume"
+    private val keySavedInterruptionFilter = "saved_interruption_filter"
 
     // Daily-goal vibration pattern: three strong pulses with short gaps so the
     // completion is unmistakable even with the phone in a pocket. Pairs of
@@ -47,6 +76,70 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        restoreLeftoverDeviceState()
+
+        // On-device QR decoding for Optical Sync receive (ZXing). Dart sends
+        // the brightness plane of one camera frame; the answer is the QR text
+        // or null.
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            qrDecoderChannelName,
+        ).setMethodCallHandler { call, result ->
+            when (call.method) {
+                "decodeFrame" -> {
+                    val bytes = call.argument<ByteArray>("bytes")
+                    val width = call.argument<Int>("width")
+                    val height = call.argument<Int>("height")
+                    val rowStride = call.argument<Int>("rowStride")
+                    if (bytes == null || width == null || height == null || rowStride == null) {
+                        result.error("ARG_FRAME", "bytes, width, height and rowStride are required", null)
+                        return@setMethodCallHandler
+                    }
+                    // Optional crop: decode only this part of the frame.
+                    val cropLeft = call.argument<Int>("cropLeft") ?: 0
+                    val cropTop = call.argument<Int>("cropTop") ?: 0
+                    val cropWidth = call.argument<Int>("cropWidth") ?: width
+                    val cropHeight = call.argument<Int>("cropHeight") ?: height
+                    qrExecutor.execute {
+                        try {
+                            val text = QrFrameDecoder.decode(
+                                bytes, width, height, rowStride,
+                                cropLeft, cropTop, cropWidth, cropHeight,
+                            )
+                            runOnUiThread { result.success(text) }
+                        } catch (e: Exception) {
+                            runOnUiThread { result.error("QR_FAILURE", e.message, null) }
+                        }
+                    }
+                }
+                else -> result.notImplemented()
+            }
+        }
+
+        // Optical Sync send mode: 75% brightness and screen kept on, so the
+        // receiving camera sees a bright, steady QR code.
+        MethodChannel(
+            flutterEngine.dartExecutor.binaryMessenger,
+            screenChannelName,
+        ).setMethodCallHandler { call, result ->
+            when (call.method) {
+                "setSendMode" -> {
+                    setSendMode(call.argument<Boolean>("on") ?: false)
+                    result.success(null)
+                }
+                "setAppBrightness" -> {
+                    val value = call.argument<Double>("value")
+                    if (value == null) {
+                        result.error("ARG_VALUE", "value is required", null)
+                    } else {
+                        setAppBrightness(value.toFloat())
+                        result.success(null)
+                    }
+                }
+                else -> result.notImplemented()
+            }
+        }
+
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             channelName,
@@ -131,7 +224,43 @@ class MainActivity : FlutterActivity() {
         restoreAlarmVolumeNow()
         restoreDndNow()
         stopPreviewTone()
+        qrExecutor.shutdown()
+        setSendMode(false)
         super.onDestroy()
+    }
+
+    /** Turns Optical Sync send mode (75% brightness, screen kept on) on or off. */
+    private fun setSendMode(on: Boolean) {
+        if (on) {
+            sendModeOn = true
+            applyWindowBrightness(sendModeBrightness)
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        } else {
+            if (!sendModeOn) return
+            sendModeOn = false
+            applyWindowBrightness(appBrightness)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        }
+    }
+
+    /**
+     * Applies the user's in-app brightness setting to this window. A value
+     * below 0 follows the system. While send mode is on the value is only
+     * stored, and applied when send mode turns off.
+     */
+    private fun setAppBrightness(value: Float) {
+        appBrightness = if (value < 0f) {
+            WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
+        } else {
+            value.coerceIn(minAppBrightness, 1f)
+        }
+        if (!sendModeOn) applyWindowBrightness(appBrightness)
+    }
+
+    private fun applyWindowBrightness(value: Float) {
+        val attrs = window.attributes
+        attrs.screenBrightness = value
+        window.attributes = attrs
     }
 
     private fun isDndAccessGranted(): Boolean {
@@ -161,7 +290,11 @@ class MainActivity : FlutterActivity() {
             return try {
                 if (enabled) {
                     if (savedInterruptionFilter == null) {
-                        savedInterruptionFilter = nm.currentInterruptionFilter
+                        val current = nm.currentInterruptionFilter
+                        savedInterruptionFilter = current
+                        restorePrefs().edit()
+                            .putInt(keySavedInterruptionFilter, current)
+                            .commit()
                     }
                     nm.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY)
                 } else {
@@ -185,6 +318,50 @@ class MainActivity : FlutterActivity() {
                 } catch (_: Exception) {}
             }
             savedInterruptionFilter = null
+            restorePrefs().edit().remove(keySavedInterruptionFilter).commit()
+        }
+    }
+
+    private fun restorePrefs(): SharedPreferences =
+        getSharedPreferences(restorePrefsName, Context.MODE_PRIVATE)
+
+    /**
+     * Undoes DND / alarm-volume changes left behind when Android killed the
+     * process before [onPause] or [onDestroy] could restore them. A value is
+     * only put back if it is still the one this app set (DND = priority,
+     * alarm volume = max), so a change the user made later is never undone.
+     */
+    private fun restoreLeftoverDeviceState() {
+        val prefs = restorePrefs()
+        if (prefs.contains(keySavedAlarmVolume)) {
+            val saved = prefs.getInt(keySavedAlarmVolume, -1)
+            try {
+                val am = getSystemService(Context.AUDIO_SERVICE) as? AudioManager
+                if (am != null && saved >= 0) {
+                    val max = am.getStreamMaxVolume(AudioManager.STREAM_ALARM)
+                    if (am.getStreamVolume(AudioManager.STREAM_ALARM) == max) {
+                        am.setStreamVolume(AudioManager.STREAM_ALARM, saved, 0)
+                    }
+                }
+            } catch (_: Exception) {
+                // best-effort
+            }
+            prefs.edit().remove(keySavedAlarmVolume).commit()
+        }
+        if (prefs.contains(keySavedInterruptionFilter)) {
+            val saved = prefs.getInt(keySavedInterruptionFilter, -1)
+            try {
+                val nm = getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+                if (nm != null && saved >= 0 &&
+                    nm.isNotificationPolicyAccessGranted &&
+                    nm.currentInterruptionFilter == NotificationManager.INTERRUPTION_FILTER_PRIORITY
+                ) {
+                    nm.setInterruptionFilter(saved)
+                }
+            } catch (_: Exception) {
+                // best-effort
+            }
+            prefs.edit().remove(keySavedInterruptionFilter).commit()
         }
     }
 
@@ -300,7 +477,9 @@ class MainActivity : FlutterActivity() {
             val am = getSystemService(Context.AUDIO_SERVICE) as? AudioManager ?: return
             val max = am.getStreamMaxVolume(AudioManager.STREAM_ALARM)
             if (savedAlarmVolume == null) {
-                savedAlarmVolume = am.getStreamVolume(AudioManager.STREAM_ALARM)
+                val current = am.getStreamVolume(AudioManager.STREAM_ALARM)
+                savedAlarmVolume = current
+                restorePrefs().edit().putInt(keySavedAlarmVolume, current).commit()
             }
             am.setStreamVolume(AudioManager.STREAM_ALARM, max, 0)
             volumeHandler.removeCallbacks(restoreAlarmVolumeRunnable)
@@ -319,6 +498,7 @@ class MainActivity : FlutterActivity() {
         val saved = savedAlarmVolume ?: return
         savedAlarmVolume = null
         try {
+            restorePrefs().edit().remove(keySavedAlarmVolume).commit()
             val am = getSystemService(Context.AUDIO_SERVICE) as? AudioManager ?: return
             am.setStreamVolume(AudioManager.STREAM_ALARM, saved, 0)
         } catch (_: Exception) {

@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Vibrate on mala / daily-goal completion. Used with USAGE_ALARM
          vibration attributes so it bypasses silent / DND / ringer mode. -->
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -7,6 +8,27 @@
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <!-- Do Not Disturb access to silence notifications during chanting sessions -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <!-- The app is strictly offline. Remove these from the final manifest in
+         case any plugin or library tries to add them, so the OS blocks all
+         network use. Check the merged release manifest before each release. -->
+    <uses-permission
+        android:name="android.permission.INTERNET"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE"
+        tools:node="remove" />
+    <!-- The camera plugin asks for these for video recording. The app only
+         reads QR codes from live frames (no audio, nothing saved), so they
+         are not needed. -->
+    <uses-permission
+        android:name="android.permission.RECORD_AUDIO"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        tools:node="remove" />
 
     <application
         android:label="@string/app_name"
@@ -15,9 +37,16 @@
         android:allowBackup="false"
         android:fullBackupContent="false"
         android:dataExtractionRules="@xml/data_extraction_rules">
+        <!-- Android 16 (API 36) ignores orientation locks on screens >= 600dp.
+             This opt-out keeps the portrait lock on unfolded foldables.
+             It is ignored from API 37, so it must be revisited then. -->
+        <property
+            android:name="android.window.PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY"
+            android:value="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:taskAffinity=""
             android:theme="@style/LaunchTheme"

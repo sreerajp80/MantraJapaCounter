@@ -10,6 +10,8 @@ import 'package:mantra_japa_counter/services/encryption_service.dart';
 import 'package:mantra_japa_counter/services/export_service.dart';
 import 'package:mantra_japa_counter/services/haptic_feedback_service.dart';
 import 'package:mantra_japa_counter/services/notification_service.dart';
+import 'package:mantra_japa_counter/services/qr_decoder_service.dart';
+import 'package:mantra_japa_counter/services/screen_service.dart';
 import 'package:mantra_japa_counter/services/session_recovery_service.dart';
 import 'package:mantra_japa_counter/services/sound_service.dart';
 
@@ -90,4 +92,12 @@ final sessionRecoveryServiceProvider = Provider<SessionRecoveryService>((ref) {
 
 final dndServiceProvider = Provider<DndService>((ref) {
   return DndService();
+});
+
+final qrDecoderServiceProvider = Provider<QrDecoderService>((ref) {
+  return const QrDecoderService();
+});
+
+final screenServiceProvider = Provider<ScreenService>((ref) {
+  return const ScreenService();
 });

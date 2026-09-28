@@ -157,6 +157,123 @@ void main() {
       },
     );
 
+    test('Chunks are small enough for an easy-to-read QR code', () {
+      final frames = OpticalSyncService.generateFrames(
+        sampleJson * 5,
+        sessionId: 'test-session',
+        maxFramesToGenerate: 40,
+      );
+
+      expect(OpticalSyncService.chunkSize, equals(120));
+      for (final frame in frames) {
+        expect(frame.dataBytes.length, lessThanOrEqualTo(120));
+        // Keeps each code at a low QR version (about 57×57 squares or less).
+        expect(frame.serialize().length, lessThan(260));
+      }
+    });
+
+    test(
+      'Round-trips a multi-chunk payload through QR text, parity frames first',
+      () {
+        // Not a multiple of the chunk size, so the last chunk is short.
+        final payload = sampleJson * 4;
+        expect(payload.length % OpticalSyncService.chunkSize, isNot(0));
+
+        final frames = OpticalSyncService.generateFrames(
+          payload,
+          sessionId: 'test-session',
+          maxFramesToGenerate: 120,
+        );
+
+        // Feed parity frames before systematic ones, as QR text, the way a
+        // receiver that joins mid-stream would see them.
+        final ordered = [
+          ...frames.where((f) => !f.isSystematic),
+          ...frames.where((f) => f.isSystematic),
+        ];
+
+        final decoder = OpticalSyncDecoder();
+        OpticalSyncReceiveProgress? progress;
+        for (final frame in ordered) {
+          final parsed = OpticalSyncFrame.parse(frame.serialize());
+          expect(parsed, isNotNull);
+          progress = decoder.processFrame(parsed!);
+          if (progress.isComplete) break;
+        }
+
+        expect(progress!.isComplete, isTrue);
+        expect(progress.decodedJsonPayload, equals(payload));
+      },
+    );
+
+    test('frameAt returns the same frame for the same index', () {
+      final a = OpticalSyncEncoder(sampleJson * 3, sessionId: 'sess-x');
+      final b = OpticalSyncEncoder(sampleJson * 3, sessionId: 'sess-x');
+      for (final i in [0, 1, a.totalOriginalChunks, 500, 123456]) {
+        expect(a.frameAt(i).serialize(), equals(b.frameAt(i).serialize()));
+      }
+    });
+
+    test('Stream keeps sending plain chunks and new mixes', () {
+      final encoder = OpticalSyncEncoder(sampleJson * 3, sessionId: 'sess-x');
+      final n = encoder.totalOriginalChunks;
+      expect(n, greaterThan(3));
+
+      // First N frames are the plain chunks in order.
+      for (int i = 0; i < n; i++) {
+        expect(encoder.frameAt(i).chunkIndices, equals([i]));
+      }
+
+      // After that, every third frame is a plain chunk; all chunks come back.
+      final plainLater = <int>{};
+      final mixes = <String>{};
+      for (int i = n; i < n + 3 * n; i++) {
+        final frame = encoder.frameAt(i);
+        if ((i - n) % 3 == 0) {
+          expect(frame.isSystematic, isTrue);
+          plainLater.add(frame.chunkIndices.single);
+        } else {
+          expect(frame.chunkIndices.length, inInclusiveRange(2, 4));
+          mixes.add(frame.chunkIndices.join(','));
+        }
+      }
+      expect(plainLater.length, equals(n));
+      expect(mixes.length, greaterThan(1));
+    });
+
+    test('Frame numbers wrap instead of growing without end', () {
+      final encoder = OpticalSyncEncoder(sampleJson, sessionId: 'sess-x');
+      final frame = encoder.frameAt(OpticalSyncEncoder.maxFrameIndex + 2);
+      expect(frame.frameIndex, equals(2));
+    });
+
+    test('Receiver joining mid-stream and missing half the frames rebuilds '
+        'the payload', () {
+      final payload = sampleJson * 4;
+      final encoder = OpticalSyncEncoder(payload, sessionId: 'sess-mid');
+      final decoder = OpticalSyncDecoder();
+      OpticalSyncReceiveProgress? progress;
+
+      for (int i = 500; i < 500 + 40 * encoder.totalOriginalChunks; i++) {
+        if (i.isOdd) continue; // camera missed this frame
+        final parsed = OpticalSyncFrame.parse(encoder.frameAt(i).serialize());
+        progress = decoder.processFrame(parsed!);
+        if (progress.isComplete) break;
+      }
+
+      expect(progress!.isComplete, isTrue);
+      expect(progress.decodedJsonPayload, equals(payload));
+    });
+
+    test('framesReceived counts each frame once', () {
+      final encoder = OpticalSyncEncoder(sampleJson * 3, sessionId: 'sess-x');
+      final decoder = OpticalSyncDecoder();
+      decoder.processFrame(encoder.frameAt(0));
+      decoder.processFrame(encoder.frameAt(0));
+      final progress = decoder.processFrame(encoder.frameAt(1));
+      expect(progress.framesReceived, equals(2));
+    });
+
     test('Rejects frames with mismatched session ID', () {
       final frames1 = OpticalSyncService.generateFrames(
         sampleJson,

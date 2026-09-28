@@ -46,7 +46,7 @@ guidelines.
 |------|---------|
 | Flutter SDK | 3.44.8 or higher (stable channel) |
 | Dart SDK | `^3.12.2` (ships with the Flutter version above) |
-| Android SDK | compile/target SDK 35, min SDK 29 |
+| Android SDK | compile/target SDK 36, min SDK 29 |
 | JDK | 17 |
 | Android NDK | The version Flutter reports for your SDK |
 
@@ -162,13 +162,13 @@ build date.
 Production builds **must** use `--release`, `--obfuscate`, and `--split-debug-info`. Leaving
 any of them out ships an unhardened, easily reverse-engineered artifact.
 
-Replace `v6.12.1` below with the version in `pubspec.yaml`.
+Replace `v6.12.2` below with the version in `pubspec.yaml`.
 
 ### Split APKs (direct install / sideloading)
 
 ```bash
 flutter build apk --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-v6.12.1/ --split-per-abi
+  --obfuscate --split-debug-info=build/symbols/android-prod-v6.12.2/ --split-per-abi
 ```
 
 Output: `build/app/outputs/apk/prod/release/app-arm64-v8a-prod-release.apk` and friends.
@@ -177,7 +177,7 @@ Output: `build/app/outputs/apk/prod/release/app-arm64-v8a-prod-release.apk` and 
 
 ```bash
 flutter build appbundle --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-v6.12.1/
+  --obfuscate --split-debug-info=build/symbols/android-prod-v6.12.2/
 ```
 
 Output: `build/app/outputs/bundle/prodRelease/app-prod-release.aab`.

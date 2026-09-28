@@ -2410,11 +2410,17 @@ abstract class AppLocalizations {
   /// **'SESSION ID: {id}'**
   String opticalSessionId(String id);
 
-  /// Progress label showing the current QR frame out of the total
+  /// Label showing the number of the QR frame now on screen (the stream has no end)
   ///
   /// In en, this message translates to:
-  /// **'Frame {current} / {total}'**
-  String opticalFrameProgress(int current, int total);
+  /// **'Frame {current}'**
+  String opticalFrameCounter(int current);
+
+  /// Optical Sync receiver line showing how many different QR frames have been read so far
+  ///
+  /// In en, this message translates to:
+  /// **'Frames received: {count}'**
+  String opticalFramesReceived(int count);
 
   /// Label for a systematic (original) data frame
   ///
@@ -3429,6 +3435,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Export your entire sadhana history to a file protected by AES-256-GCM encryption with your personal passphrase.'**
   String get tutorialStep7Desc;
+
+  /// Shown on the Optical Sync receiver when camera permission is denied
+  ///
+  /// In en, this message translates to:
+  /// **'Camera access was denied. To receive data, allow the camera permission for this app in Android Settings.'**
+  String get opticalCameraDenied;
+
+  /// Shown on the Optical Sync receiver when the camera fails to start
+  ///
+  /// In en, this message translates to:
+  /// **'The camera could not be started. Close other apps that use the camera and try again.'**
+  String get opticalCameraError;
+
+  /// Shown on the Optical Sync receiver when no native QR decoder exists
+  ///
+  /// In en, this message translates to:
+  /// **'The QR scanner is not available on this device.'**
+  String get opticalCameraUnavailable;
+
+  /// Tooltip for the button that turns the camera light on in the Optical Sync receiver
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on light'**
+  String get opticalTorchOn;
+
+  /// Tooltip for the button that turns the camera light off in the Optical Sync receiver
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off light'**
+  String get opticalTorchOff;
+
+  /// Label for the camera zoom slider in the Optical Sync receiver
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom'**
+  String get opticalZoom;
+
+  /// Hint shown over the camera in the Optical Sync receiver
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the code to focus. Use zoom if it looks blurred.'**
+  String get opticalScanTip;
 }
 
 class _AppLocalizationsDelegate

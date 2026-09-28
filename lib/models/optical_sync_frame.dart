@@ -26,9 +26,10 @@ class OpticalSyncFrame {
     required this.crc32,
   });
 
-  /// Is this a systematic frame (representing a single raw original chunk index)?
-  bool get isSystematic =>
-      chunkIndices.length == 1 && chunkIndices.first == frameIndex;
+  /// Is this a systematic frame (one plain chunk, not a mix)? Plain chunks
+  /// repeat later in the stream, so the frame number can differ from the
+  /// chunk number.
+  bool get isSystematic => chunkIndices.length == 1;
 
   /// Decode binary data from Base64 string
   List<int> get dataBytes => base64Decode(dataBase64);
