@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:mantra_japa_counter/models/optical_sync_frame.dart';
@@ -127,35 +128,32 @@ void main() {
       expect(progress.decodedJsonPayload, equals(sampleJson));
     });
 
-    test(
-      'Reconstructs payload under 50% systematic frame drops using LT parity frames',
-      () {
-        final frames = OpticalSyncService.generateFrames(
-          sampleJson,
-          sessionId: 'test-session',
-          maxFramesToGenerate: 60,
-        );
+    test('Reconstructs payload under 50% systematic frame drops using LT parity frames', () {
+      final frames = OpticalSyncService.generateFrames(
+        sampleJson,
+        sessionId: 'test-session',
+        maxFramesToGenerate: 60,
+      );
 
-        final decoder = OpticalSyncDecoder();
-        OpticalSyncReceiveProgress? progress;
+      final decoder = OpticalSyncDecoder();
+      OpticalSyncReceiveProgress? progress;
 
-        // Simulate dropping odd systematic frames, feeding parity frames instead
-        for (int i = 0; i < frames.length; i++) {
-          final frame = frames[i];
-          if (frame.isSystematic && frame.frameIndex % 2 != 0) {
-            // Drop odd systematic frame
-            continue;
-          }
-
-          progress = decoder.processFrame(frame);
-          if (progress.isComplete) break;
+      // Simulate dropping odd systematic frames, feeding parity frames instead
+      for (int i = 0; i < frames.length; i++) {
+        final frame = frames[i];
+        if (frame.isSystematic && frame.frameIndex % 2 != 0) {
+          // Drop odd systematic frame
+          continue;
         }
 
-        expect(progress, isNotNull);
-        expect(progress!.isComplete, isTrue);
-        expect(progress.decodedJsonPayload, equals(sampleJson));
-      },
-    );
+        progress = decoder.processFrame(frame);
+        if (progress.isComplete) break;
+      }
+
+      expect(progress, isNotNull);
+      expect(progress!.isComplete, isTrue);
+      expect(progress.decodedJsonPayload, equals(sampleJson));
+    });
 
     test('Chunks are small enough for an easy-to-read QR code', () {
       final frames = OpticalSyncService.generateFrames(

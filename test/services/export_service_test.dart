@@ -67,21 +67,18 @@ void main() {
       expect(parsed.counters.first.name, equals('Om Namah Shivaya'));
     });
 
-    test(
-      'importFromJson detects encrypted content and throws EncryptedExportException',
-      () async {
-        const plaintext = '{"counters":[],"sessions":[],"exportDate":123}';
-        final encrypted = await encryptionService.encrypt(
-          plaintext,
-          'secretKey123',
-        );
+    test('importFromJson detects encrypted content and throws EncryptedExportException', () async {
+      const plaintext = '{"counters":[],"sessions":[],"exportDate":123}';
+      final encrypted = await encryptionService.encrypt(
+        plaintext,
+        'secretKey123',
+      );
 
-        expect(
-          () => exportService.importFromJson(encrypted),
-          throwsA(isA<EncryptedExportException>()),
-        );
-      },
-    );
+      expect(
+        () => exportService.importFromJson(encrypted),
+        throwsA(isA<EncryptedExportException>()),
+      );
+    });
 
     test(
       'importEncryptedFromJson decrypts and imports data successfully',

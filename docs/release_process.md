@@ -159,6 +159,7 @@ Complete these items before every release.
 - [ ] `dart format --output=none --set-exit-if-changed .` passes.
 - [ ] `flutter analyze` passes with zero warnings.
 - [ ] `flutter test` passes — all unit, widget, and integration tests.
+- [ ] Golden tests pass (`flutter test --tags golden`). Run them on Windows — see section 16.
 - [ ] Code generation is current: `dart run build_runner build --delete-conflicting-outputs`.
 - [ ] No critical or release-blocking bugs remain open.
 
@@ -308,3 +309,32 @@ Record links or references to release evidence after each release.
 - [ ] Release tag confirmed: `git tag -l v<version>`.
 - [ ] Debug symbols confirmed at `releases/v<version>/symbols/`.
 - [ ] Follow-up tasks recorded (bugs found during validation, deferred features).
+
+---
+
+## 16. UI Package Upgrades (`material_ui` / `cupertino_ui`)
+
+Since Flutter 3.47, Material and Cupertino widgets come from the `material_ui` and
+`cupertino_ui` packages, not from the Flutter SDK. They can get new releases every week.
+To keep visual changes under control, both are **pinned to exact versions** in
+`pubspec.yaml` (no `^`). Upgrade them only with this checklist.
+
+- [ ] Upgrade the UI packages in **their own change**. Never in the same change as a
+      Flutter SDK upgrade or other package upgrades, so any breakage has one clear cause.
+- [ ] Read the package changelogs on pub.dev. Note any visual or breaking changes in the plan.
+- [ ] Change the pinned versions in `pubspec.yaml`, then run `flutter pub get`.
+- [ ] `flutter analyze` passes with zero warnings.
+- [ ] `flutter test` passes.
+- [ ] If golden tests fail, look at the difference images in `test/**/failures/`.
+      - If the change is expected, run `flutter test --update-goldens --tags golden`
+        and commit the new images in `test/**/goldens/`.
+      - If it is not expected, stay on the old version.
+- [ ] Check by hand on a device: counting screen, counter list, bottom sheets, dialogs,
+      and settings — in all three languages (English, Malayalam, Sanskrit).
+
+### Golden tests and platforms
+
+Golden tests compare a widget's picture to a saved reference image in a `goldens/`
+folder next to the test. Text is drawn slightly differently on Windows, macOS and Linux,
+so the reference images are made on **Windows** and must only be updated on Windows.
+`flutter test --tags golden` runs only the golden tests; `flutter test` runs everything.

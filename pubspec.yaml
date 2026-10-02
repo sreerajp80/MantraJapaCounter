@@ -4,13 +4,13 @@ publish_to: 'none'
 version: 6.13.4+35
 
 environment:
-  sdk: ^3.12.2
+  sdk: ^3.13.0
 
 dependencies:
   flutter:
     sdk: flutter
 
-  # Localization (English + Malayalam)
+  # Localization (English + Malayalam + Sanskrit)
   flutter_localizations:
     sdk: flutter
   intl: any
@@ -56,12 +56,11 @@ dependencies:
   # Optional export encryption (AES-256-GCM + PBKDF2) — pure Dart, no network
   cryptography: ^2.7.0
 
-  # Icons
-  cupertino_icons: ^2.0.0
-
-  # Material and Cupertino widgets (moved out of the Flutter SDK in 3.47)
-  material_ui: ^1.5.0
-  cupertino_ui: ^1.1.1
+  # Material and Cupertino widgets (moved out of the Flutter SDK in 3.47).
+  # Pinned on purpose. Upgrade only via the UI package upgrade checklist in
+  # docs/release_process.md.
+  material_ui: 1.5.0
+  cupertino_ui: 1.1.1
 
 dev_dependencies:
   flutter_test:

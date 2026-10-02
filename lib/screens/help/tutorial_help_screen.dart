@@ -18,56 +18,49 @@ class TutorialHelpScreen extends StatelessWidget {
         title: l.tutorialStep1Title,
         description: l.tutorialStep1Desc,
         icon: Icons.add_circle_outline,
-        tip:
-            'Choose +1 for single chants, or +108 if you use an external physical mala and log by the mala.',
+        tip: 'Choose +1 for single chants, or +108 if you use an external physical mala and log by the mala.',
       ),
       _TutorialStep(
         stepNumber: '02',
         title: l.tutorialStep2Title,
         description: l.tutorialStep2Desc,
         icon: Icons.touch_app_outlined,
-        tip:
-            'Swipe down anywhere on the screen to undo an accidental tap instantly.',
+        tip: 'Swipe down anywhere on the screen to undo an accidental tap instantly.',
       ),
       _TutorialStep(
         stepNumber: '03',
         title: l.tutorialStep3Title,
         description: l.tutorialStep3Desc,
         icon: Icons.lens_blur_outlined,
-        tip:
-            'The 27-segment bead progress strip on the card shows your daily mala progression at a glance.',
+        tip: 'The 27-segment bead progress strip on the card shows your daily mala progression at a glance.',
       ),
       _TutorialStep(
         stepNumber: '04',
         title: l.tutorialStep4Title,
         description: l.tutorialStep4Desc,
         icon: Icons.celebration_outlined,
-        tip:
-            'Configure sacred conch shells, bronze bells, or custom ringtones in Settings > Sound & Haptics.',
+        tip: 'Configure sacred conch shells, bronze bells, or custom ringtones in Settings > Sound & Haptics.',
       ),
       _TutorialStep(
         stepNumber: '05',
         title: l.tutorialStep5Title,
         description: l.tutorialStep5Desc,
         icon: Icons.lock_outline,
-        tip:
-            'Long-press any counter card to lock it, preventing unintended count modifications.',
+        tip: 'Long-press any counter card to lock it, preventing unintended count modifications.',
       ),
       _TutorialStep(
         stepNumber: '06',
         title: l.tutorialStep6Title,
         description: l.tutorialStep6Desc,
         icon: Icons.qr_code_scanner_outlined,
-        tip:
-            'Zero cables, zero pairing, and zero internet. Simply scan the animated QR code on the receiving phone.',
+        tip: 'Zero cables, zero pairing, and zero internet. Simply scan the animated QR code on the receiving phone.',
       ),
       _TutorialStep(
         stepNumber: '07',
         title: l.tutorialStep7Title,
         description: l.tutorialStep7Desc,
         icon: Icons.shield_outlined,
-        tip:
-            'Encrypted backups (.enc) use AES-256-GCM. Remember your passphrase; it cannot be recovered if lost.',
+        tip: 'Encrypted backups (.enc) use AES-256-GCM. Remember your passphrase; it cannot be recovered if lost.',
       ),
     ];
 

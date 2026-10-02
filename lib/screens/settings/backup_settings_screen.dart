@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -180,9 +181,8 @@ class BackupSettingsScreen extends ConsumerWidget {
           );
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(l.exportFailed('$e'))));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(l.exportFailed('$e'))));
       }
     }
   }
@@ -233,9 +233,8 @@ class BackupSettingsScreen extends ConsumerWidget {
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(l.importFailed('$e'))));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(l.importFailed('$e'))));
       }
     }
   }
@@ -257,9 +256,8 @@ class BackupSettingsScreen extends ConsumerWidget {
               Navigator.pop(context);
               await ref.read(countersNotifierProvider.notifier).clearAllData();
               if (context.mounted) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(l.allDataCleared)));
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(l.allDataCleared)));
               }
             },
             child: Text(

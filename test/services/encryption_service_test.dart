@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mantra_japa_counter/services/encryption_service.dart';
 
@@ -10,28 +11,25 @@ void main() {
   });
 
   group('EncryptionService', () {
-    test(
-      'encrypt and decrypt round trip succeeds with correct passphrase',
-      () async {
-        const plaintext =
-            '{"counters":[{"id":"c1","name":"Om Namah Shivaya"}],"sessions":[]}';
-        const passphrase = 'sacredPassphrase108';
+    test('encrypt and decrypt round trip succeeds with correct passphrase', () async {
+      const plaintext =
+          '{"counters":[{"id":"c1","name":"Om Namah Shivaya"}],"sessions":[]}';
+      const passphrase = 'sacredPassphrase108';
 
-        final encrypted = await service.encrypt(plaintext, passphrase);
+      final encrypted = await service.encrypt(plaintext, passphrase);
 
-        expect(service.isEncrypted(encrypted), isTrue);
+      expect(service.isEncrypted(encrypted), isTrue);
 
-        final envelope = jsonDecode(encrypted) as Map<String, dynamic>;
-        expect(envelope['encrypted'], isTrue);
-        expect(envelope['version'], equals(1));
-        expect(envelope['salt'], isNotEmpty);
-        expect(envelope['iv'], isNotEmpty);
-        expect(envelope['ciphertext'], isNotEmpty);
+      final envelope = jsonDecode(encrypted) as Map<String, dynamic>;
+      expect(envelope['encrypted'], isTrue);
+      expect(envelope['version'], equals(1));
+      expect(envelope['salt'], isNotEmpty);
+      expect(envelope['iv'], isNotEmpty);
+      expect(envelope['ciphertext'], isNotEmpty);
 
-        final decrypted = await service.decrypt(encrypted, passphrase);
-        expect(decrypted, equals(plaintext));
-      },
-    );
+      final decrypted = await service.decrypt(encrypted, passphrase);
+      expect(decrypted, equals(plaintext));
+    });
 
     test(
       'throws ArgumentError when passphrase is under 6 characters',

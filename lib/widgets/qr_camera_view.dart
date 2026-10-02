@@ -510,9 +510,8 @@ class _QrCameraViewState extends ConsumerState<QrCameraView>
         child: Text(
           AppLocalizations.of(context).opticalScanTip,
           textAlign: TextAlign.center,
-          style: Theme.of(
-            context,
-          ).textTheme.bodySmall?.copyWith(color: Colors.white),
+          style: Theme.of(context).textTheme.bodySmall
+              ?.copyWith(color: Colors.white),
         ),
       ),
     );
@@ -597,9 +596,8 @@ class _QrCameraViewState extends ConsumerState<QrCameraView>
               Text(
                 message,
                 textAlign: TextAlign.center,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.copyWith(color: TempleColors.ink),
+                style: Theme.of(context).textTheme.bodyMedium
+                    ?.copyWith(color: TempleColors.ink),
               ),
             ],
           ),

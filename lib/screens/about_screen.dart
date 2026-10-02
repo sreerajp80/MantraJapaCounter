@@ -66,9 +66,8 @@ class AboutScreen extends StatelessWidget {
                           color: Theme.of(context).colorScheme.primaryContainer,
                           borderRadius: BorderRadius.circular(6),
                           border: Border.all(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.primary.withValues(alpha: 0.35),
+                            color: Theme.of(context).colorScheme.primary
+                                .withValues(alpha: 0.35),
                           ),
                         ),
                         child: Text(
@@ -77,9 +76,9 @@ class AboutScreen extends StatelessWidget {
                             fontSize: 11,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 0.8,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onPrimaryContainer,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
                           ),
                         ),
                       ),

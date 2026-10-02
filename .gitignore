@@ -68,3 +68,6 @@ android/local.properties
 
 # Debug symbol archives from --split-debug-info
 *.symbols/
+
+# Golden test difference images from failed runs
+test/**/failures/

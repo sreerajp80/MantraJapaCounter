@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:material_ui/material_ui.dart';
 
 /// Circular progress arc with a centered label.

@@ -20,7 +20,7 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 
 | Concern | Details / Package |
 |---|---|
-| **Framework & Engine** | Flutter (`sdk ^3.12.2`), Target SDK 36 (Android 16), Min SDK 29 (Android 10), Java 17 |
+| **Framework & Engine** | Flutter (`sdk ^3.13.0`), Target SDK 36 (Android 16), Min SDK 29 (Android 10), Java 17 |
 | **Desugaring** | `com.android.tools:desugar_jdk_libs:2.1.4` (Core JDK library desugaring for Java 8+ APIs) |
 | **State Management** | `flutter_riverpod` (v3.3.1) with `AsyncNotifier` and `StateNotifier` architecture |
 | **Navigation** | `go_router` (v17.2.2) with declarative routing and parameter passing |
@@ -30,7 +30,7 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 | **Notifications** | `flutter_local_notifications` (v21.0.0) |
 | **QR Scanning** | `camera` (v0.12.1) live frames + ZXing core (`com.google.zxing:core` 3.5.3) decoding on device — no ML Kit, no Google services |
 | **File Picker & Sharing** | `file_picker` (v11.0.2) + `share_plus` (v12.0.2) + `path_provider` (v2.1.5) |
-| **App Metadata & Utilities** | `package_info_plus` (v9.0.1), `uuid` (v4.5.1), `cupertino_icons` (v1.0.8) |
+| **App Metadata & Utilities** | `package_info_plus` (v9.0.1), `uuid` (v4.5.1) |
 | **Localization** | `flutter_localizations` (`intl`) supporting English (`en`) & Malayalam (`ml`) |
 | **Typography** | `EBGaramond` (variable font), `Inter` (variable font), `NotoSansMalayalam` (variable font) |
 | **Native Integration** | `MainActivity.kt` Kotlin plugin implementing native `ToneGenerator` DTMF beeps, `USAGE_ALARM` audio/vibration attributes, ringtone query via `RingtoneManager`, and `STREAM_ALARM` volume boost/auto-restore (`6000ms` window) |

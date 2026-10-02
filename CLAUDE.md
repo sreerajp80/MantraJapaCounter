@@ -13,8 +13,8 @@ This file is read by Claude Code at the start of every session in this repositor
 | Package / org id (prod) | `com.sreerajp.mantrajapacounter` |
 | Package / org id (dev) | `com.sreerajp.mantrajapacounter.dev` |
 | Platform(s) | Android (minSdk 29, targetSdk 36) |
-| Flutter SDK | `^3.12.2` / 3.44.8 or higher |
-| Dart SDK | `^3.12.2` or higher |
+| Flutter SDK | 3.47.6 or higher (pinned — check with `flutter --version`) |
+| Dart SDK | `^3.13.0` (Dart 3.13.5 ships with Flutter 3.47.6) |
 | Android toolchain | Java 17, AGP 9.1.0, Gradle 9.3.1, Kotlin 2.4.0 (`android.builtInKotlin=false` until all plugins support built-in Kotlin) |
 | State management | `flutter_riverpod` |
 | Navigation | `go_router` |

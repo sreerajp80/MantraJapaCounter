@@ -23,7 +23,7 @@ Read [AGENTS.md](../AGENTS.md) and [security.md](security.md) before modifying `
 | Logging | `logger` | `^2.5.0` | Sanitized local file and console logging |
 | Package Metadata | `package_info_plus` | `^9.0.1` | Runtime version verification against `app_config.json` |
 | Identifiers | `uuid` | `^4.5.1` | RFC 4122 v4 UUID generation for records |
-| UI Icons | `cupertino_icons` | `^1.0.8` | Standard iOS style icon set |
+| Material & Cupertino widgets | `material_ui`, `cupertino_ui` | `1.5.0` / `1.1.1` (pinned) | Material and Cupertino widgets, moved out of the Flutter SDK in 3.47. Pinned to exact versions; upgrade only via the "UI package upgrades" checklist in [release_process.md](release_process.md). |
 
 ---
 

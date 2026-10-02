@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -134,9 +135,8 @@ class _ImportExportDialogState extends State<ImportExportDialog> {
       widget.ref.invalidate(countersNotifierProvider);
       if (mounted) {
         Navigator.pop(context);
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(l.importSuccessful)));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(l.importSuccessful)));
       }
     } catch (e) {
       setState(() {

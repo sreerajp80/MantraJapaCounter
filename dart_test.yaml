@@ -1,0 +1,8 @@
+# Test tags.
+#
+# golden: pixel-compare tests against reference images in test/**/goldens/.
+# Run only these with `flutter test --tags golden`. Update the images only on
+# Windows with `flutter test --update-goldens --tags golden`.
+# See docs/release_process.md section 16.
+tags:
+  golden:
