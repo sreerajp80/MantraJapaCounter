@@ -47,7 +47,8 @@ In Sanatana Dharma and contemplative spiritual traditions, *Japa* (sacred repeti
   - The practitioner touches the top of the bead track and drags downward. As the bead passes the midpoint, a subtle haptic click registers the count and the next bead animates smoothly into position.
   - This faithfully recreates the meditative muscle memory of rolling physical Tulsi, Rudraksha, or Sandalwood beads.
 
-#### 4. Meru Bead Sacred Pause
+#### 4. Meru Bead Sacred Pause ✅
+- **Status:** **Completed ✅** — optional setting (Settings → Display), 3/5/10 s, lotus overlay with countdown ring; taps during the pause are not counted.
 - **Current State:** Reaching bead 108 immediately triggers the mala sound/vibration and continues counting into the next mala without pausing.
 - **Limitation:** In traditional japa, the central 109th bead (*Meru* or *Guru* bead) is never crossed. The practitioner pauses, pays reverence to the Guru/Divine, takes a mindful breath, and turns the mala around.
 - **Proposed Improvement:**
@@ -55,7 +56,8 @@ In Sanatana Dharma and contemplative spiritual traditions, *Japa* (sacred repeti
   - The app displays a gentle lotus or Meru symbol with a peaceful breath prompt.
   - Prevents hurried, automatic rolling from one mala straight into the next, re-centering the mind in reverent awareness.
 
-#### 5. Mindful Pacing & Anti-Rushing Awareness
+#### 5. Mindful Pacing & Anti-Rushing Awareness ✅
+- **Status:** **Completed ✅** — soft amber glow and a short hint when tapping faster than 3 taps per second; never blocks a count.
 - **Current State:** The user can tap as fast as their fingers allow.
 - **Limitation:** Rapid-fire tapping encourages mechanical, hurried chanting where the mind rushes to finish a quota rather than tasting the sacred syllables.
 - **Proposed Improvement:**
@@ -88,7 +90,8 @@ In Sanatana Dharma and contemplative spiritual traditions, *Japa* (sacred repeti
 
 ### C. Session History & Compassionate Analytics
 
-#### 8. "Sadhana Flow" vs. Toxic Streaks
+#### 8. "Sadhana Flow" vs. Toxic Streaks ✅
+- **Status:** **Completed ✅** — 16-week heat-map on the History screen with a yearly practice-day line and a welcome-back message.
 - **Current State:** History records daily sittings and dates.
 - **Philosophy:** Avoid "streak counters" that reset to zero with a red cross or warning if a day is missed. In Sanatana Dharma, life has seasons of travel, illness, and duties (*kartavya*).
 - **Proposed Improvement:**
@@ -227,7 +230,7 @@ In Sanatana Dharma and contemplative spiritual traditions, *Japa* (sacred repeti
 | Phase | Category | Enhancements / Features | Complexity | Architectural Impact |
 |---|---|---|---|---|
 | **Phase 1** | **Ergonomics & Immersion** | • Dhyana Mode (Numberless immersion)<br>• Full-Screen Edge-to-Edge Pocket Tap Mode<br>• Physical Volume Button Counting<br>• Authentic Bronze Temple Bell & Bowl audio ✅ | Medium | UI layer (`CountingScreen`), new audio assets in `assets/audio/`, native key handler in `MainActivity.kt`. |
-| **Phase 2** | **Bhavana & Contemplation** | • Mantra Meaning, Translation & Dhyana Shloka<br>• Pre-session reflection card<br>• Meru Bead Mindful Pause<br>• Anti-Rushing Pacing Indicator | Low–Medium | Database migration (schema v5) to add optional `meaning`, `dhyanaShloka`, and `scriptText` fields to `counters` table. |
+| **Phase 2** | **Bhavana & Contemplation** | • Mantra Meaning, Translation & Dhyana Shloka<br>• Pre-session reflection card<br>• Meru Bead Mindful Pause ✅<br>• Anti-Rushing Pacing Indicator ✅ | Low–Medium | Database migration (schema v5) to add optional `meaning`, `dhyanaShloka`, and `scriptText` fields to `counters` table. |
 | **Phase 3** | **Sacred Sound & Reflection** | • Offline Tanpura / Acoustic Drone player<br>• Post-session Stillness Timer<br>• Private Sadhana Diary<br>• Tactile Bead-Rolling Drag gesture | Medium | Audio looping engine (`audioplayers`), new `sadhana_notes` table in SQLite, custom drag gesture recognizer. |
 | **Phase 4** | **Holistic Sadhana** | • Sacred Sankalpa Setup Ceremony<br>• 100% Offline Astronomical Panchanga calculation<br>• Custom Bead Textures (Rudraksha, Tulsi, Sphatika)<br>• Selective Counter QR Sync | Medium–High | Offline solar/lunar math library in Dart, custom canvas shaders for bead materials, air-gap sync protocol extensions. |
 

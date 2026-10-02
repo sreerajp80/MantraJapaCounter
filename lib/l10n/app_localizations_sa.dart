@@ -1865,4 +1865,96 @@ class AppLocalizationsSa extends AppLocalizations {
   @override
   String get opticalScanTip =>
       'केन्द्रीकरणाय सङ्केतं स्पृशतु। अस्पष्टं दृश्यते चेत् विस्तारं प्रयुङ्क्ताम्।';
+
+  @override
+  String get meruPauseTitle => 'विरमतु · श्वसितु';
+
+  @override
+  String get meruPauseMessage => 'मेरुमणिः प्राप्तः। प्रशान्त्यां विश्राम्यतु।';
+
+  @override
+  String get pacingHintMessage => 'शनैः शनैः, श्वसितु, मन्त्रम् अनुभवतु।';
+
+  @override
+  String get sectionMindfulCounting => 'सावधानगणनम्';
+
+  @override
+  String get sectionMindfulCountingSub => 'अत्वरितजपाय मृदुसाहाय्यम्';
+
+  @override
+  String get meruPauseSettingTitle => 'प्रतिमालान्ते मेरुविरामः';
+
+  @override
+  String get meruPauseSettingSub =>
+      'अष्टोत्तरशतान्ते लघुः शान्तः विरामः। विरामकाले स्पर्शाः न गण्यन्ते।';
+
+  @override
+  String secondsShort(int seconds) {
+    return '$seconds क्ष';
+  }
+
+  @override
+  String get pacingHintSettingTitle => 'मृदुगतिसूचना';
+
+  @override
+  String get pacingHintSettingSub =>
+      'अतिशीघ्रस्पर्शे मृदुप्रकाशः। सर्वे स्पर्शाः गण्यन्ते एव।';
+
+  @override
+  String get helpCountingMindfulSection => 'सावधानगणनम्';
+
+  @override
+  String get helpCountingMeruBold => 'मेरुविरामः';
+
+  @override
+  String get helpCountingMeruBullet =>
+      'विन्यासेषु → प्रदर्शने सक्रियं कृते, प्रतिमालान्ते अनुप्रयोगः कतिचन क्षणान् विरमति। मेरुमणिः यथा न लङ्घ्यते, तथा विरामकाले स्पर्शाः न गण्यन्ते।';
+
+  @override
+  String get helpCountingPacingBold => 'गतिसूचना';
+
+  @override
+  String get helpCountingPacingBullet =>
+      'प्रतिक्षणं प्रायः त्रिवारात् अधिकं शीघ्रं स्पृश्यते चेत्, माला मृदु प्रकाशते, लघुस्मरणं च दृश्यते। इदं गणनां कदापि न निरुणद्धि।';
+
+  @override
+  String get sadhanaFlowTitle => 'साधनाप्रवाहः';
+
+  @override
+  String sadhanaFlowA11y(int weeks) {
+    return 'गतेषु $weeks सप्ताहेषु साधनादिनानां पञ्चाङ्गम्';
+  }
+
+  @override
+  String sadhanaFlowYearDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'अस्मिन् वर्षे पवित्रस्मरणस्य $count दिनानि।',
+      one: 'अस्मिन् वर्षे पवित्रस्मरणस्य 1 दिनम्।',
+      zero: 'अस्मिन् वर्षे अर्पितः प्रत्येकः मन्त्रः अत्र प्रकाशिष्यते।',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sadhanaFlowWelcomeBack =>
+      'भवतः पवित्रस्थानं प्रति पुनः स्वागतम्। अर्पितः प्रत्येकः मन्त्रः शाश्वतः।';
+
+  @override
+  String get sadhanaFlowLess => 'अल्पम्';
+
+  @override
+  String get sadhanaFlowMore => 'अधिकम्';
+
+  @override
+  String get opticalBrightness => 'प्रकाशः';
+
+  @override
+  String get opticalBrightnessNormal => 'सामान्यम्';
+
+  @override
+  String opticalBrightnessBoost(int percent) {
+    return '+$percent%';
+  }
 }

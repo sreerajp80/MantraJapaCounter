@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Linear progress indicator for a goal (lifetime or daily).
 class GoalProgressBar extends StatelessWidget {

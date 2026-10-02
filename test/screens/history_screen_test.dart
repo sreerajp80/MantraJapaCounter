@@ -1,14 +1,17 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:mantra_japa_counter/core/locale/locale_config.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/models/counter.dart';
 import 'package:mantra_japa_counter/models/japa_session.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
+import 'package:mantra_japa_counter/screens/history/history_hero.dart';
 import 'package:mantra_japa_counter/screens/history/history_screen.dart';
+import 'package:mantra_japa_counter/screens/history/sadhana_flow_card.dart';
 import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
 
 import '../helpers/fake_japa_counter_repository.dart';
@@ -63,7 +66,7 @@ void main() {
           japaCounterRepositoryProvider.overrideWithValue(repo),
         ],
         child: MaterialApp(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          localizationsDelegates: LocaleConfig.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           home: HistoryScreen(filterCounterId: counterId),
         ),
@@ -165,7 +168,16 @@ void main() {
     expect(find.text('216'), findsOneWidget);
     expect(find.text('/ 1080'), findsOneWidget);
     expect(find.text('CHANTS OFFERED · 20% OF VOW'), findsOneWidget);
-    expect(find.byType(TempleDiyaIcon), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(HistoryHero),
+        matching: find.byType(TempleDiyaIcon),
+      ),
+      findsOneWidget,
+    );
     expect(find.text('All counters'), findsNothing);
+    // The Sadhana Flow heat-map sits under the hero.
+    expect(find.byType(SadhanaFlowCard), findsOneWidget);
+    expect(find.text('SADHANA FLOW'), findsOneWidget);
   });
 }

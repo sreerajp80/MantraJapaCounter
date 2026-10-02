@@ -215,4 +215,49 @@ void main() {
       expect(repo.notificationPermissionAsked, isTrue);
     });
   });
+
+  group('SettingsRepository - Meru pause & pacing hint', () {
+    late SharedPreferences prefs;
+    late SettingsRepository repo;
+
+    setUp(() async {
+      SharedPreferences.setMockInitialValues({});
+      prefs = await SharedPreferences.getInstance();
+      repo = SettingsRepository(prefs);
+    });
+
+    test('defaults: Meru pause off at 5 s, pacing hint on', () {
+      expect(repo.meruPauseEnabled, isFalse);
+      expect(repo.meruPauseSeconds, AppConstants.meruPauseDefaultSeconds);
+      expect(repo.pacingHintEnabled, isTrue);
+    });
+
+    test('saves and reads the values', () async {
+      await repo.setMeruPauseEnabled(true);
+      await repo.setMeruPauseSeconds(10);
+      await repo.setPacingHintEnabled(false);
+      expect(repo.meruPauseEnabled, isTrue);
+      expect(repo.meruPauseSeconds, 10);
+      expect(repo.pacingHintEnabled, isFalse);
+    });
+
+    test('an unknown saved pause length falls back to the default', () async {
+      await prefs.setInt(AppConstants.prefsMeruPauseSecondsKey, 42);
+      expect(repo.meruPauseSeconds, AppConstants.meruPauseDefaultSeconds);
+    });
+
+    test('SettingsNotifier exposes and updates the values', () async {
+      final notifier = SettingsNotifier(repo);
+      expect(notifier.state.meruPauseEnabled, isFalse);
+      expect(notifier.state.pacingHintEnabled, isTrue);
+
+      await notifier.setMeruPauseEnabled(true);
+      await notifier.setMeruPauseSeconds(3);
+      await notifier.setPacingHintEnabled(false);
+      expect(notifier.state.meruPauseEnabled, isTrue);
+      expect(notifier.state.meruPauseSeconds, 3);
+      expect(notifier.state.pacingHintEnabled, isFalse);
+      expect(repo.meruPauseSeconds, 3);
+    });
+  });
 }

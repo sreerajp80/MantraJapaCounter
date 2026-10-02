@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
+
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +14,7 @@ import 'package:mantra_japa_counter/core/routing/router.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
+import 'package:mantra_japa_counter/providers/current_day_provider.dart';
 import 'package:mantra_japa_counter/providers/settings_provider.dart';
 import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
@@ -69,11 +72,59 @@ void main() async {
   );
 }
 
-class MantraJapaCounterApp extends ConsumerWidget {
+class MantraJapaCounterApp extends ConsumerStatefulWidget {
   const MantraJapaCounterApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MantraJapaCounterApp> createState() =>
+      _MantraJapaCounterAppState();
+}
+
+class _MantraJapaCounterAppState extends ConsumerState<MantraJapaCounterApp>
+    with WidgetsBindingObserver {
+  Timer? _midnightTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _scheduleMidnightRefresh();
+  }
+
+  @override
+  void dispose() {
+    _midnightTimer?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // The date may have changed while the app was in the background.
+      ref.read(currentDayProvider.notifier).refresh();
+      _scheduleMidnightRefresh();
+    }
+  }
+
+  /// Refreshes the current day just after the next local midnight, so
+  /// "today" numbers reset even when the app stays open.
+  void _scheduleMidnightRefresh() {
+    _midnightTimer?.cancel();
+    final now = DateTime.now();
+    final nextMidnight = DateTime(now.year, now.month, now.day + 1);
+    _midnightTimer = Timer(
+      nextMidnight.difference(now) + const Duration(seconds: 1),
+      () {
+        if (!mounted) return;
+        ref.read(currentDayProvider.notifier).refresh();
+        _scheduleMidnightRefresh();
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final settings = ref.watch(settingsNotifierProvider);
     final selectedCode = settings.languageCode;
     final explicitLocale = (selectedCode == null || selectedCode == 'system')
@@ -96,12 +147,7 @@ class MantraJapaCounterApp extends ConsumerWidget {
       theme: AppTheme.light(),
       themeMode: ThemeMode.light,
       locale: explicitLocale,
-      localizationsDelegates: const [
-        SaMaterialLocalizationsDelegate(),
-        SaCupertinoLocalizationsDelegate(),
-        SaWidgetsLocalizationsDelegate(),
-        ...AppLocalizations.localizationsDelegates,
-      ],
+      localizationsDelegates: LocaleConfig.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       localeResolutionCallback: LocaleConfig.localeResolution,
       routerConfig: appRouter,

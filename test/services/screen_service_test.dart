@@ -59,4 +59,38 @@ void main() {
     expect(received!.method, 'setSendMode');
     expect((received!.arguments as Map)['on'], isTrue);
   });
+
+  test('setSendBrightness sends the value', () async {
+    MethodCall? received;
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      received = call;
+      return null;
+    });
+
+    await service.setSendBrightness(0.8);
+    expect(received!.method, 'setSendBrightness');
+    expect((received!.arguments as Map)['value'], 0.8);
+  });
+
+  test('setSendBrightness does not throw with no native side', () async {
+    await expectLater(service.setSendBrightness(0.8), completes);
+  });
+
+  test('getCurrentBrightness returns the native value', () async {
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      expect(call.method, 'getCurrentBrightness');
+      return 0.42;
+    });
+
+    expect(await service.getCurrentBrightness(), 0.42);
+  });
+
+  test('getCurrentBrightness falls back on errors', () async {
+    expect(await service.getCurrentBrightness(fallback: 0.3), 0.3);
+
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      throw PlatformException(code: 'FAIL');
+    });
+    expect(await service.getCurrentBrightness(fallback: 0.3), 0.3);
+  });
 }

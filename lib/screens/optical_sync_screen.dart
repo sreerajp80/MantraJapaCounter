@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -33,6 +33,14 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen>
 
   /// True while frames are streaming (send mode is on).
   bool _sending = false;
+
+  /// The normal screen brightness (0..1), read when sending starts. Null
+  /// until it is known.
+  double? _normalBrightness;
+
+  /// Brightness slider position: 0 = normal brightness, 1 = full. Starts at
+  /// normal each time the screen opens; it is not saved.
+  double _brightnessBoost = 0;
 
   @override
   void initState() {
@@ -95,6 +103,7 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen>
     if (!_sending) {
       _sending = true;
       unawaited(_screenService.setSendMode(true));
+      unawaited(_loadNormalBrightness());
     }
     _streamTimer?.cancel();
     final fps = ref.read(opticalSyncTransmitProvider).fps;
@@ -104,14 +113,35 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen>
     });
   }
 
+  Future<void> _loadNormalBrightness() async {
+    final normal = await _screenService.getCurrentBrightness();
+    if (!mounted) return;
+    setState(() => _normalBrightness = normal);
+  }
+
+  /// Applies the slider: 0 is the normal brightness, 1 is full brightness.
+  Future<void> _applyBrightnessBoost() async {
+    final normal = _normalBrightness;
+    if (normal == null || _brightnessBoost <= 0) {
+      await _screenService.setSendBrightness(-1);
+      return;
+    }
+    await _screenService.setSendBrightness(
+      normal + _brightnessBoost * (1 - normal),
+    );
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (!_sending) return;
-    // Bright, always-on screen only while the send screen is in front.
+    // Always-on screen (and any extra brightness) only while the send screen
+    // is in front. Leaving drops the boost; coming back applies it again.
     if (state == AppLifecycleState.paused) {
       unawaited(_screenService.setSendMode(false));
     } else if (state == AppLifecycleState.resumed) {
-      unawaited(_screenService.setSendMode(true));
+      unawaited(
+        _screenService.setSendMode(true).then((_) => _applyBrightnessBoost()),
+      );
     }
   }
 
@@ -321,7 +351,9 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen>
               );
             }).toList(),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
+          _brightnessSlider(l, theme),
+          const SizedBox(height: 12),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
@@ -334,6 +366,51 @@ class _OpticalSyncScreenState extends ConsumerState<OpticalSyncScreen>
           ),
         ],
       ),
+    );
+  }
+
+  /// Slider from the normal brightness (left) up to full (right).
+  Widget _brightnessSlider(AppLocalizations l, ThemeData theme) {
+    final valueLabel = _brightnessBoost <= 0
+        ? l.opticalBrightnessNormal
+        : l.opticalBrightnessBoost((_brightnessBoost * 100).round());
+    return Column(
+      children: [
+        Text(
+          '${l.opticalBrightness} · $valueLabel',
+          style: theme.textTheme.labelMedium?.copyWith(
+            color: TempleColors.ink2,
+          ),
+        ),
+        Row(
+          children: [
+            const Icon(
+              Icons.brightness_low,
+              size: 20,
+              color: TempleColors.ink2,
+            ),
+            Expanded(
+              child: Slider(
+                value: _brightnessBoost,
+                activeColor: TempleColors.vermillion,
+                inactiveColor: TempleColors.line,
+                semanticFormatterCallback: (_) => valueLabel,
+                onChanged: _normalBrightness == null
+                    ? null
+                    : (value) {
+                        setState(() => _brightnessBoost = value);
+                        unawaited(_applyBrightnessBoost());
+                      },
+              ),
+            ),
+            const Icon(
+              Icons.brightness_high,
+              size: 20,
+              color: TempleColors.sandal,
+            ),
+          ],
+        ),
+      ],
     );
   }
 

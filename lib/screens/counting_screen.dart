@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:math' as math;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -129,76 +129,114 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
                     final mala = medallion / 1.14;
                     final tapRadius = mala / 2;
                     final center = Offset(medallion / 2, medallion / 2);
-                    return Center(
-                      child: SizedBox(
-                        width: medallion,
-                        height: medallion,
-                        child: Listener(
-                          behavior: HitTestBehavior.translucent,
-                          onPointerDown: (event) {
-                            _activePointers[event.pointer] = event.position;
-                          },
-                          onPointerMove: _onPointerMove,
-                          onPointerUp: _onPointerEnd,
-                          onPointerCancel: _onPointerEnd,
-                          child: GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTapUp: (details) {
-                              if ((details.localPosition - center).distance <=
-                                  tapRadius) {
-                                ref
-                                    .read(
-                                      countingNotifierProvider(
-                                        widget.counterId,
-                                      ).notifier,
-                                    )
-                                    .tap();
-                              }
-                            },
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Container(
-                                  width: medallion,
-                                  height: medallion,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: isDimmed
-                                        ? const Color(0xFF14100B)
-                                        : TempleColors.cardSoft,
-                                  ),
+                    return Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Center(
+                          child: SizedBox(
+                            width: medallion,
+                            height: medallion,
+                            child: Listener(
+                              behavior: HitTestBehavior.translucent,
+                              onPointerDown: (event) {
+                                _activePointers[event.pointer] = event.position;
+                              },
+                              onPointerMove: _onPointerMove,
+                              onPointerUp: _onPointerEnd,
+                              onPointerCancel: _onPointerEnd,
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTapUp: (details) {
+                                  if ((details.localPosition - center)
+                                          .distance <=
+                                      tapRadius) {
+                                    ref
+                                        .read(
+                                          countingNotifierProvider(
+                                            widget.counterId,
+                                          ).notifier,
+                                        )
+                                        .tap();
+                                  }
+                                },
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    // A warm amber glow is the pacing hint.
+                                    AnimatedContainer(
+                                      duration: const Duration(
+                                        milliseconds: 600,
+                                      ),
+                                      curve: Curves.easeInOut,
+                                      width: medallion,
+                                      height: medallion,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: isDimmed
+                                            ? const Color(0xFF14100B)
+                                            : TempleColors.cardSoft,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: TempleColors.sandal
+                                                .withValues(
+                                                  alpha: countingState.isRushing
+                                                      ? 0.55
+                                                      : 0.0,
+                                                ),
+                                            blurRadius: 28,
+                                            spreadRadius: 4,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    TempleMedallion(
+                                      size: medallion,
+                                      color: isDailyGoalReached
+                                          ? TempleColors.vermillionDeep
+                                          : (isDimmed
+                                                ? TempleColors.sandal
+                                                : TempleColors.vermillion),
+                                      opacity: isDailyGoalReached
+                                          ? 0.45
+                                          : (isDimmed ? 0.20 : 0.28),
+                                    ),
+                                    TempleMalaCircle(
+                                      count: sessionInMala,
+                                      goal: 108,
+                                      diameter: medallion,
+                                      goalReached: isDailyGoalReached,
+                                      child: _centerNumber(
+                                        sessionInMala: sessionInMala,
+                                        sessionMalas: sessionMalas,
+                                        beadsRemaining: beadsRemaining,
+                                        isLifetimeGoalReached:
+                                            isLifetimeGoalReached,
+                                        isDailyGoalReached: isDailyGoalReached,
+                                        isDimmed: isDimmed,
+                                      ),
+                                    ),
+                                    if (countingState.isMeruPause)
+                                      _MeruPauseOverlay(
+                                        // New key per mala so the ring restarts.
+                                        key: ValueKey(session.tapCount),
+                                        diameter: mala * 0.78,
+                                        seconds: countingState.meruPauseSeconds,
+                                        isDimmed: isDimmed,
+                                      ),
+                                  ],
                                 ),
-                                TempleMedallion(
-                                  size: medallion,
-                                  color: isDailyGoalReached
-                                      ? TempleColors.vermillionDeep
-                                      : (isDimmed
-                                            ? TempleColors.sandal
-                                            : TempleColors.vermillion),
-                                  opacity: isDailyGoalReached
-                                      ? 0.45
-                                      : (isDimmed ? 0.20 : 0.28),
-                                ),
-                                TempleMalaCircle(
-                                  count: sessionInMala,
-                                  goal: 108,
-                                  diameter: medallion,
-                                  goalReached: isDailyGoalReached,
-                                  child: _centerNumber(
-                                    sessionInMala: sessionInMala,
-                                    sessionMalas: sessionMalas,
-                                    beadsRemaining: beadsRemaining,
-                                    isLifetimeGoalReached:
-                                        isLifetimeGoalReached,
-                                    isDailyGoalReached: isDailyGoalReached,
-                                    isDimmed: isDimmed,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                        Positioned(
+                          bottom: 0,
+                          child: _PacingHintPill(
+                            visible: countingState.isRushing,
+                            isDimmed: isDimmed,
+                          ),
+                        ),
+                      ],
                     );
                   },
                 ),
@@ -850,3 +888,120 @@ final _counterProvider = FutureProvider.autoDispose.family((
   final repo = ref.watch(japaCounterRepositoryProvider);
   return repo.getCounterById(counterId);
 });
+
+/// Soft overlay shown inside the mala during the Meru pause: a lotus, a
+/// short line, and a ring that runs down over the pause time.
+class _MeruPauseOverlay extends StatelessWidget {
+  final double diameter;
+  final int seconds;
+  final bool isDimmed;
+
+  const _MeruPauseOverlay({
+    super.key,
+    required this.diameter,
+    required this.seconds,
+    required this.isDimmed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final bg = isDimmed ? const Color(0xF014100B) : const Color(0xF2F7EED8);
+    final ink = isDimmed ? const Color(0xFFF5E6CC) : TempleColors.ink;
+    final accent = isDimmed ? TempleColors.sandal : TempleColors.vermillion;
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 500),
+      builder: (context, fade, child) => Opacity(opacity: fade, child: child),
+      child: Container(
+        width: diameter,
+        height: diameter,
+        decoration: BoxDecoration(shape: BoxShape.circle, color: bg),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            SizedBox(
+              width: diameter - 12,
+              height: diameter - 12,
+              child: TweenAnimationBuilder<double>(
+                tween: Tween(begin: 1, end: 0),
+                duration: Duration(seconds: seconds),
+                builder: (context, value, _) => CircularProgressIndicator(
+                  value: value,
+                  strokeWidth: 2,
+                  color: accent.withValues(alpha: 0.6),
+                  backgroundColor: Colors.transparent,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(diameter * 0.14),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TempleLotusIcon(size: 40, color: accent),
+                  const SizedBox(height: 10),
+                  Text(
+                    l.meruPauseTitle,
+                    textAlign: TextAlign.center,
+                    style: AppTheme.serif(fontSize: 22, color: ink),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    l.meruPauseMessage,
+                    textAlign: TextAlign.center,
+                    style: AppTheme.serif(
+                      fontSize: 13,
+                      color: isDimmed ? TempleColors.sandal : TempleColors.ink2,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Gentle pill shown when the user taps faster than a natural pace. It only
+/// fades in and out; it never takes taps.
+class _PacingHintPill extends StatelessWidget {
+  final bool visible;
+  final bool isDimmed;
+
+  const _PacingHintPill({required this.visible, required this.isDimmed});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return IgnorePointer(
+      child: AnimatedOpacity(
+        opacity: visible ? 1 : 0,
+        duration: const Duration(milliseconds: 600),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+          decoration: BoxDecoration(
+            color: isDimmed
+                ? const Color(0xFF1E1912)
+                : TempleColors.sandal.withValues(alpha: 0.18),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: TempleColors.sandal.withValues(alpha: 0.5),
+            ),
+          ),
+          child: Text(
+            l.pacingHintMessage,
+            textAlign: TextAlign.center,
+            style: AppTheme.serif(
+              fontSize: 13,
+              color: isDimmed ? TempleColors.sandal : TempleColors.ink2,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

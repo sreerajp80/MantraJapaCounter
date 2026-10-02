@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart' show CupertinoLocalizations;
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mantra_japa_counter/core/locale/locale_config.dart';
 
@@ -134,6 +135,64 @@ void main() {
         const cupDelegate = FallbackCupertinoLocalizationsDelegate();
         final cupLoc = await cupDelegate.load(const Locale('sa'));
         expect(cupLoc, isNotNull);
+      });
+    });
+
+    group('localizationsDelegates (material_ui types)', () {
+      // Guards the material_ui migration: the generated
+      // AppLocalizations.localizationsDelegates still points at the old SDK
+      // delegates. LocaleConfig's list must give material_ui / cupertino_ui
+      // localizations for every supported locale.
+      for (final locale in LocaleConfig.supportedLocales) {
+        testWidgets('Material and Cupertino localizations load for '
+            '${locale.languageCode}', (tester) async {
+          MaterialLocalizations? material;
+          CupertinoLocalizations? cupertino;
+          await tester.pumpWidget(
+            MaterialApp(
+              locale: locale,
+              localizationsDelegates: LocaleConfig.localizationsDelegates,
+              supportedLocales: LocaleConfig.supportedLocales,
+              home: Builder(
+                builder: (context) {
+                  material = Localizations.of<MaterialLocalizations>(
+                    context,
+                    MaterialLocalizations,
+                  );
+                  cupertino = Localizations.of<CupertinoLocalizations>(
+                    context,
+                    CupertinoLocalizations,
+                  );
+                  return const SizedBox.shrink();
+                },
+              ),
+            ),
+          );
+          await tester.pumpAndSettle();
+          expect(material, isNotNull);
+          expect(cupertino, isNotNull);
+        });
+      }
+
+      testWidgets('Malayalam uses the Malayalam Material strings', (
+        tester,
+      ) async {
+        late MaterialLocalizations material;
+        await tester.pumpWidget(
+          MaterialApp(
+            locale: LocaleConfig.malayalam,
+            localizationsDelegates: LocaleConfig.localizationsDelegates,
+            supportedLocales: LocaleConfig.supportedLocales,
+            home: Builder(
+              builder: (context) {
+                material = MaterialLocalizations.of(context);
+                return const SizedBox.shrink();
+              },
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(material.okButtonLabel, isNot('OK'));
       });
     });
   });

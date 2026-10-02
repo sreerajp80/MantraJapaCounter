@@ -33,12 +33,13 @@ class MainActivity : FlutterActivity() {
     // never changed). BRIGHTNESS_OVERRIDE_NONE (-1) = follow the system.
     private var appBrightness: Float = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
 
-    // True while Optical Sync send mode holds the window at [sendModeBrightness].
+    // True while Optical Sync send mode keeps the screen on.
     private var sendModeOn = false
 
-    // Window brightness while Optical Sync is sending. Bright enough for the
-    // receiving camera; full brightness is not needed.
-    private val sendModeBrightness = 0.75f
+    // Extra brightness the user picked with the slider on the Optical Sync
+    // send screen. BRIGHTNESS_OVERRIDE_NONE (-1) = no boost, use the normal
+    // brightness. Dropped when send mode ends.
+    private var sendBrightness: Float = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
 
     // Lowest custom level, so "still" at 0% is very dim but never black.
     private val minAppBrightness = 0.02f
@@ -116,8 +117,9 @@ class MainActivity : FlutterActivity() {
             }
         }
 
-        // Optical Sync send mode: 75% brightness and screen kept on, so the
-        // receiving camera sees a bright, steady QR code.
+        // Screen brightness and Optical Sync send mode. Send mode keeps the
+        // screen on at the normal brightness; the send screen's slider can
+        // make it brighter while sending.
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             screenChannelName,
@@ -135,6 +137,18 @@ class MainActivity : FlutterActivity() {
                         setAppBrightness(value.toFloat())
                         result.success(null)
                     }
+                }
+                "setSendBrightness" -> {
+                    val value = call.argument<Double>("value")
+                    if (value == null) {
+                        result.error("ARG_VALUE", "value is required", null)
+                    } else {
+                        setSendBrightness(value.toFloat())
+                        result.success(null)
+                    }
+                }
+                "getCurrentBrightness" -> {
+                    result.success(getCurrentBrightness().toDouble())
                 }
                 else -> result.notImplemented()
             }
@@ -229,24 +243,64 @@ class MainActivity : FlutterActivity() {
         super.onDestroy()
     }
 
-    /** Turns Optical Sync send mode (75% brightness, screen kept on) on or off. */
+    /**
+     * Turns Optical Sync send mode on or off. On keeps the screen on at the
+     * normal brightness. Off also drops any slider boost, so the user's own
+     * brightness always comes back.
+     */
     private fun setSendMode(on: Boolean) {
         if (on) {
             sendModeOn = true
-            applyWindowBrightness(sendModeBrightness)
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         } else {
             if (!sendModeOn) return
             sendModeOn = false
-            applyWindowBrightness(appBrightness)
+            sendBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
             window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        }
+        applyWindowBrightness(effectiveBrightness())
+    }
+
+    /**
+     * Sets the send screen's brightness boost. A value below 0 goes back to
+     * the normal brightness. Ignored when send mode is off.
+     */
+    private fun setSendBrightness(value: Float) {
+        if (!sendModeOn) return
+        sendBrightness = if (value < 0f) {
+            WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
+        } else {
+            value.coerceIn(minAppBrightness, 1f)
+        }
+        applyWindowBrightness(effectiveBrightness())
+    }
+
+    /** The window brightness that should be in effect right now. */
+    private fun effectiveBrightness(): Float =
+        if (sendModeOn && sendBrightness >= 0f) sendBrightness else appBrightness
+
+    /**
+     * The normal brightness, from 0 to 1: the in-app setting if one is set,
+     * otherwise the system level (an approximation on devices whose system
+     * scale is not 0..255). Falls back to 0.5 if it cannot be read.
+     */
+    private fun getCurrentBrightness(): Float {
+        if (appBrightness >= 0f) return appBrightness
+        return try {
+            val level = Settings.System.getInt(
+                contentResolver,
+                Settings.System.SCREEN_BRIGHTNESS,
+            )
+            (level / 255f).coerceIn(0f, 1f)
+        } catch (_: Exception) {
+            0.5f
         }
     }
 
     /**
      * Applies the user's in-app brightness setting to this window. A value
-     * below 0 follows the system. While send mode is on the value is only
-     * stored, and applied when send mode turns off.
+     * below 0 follows the system. While a send-screen boost is active the
+     * value is only stored, and applied when send mode turns off.
      */
     private fun setAppBrightness(value: Float) {
         appBrightness = if (value < 0f) {
@@ -254,7 +308,7 @@ class MainActivity : FlutterActivity() {
         } else {
             value.coerceIn(minAppBrightness, 1f)
         }
-        if (!sendModeOn) applyWindowBrightness(appBrightness)
+        applyWindowBrightness(effectiveBrightness())
     }
 
     private fun applyWindowBrightness(value: Float) {

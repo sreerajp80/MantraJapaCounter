@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mantra_japa_counter/screens/help/help_home_screen.dart';
 
 /// Legacy HelpScreen export mapping to the new HelpHomeScreen hub.

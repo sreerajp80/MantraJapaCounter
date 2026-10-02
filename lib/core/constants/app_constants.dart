@@ -7,6 +7,22 @@ class AppConstants {
   // Mala
   static const int malaSize = 108;
 
+  // Meru pause after each mala (seconds). Choices shown in Settings.
+  static const List<int> meruPauseChoicesSeconds = [3, 5, 10];
+  static const int meruPauseDefaultSeconds = 5;
+
+  // Pacing hint: taps faster than this rate (averaged over the last
+  // [pacingWindowTaps] taps) count as rushing. The hint clears
+  // [pacingHintHoldMs] after the last fast tap.
+  static const double pacingMaxTapsPerSecond = 3.0;
+  static const int pacingWindowTaps = 5;
+  static const int pacingHintHoldMs = 3000;
+
+  // Sadhana Flow heat-map: number of weeks shown on the History screen.
+  static const int sadhanaFlowWeeks = 16;
+  // A gap of this many days since the last practice shows "welcome back".
+  static const int sadhanaFlowWelcomeBackDays = 3;
+
   // Crash-recovery batch thresholds (SharedPreferences)
   static const int prefsBatchTapCount = 5;
   static const int prefsBatchIntervalSeconds = 5;
@@ -46,6 +62,9 @@ class AppConstants {
   static const String prefsNotifPermissionAskedKey =
       'notification_permission_asked';
   static const String prefsDimmedChantingKey = 'dimmed_chanting_mode';
+  static const String prefsMeruPauseKey = 'meru_pause_enabled';
+  static const String prefsMeruPauseSecondsKey = 'meru_pause_seconds';
+  static const String prefsPacingHintKey = 'pacing_hint_enabled';
 
   // Export
   static const int exportFormatVersion = 1;

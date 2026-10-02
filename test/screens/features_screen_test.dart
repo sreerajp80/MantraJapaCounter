@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:mantra_japa_counter/core/locale/locale_config.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/screens/features_screen.dart';
 
@@ -15,7 +16,7 @@ void main() {
 
     await tester.pumpWidget(
       const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: LocaleConfig.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: FeaturesScreen(),
       ),
@@ -44,7 +45,7 @@ void main() {
     await tester.pumpWidget(
       const MaterialApp(
         locale: Locale('ml'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: LocaleConfig.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: FeaturesScreen(),
       ),

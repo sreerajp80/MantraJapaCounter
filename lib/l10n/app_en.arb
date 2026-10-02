@@ -2418,5 +2418,121 @@
   "opticalScanTip": "Tap the code to focus. Use zoom if it looks blurred.",
   "@opticalScanTip": {
     "description": "Hint shown over the camera in the Optical Sync receiver"
+  },
+  "meruPauseTitle": "Pause · Breathe",
+  "@meruPauseTitle": {
+    "description": "Title shown inside the mala during the Meru pause"
+  },
+  "meruPauseMessage": "You have reached the Meru bead. Rest in stillness.",
+  "@meruPauseMessage": {
+    "description": "Gentle line shown during the Meru pause after a full mala"
+  },
+  "pacingHintMessage": "Slow down, breathe, feel the mantra.",
+  "@pacingHintMessage": {
+    "description": "Soft hint shown when the user taps faster than a natural chanting pace"
+  },
+  "sectionMindfulCounting": "Mindful counting",
+  "@sectionMindfulCounting": {
+    "description": "Settings section title for Meru pause and pacing hint"
+  },
+  "sectionMindfulCountingSub": "Gentle support for unhurried japa",
+  "@sectionMindfulCountingSub": {
+    "description": "Settings section subtitle for Meru pause and pacing hint"
+  },
+  "meruPauseSettingTitle": "Meru pause after each mala",
+  "@meruPauseSettingTitle": {
+    "description": "Settings toggle title for the Meru pause"
+  },
+  "meruPauseSettingSub": "A short, quiet pause after 108. Taps during the pause are not counted.",
+  "@meruPauseSettingSub": {
+    "description": "Settings toggle subtitle for the Meru pause"
+  },
+  "secondsShort": "{seconds} s",
+  "@secondsShort": {
+    "description": "Short label for a number of seconds, used on Meru pause length chips",
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "pacingHintSettingTitle": "Gentle pacing hint",
+  "@pacingHintSettingTitle": {
+    "description": "Settings toggle title for the pacing hint"
+  },
+  "pacingHintSettingSub": "A soft glow when tapping very fast. Every tap still counts.",
+  "@pacingHintSettingSub": {
+    "description": "Settings toggle subtitle for the pacing hint"
+  },
+  "helpCountingMindfulSection": "Mindful counting",
+  "@helpCountingMindfulSection": {
+    "description": "Help section title for Meru pause and pacing hint"
+  },
+  "helpCountingMeruBold": "Meru pause:",
+  "@helpCountingMeruBold": {
+    "description": "Bold prefix for the Meru pause help bullet"
+  },
+  "helpCountingMeruBullet": "When turned on in Settings → Display, the app pauses for a few seconds after each mala of 108. Taps in the pause are not counted, just as the Meru bead is never crossed.",
+  "@helpCountingMeruBullet": {
+    "description": "Help bullet explaining the Meru pause"
+  },
+  "helpCountingPacingBold": "Pacing hint:",
+  "@helpCountingPacingBold": {
+    "description": "Bold prefix for the pacing hint help bullet"
+  },
+  "helpCountingPacingBullet": "If you tap faster than about 3 times a second, the mala glows softly and a short reminder appears. It never blocks a count.",
+  "@helpCountingPacingBullet": {
+    "description": "Help bullet explaining the pacing hint"
+  },
+  "sadhanaFlowTitle": "SADHANA FLOW",
+  "@sadhanaFlowTitle": {
+    "description": "Title of the Sadhana Flow calendar heat-map on the History screen"
+  },
+  "sadhanaFlowA11y": "Calendar of practice days for the last {weeks} weeks",
+  "@sadhanaFlowA11y": {
+    "description": "Screen reader label for the Sadhana Flow calendar grid",
+    "placeholders": {
+      "weeks": {
+        "type": "int"
+      }
+    }
+  },
+  "sadhanaFlowYearDays": "{count, plural, =0{Every mantra you offer this year will glow here.} =1{1 day of sacred remembrance this year.} other{{count} days of sacred remembrance this year.}}",
+  "@sadhanaFlowYearDays": {
+    "description": "Uplifting line: number of practice days in the current year",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sadhanaFlowWelcomeBack": "Welcome back to your sacred space. Every mantra offered is eternal.",
+  "@sadhanaFlowWelcomeBack": {
+    "description": "Warm message when the user returns after a break of a few days"
+  },
+  "sadhanaFlowLess": "Less",
+  "@sadhanaFlowLess": {
+    "description": "Legend label for the dimmest cells of the Sadhana Flow grid"
+  },
+  "sadhanaFlowMore": "More",
+  "@sadhanaFlowMore": {
+    "description": "Legend label for the brightest cells of the Sadhana Flow grid"
+  },
+  "opticalBrightness": "Brightness",
+  "@opticalBrightness": {
+    "description": "Label for the brightness slider on the Optical Sync send screen"
+  },
+  "opticalBrightnessNormal": "Normal",
+  "@opticalBrightnessNormal": {
+    "description": "Brightness slider value when at the normal brightness"
+  },
+  "opticalBrightnessBoost": "+{percent}%",
+  "@opticalBrightnessBoost": {
+    "description": "Brightness slider value: how much brighter than normal, in percent",
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
   }
 }

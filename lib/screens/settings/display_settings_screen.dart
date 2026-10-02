@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
@@ -135,6 +136,58 @@ class DisplaySettingsScreen extends ConsumerWidget {
                         sub: l.dimmedModeSub,
                         toggle: settings.dimmedChantingMode,
                         onToggle: (val) => notifier.setDimmedChantingMode(val),
+                      ),
+                    ],
+                  ),
+                  SettingsSection(
+                    title: l.sectionMindfulCounting,
+                    sub: l.sectionMindfulCountingSub,
+                    iconBuilder: (s, c) =>
+                        Icon(Icons.spa_outlined, size: s, color: c),
+                    children: [
+                      SettingsRow(
+                        leading: const TempleLotusIcon(),
+                        title: l.meruPauseSettingTitle,
+                        sub: l.meruPauseSettingSub,
+                        toggle: settings.meruPauseEnabled,
+                        onToggle: notifier.setMeruPauseEnabled,
+                      ),
+                      if (settings.meruPauseEnabled)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(56, 0, 14, 12),
+                          child: Wrap(
+                            spacing: 8,
+                            children: [
+                              for (final secs
+                                  in AppConstants.meruPauseChoicesSeconds)
+                                ChoiceChip(
+                                  label: Text(l.secondsShort(secs)),
+                                  selected: settings.meruPauseSeconds == secs,
+                                  selectedColor: TempleColors.vermillion,
+                                  labelStyle: TextStyle(
+                                    color: settings.meruPauseSeconds == secs
+                                        ? Colors.white
+                                        : TempleColors.ink,
+                                  ),
+                                  onSelected: (selected) {
+                                    if (selected) {
+                                      notifier.setMeruPauseSeconds(secs);
+                                    }
+                                  },
+                                ),
+                            ],
+                          ),
+                        ),
+                      SettingsRow(
+                        leading: const Icon(
+                          Icons.air,
+                          size: 20,
+                          color: TempleColors.vermillion,
+                        ),
+                        title: l.pacingHintSettingTitle,
+                        sub: l.pacingHintSettingSub,
+                        toggle: settings.pacingHintEnabled,
+                        onToggle: notifier.setPacingHintEnabled,
                       ),
                     ],
                   ),

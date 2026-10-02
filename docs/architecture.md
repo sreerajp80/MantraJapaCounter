@@ -159,8 +159,10 @@ ZXing core on the Android side (`QrFrameDecoder.kt`, channel
 `com.sreerajp.mantrajapacounter/qr_decoder`, wrapped by `QrDecoderService`). Google ML Kit is not
 used, because it brings Google's `datatransport` usage-log uploader and the `INTERNET` permission.
 Only the rows under the on-screen guide box are sent to the decoder, with a crop rectangle.
-While sending, `ScreenService` (channel `com.sreerajp.mantrajapacounter/screen`) sets 75%
-brightness and keeps the screen on; the user's brightness setting comes back when sending stops.
+While sending, `ScreenService` (channel `com.sreerajp.mantrajapacounter/screen`) keeps the
+screen on at the normal brightness. The send screen's slider calls `setSendBrightness` to go from
+the normal level (read with `getCurrentBrightness`) up to full; the boost is dropped when sending
+stops or the app goes to the background, so the user's brightness setting always comes back.
 Both Optical Sync providers are auto-dispose, so each visit to the screen starts fresh.
 
 `ScreenService.setAppBrightness` also applies the user's screen brightness setting (Settings →
@@ -350,6 +352,12 @@ Migration history:
 ### Theme
 
 - Material Design 3 (Material You)
+- Material and Cupertino widgets come from the standalone `material_ui` and `cupertino_ui`
+  packages (moved out of the Flutter SDK in 3.47). Import `package:material_ui/material_ui.dart`,
+  never `package:flutter/material.dart`; the `migrate_design_widgets` lint enforces this.
+- `MaterialApp.localizationsDelegates` must use `LocaleConfig.localizationsDelegates`, not the
+  generated `AppLocalizations.localizationsDelegates` (the generated list still points at the old
+  SDK Material/Cupertino delegates, so Malayalam and Sanskrit would lose their Material strings).
 - Dark and light mode support
 - Dynamic color on Android 12+ (API 31+)
 - Portrait orientation locked at app startup via `SystemChrome.setPreferredOrientations`

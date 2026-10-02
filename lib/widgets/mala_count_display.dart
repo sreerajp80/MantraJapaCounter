@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Displays a count + mala pair (e.g. "Count: 216  Malas: 2").
 class MalaCountDisplay extends StatelessWidget {

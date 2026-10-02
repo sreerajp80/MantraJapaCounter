@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/l10n/sa_material_localizations.dart';
 
@@ -18,6 +18,21 @@ class LocaleConfig {
   static const Locale sanskrit = Locale('sa');
 
   static const List<Locale> supportedLocales = [english, malayalam, sanskrit];
+
+  /// Delegates for [MaterialApp.localizationsDelegates].
+  ///
+  /// Use this instead of the generated `AppLocalizations.localizationsDelegates`.
+  /// The generated list still points at the old SDK Material/Cupertino
+  /// delegates, whose types do not match the `material_ui` / `cupertino_ui`
+  /// widgets the app uses. The Sanskrit fallbacks come first so they win for
+  /// Locale('sa').
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = [
+    SaMaterialLocalizationsDelegate(),
+    SaCupertinoLocalizationsDelegate(),
+    SaWidgetsLocalizationsDelegate(),
+    AppLocalizations.delegate,
+    ...GlobalMaterialLocalizations.delegates,
+  ];
 
   /// Currently active locale cached for context-free lookups.
   static Locale? activeLocale;

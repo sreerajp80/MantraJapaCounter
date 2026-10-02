@@ -1,5 +1,5 @@
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
@@ -217,10 +217,10 @@ Future<void> _browseAudioFile(
   BuildContext context,
   Future<void> Function(String? uri, String? name) onSelect,
 ) async {
-  final result = await FilePicker.pickFiles(type: FileType.audio);
-  final picked = result?.files.single;
-  if (picked?.path != null) {
-    await onSelect(picked!.path!, picked.name);
+  final picked = await FilePicker.pickFile(type: FileType.audio);
+  final pickedPath = picked?.path;
+  if (pickedPath != null) {
+    await onSelect(pickedPath, picked!.name);
   }
 }
 

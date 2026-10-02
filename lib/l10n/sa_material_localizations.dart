@@ -1,6 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
+// Material and Cupertino delegates now come from material_ui / cupertino_ui.
+// Only the widgets-level delegate still lives in flutter_localizations.
+import 'package:flutter_localizations/flutter_localizations.dart'
+    show GlobalWidgetsLocalizations;
 
 /// flutter_localizations has no Sanskrit ('sa') translation. This delegate
 /// answers for Locale('sa') by loading the English framework strings, so the

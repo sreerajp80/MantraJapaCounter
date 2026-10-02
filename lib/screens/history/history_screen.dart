@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
@@ -9,6 +9,8 @@ import 'package:mantra_japa_counter/providers/history_provider.dart';
 import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
 import 'package:mantra_japa_counter/screens/history/history_hero.dart';
 import 'package:mantra_japa_counter/screens/history/history_day_group.dart';
+import 'package:mantra_japa_counter/screens/history/sadhana_flow_card.dart';
+import 'package:mantra_japa_counter/core/utils/sadhana_flow.dart';
 
 /// Full session history grouped by date — Temple variation.
 /// When [filterCounterId] is provided, a devotional hero displays the counter
@@ -139,6 +141,16 @@ class HistoryScreen extends ConsumerWidget {
             lifetimeTotal: lifetimeTotal,
             counterGoal: counterGoal,
             dayCount: summaries.length,
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: SadhanaFlowCard(
+            l: l,
+            flow: SadhanaFlow.fromSummaries(
+              summaries,
+              today: DateTime.now(),
+              dailyGoal: counterDailyGoal,
+            ),
           ),
         ),
         SliverPadding(

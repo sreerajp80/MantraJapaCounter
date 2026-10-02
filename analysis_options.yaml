@@ -13,6 +13,8 @@ analyzer:
     - lib/l10n/app_localizations*.dart
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    - build/**
+    - android/**
 
 linter:
   rules:
@@ -47,3 +49,7 @@ linter:
 
     # Imports — package: imports only, never relative
     always_use_package_imports: true
+
+    # Design libraries — import material_ui / cupertino_ui, never the frozen
+    # package:flutter/material.dart or package:flutter/cupertino.dart
+    migrate_design_widgets: true

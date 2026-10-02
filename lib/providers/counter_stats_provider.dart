@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mantra_japa_counter/core/utils/mala.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/counters_provider.dart';
+import 'package:mantra_japa_counter/providers/current_day_provider.dart';
 
 class CounterStats {
   final int totalCount;
@@ -26,6 +27,8 @@ class CounterStats {
 ///   todayCount = SUM(session.count) for sessions since today's midnight
 final counterStatsProvider = FutureProvider.autoDispose
     .family<CounterStats, String>((ref, counterId) async {
+      // Re-run when the date changes so "today" numbers reset on a new day.
+      ref.watch(currentDayProvider);
       final repo = ref.watch(japaCounterRepositoryProvider);
       // Watch the counters list so edits (e.g. changing initialCount) refresh stats
       // immediately without needing to leave and re-enter the screen.
@@ -69,6 +72,8 @@ class TodayAggregate {
 final todayAggregateProvider = FutureProvider.autoDispose<TodayAggregate>((
   ref,
 ) async {
+  // Re-run when the date changes so "today" numbers reset on a new day.
+  ref.watch(currentDayProvider);
   final repo = ref.watch(japaCounterRepositoryProvider);
   final counters = await ref.watch(countersNotifierProvider.future);
   final active = counters.where((c) => c.isActive).toList();

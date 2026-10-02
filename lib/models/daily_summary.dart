@@ -15,4 +15,13 @@ class DailySummary {
     required this.totalDuration,
     required this.sessions,
   });
+
+  /// The calendar day (local time, midnight) these sessions belong to.
+  /// All sessions in a summary share the same day, so the first one is used.
+  /// Null only for an empty summary, which the repository never builds.
+  DateTime? get day {
+    if (sessions.isEmpty) return null;
+    final dt = DateTime.fromMillisecondsSinceEpoch(sessions.first.timestamp);
+    return DateTime(dt.year, dt.month, dt.day);
+  }
 }

@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
@@ -190,11 +190,11 @@ class BackupSettingsScreen extends ConsumerWidget {
   Future<void> _doImport(BuildContext context, WidgetRef ref) async {
     final l = AppLocalizations.of(context);
     try {
-      final result = await FilePicker.pickFiles(
+      final picked = await FilePicker.pickFile(
         type: FileType.custom,
         allowedExtensions: ['json', 'enc'],
       );
-      final pickedPath = result?.files.single.path;
+      final pickedPath = picked?.path;
       if (pickedPath == null) return;
 
       final content = await File(pickedPath).readAsString();

@@ -15,6 +15,7 @@ This file is read by Claude Code at the start of every session in this repositor
 | Platform(s) | Android (minSdk 29, targetSdk 36) |
 | Flutter SDK | `^3.12.2` / 3.44.8 or higher |
 | Dart SDK | `^3.12.2` or higher |
+| Android toolchain | Java 17, AGP 9.1.0, Gradle 9.3.1, Kotlin 2.4.0 (`android.builtInKotlin=false` until all plugins support built-in Kotlin) |
 | State management | `flutter_riverpod` |
 | Navigation | `go_router` |
 | Database | `sqflite` (schema v4) |
@@ -121,6 +122,8 @@ flutter build appbundle --flavor prod --release \
 
 - Files `snake_case.dart`; classes `PascalCase`; methods/variables `camelCase`; providers `camelCase` + `Provider` suffix.
 - Use `package:` imports over relative imports for external references.
+- Import `package:material_ui/material_ui.dart` / `package:cupertino_ui/cupertino_ui.dart`, never `package:flutter/material.dart` / `package:flutter/cupertino.dart` (enforced by the `migrate_design_widgets` lint).
+- For `localizationsDelegates`, always use `LocaleConfig.localizationsDelegates`, never the generated `AppLocalizations.localizationsDelegates`.
 - Keep `flutter analyze` clean with 0 warnings before committing.
 
 ---

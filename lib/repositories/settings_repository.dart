@@ -209,4 +209,31 @@ class SettingsRepository {
   Future<void> setDimmedChantingMode(bool value) async {
     await _prefs.setBool(AppConstants.prefsDimmedChantingKey, value);
   }
+
+  bool get meruPauseEnabled =>
+      _prefs.getBool(AppConstants.prefsMeruPauseKey) ?? false;
+
+  Future<void> setMeruPauseEnabled(bool value) async {
+    await _prefs.setBool(AppConstants.prefsMeruPauseKey, value);
+  }
+
+  /// Meru pause length in seconds. Unknown saved values fall back to the
+  /// default.
+  int get meruPauseSeconds {
+    final saved = _prefs.getInt(AppConstants.prefsMeruPauseSecondsKey);
+    return AppConstants.meruPauseChoicesSeconds.contains(saved)
+        ? saved!
+        : AppConstants.meruPauseDefaultSeconds;
+  }
+
+  Future<void> setMeruPauseSeconds(int value) async {
+    await _prefs.setInt(AppConstants.prefsMeruPauseSecondsKey, value);
+  }
+
+  bool get pacingHintEnabled =>
+      _prefs.getBool(AppConstants.prefsPacingHintKey) ?? true;
+
+  Future<void> setPacingHintEnabled(bool value) async {
+    await _prefs.setBool(AppConstants.prefsPacingHintKey, value);
+  }
 }

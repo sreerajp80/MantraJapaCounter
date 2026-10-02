@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mantra_japa_counter/models/japa_session.dart';
 
 /// List tile for a single session in the history screen.

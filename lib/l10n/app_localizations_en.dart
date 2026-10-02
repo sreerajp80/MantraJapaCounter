@@ -1929,4 +1929,97 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get opticalScanTip =>
       'Tap the code to focus. Use zoom if it looks blurred.';
+
+  @override
+  String get meruPauseTitle => 'Pause · Breathe';
+
+  @override
+  String get meruPauseMessage =>
+      'You have reached the Meru bead. Rest in stillness.';
+
+  @override
+  String get pacingHintMessage => 'Slow down, breathe, feel the mantra.';
+
+  @override
+  String get sectionMindfulCounting => 'Mindful counting';
+
+  @override
+  String get sectionMindfulCountingSub => 'Gentle support for unhurried japa';
+
+  @override
+  String get meruPauseSettingTitle => 'Meru pause after each mala';
+
+  @override
+  String get meruPauseSettingSub =>
+      'A short, quiet pause after 108. Taps during the pause are not counted.';
+
+  @override
+  String secondsShort(int seconds) {
+    return '$seconds s';
+  }
+
+  @override
+  String get pacingHintSettingTitle => 'Gentle pacing hint';
+
+  @override
+  String get pacingHintSettingSub =>
+      'A soft glow when tapping very fast. Every tap still counts.';
+
+  @override
+  String get helpCountingMindfulSection => 'Mindful counting';
+
+  @override
+  String get helpCountingMeruBold => 'Meru pause:';
+
+  @override
+  String get helpCountingMeruBullet =>
+      'When turned on in Settings → Display, the app pauses for a few seconds after each mala of 108. Taps in the pause are not counted, just as the Meru bead is never crossed.';
+
+  @override
+  String get helpCountingPacingBold => 'Pacing hint:';
+
+  @override
+  String get helpCountingPacingBullet =>
+      'If you tap faster than about 3 times a second, the mala glows softly and a short reminder appears. It never blocks a count.';
+
+  @override
+  String get sadhanaFlowTitle => 'SADHANA FLOW';
+
+  @override
+  String sadhanaFlowA11y(int weeks) {
+    return 'Calendar of practice days for the last $weeks weeks';
+  }
+
+  @override
+  String sadhanaFlowYearDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days of sacred remembrance this year.',
+      one: '1 day of sacred remembrance this year.',
+      zero: 'Every mantra you offer this year will glow here.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sadhanaFlowWelcomeBack =>
+      'Welcome back to your sacred space. Every mantra offered is eternal.';
+
+  @override
+  String get sadhanaFlowLess => 'Less';
+
+  @override
+  String get sadhanaFlowMore => 'More';
+
+  @override
+  String get opticalBrightness => 'Brightness';
+
+  @override
+  String get opticalBrightnessNormal => 'Normal';
+
+  @override
+  String opticalBrightnessBoost(int percent) {
+    return '+$percent%';
+  }
 }

@@ -3477,6 +3477,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap the code to focus. Use zoom if it looks blurred.'**
   String get opticalScanTip;
+
+  /// Title shown inside the mala during the Meru pause
+  ///
+  /// In en, this message translates to:
+  /// **'Pause · Breathe'**
+  String get meruPauseTitle;
+
+  /// Gentle line shown during the Meru pause after a full mala
+  ///
+  /// In en, this message translates to:
+  /// **'You have reached the Meru bead. Rest in stillness.'**
+  String get meruPauseMessage;
+
+  /// Soft hint shown when the user taps faster than a natural chanting pace
+  ///
+  /// In en, this message translates to:
+  /// **'Slow down, breathe, feel the mantra.'**
+  String get pacingHintMessage;
+
+  /// Settings section title for Meru pause and pacing hint
+  ///
+  /// In en, this message translates to:
+  /// **'Mindful counting'**
+  String get sectionMindfulCounting;
+
+  /// Settings section subtitle for Meru pause and pacing hint
+  ///
+  /// In en, this message translates to:
+  /// **'Gentle support for unhurried japa'**
+  String get sectionMindfulCountingSub;
+
+  /// Settings toggle title for the Meru pause
+  ///
+  /// In en, this message translates to:
+  /// **'Meru pause after each mala'**
+  String get meruPauseSettingTitle;
+
+  /// Settings toggle subtitle for the Meru pause
+  ///
+  /// In en, this message translates to:
+  /// **'A short, quiet pause after 108. Taps during the pause are not counted.'**
+  String get meruPauseSettingSub;
+
+  /// Short label for a number of seconds, used on Meru pause length chips
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds} s'**
+  String secondsShort(int seconds);
+
+  /// Settings toggle title for the pacing hint
+  ///
+  /// In en, this message translates to:
+  /// **'Gentle pacing hint'**
+  String get pacingHintSettingTitle;
+
+  /// Settings toggle subtitle for the pacing hint
+  ///
+  /// In en, this message translates to:
+  /// **'A soft glow when tapping very fast. Every tap still counts.'**
+  String get pacingHintSettingSub;
+
+  /// Help section title for Meru pause and pacing hint
+  ///
+  /// In en, this message translates to:
+  /// **'Mindful counting'**
+  String get helpCountingMindfulSection;
+
+  /// Bold prefix for the Meru pause help bullet
+  ///
+  /// In en, this message translates to:
+  /// **'Meru pause:'**
+  String get helpCountingMeruBold;
+
+  /// Help bullet explaining the Meru pause
+  ///
+  /// In en, this message translates to:
+  /// **'When turned on in Settings → Display, the app pauses for a few seconds after each mala of 108. Taps in the pause are not counted, just as the Meru bead is never crossed.'**
+  String get helpCountingMeruBullet;
+
+  /// Bold prefix for the pacing hint help bullet
+  ///
+  /// In en, this message translates to:
+  /// **'Pacing hint:'**
+  String get helpCountingPacingBold;
+
+  /// Help bullet explaining the pacing hint
+  ///
+  /// In en, this message translates to:
+  /// **'If you tap faster than about 3 times a second, the mala glows softly and a short reminder appears. It never blocks a count.'**
+  String get helpCountingPacingBullet;
+
+  /// Title of the Sadhana Flow calendar heat-map on the History screen
+  ///
+  /// In en, this message translates to:
+  /// **'SADHANA FLOW'**
+  String get sadhanaFlowTitle;
+
+  /// Screen reader label for the Sadhana Flow calendar grid
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar of practice days for the last {weeks} weeks'**
+  String sadhanaFlowA11y(int weeks);
+
+  /// Uplifting line: number of practice days in the current year
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Every mantra you offer this year will glow here.} =1{1 day of sacred remembrance this year.} other{{count} days of sacred remembrance this year.}}'**
+  String sadhanaFlowYearDays(int count);
+
+  /// Warm message when the user returns after a break of a few days
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back to your sacred space. Every mantra offered is eternal.'**
+  String get sadhanaFlowWelcomeBack;
+
+  /// Legend label for the dimmest cells of the Sadhana Flow grid
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get sadhanaFlowLess;
+
+  /// Legend label for the brightest cells of the Sadhana Flow grid
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get sadhanaFlowMore;
+
+  /// Label for the brightness slider on the Optical Sync send screen
+  ///
+  /// In en, this message translates to:
+  /// **'Brightness'**
+  String get opticalBrightness;
+
+  /// Brightness slider value when at the normal brightness
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get opticalBrightnessNormal;
+
+  /// Brightness slider value: how much brighter than normal, in percent
+  ///
+  /// In en, this message translates to:
+  /// **'+{percent}%'**
+  String opticalBrightnessBoost(int percent);
 }
 
 class _AppLocalizationsDelegate

@@ -85,6 +85,8 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 - **Touch Gesture Controls**:
   - **Tap to Count**: Single-finger tap anywhere inside the bead circle increments the count by the counter's step. Taps outside the circle are ignored to prevent accidental counts.
   - **Two-Finger Undo Swipe**: Place two fingers on the medallion and swipe horizontally (left or right) to decrement the count by 1 step. Triggers medium haptic feedback to confirm undo.
+- **Meru Pause (optional)**: When turned on in Settings → Display, the app pauses for 3, 5 or 10 seconds (default 5) after each mala of 108. A soft lotus overlay with "Pause · Breathe" and a countdown ring appears inside the mala. Taps during the pause are not counted, as the Meru bead is never crossed. The pause ends by itself, or with the undo swipe. Off by default.
+- **Gentle Pacing Hint**: If taps come faster than about 3 per second (over the last 5 taps), the mala glows a warm amber and a short line appears: "Slow down, breathe, feel the mantra." Every tap still counts; there is no sound or vibration. On by default; can be turned off in Settings → Display.
 - **Live Session Timer**:
   - Live duration clock pill (`HH:MM:SS` or `MM:SS`) tracking elapsed active session time.
   - Pause-aware: Automatically pauses timer when app is backgrounded or inactive (`WidgetsBindingObserver` lifecycle handling), excluding idle time between pause and resume.
@@ -110,6 +112,11 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
   - Overall stats hero banner showing total chants offered, total malas, active days count, and percentage of vow completed.
   - Interactive Diya progress bar track showing lifetime vow completion progress.
   - Filter history log by individual mantra counter or view across all counters.
+- **Sadhana Flow Heat-Map**:
+  - A calendar grid of the last 16 weeks (Monday at the top) where practice days glow like diyas, from soft sandal to deep saffron.
+  - For a single counter with a daily goal, the glow follows progress toward that goal; otherwise it is relative to the busiest day shown.
+  - Shows "N days of sacred remembrance this year", and a warm "Welcome back" line when the last practice was 3 or more days ago.
+  - No streak counters and no "missed day" marks, by design.
 - **Date-Level Cumulative Progress Tracking**:
   - Displays cumulative total at the end of each day (`count / lifetimeGoal`) and daily completion percentage.
 - **Session Detail Records**:
@@ -150,7 +157,7 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 - **Optical Air-Gap Sync (High-Density Animated QR Stream)**:
   - **100% Offline Device-to-Device Sync**: Transfer all counters, active sitting progress, and practice history between nearby mobile devices using screen-to-camera animated QR streams (8–15 FPS) without Wi-Fi, Bluetooth, NFC, local sockets, or cloud infrastructure.
   - **Fountain Code Engine (Luby Transform / LT)**: Encodes full backup payloads into systematic chunks and LT XOR parity frames (`AIRQR|LT1` format) with IEEE 802.3 CRC32 checksum verification.
-  - **Endless Frame Stream**: The sender shows every plain chunk once, then repeats a pattern of one plain chunk and two new mix frames without end. Every frame caught helps, so the last missing chunks arrive quickly. The sender screen goes to 75% brightness and stays on while sending.
+  - **Endless Frame Stream**: The sender shows every plain chunk once, then repeats a pattern of one plain chunk and two new mix frames without end. Every frame caught helps, so the last missing chunks arrive quickly. The sender screen stays on at the normal brightness while sending. A brightness slider on the send screen can raise it from Normal up to full if the receiving camera needs it; the boost ends when sending stops.
   - **Scanner Controls**: The receiver starts at 1× zoom and has tap-to-focus (with a focus ring), a zoom slider (up to 4×), and a light (torch) button. Only the area under the guide box is decoded, and a fast search is used first (the slow, thorough search runs on every 4th miss). A "Frames received" line shows the scan is working before chunks are solved. Cancelling the import preview clears the received data and starts a new scan. Auto focus is nudged every 3 seconds while no code is read. The sender shows plain black-on-white codes, as large as the screen allows (up to 320 px), with 120-byte chunks and a default speed of 8 FPS.
   - **Loss-Tolerant Scanning**: Camera frame drops do not block decoding; missing fragments are automatically reconstructed out-of-order via belief propagation / Gaussian elimination over GF(2).
   - **Interactive Import Preview**: Scanned streams trigger an interactive preview sheet detailing counter and session counts before merging atomically into local SQLite storage.

@@ -12,6 +12,13 @@ import 'package:mantra_japa_counter/providers/history_provider.dart';
 
 const _uuid = Uuid();
 
+/// Current time in milliseconds. Overridden in tests to control the pacing
+/// hint.
+final countingClockProvider = Provider<int Function()>(
+  (ref) =>
+      () => DateTime.now().millisecondsSinceEpoch,
+);
+
 /// State for the active counting screen.
 ///
 /// [lifetimeTotal] and [todayTotal] are snapshots of `initialCount + DB SUM`
@@ -27,12 +34,26 @@ class CountingState {
   final int lastDbWrittenCount;
   final bool isCompleting;
 
+  /// True during the Meru pause after a completed mala. Taps are not counted
+  /// while it is on.
+  final bool isMeruPause;
+
+  /// Length of the current (or next) Meru pause, for the countdown ring.
+  final int meruPauseSeconds;
+
+  /// True while the user taps faster than a natural chanting pace. Only a
+  /// hint — counting is never blocked.
+  final bool isRushing;
+
   const CountingState({
     this.session,
     this.lifetimeTotal = 0,
     this.todayTotal = 0,
     this.lastDbWrittenCount = 0,
     this.isCompleting = false,
+    this.isMeruPause = false,
+    this.meruPauseSeconds = AppConstants.meruPauseDefaultSeconds,
+    this.isRushing = false,
   });
 
   /// Unflushed taps in the current session — the delta still in memory.
@@ -54,6 +75,9 @@ class CountingState {
     int? todayTotal,
     int? lastDbWrittenCount,
     bool? isCompleting,
+    bool? isMeruPause,
+    int? meruPauseSeconds,
+    bool? isRushing,
   }) {
     return CountingState(
       session: session ?? this.session,
@@ -61,6 +85,9 @@ class CountingState {
       todayTotal: todayTotal ?? this.todayTotal,
       lastDbWrittenCount: lastDbWrittenCount ?? this.lastDbWrittenCount,
       isCompleting: isCompleting ?? this.isCompleting,
+      isMeruPause: isMeruPause ?? this.isMeruPause,
+      meruPauseSeconds: meruPauseSeconds ?? this.meruPauseSeconds,
+      isRushing: isRushing ?? this.isRushing,
     );
   }
 }
@@ -99,6 +126,11 @@ class CountingNotifier extends StateNotifier<CountingState> {
   int _tapsSinceLastDbFlush = 0;
   int _lastPrefsWriteMs = 0;
   int _lastDbWriteMs = 0;
+
+  // Meru pause and pacing hint
+  Timer? _meruTimer;
+  Timer? _rushTimer;
+  final List<int> _recentTapMs = [];
 
   CountingNotifier(this._ref, this._counterId) : super(const CountingState());
 
@@ -251,6 +283,8 @@ class CountingNotifier extends StateNotifier<CountingState> {
   Future<void> tap() async {
     final session = state.session;
     if (session == null) return;
+    // The Meru bead is not crossed: taps during the pause are not counted.
+    if (state.isMeruPause) return;
 
     final resumed = _resumeIfPaused(session);
     final wasZero = resumed.tapCount == 0;
@@ -271,13 +305,81 @@ class CountingNotifier extends StateNotifier<CountingState> {
     }
 
     _checkNotifications(updated);
+    _trackPacing();
+    _startMeruPauseIfMalaDone(updated);
     _invalidateStatsAndHistory();
+  }
+
+  // ───────────────────────────── Meru pause / pacing ──────────────────────
+
+  /// Starts the Meru pause when this tap completed a mala and the setting is
+  /// on.
+  void _startMeruPauseIfMalaDone(ActiveSession session) {
+    final settings = _ref.read(settingsRepositoryProvider);
+    if (!settings.meruPauseEnabled) return;
+    final prevMalas =
+        (session.tapCount - session.incrementStep) ~/ AppConstants.malaSize;
+    final newMalas = session.tapCount ~/ AppConstants.malaSize;
+    if (newMalas <= prevMalas) return;
+
+    final seconds = settings.meruPauseSeconds;
+    _meruTimer?.cancel();
+    _meruTimer = Timer(Duration(seconds: seconds), endMeruPause);
+    // Rushing does not matter during a pause; start fresh after it.
+    _clearPacing();
+    state = state.copyWith(isMeruPause: true, meruPauseSeconds: seconds);
+  }
+
+  /// Ends the Meru pause now. Called by its timer, by undo, and when the
+  /// app leaves the screen.
+  void endMeruPause() {
+    _meruTimer?.cancel();
+    _meruTimer = null;
+    if (mounted && state.isMeruPause) {
+      state = state.copyWith(isMeruPause: false);
+    }
+  }
+
+  /// Records this tap's time and turns the pacing hint on when the last few
+  /// taps came faster than a natural chanting pace.
+  void _trackPacing() {
+    if (!_ref.read(settingsRepositoryProvider).pacingHintEnabled) return;
+    final now = _ref.read(countingClockProvider)();
+    _recentTapMs.add(now);
+    if (_recentTapMs.length > AppConstants.pacingWindowTaps) {
+      _recentTapMs.removeAt(0);
+    }
+    if (_recentTapMs.length < AppConstants.pacingWindowTaps) return;
+
+    final spanMs = _recentTapMs.last - _recentTapMs.first;
+    final gaps = _recentTapMs.length - 1;
+    final tooFast = spanMs * AppConstants.pacingMaxTapsPerSecond < gaps * 1000;
+    if (!tooFast) return;
+
+    _rushTimer?.cancel();
+    _rushTimer = Timer(
+      const Duration(milliseconds: AppConstants.pacingHintHoldMs),
+      () {
+        if (mounted) state = state.copyWith(isRushing: false);
+      },
+    );
+    if (!state.isRushing) state = state.copyWith(isRushing: true);
+  }
+
+  void _clearPacing() {
+    _rushTimer?.cancel();
+    _rushTimer = null;
+    _recentTapMs.clear();
+    if (mounted && state.isRushing) state = state.copyWith(isRushing: false);
   }
 
   Future<void> decrement() async {
     final session = state.session;
     if (session == null) return;
     if (session.tapCount < session.incrementStep) return;
+
+    // Undo also ends a Meru pause.
+    endMeruPause();
 
     final resumed = _resumeIfPaused(session);
     final newCount = resumed.tapCount - resumed.incrementStep;
@@ -503,6 +605,8 @@ class CountingNotifier extends StateNotifier<CountingState> {
   /// Deletes the in-progress DB row and starts a fresh session.
   Future<void> resetSession() async {
     _stopTimers();
+    endMeruPause();
+    _clearPacing();
     await _cancelSession();
 
     final repo = _ref.read(japaCounterRepositoryProvider);
@@ -524,6 +628,8 @@ class CountingNotifier extends StateNotifier<CountingState> {
   /// Deletes ALL sessions for the counter without saving the current one.
   Future<void> resetCounter() async {
     _stopTimers();
+    endMeruPause();
+    _clearPacing();
     final repo = _ref.read(japaCounterRepositoryProvider);
     await repo.deleteSessionsByCounterId(_counterId);
     await _ref.read(settingsRepositoryProvider).clearActiveSession(_counterId);
@@ -544,6 +650,8 @@ class CountingNotifier extends StateNotifier<CountingState> {
   /// Lifecycle: flush pending writes and stop timers when the app goes background.
   Future<void> onPause() async {
     _stopTimers();
+    endMeruPause();
+    _clearPacing();
     final session = state.session;
     if (session == null) return;
     if (_tapsSinceLastPrefsFlush > 0) {
@@ -669,6 +777,8 @@ class CountingNotifier extends StateNotifier<CountingState> {
   @override
   void dispose() {
     _stopTimers();
+    _meruTimer?.cancel();
+    _rushTimer?.cancel();
     super.dispose();
   }
 }

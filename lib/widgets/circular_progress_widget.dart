@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Circular progress arc with a centered label.
 class CircularProgressWidget extends StatelessWidget {

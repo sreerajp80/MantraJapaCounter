@@ -1931,4 +1931,98 @@ class AppLocalizationsMl extends AppLocalizations {
   @override
   String get opticalScanTip =>
       'ഫോക്കസ് ചെയ്യാൻ കോഡിൽ തൊടുക. മങ്ങിയതായി തോന്നിയാൽ സൂം ഉപയോഗിക്കുക.';
+
+  @override
+  String get meruPauseTitle => 'നിർത്തുക · ശ്വസിക്കുക';
+
+  @override
+  String get meruPauseMessage =>
+      'നിങ്ങൾ മേരു മണിയിൽ എത്തി. നിശ്ചലതയിൽ വിശ്രമിക്കുക.';
+
+  @override
+  String get pacingHintMessage => 'പതുക്കെ, ശ്വസിക്കുക, മന്ത്രം അനുഭവിക്കുക.';
+
+  @override
+  String get sectionMindfulCounting => 'ശ്രദ്ധയോടെ എണ്ണൽ';
+
+  @override
+  String get sectionMindfulCountingSub =>
+      'തിരക്കില്ലാത്ത ജപത്തിന് സൗമ്യമായ സഹായം';
+
+  @override
+  String get meruPauseSettingTitle => 'ഓരോ മാലയ്ക്കും ശേഷം മേരു വിരാമം';
+
+  @override
+  String get meruPauseSettingSub =>
+      '108-ന് ശേഷം ചെറിയ ശാന്തമായ വിരാമം. വിരാമ സമയത്തെ സ്പർശനങ്ങൾ എണ്ണില്ല.';
+
+  @override
+  String secondsShort(int seconds) {
+    return '$seconds സെ';
+  }
+
+  @override
+  String get pacingHintSettingTitle => 'സൗമ്യമായ വേഗ സൂചന';
+
+  @override
+  String get pacingHintSettingSub =>
+      'വളരെ വേഗത്തിൽ സ്പർശിക്കുമ്പോൾ മൃദുവായ തിളക്കം. എല്ലാ സ്പർശനവും എണ്ണും.';
+
+  @override
+  String get helpCountingMindfulSection => 'ശ്രദ്ധയോടെ എണ്ണൽ';
+
+  @override
+  String get helpCountingMeruBold => 'മേരു വിരാമം:';
+
+  @override
+  String get helpCountingMeruBullet =>
+      'ക്രമീകരണങ്ങൾ → ഡിസ്‌പ്ലേയിൽ ഓണാക്കിയാൽ, 108-ന്റെ ഓരോ മാലയ്ക്കും ശേഷം ആപ്പ് ഏതാനും നിമിഷം നിർത്തും. മേരു മണി കടക്കാത്തതുപോലെ, ഈ സമയത്തെ സ്പർശനങ്ങൾ എണ്ണില്ല.';
+
+  @override
+  String get helpCountingPacingBold => 'വേഗ സൂചന:';
+
+  @override
+  String get helpCountingPacingBullet =>
+      'സെക്കൻഡിൽ ഏകദേശം 3 തവണയിൽ കൂടുതൽ വേഗത്തിൽ സ്പർശിച്ചാൽ, മാല മൃദുവായി തിളങ്ങുകയും ചെറിയ ഓർമ്മപ്പെടുത്തൽ കാണിക്കുകയും ചെയ്യും. ഇത് ഒരിക്കലും എണ്ണം തടയില്ല.';
+
+  @override
+  String get sadhanaFlowTitle => 'സാധനാ പ്രവാഹം';
+
+  @override
+  String sadhanaFlowA11y(int weeks) {
+    return 'കഴിഞ്ഞ $weeks ആഴ്ചകളിലെ സാധനാ ദിനങ്ങളുടെ കലണ്ടർ';
+  }
+
+  @override
+  String sadhanaFlowYearDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'ഈ വർഷം പവിത്ര സ്മരണയുടെ $count ദിവസങ്ങൾ.',
+      one: 'ഈ വർഷം പവിത്ര സ്മരണയുടെ 1 ദിവസം.',
+      zero: 'ഈ വർഷം നിങ്ങൾ അർപ്പിക്കുന്ന ഓരോ മന്ത്രവും ഇവിടെ തിളങ്ങും.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sadhanaFlowWelcomeBack =>
+      'നിങ്ങളുടെ പവിത്ര ഇടത്തിലേക്ക് സ്വാഗതം. അർപ്പിച്ച ഓരോ മന്ത്രവും ശാശ്വതമാണ്.';
+
+  @override
+  String get sadhanaFlowLess => 'കുറവ്';
+
+  @override
+  String get sadhanaFlowMore => 'കൂടുതൽ';
+
+  @override
+  String get opticalBrightness => 'പ്രകാശം';
+
+  @override
+  String get opticalBrightnessNormal => 'സാധാരണ';
+
+  @override
+  String opticalBrightnessBoost(int percent) {
+    return '+$percent%';
+  }
 }

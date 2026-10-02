@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mantra_japa_counter/core/config/config_service.dart';
 import 'package:mantra_japa_counter/core/flavor/flavor_config.dart';
@@ -43,7 +43,7 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: LocaleConfig.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: AboutScreen(configService: customConfigService),
       ),
@@ -119,11 +119,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         locale: const Locale('sa'),
-        localizationsDelegates: const [
-          FallbackMaterialLocalizationsDelegate(),
-          FallbackCupertinoLocalizationsDelegate(),
-          ...AppLocalizations.localizationsDelegates,
-        ],
+        localizationsDelegates: LocaleConfig.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: AboutScreen(configService: configService),
       ),
@@ -213,7 +209,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         locale: const Locale('ml'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: LocaleConfig.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: AboutScreen(configService: configService),
       ),
@@ -266,11 +262,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         locale: const Locale('sa'),
-        localizationsDelegates: const [
-          FallbackMaterialLocalizationsDelegate(),
-          FallbackCupertinoLocalizationsDelegate(),
-          ...AppLocalizations.localizationsDelegates,
-        ],
+        localizationsDelegates: LocaleConfig.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: AboutScreen(configService: configService),
       ),
@@ -308,11 +300,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         locale: const Locale('sa'),
-        localizationsDelegates: const [
-          FallbackMaterialLocalizationsDelegate(),
-          FallbackCupertinoLocalizationsDelegate(),
-          ...AppLocalizations.localizationsDelegates,
-        ],
+        localizationsDelegates: LocaleConfig.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: AboutScreen(configService: configService),
       ),

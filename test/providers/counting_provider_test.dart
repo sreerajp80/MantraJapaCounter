@@ -78,13 +78,14 @@ void main() {
     }
   });
 
-  ProviderContainer newContainer() {
+  ProviderContainer newContainer({int Function()? clock}) {
     final container = ProviderContainer(
       overrides: [
         databaseProvider.overrideWithValue(db),
         sharedPreferencesProvider.overrideWithValue(prefs),
         notificationServiceProvider.overrideWithValue(_FakeNotifications()),
         soundServiceProvider.overrideWithValue(_FakeSound()),
+        if (clock != null) countingClockProvider.overrideWithValue(clock),
       ],
     );
     // Keep the autoDispose provider alive for the whole test.
@@ -152,5 +153,115 @@ void main() {
     expect(saved, isNotNull);
     expect(saved!.sessionId, rows.single['id']);
     container.dispose();
+  });
+
+  group('Meru pause', () {
+    Future<void> tapTimes(CountingNotifier notifier, int times) async {
+      for (var i = 0; i < times; i++) {
+        await notifier.tap();
+      }
+    }
+
+    test('is off by default: counting rolls into the next mala', () async {
+      final container = newContainer();
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+
+      await tapTimes(notifier, 109);
+
+      final state = container.read(countingNotifierProvider('c1'));
+      expect(state.isMeruPause, isFalse);
+      expect(state.session!.tapCount, 109);
+      await notifier.onPause(); // wait for pending DB writes
+      container.dispose();
+    });
+
+    test('starts after 108 and ignores taps until it ends', () async {
+      await prefs.setBool(AppConstants.prefsMeruPauseKey, true);
+      await prefs.setInt(AppConstants.prefsMeruPauseSecondsKey, 3);
+      final container = newContainer();
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+
+      await tapTimes(notifier, 107);
+      expect(
+        container.read(countingNotifierProvider('c1')).isMeruPause,
+        isFalse,
+      );
+
+      await notifier.tap(); // 108: mala complete
+      var state = container.read(countingNotifierProvider('c1'));
+      expect(state.isMeruPause, isTrue);
+      expect(state.meruPauseSeconds, 3);
+
+      await notifier.tap(); // ignored during the pause
+      expect(
+        container.read(countingNotifierProvider('c1')).session!.tapCount,
+        108,
+      );
+
+      notifier.endMeruPause();
+      await notifier.tap();
+      state = container.read(countingNotifierProvider('c1'));
+      expect(state.isMeruPause, isFalse);
+      expect(state.session!.tapCount, 109);
+      await notifier.onPause(); // wait for pending DB writes
+      container.dispose();
+    });
+
+    test('undo ends the pause', () async {
+      await prefs.setBool(AppConstants.prefsMeruPauseKey, true);
+      final container = newContainer();
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+
+      await tapTimes(notifier, 108);
+      expect(
+        container.read(countingNotifierProvider('c1')).isMeruPause,
+        isTrue,
+      );
+
+      await notifier.decrement();
+      final state = container.read(countingNotifierProvider('c1'));
+      expect(state.isMeruPause, isFalse);
+      expect(state.session!.tapCount, 107);
+      await notifier.onPause(); // wait for pending DB writes
+      container.dispose();
+    });
+  });
+
+  group('Pacing hint', () {
+    Future<CountingState> tapEvery(int gapMs, {int taps = 6}) async {
+      var now = 1000000;
+      final container = newContainer(clock: () => now);
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+      for (var i = 0; i < taps; i++) {
+        await notifier.tap();
+        now += gapMs;
+      }
+      final state = container.read(countingNotifierProvider('c1'));
+      await notifier.onPause(); // wait for pending DB writes
+      container.dispose();
+      return state;
+    }
+
+    test('fast taps turn the hint on and still count every tap', () async {
+      final state = await tapEvery(100);
+      expect(state.isRushing, isTrue);
+      expect(state.session!.tapCount, 6);
+    });
+
+    test('a natural pace does not show the hint', () async {
+      final state = await tapEvery(500);
+      expect(state.isRushing, isFalse);
+    });
+
+    test('no hint when the setting is off', () async {
+      await prefs.setBool(AppConstants.prefsPacingHintKey, false);
+      final state = await tapEvery(100);
+      expect(state.isRushing, isFalse);
+      expect(state.session!.tapCount, 6);
+    });
   });
 }

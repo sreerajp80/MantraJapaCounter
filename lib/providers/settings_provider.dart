@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/models/mala_sound.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
@@ -22,6 +23,9 @@ class AppSettings {
   final String? languageCode;
   final bool dndEnabled;
   final bool dimmedChantingMode;
+  final bool meruPauseEnabled;
+  final int meruPauseSeconds;
+  final bool pacingHintEnabled;
 
   const AppSettings({
     required this.screenBrightness,
@@ -37,6 +41,9 @@ class AppSettings {
     this.languageCode,
     this.dndEnabled = false,
     this.dimmedChantingMode = false,
+    this.meruPauseEnabled = false,
+    this.meruPauseSeconds = AppConstants.meruPauseDefaultSeconds,
+    this.pacingHintEnabled = true,
   });
 
   AppSettings copyWith({
@@ -56,6 +63,9 @@ class AppSettings {
     bool clearLanguageCode = false,
     bool? dndEnabled,
     bool? dimmedChantingMode,
+    bool? meruPauseEnabled,
+    int? meruPauseSeconds,
+    bool? pacingHintEnabled,
   }) {
     return AppSettings(
       screenBrightness: screenBrightness ?? this.screenBrightness,
@@ -85,6 +95,9 @@ class AppSettings {
           : (languageCode ?? this.languageCode),
       dndEnabled: dndEnabled ?? this.dndEnabled,
       dimmedChantingMode: dimmedChantingMode ?? this.dimmedChantingMode,
+      meruPauseEnabled: meruPauseEnabled ?? this.meruPauseEnabled,
+      meruPauseSeconds: meruPauseSeconds ?? this.meruPauseSeconds,
+      pacingHintEnabled: pacingHintEnabled ?? this.pacingHintEnabled,
     );
   }
 }
@@ -117,6 +130,9 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
           languageCode: _repo.languageCode,
           dndEnabled: _repo.dndEnabled,
           dimmedChantingMode: _repo.dimmedChantingMode,
+          meruPauseEnabled: _repo.meruPauseEnabled,
+          meruPauseSeconds: _repo.meruPauseSeconds,
+          pacingHintEnabled: _repo.pacingHintEnabled,
         ),
       ) {
     // Apply the saved brightness from app start.
@@ -198,6 +214,21 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
   Future<void> setDimmedChantingMode(bool value) async {
     await _repo.setDimmedChantingMode(value);
     state = state.copyWith(dimmedChantingMode: value);
+  }
+
+  Future<void> setMeruPauseEnabled(bool value) async {
+    await _repo.setMeruPauseEnabled(value);
+    state = state.copyWith(meruPauseEnabled: value);
+  }
+
+  Future<void> setMeruPauseSeconds(int value) async {
+    await _repo.setMeruPauseSeconds(value);
+    state = state.copyWith(meruPauseSeconds: value);
+  }
+
+  Future<void> setPacingHintEnabled(bool value) async {
+    await _repo.setPacingHintEnabled(value);
+    state = state.copyWith(pacingHintEnabled: value);
   }
 }
 

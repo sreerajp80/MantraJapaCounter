@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/screens/help/help_widgets.dart';
@@ -71,6 +71,22 @@ class CountingHelpScreen extends StatelessWidget {
                       HelpBullet(
                         l.helpCountingTimerBullet2,
                         boldPrefix: l.helpCountingTimerBold2,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+
+                  HelpSection(
+                    icon: Icons.spa_outlined,
+                    title: l.helpCountingMindfulSection,
+                    children: [
+                      HelpBullet(
+                        l.helpCountingMeruBullet,
+                        boldPrefix: l.helpCountingMeruBold,
+                      ),
+                      HelpBullet(
+                        l.helpCountingPacingBullet,
+                        boldPrefix: l.helpCountingPacingBold,
                       ),
                     ],
                   ),

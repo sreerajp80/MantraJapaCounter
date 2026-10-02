@@ -2,12 +2,15 @@ import java.io.File
 import java.io.FileInputStream
 import java.time.LocalDate
 import java.util.Properties
+import javax.inject.Inject
 import org.gradle.api.GradleException
+import org.gradle.process.ExecOperations
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    // Kotlin is applied by the Flutter Gradle plugin while android.builtInKotlin=false
+    // (matches the Flutter 3.47 app template).
     id("dev.flutter.flutter-gradle-plugin")
 }
 
@@ -33,6 +36,11 @@ val dartExecutable = File(
 )
 val projectRootDir = rootProject.projectDir.parentFile
 
+// Gradle 9 removed project.exec; ExecOperations is the supported replacement.
+interface InjectedExecOps {
+    @get:Inject val execOps: ExecOperations
+}
+
 val generateBuildMetadata = tasks.register("generateBuildMetadata") {
     group = "build setup"
     description = "Generates About-screen build metadata before Android builds."
@@ -44,6 +52,8 @@ val generateBuildMetadata = tasks.register("generateBuildMetadata") {
     outputs.file(projectRootDir.resolve("lib/core/utils/app_version.g.dart"))
     outputs.file(projectRootDir.resolve("lib/core/utils/build_date.g.dart"))
 
+    val injected = project.objects.newInstance<InjectedExecOps>()
+
     doLast {
         if (!dartExecutable.exists()) {
             throw GradleException(
@@ -52,11 +62,11 @@ val generateBuildMetadata = tasks.register("generateBuildMetadata") {
             )
         }
 
-        project.exec {
+        injected.execOps.exec {
             workingDir = projectRootDir
             commandLine(dartExecutable.absolutePath, "run", "tool/generate_app_version.dart")
         }
-        project.exec {
+        injected.execOps.exec {
             workingDir = projectRootDir
             commandLine(dartExecutable.absolutePath, "run", "tool/generate_build_date.dart")
         }

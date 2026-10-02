@@ -583,5 +583,29 @@
   "opticalScanTip": "केन्द्रीकरणाय सङ्केतं स्पृशतु। अस्पष्टं दृश्यते चेत् विस्तारं प्रयुङ्क्ताम्।",
   "@opticalScanTip": {
     "description": "Hint shown over the camera in the Optical Sync receiver"
-  }
+  },
+  "meruPauseTitle": "विरमतु · श्वसितु",
+  "meruPauseMessage": "मेरुमणिः प्राप्तः। प्रशान्त्यां विश्राम्यतु।",
+  "pacingHintMessage": "शनैः शनैः, श्वसितु, मन्त्रम् अनुभवतु।",
+  "sectionMindfulCounting": "सावधानगणनम्",
+  "sectionMindfulCountingSub": "अत्वरितजपाय मृदुसाहाय्यम्",
+  "meruPauseSettingTitle": "प्रतिमालान्ते मेरुविरामः",
+  "meruPauseSettingSub": "अष्टोत्तरशतान्ते लघुः शान्तः विरामः। विरामकाले स्पर्शाः न गण्यन्ते।",
+  "secondsShort": "{seconds} क्ष",
+  "pacingHintSettingTitle": "मृदुगतिसूचना",
+  "pacingHintSettingSub": "अतिशीघ्रस्पर्शे मृदुप्रकाशः। सर्वे स्पर्शाः गण्यन्ते एव।",
+  "helpCountingMindfulSection": "सावधानगणनम्",
+  "helpCountingMeruBold": "मेरुविरामः",
+  "helpCountingMeruBullet": "विन्यासेषु → प्रदर्शने सक्रियं कृते, प्रतिमालान्ते अनुप्रयोगः कतिचन क्षणान् विरमति। मेरुमणिः यथा न लङ्घ्यते, तथा विरामकाले स्पर्शाः न गण्यन्ते।",
+  "helpCountingPacingBold": "गतिसूचना",
+  "helpCountingPacingBullet": "प्रतिक्षणं प्रायः त्रिवारात् अधिकं शीघ्रं स्पृश्यते चेत्, माला मृदु प्रकाशते, लघुस्मरणं च दृश्यते। इदं गणनां कदापि न निरुणद्धि।",
+  "sadhanaFlowTitle": "साधनाप्रवाहः",
+  "sadhanaFlowA11y": "गतेषु {weeks} सप्ताहेषु साधनादिनानां पञ्चाङ्गम्",
+  "sadhanaFlowYearDays": "{count, plural, =0{अस्मिन् वर्षे अर्पितः प्रत्येकः मन्त्रः अत्र प्रकाशिष्यते।} =1{अस्मिन् वर्षे पवित्रस्मरणस्य 1 दिनम्।} other{अस्मिन् वर्षे पवित्रस्मरणस्य {count} दिनानि।}}",
+  "sadhanaFlowWelcomeBack": "भवतः पवित्रस्थानं प्रति पुनः स्वागतम्। अर्पितः प्रत्येकः मन्त्रः शाश्वतः।",
+  "sadhanaFlowLess": "अल्पम्",
+  "sadhanaFlowMore": "अधिकम्",
+  "opticalBrightness": "प्रकाशः",
+  "opticalBrightnessNormal": "सामान्यम्",
+  "opticalBrightnessBoost": "+{percent}%"
 }

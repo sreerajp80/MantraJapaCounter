@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mantra_japa_counter/core/config/app_config.dart';
 import 'package:mantra_japa_counter/core/config/config_service.dart';
 import 'package:mantra_japa_counter/core/flavor/flavor_config.dart';

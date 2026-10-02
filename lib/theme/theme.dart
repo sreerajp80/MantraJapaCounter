@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Temple theme — light, devotional palette inspired by South Indian temples.
 /// Cream background, vermillion accents, sandal yellow highlights, tulsi green

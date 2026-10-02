@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:mantra_japa_counter/core/locale/locale_config.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/screens/help/help_home_screen.dart';
 import 'package:mantra_japa_counter/screens/help/counting_help_screen.dart';
@@ -20,7 +21,7 @@ void main() {
 
     await tester.pumpWidget(
       const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: LocaleConfig.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: HelpHomeScreen(),
       ),
@@ -46,7 +47,7 @@ void main() {
 
     await tester.pumpWidget(
       const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: LocaleConfig.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: CountingHelpScreen(),
       ),
@@ -67,7 +68,7 @@ void main() {
 
     await tester.pumpWidget(
       const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: LocaleConfig.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: MalaMathHelpScreen(),
       ),
@@ -89,7 +90,7 @@ void main() {
 
     await tester.pumpWidget(
       const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: LocaleConfig.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: OpticalSyncHelpScreen(),
       ),
@@ -109,7 +110,7 @@ void main() {
 
     await tester.pumpWidget(
       const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: LocaleConfig.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: SoundHapticsHelpScreen(),
       ),
@@ -128,7 +129,7 @@ void main() {
 
     await tester.pumpWidget(
       const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: LocaleConfig.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: BackupHelpScreen(),
       ),
@@ -149,7 +150,7 @@ void main() {
 
     await tester.pumpWidget(
       const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: LocaleConfig.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: PrivacyOfflineHelpScreen(),
       ),
@@ -168,7 +169,7 @@ void main() {
 
     await tester.pumpWidget(
       const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: LocaleConfig.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: FaqHelpScreen(),
       ),

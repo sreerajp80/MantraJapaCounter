@@ -1,5 +1,5 @@
 import 'dart:math' as math;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
 
 /// Circular mala (108-bead rosary) visualization. Beads are drawn around a
