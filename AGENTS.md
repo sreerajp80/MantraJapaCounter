@@ -69,16 +69,19 @@ flutter analyze                        # static analysis (must be clean)
 flutter test                           # run all unit tests
 dart format .                          # format code
 
-# Replace <version> with the pubspec.yaml version (e.g. 6.13.5), so each
-# release keeps its own debug symbols.
-
-# Production release APK (split per ABI)
+# Production release APK (split per ABI). Replace <version> with the
+# pubspec.yaml version without the build number (e.g. 6.13.6).
 flutter build apk --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-v<version>/ --split-per-abi
+  --obfuscate --split-debug-info=build/symbols/android-prod-<version>/ --split-per-abi
+```
 
-# Production Play Store bundle
-flutter build appbundle --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-v<version>/
+Production Play Store bundle — **use this command for Google Play uploads** (Windows
+PowerShell). It reads the version from `pubspec.yaml`, so each release keeps its own debug
+symbols folder (e.g. `build/symbols/android-prod-6.13.6/`):
+
+```powershell
+$version = ((Select-String -Path pubspec.yaml -Pattern '^version:\s*(.+)$').Matches[0].Groups[1].Value -split '\+')[0]
+flutter build appbundle --flavor prod --release --obfuscate "--split-debug-info=build/symbols/android-prod-$version/"
 ```
 
 ---

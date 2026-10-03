@@ -253,6 +253,14 @@ flutter build apk --flavor prod --release \
   --analyze-size
 ```
 
+**App Bundle for Google Play on Windows (PowerShell) — this is the command used for Play
+uploads.** It gives the same result as the bash App Bundle command above:
+
+```powershell
+$version = ((Select-String -Path pubspec.yaml -Pattern '^version:\s*(.+)$').Matches[0].Groups[1].Value -split '\+')[0]
+flutter build appbundle --flavor prod --release --obfuscate "--split-debug-info=build/symbols/android-prod-$version/"
+```
+
 ---
 
 ## 10. iOS Release Steps

@@ -162,22 +162,27 @@ build date.
 Production builds **must** use `--release`, `--obfuscate`, and `--split-debug-info`. Leaving
 any of them out ships an unhardened, easily reverse-engineered artifact.
 
-Replace `<version>` below with the version in `pubspec.yaml` (for example `6.13.5`).
-
 ### Split APKs (direct install / sideloading)
+
+Replace `<version>` with the version in `pubspec.yaml`, without the build number (for example
+`6.13.6`).
 
 ```bash
 flutter build apk --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-v<version>/ --split-per-abi
+  --obfuscate --split-debug-info=build/symbols/android-prod-<version>/ --split-per-abi
 ```
 
 Output: `build/app/outputs/apk/prod/release/app-arm64-v8a-prod-release.apk` and friends.
 
 ### App Bundle (Google Play)
 
-```bash
-flutter build appbundle --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-v<version>/
+Use this command for Google Play uploads (Windows PowerShell). It reads the version from
+`pubspec.yaml`, so each release keeps its own debug symbols folder (for example
+`build/symbols/android-prod-6.13.6/`).
+
+```powershell
+$version = ((Select-String -Path pubspec.yaml -Pattern '^version:\s*(.+)$').Matches[0].Groups[1].Value -split '\+')[0]
+flutter build appbundle --flavor prod --release --obfuscate "--split-debug-info=build/symbols/android-prod-$version/"
 ```
 
 Output: `build/app/outputs/bundle/prodRelease/app-prod-release.aab`.
