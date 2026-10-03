@@ -1,7 +1,7 @@
 name: mantra_japa_counter
 description: SreerajP MantraJapa Counter — track your mantra recitation practice.
 publish_to: 'none'
-version: 6.13.4+35
+version: 6.13.6+37
 
 environment:
   sdk: ^3.13.0

@@ -200,8 +200,12 @@ Not in scope for this release.
 |------------|------------------|----------------|-----------------|
 | `VIBRATE` | Vibration feedback on mala completion and daily goal achievement | Declared in manifest; no runtime request | Notifications sent without vibration |
 | `POST_NOTIFICATIONS` | Show local notifications on Android 13+ (API 33+) | First time user enables notifications in Settings screen | Notifications silently disabled; user informed in Settings |
-| `READ_MEDIA_AUDIO` | User picks a custom notification tone from device storage (Android 13+) | When user taps "Choose custom tone" in Settings | Default system tone used instead; feature gracefully unavailable |
-| `READ_EXTERNAL_STORAGE` | User picks a custom notification tone from device storage (Android ≤12) | When user taps "Choose custom tone" in Settings on Android ≤12 | Default system tone used instead; feature gracefully unavailable |
+| `CAMERA` | Optical Sync receive: read QR codes from live camera frames. Frames are decoded on the device by ZXing and thrown away; nothing is saved or sent | When the user starts a camera receive in Optical Sync | Camera receive shows a "permission denied" message; the rest of the app works normally |
+| `ACCESS_NOTIFICATION_POLICY` | Optional Do Not Disturb while chanting | When the user turns on "Silence notifications (Do Not Disturb)" in Settings; Android opens its own settings page | Chanting works as normal, without silencing alerts |
+
+The custom tone picker uses the system file picker, which needs no storage permission.
+`READ_EXTERNAL_STORAGE`, `WRITE_EXTERNAL_STORAGE` and `RECORD_AUDIO` are removed from the merged
+manifest with `tools:node="remove"`.
 
 Permission review rules:
 
@@ -213,7 +217,8 @@ Permission review rules:
   QR scanning uses the `camera` plugin plus ZXing core (`com.google.zxing:core`) instead of ML Kit.
 - The merged release manifest must also contain no `mlkit`, `datatransport` or `firebase` entries.
 - No dangerous permissions are requested at app startup; all requested at point of use with a clear rationale.
-- The app functions fully without `POST_NOTIFICATIONS`, `READ_MEDIA_AUDIO`, and `READ_EXTERNAL_STORAGE`; these control optional features only.
+- The app functions fully without `POST_NOTIFICATIONS`, `CAMERA`, and `ACCESS_NOTIFICATION_POLICY`; these control optional features only.
+- Any change to the permission list must also update [PRIVACY_POLICY.md](../PRIVACY_POLICY.md) and the Play Console Data safety form.
 
 ---
 

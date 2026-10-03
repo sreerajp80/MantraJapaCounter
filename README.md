@@ -162,13 +162,13 @@ build date.
 Production builds **must** use `--release`, `--obfuscate`, and `--split-debug-info`. Leaving
 any of them out ships an unhardened, easily reverse-engineered artifact.
 
-Replace `v6.12.2` below with the version in `pubspec.yaml`.
+Replace `<version>` below with the version in `pubspec.yaml` (for example `6.13.5`).
 
 ### Split APKs (direct install / sideloading)
 
 ```bash
 flutter build apk --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-v6.12.2/ --split-per-abi
+  --obfuscate --split-debug-info=build/symbols/android-prod-v<version>/ --split-per-abi
 ```
 
 Output: `build/app/outputs/apk/prod/release/app-arm64-v8a-prod-release.apk` and friends.
@@ -177,7 +177,7 @@ Output: `build/app/outputs/apk/prod/release/app-arm64-v8a-prod-release.apk` and 
 
 ```bash
 flutter build appbundle --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-v6.12.2/
+  --obfuscate --split-debug-info=build/symbols/android-prod-v<version>/
 ```
 
 Output: `build/app/outputs/bundle/prodRelease/app-prod-release.aab`.
@@ -276,6 +276,12 @@ personal details. See [docs/workflow_rules.md](docs/workflow_rules.md).
 
 ---
 
-## 11. License
+## 11. Privacy
+
+The app collects no data. See the [Privacy Policy](PRIVACY_POLICY.md).
+
+---
+
+## 12. License
 
 See [LICENSE](LICENSE).

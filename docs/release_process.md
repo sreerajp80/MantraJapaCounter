@@ -179,7 +179,9 @@ Complete these items before every release.
 - [ ] INTERNET permission confirmed absent from merged release manifest.
 - [ ] No `mlkit`, `datatransport` or `firebase` entries in the merged release manifest
       (`build/app/intermediates/merged_manifest/prodRelease/processProdReleaseMainManifest/AndroidManifest.xml`).
-- [ ] Permissions in manifest reviewed — only VIBRATE, POST_NOTIFICATIONS (Android 13+), READ_MEDIA_AUDIO (Android 13+), READ_EXTERNAL_STORAGE (maxSdkVersion=32).
+- [ ] Permissions in manifest reviewed — only VIBRATE, CAMERA, POST_NOTIFICATIONS (Android 13+) and
+      ACCESS_NOTIFICATION_POLICY. No storage permissions (READ_EXTERNAL_STORAGE,
+      WRITE_EXTERNAL_STORAGE, READ_MEDIA_AUDIO) and no RECORD_AUDIO.
 - [ ] Security checklist in `docs/security.md` section 18 completed.
 
 ### Product And Documentation
@@ -187,6 +189,8 @@ Complete these items before every release.
 - [ ] Version in `pubspec.yaml` updated (`version: X.Y.Z+N`).
 - [ ] `CHANGELOG.md` updated with user-visible changes.
 - [ ] Play Store listing metadata reviewed (description, screenshots, feature graphic if changed).
+- [ ] Privacy policy URL in Play Console opens without login, and
+      [PRIVACY_POLICY.md](../PRIVACY_POLICY.md) matches the current permissions and features.
 - [ ] Tablets and Chromebooks are excluded in Play Console → Device catalog (the app is portrait-only, phone-only).
 - [ ] Before raising `targetSdk` to 37: handle landscape on large screens. The Android 16 portrait-lock opt-out (`PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY`) is ignored from API 37.
 
