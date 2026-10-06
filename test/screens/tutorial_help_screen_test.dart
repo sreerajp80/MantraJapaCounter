@@ -5,7 +5,7 @@ import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/screens/help/tutorial_help_screen.dart';
 
 void main() {
-  testWidgets('TutorialHelpScreen renders all 7 steps with advice', (
+  testWidgets('TutorialHelpScreen shows chapters and all 30 steps', (
     tester,
   ) async {
     tester.view.physicalSize = const Size(1080, 2400);
@@ -23,20 +23,24 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('App Tutorial'), findsNWidgets(2));
+    expect(find.text('Getting started'), findsOneWidget);
     expect(find.text('01'), findsOneWidget);
-    expect(find.text('02'), findsOneWidget);
-    expect(find.text('03'), findsOneWidget);
-    expect(find.text('04'), findsOneWidget);
-    expect(find.text('05'), findsOneWidget);
-    expect(find.text('06'), findsOneWidget);
-    expect(find.text('07'), findsOneWidget);
+    expect(find.text('Welcome'), findsOneWidget);
 
-    expect(find.text('1. Create Your First Counter'), findsOneWidget);
-    expect(find.text('2. Sacred Fullscreen Counting'), findsOneWidget);
-    expect(find.text('3. 108 Beads Mala System'), findsOneWidget);
-    expect(find.text('4. Daily & Lifetime Milestones'), findsOneWidget);
-    expect(find.text('5. Locking & Archiving'), findsOneWidget);
-    expect(find.text('6. Air-Gapped Optical QR Sync'), findsOneWidget);
-    expect(find.text('7. Encrypted Backups'), findsOneWidget);
+    final list = find.byType(Scrollable).first;
+    for (final text in [
+      'Your counters',
+      'Lock a counter',
+      'Undo a count',
+      'Meru pause',
+      'Sadhana Flow',
+      'Restore from a file',
+      'Privacy',
+      '30',
+      'Permissions',
+    ]) {
+      await tester.scrollUntilVisible(find.text(text), 300, scrollable: list);
+      expect(find.text(text), findsOneWidget);
+    }
   });
 }

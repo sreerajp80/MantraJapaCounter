@@ -23,7 +23,21 @@ class BackupHelpScreen extends StatelessWidget {
                 children: [
                   HelpIntroCard(l.helpBackupIntro),
                   const SizedBox(height: 20),
-
+                  HelpSection(
+                    icon: Icons.place_outlined,
+                    title: l.helpBackupWhereSection,
+                    children: [
+                      HelpBullet(
+                        l.helpBackupWhereBullet1,
+                        boldPrefix: l.helpBackupWhereBold1,
+                      ),
+                      HelpBullet(
+                        l.helpBackupWhereBullet2,
+                        boldPrefix: l.helpBackupWhereBold2,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
                   HelpSection(
                     icon: Icons.upload_file_outlined,
                     title: l.helpBackupExportSection,
@@ -40,12 +54,15 @@ class BackupHelpScreen extends StatelessWidget {
                         l.helpBackupExportBullet3,
                         boldPrefix: l.helpBackupExportBold3,
                       ),
+                      HelpBullet(
+                        l.helpBackupExportBullet4,
+                        boldPrefix: l.helpBackupExportBold4,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
-
                   HelpSection(
-                    icon: Icons.download_for_offline_outlined,
+                    icon: Icons.restore_outlined,
                     title: l.helpBackupImportSection,
                     children: [
                       HelpBullet(
@@ -59,6 +76,25 @@ class BackupHelpScreen extends StatelessWidget {
                       HelpBullet(
                         l.helpBackupImportBullet3,
                         boldPrefix: l.helpBackupImportBold3,
+                      ),
+                      HelpBullet(
+                        l.helpBackupImportBullet4,
+                        boldPrefix: l.helpBackupImportBold4,
+                      ),
+                      HelpBullet(
+                        l.helpBackupImportBullet5,
+                        boldPrefix: l.helpBackupImportBold5,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  HelpSection(
+                    icon: Icons.delete_forever_outlined,
+                    title: l.helpBackupClearSection,
+                    children: [
+                      HelpBullet(
+                        l.helpBackupClearBullet1,
+                        boldPrefix: l.helpBackupClearBold1,
                       ),
                     ],
                   ),

@@ -23,7 +23,6 @@ class PrivacyOfflineHelpScreen extends StatelessWidget {
                 children: [
                   HelpIntroCard(l.helpPrivacyIntro),
                   const SizedBox(height: 20),
-
                   HelpSection(
                     icon: Icons.wifi_off_outlined,
                     title: l.helpPrivacyOfflineSection,
@@ -43,7 +42,6 @@ class PrivacyOfflineHelpScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-
                   HelpSection(
                     icon: Icons.storage_outlined,
                     title: l.helpPrivacyStorageSection,
@@ -55,6 +53,41 @@ class PrivacyOfflineHelpScreen extends StatelessWidget {
                       HelpBullet(
                         l.helpPrivacyStorageBullet2,
                         boldPrefix: l.helpPrivacyStorageBold2,
+                      ),
+                      HelpBullet(
+                        l.helpPrivacyStorageBullet3,
+                        boldPrefix: l.helpPrivacyStorageBold3,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  HelpSection(
+                    icon: Icons.verified_user_outlined,
+                    title: l.helpPrivacyPermsSection,
+                    children: [
+                      HelpBullet(
+                        l.helpPrivacyPermsBullet1,
+                        boldPrefix: l.helpPrivacyPermsBold1,
+                      ),
+                      HelpBullet(
+                        l.helpPrivacyPermsBullet2,
+                        boldPrefix: l.helpPrivacyPermsBold2,
+                      ),
+                      HelpBullet(
+                        l.helpPrivacyPermsBullet3,
+                        boldPrefix: l.helpPrivacyPermsBold3,
+                      ),
+                      HelpBullet(
+                        l.helpPrivacyPermsBullet4,
+                        boldPrefix: l.helpPrivacyPermsBold4,
+                      ),
+                      HelpBullet(
+                        l.helpPrivacyPermsBullet5,
+                        boldPrefix: l.helpPrivacyPermsBold5,
+                      ),
+                      HelpBullet(
+                        l.helpPrivacyPermsBullet6,
+                        boldPrefix: l.helpPrivacyPermsBold6,
                       ),
                     ],
                   ),

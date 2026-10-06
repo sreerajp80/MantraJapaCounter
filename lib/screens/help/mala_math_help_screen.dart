@@ -23,7 +23,6 @@ class MalaMathHelpScreen extends StatelessWidget {
                 children: [
                   HelpIntroCard(l.helpMalaIntro),
                   const SizedBox(height: 20),
-
                   HelpSection(
                     icon: Icons.lens_blur_outlined,
                     title: l.helpMalaBeadsSection,
@@ -40,10 +39,13 @@ class MalaMathHelpScreen extends StatelessWidget {
                         l.helpMalaBeadsBullet3,
                         boldPrefix: l.helpMalaBeadsBold3,
                       ),
+                      HelpBullet(
+                        l.helpMalaBeadsBullet4,
+                        boldPrefix: l.helpMalaBeadsBold4,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
-
                   HelpSection(
                     icon: Icons.flag_outlined,
                     title: l.helpMalaGoalsSection,
@@ -55,6 +57,33 @@ class MalaMathHelpScreen extends StatelessWidget {
                       HelpBullet(
                         l.helpMalaGoalsBullet2,
                         boldPrefix: l.helpMalaGoalsBold2,
+                      ),
+                      HelpBullet(
+                        l.helpMalaGoalsBullet3,
+                        boldPrefix: l.helpMalaGoalsBold3,
+                      ),
+                      HelpBullet(
+                        l.helpMalaGoalsBullet4,
+                        boldPrefix: l.helpMalaGoalsBold4,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  HelpSection(
+                    icon: Icons.style_outlined,
+                    title: l.helpMalaCardSection,
+                    children: [
+                      HelpBullet(
+                        l.helpMalaCardBullet1,
+                        boldPrefix: l.helpMalaCardBold1,
+                      ),
+                      HelpBullet(
+                        l.helpMalaCardBullet2,
+                        boldPrefix: l.helpMalaCardBold2,
+                      ),
+                      HelpBullet(
+                        l.helpMalaCardBullet3,
+                        boldPrefix: l.helpMalaCardBold3,
                       ),
                     ],
                   ),

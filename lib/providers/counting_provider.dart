@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:uuid/uuid.dart';
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
+import 'package:mantra_japa_counter/core/utils/day.dart';
 import 'package:mantra_japa_counter/models/active_session.dart';
 import 'package:mantra_japa_counter/models/japa_session.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
@@ -46,6 +47,11 @@ class CountingState {
   /// hint — counting is never blocked.
   final bool isRushing;
 
+  /// True when the screen opened on an unfinished mala whose taps were made
+  /// on an earlier day, and no tap has been made yet. Drives the
+  /// "Start new" banner.
+  final bool resumedFromEarlierDay;
+
   const CountingState({
     this.session,
     this.lifetimeTotal = 0,
@@ -55,6 +61,7 @@ class CountingState {
     this.isMeruPause = false,
     this.meruPauseSeconds = AppConstants.meruPauseDefaultSeconds,
     this.isRushing = false,
+    this.resumedFromEarlierDay = false,
   });
 
   /// Unflushed taps in the current session — the delta still in memory.
@@ -79,6 +86,7 @@ class CountingState {
     bool? isMeruPause,
     int? meruPauseSeconds,
     bool? isRushing,
+    bool? resumedFromEarlierDay,
   }) {
     return CountingState(
       session: session ?? this.session,
@@ -89,6 +97,8 @@ class CountingState {
       isMeruPause: isMeruPause ?? this.isMeruPause,
       meruPauseSeconds: meruPauseSeconds ?? this.meruPauseSeconds,
       isRushing: isRushing ?? this.isRushing,
+      resumedFromEarlierDay:
+          resumedFromEarlierDay ?? this.resumedFromEarlierDay,
     );
   }
 }
@@ -149,14 +159,19 @@ class CountingNotifier extends StateNotifier<CountingState> {
     final saved = settings.getActiveSession(_counterId);
 
     ActiveSession session;
+    var resumedFromEarlierDay = false;
     if (saved != null && saved.counterId == _counterId) {
       // Resume the abandoned/paused session for this counter.
       session = saved;
       _sessionDbId = saved.sessionId;
+      // The DB row holds only this row's part of the session; taps carried
+      // from earlier-day rows are already stored there.
+      final rowCount = saved.rowCount;
+      _lastDbWrittenCount = saved.carriedCount;
       final existing = _sessionDbId == null
           ? null
           : await repo.getSessionById(_sessionDbId!);
-      if (existing == null && saved.tapCount > 0) {
+      if (existing == null && rowCount > 0) {
         // Prefs had taps but no DB row — write it now to recover.
         final id = _sessionDbId ?? _uuid.v4();
         _sessionDbId = id;
@@ -165,32 +180,34 @@ class CountingNotifier extends StateNotifier<CountingState> {
             id: id,
             counterId: counter.id,
             counterName: counter.name,
-            count: saved.tapCount,
-            malas: saved.tapCount ~/ 108,
-            chants: saved.tapCount % 108,
+            count: rowCount,
+            malas: rowCount ~/ 108,
+            chants: rowCount % 108,
             timestamp: saved.startTime,
-            duration: saved.duration,
+            duration: saved.rowDuration,
           ),
         );
         _isSessionInDb = true;
         _lastDbWrittenCount = saved.tapCount;
       } else if (existing != null) {
         _isSessionInDb = true;
-        if (saved.tapCount > existing.count) {
+        if (rowCount > existing.count) {
           // Prefs had more recent data — update DB.
           await repo.updateSession(
             existing.copyWith(
-              count: saved.tapCount,
-              malas: saved.tapCount ~/ 108,
-              chants: saved.tapCount % 108,
-              duration: saved.duration,
+              count: rowCount,
+              malas: rowCount ~/ 108,
+              chants: rowCount % 108,
+              duration: saved.rowDuration,
             ),
           );
           _lastDbWrittenCount = saved.tapCount;
         } else {
-          _lastDbWrittenCount = existing.count;
+          _lastDbWrittenCount = existing.count + saved.carriedCount;
         }
       }
+      resumedFromEarlierDay =
+          saved.tapCount > 0 && _isOnEarlierDay(saved.startTime);
     } else {
       // Fresh session — no DB row yet (Kotlin inserts on first tap).
       session = _startFreshSession(
@@ -203,6 +220,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
     state = CountingState(
       session: session,
       lastDbWrittenCount: _lastDbWrittenCount,
+      resumedFromEarlierDay: resumedFromEarlierDay,
     );
     await _refreshTotals(counter.initialCount);
 
@@ -282,20 +300,27 @@ class CountingNotifier extends StateNotifier<CountingState> {
   // ───────────────────────────── tap / decrement ──────────────────────────
 
   Future<void> tap() async {
-    final session = state.session;
+    var session = state.session;
     if (session == null) return;
     // The Meru bead is not crossed: taps during the pause are not counted.
     if (state.isMeruPause) return;
 
+    if (_isOnEarlierDay(session.startTime)) {
+      // A new day: today's taps go into a new row dated today.
+      await _startNewDayRow(session);
+      session = state.session;
+      if (session == null) return;
+    }
+
     final resumed = _resumeIfPaused(session);
-    final wasZero = resumed.tapCount == 0;
+    final isFirstRowTap = !_isSessionInDb;
     final updated = resumed.copyWith(
       tapCount: resumed.tapCount + resumed.incrementStep,
     );
-    state = state.copyWith(session: updated);
+    state = state.copyWith(session: updated, resumedFromEarlierDay: false);
 
-    if (wasZero) {
-      // First tap of this session — insert into DB immediately for data safety.
+    if (isFirstRowTap) {
+      // First tap of this row — insert into DB immediately for data safety.
       await _insertSessionRow(updated);
       await _writePrefsImmediately(updated);
     } else {
@@ -377,7 +402,9 @@ class CountingNotifier extends StateNotifier<CountingState> {
   Future<void> decrement() async {
     final session = state.session;
     if (session == null) return;
-    if (session.tapCount < session.incrementStep) return;
+    // Taps already stored on an earlier day cannot be undone.
+    if (session.rowCount < session.incrementStep) return;
+    if (_isOnEarlierDay(session.startTime)) return;
 
     // Undo also ends a Meru pause.
     endMeruPause();
@@ -387,7 +414,17 @@ class CountingNotifier extends StateNotifier<CountingState> {
     final updated = resumed.copyWith(tapCount: newCount);
     state = state.copyWith(session: updated);
 
-    if (newCount <= 0) {
+    if (newCount > 0 && updated.rowCount <= 0) {
+      // Undid all of today's taps of a carried-over mala. Drop today's row
+      // but keep the session, so the unfinished mala stays.
+      _dbDebounce?.cancel();
+      await _deleteCurrentDbRow();
+      _isSessionInDb = false;
+      _lastDbWrittenCount = updated.tapCount;
+      _tapsSinceLastDbFlush = 0;
+      await _writePrefsImmediately(updated);
+      await _refreshTotalsFromCounter();
+    } else if (newCount <= 0) {
       // Reached zero — cancel session (delete DB row, clear prefs), then
       // start a fresh one. The fresh session's id is used for both the
       // prefs entry and the DB row, so recovery can never create a second
@@ -420,6 +457,62 @@ class CountingNotifier extends StateNotifier<CountingState> {
     );
   }
 
+  bool _isOnEarlierDay(int ms) =>
+      isEarlierLocalDay(ms, _ref.read(countingClockProvider)());
+
+  /// Moves the session onto a new row dated today. The current row keeps
+  /// the taps made on its own day (unsaved ones are written first); the
+  /// mala itself carries on, so [ActiveSession.tapCount] is unchanged.
+  Future<void> _startNewDayRow(ActiveSession session) async {
+    final oldId = _sessionDbId;
+    final oldInDb = _isSessionInDb;
+    final oldUnsaved = session.tapCount != _lastDbWrittenCount;
+
+    // Switch to the new row before any await, so a second tap arriving
+    // meanwhile does not split again.
+    final now = _ref.read(countingClockProvider)();
+    final next = session.copyWith(
+      sessionId: _uuid.v4(),
+      startTime: now,
+      carriedCount: session.tapCount,
+      carriedDurationMs: session.duration,
+    );
+    _dbDebounce?.cancel();
+    _sessionDbId = next.sessionId;
+    _isSessionInDb = false;
+    _lastDbWrittenCount = session.tapCount;
+    _tapsSinceLastDbFlush = 0;
+    state = state.copyWith(
+      session: next,
+      lastDbWrittenCount: _lastDbWrittenCount,
+      resumedFromEarlierDay: false,
+    );
+
+    final repo = _ref.read(japaCounterRepositoryProvider);
+    final oldCount = session.rowCount;
+    if (oldId != null && oldCount > 0 && (oldUnsaved || !oldInDb)) {
+      final existing = oldInDb ? await repo.getSessionById(oldId) : null;
+      final row = JapaSession(
+        id: oldId,
+        counterId: session.counterId,
+        counterName: session.counterName,
+        count: oldCount,
+        malas: oldCount ~/ 108,
+        chants: oldCount % 108,
+        timestamp: existing?.timestamp ?? session.startTime,
+        duration: session.rowDuration,
+      );
+      if (existing != null) {
+        await repo.updateSession(row);
+      } else {
+        await repo.insertSession(row);
+      }
+    }
+    await _writePrefsImmediately(state.session ?? next);
+    // "Today" has moved on — reload the daily total.
+    await _refreshTotalsFromCounter();
+  }
+
   // ───────────────────────────── DB write helpers ─────────────────────────
 
   Future<void> _insertSessionRow(ActiveSession session) async {
@@ -427,15 +520,18 @@ class CountingNotifier extends StateNotifier<CountingState> {
     // Use the session's own id so the prefs entry and the DB row match.
     final id = _sessionDbId ?? session.sessionId;
     _sessionDbId = id;
+    // Never store an empty row (e.g. a late batch write after undo).
+    final rowCount = session.rowCount;
+    if (rowCount <= 0) return;
     final row = JapaSession(
       id: id,
       counterId: session.counterId,
       counterName: session.counterName,
-      count: session.tapCount,
-      malas: session.tapCount ~/ 108,
-      chants: session.tapCount % 108,
+      count: rowCount,
+      malas: rowCount ~/ 108,
+      chants: rowCount % 108,
       timestamp: session.startTime,
-      duration: session.duration,
+      duration: session.rowDuration,
     );
     await repo.insertSession(row);
     _isSessionInDb = true;
@@ -462,11 +558,11 @@ class CountingNotifier extends StateNotifier<CountingState> {
         id: existing.id,
         counterId: existing.counterId,
         counterName: existing.counterName,
-        count: session.tapCount,
-        malas: session.tapCount ~/ 108,
-        chants: session.tapCount % 108,
+        count: session.rowCount,
+        malas: session.rowCount ~/ 108,
+        chants: session.rowCount % 108,
         timestamp: existing.timestamp,
-        duration: session.duration,
+        duration: session.rowDuration,
       ),
     );
     _lastDbWrittenCount = session.tapCount;
@@ -495,7 +591,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
 
   Future<void> _flushDbIfNeeded() async {
     final session = state.session;
-    if (session == null || session.tapCount == 0) return;
+    if (session == null || session.rowCount <= 0) return;
     if (_tapsSinceLastDbFlush == 0 || session.tapCount == _lastDbWrittenCount) {
       return;
     }
@@ -546,9 +642,8 @@ class CountingNotifier extends StateNotifier<CountingState> {
   /// pause it so the next visit to this counter resumes the same session.
   /// Otherwise finalize and clear crash-recovery prefs.
   ///
-  /// Special case: when the user has a sub-mala daily goal (e.g. 50 chants)
-  /// and has already met it today, finishing mid-mala is the natural stop
-  /// point — don't pause, just finalize.
+  /// This holds even when today's daily goal is already met: the leftover
+  /// count is kept. To close an unfinished mala, use [finishAndStartNew].
   Future<JapaSession?> completeSession() async {
     final session = state.session;
     if (session == null || state.isCompleting) return null;
@@ -556,14 +651,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
     state = state.copyWith(isCompleting: true);
     _stopTimers();
 
-    final subMalaDailyGoalMet =
-        _dailyGoal > 0 &&
-        _dailyGoal < 108 &&
-        state.liveTodayTotal >= _dailyGoal;
-    final shouldPause =
-        session.tapCount > 0 &&
-        session.tapCount % 108 != 0 &&
-        !subMalaDailyGoalMet;
+    final shouldPause = session.tapCount > 0 && session.tapCount % 108 != 0;
 
     if (shouldPause) {
       // Freeze the active segment into accumulatedMs and persist as paused.
@@ -578,7 +666,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
     }
 
     JapaSession? result;
-    if (session.tapCount > 0) {
+    if (session.rowCount > 0) {
       // Force-save the final count to DB.
       if (_isSessionInDb && _sessionDbId != null) {
         await _updateSessionRow(session);
@@ -600,6 +688,40 @@ class CountingNotifier extends StateNotifier<CountingState> {
     _resetTrackingState();
     _invalidateStatsAndHistory();
     return result;
+  }
+
+  /// Close the current session and start a fresh one at 0.
+  ///
+  /// Unlike [resetSession], nothing is deleted: the counts made so far stay
+  /// in history on the day they were made. Used by the "Start new" banner
+  /// and the "Finish & start new" menu item.
+  Future<void> finishAndStartNew() async {
+    final session = state.session;
+    if (session == null || state.isCompleting) return;
+    _stopTimers();
+    endMeruPause();
+    _clearPacing();
+
+    if (session.rowCount > 0) {
+      await _updateSessionRow(session);
+    } else {
+      await _deleteCurrentDbRow();
+    }
+    await _ref.read(settingsRepositoryProvider).clearActiveSession(_counterId);
+    _resetTrackingState();
+
+    final repo = _ref.read(japaCounterRepositoryProvider);
+    final counter = await repo.getCounterById(_counterId);
+    if (counter == null) return;
+    final newSession = _startFreshSession(
+      counterId: counter.id,
+      counterName: counter.name,
+      incrementStep: counter.incrementStep,
+    );
+    state = CountingState(session: newSession);
+    await _refreshTotals(counter.initialCount);
+    _startTimers();
+    _invalidateStatsAndHistory();
   }
 
   /// Reset the current session — matches Kotlin's `cancelSession` flow.

@@ -3,8 +3,8 @@ import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/screens/help/help_widgets.dart';
 
-class SoundHapticsHelpScreen extends StatelessWidget {
-  const SoundHapticsHelpScreen({super.key});
+class DisplayHelpScreen extends StatelessWidget {
+  const DisplayHelpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,88 +16,88 @@ class SoundHapticsHelpScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            HelpDetailTopBar(title: l.helpTopicAudioTitle),
+            HelpDetailTopBar(title: l.helpTopicDisplayTitle),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(18, 12, 18, 32),
                 children: [
-                  HelpIntroCard(l.helpAudioIntro),
+                  HelpIntroCard(l.helpDisplayIntro),
                   const SizedBox(height: 20),
                   HelpSection(
-                    icon: Icons.lens_blur_outlined,
-                    title: l.helpAudioMalaSection,
+                    icon: Icons.brightness_medium_outlined,
+                    title: l.helpDisplayBrightSection,
                     children: [
                       HelpBullet(
-                        l.helpAudioMalaBullet1,
-                        boldPrefix: l.helpAudioMalaBold1,
+                        l.helpDisplayBrightBullet1,
+                        boldPrefix: l.helpDisplayBrightBold1,
                       ),
                       HelpBullet(
-                        l.helpAudioMalaBullet2,
-                        boldPrefix: l.helpAudioMalaBold2,
+                        l.helpDisplayBrightBullet2,
+                        boldPrefix: l.helpDisplayBrightBold2,
                       ),
                       HelpBullet(
-                        l.helpAudioMalaBullet3,
-                        boldPrefix: l.helpAudioMalaBold3,
+                        l.helpDisplayBrightBullet3,
+                        boldPrefix: l.helpDisplayBrightBold3,
                       ),
                     ],
                   ),
                   const SizedBox(height: 20),
                   HelpSection(
-                    icon: Icons.flag_outlined,
-                    title: l.helpAudioGoalSection,
+                    icon: Icons.do_not_disturb_on_outlined,
+                    title: l.helpDisplayDndSection,
                     children: [
                       HelpBullet(
-                        l.helpAudioGoalBullet1,
-                        boldPrefix: l.helpAudioGoalBold1,
+                        l.helpDisplayDndBullet1,
+                        boldPrefix: l.helpDisplayDndBold1,
                       ),
                       HelpBullet(
-                        l.helpAudioGoalBullet2,
-                        boldPrefix: l.helpAudioGoalBold2,
-                      ),
-                      HelpBullet(
-                        l.helpAudioGoalBullet3,
-                        boldPrefix: l.helpAudioGoalBold3,
+                        l.helpDisplayDndBullet2,
+                        boldPrefix: l.helpDisplayDndBold2,
                       ),
                     ],
                   ),
                   const SizedBox(height: 20),
                   HelpSection(
-                    icon: Icons.emoji_events_outlined,
-                    title: l.helpAudioLifetimeSection,
+                    icon: Icons.spa_outlined,
+                    title: l.helpDisplayMindfulSection,
                     children: [
                       HelpBullet(
-                        l.helpAudioLifetimeBullet1,
-                        boldPrefix: l.helpAudioLifetimeBold1,
+                        l.helpDisplayMindfulBullet1,
+                        boldPrefix: l.helpDisplayMindfulBold1,
                       ),
                       HelpBullet(
-                        l.helpAudioLifetimeBullet2,
-                        boldPrefix: l.helpAudioLifetimeBold2,
+                        l.helpDisplayMindfulBullet2,
+                        boldPrefix: l.helpDisplayMindfulBold2,
                       ),
                     ],
                   ),
                   const SizedBox(height: 20),
                   HelpSection(
-                    icon: Icons.vibration_outlined,
-                    title: l.helpAudioVibrationSection,
+                    icon: Icons.translate_outlined,
+                    title: l.helpDisplayLangSection,
                     children: [
                       HelpBullet(
-                        l.helpAudioVibrationBullet1,
-                        boldPrefix: l.helpAudioVibrationBold1,
+                        l.helpDisplayLangBullet1,
+                        boldPrefix: l.helpDisplayLangBold1,
                       ),
                       HelpBullet(
-                        l.helpAudioVibrationBullet2,
-                        boldPrefix: l.helpAudioVibrationBold2,
+                        l.helpDisplayLangBullet2,
+                        boldPrefix: l.helpDisplayLangBold2,
                       ),
                     ],
                   ),
                   const SizedBox(height: 20),
                   HelpSection(
-                    icon: Icons.volume_up_outlined,
-                    title: l.helpAudioVolumeSection,
+                    icon: Icons.palette_outlined,
+                    title: l.helpDisplayLookSection,
                     children: [
                       HelpBullet(
-                        l.helpAudioVolumeBullet1,
-                        boldPrefix: l.helpAudioVolumeBold1,
+                        l.helpDisplayLookBullet1,
+                        boldPrefix: l.helpDisplayLookBold1,
+                      ),
+                      HelpBullet(
+                        l.helpDisplayLookBullet2,
+                        boldPrefix: l.helpDisplayLookBold2,
                       ),
                     ],
                   ),

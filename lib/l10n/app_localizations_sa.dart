@@ -177,6 +177,17 @@ class AppLocalizationsSa extends AppLocalizations {
   String get resetSession => 'सत्रं पुनःस्थाप्यताम्';
 
   @override
+  String unfinishedMalaBanner(int chants) {
+    return 'पूर्वदिनस्य अपूर्णा माला: $chants/१०८';
+  }
+
+  @override
+  String get startNewSession => 'नूतनम् आरभ्यताम्';
+
+  @override
+  String get finishAndStartNew => 'समाप्य नूतनम् आरभ्यताम्';
+
+  @override
   String get resetCounter => 'गणकः पुनःस्थाप्यताम्';
 
   @override
@@ -835,7 +846,8 @@ class AppLocalizationsSa extends AppLocalizations {
   String get helpHeaderTitle => 'साधनासाहाय्यम्';
 
   @override
-  String get helpHeaderSub => 'जपगणकस्य उपयोगविषये मार्गदर्शिका';
+  String get helpHeaderSub =>
+      'उपकरणस्य सर्वभागानां मार्गदर्शिकाः: गणकाः, गणनं, मालाः लक्ष्याणि च, इतिहासः, ध्वनिः, प्रदर्शनं, प्रतिलिपिः, प्रकाशसञ्चारः, गोपनीयता च।';
 
   @override
   String get helpCategoryCounting => 'जपसाधना';
@@ -844,7 +856,7 @@ class AppLocalizationsSa extends AppLocalizations {
   String get helpCategorySync => 'दत्तांशसञ्चारः';
 
   @override
-  String get helpCategoryAudio => 'ध्वनिः कम्पनञ्च';
+  String get helpCategoryAudio => 'ध्वनिः, प्रदर्शनं, स्थिरता च';
 
   @override
   String get helpCategoryPrivacy => 'गोपनीयता';
@@ -853,38 +865,42 @@ class AppLocalizationsSa extends AppLocalizations {
   String get helpTopicCountingTitle => 'जपगणना कथं करणीया';
 
   @override
-  String get helpTopicCountingSub => 'स्पर्शः, मालाः, ध्यानावस्था च';
+  String get helpTopicCountingSub =>
+      'वृत्तान्तः स्पर्शः, अङ्गुलिद्वयनिवर्तनं, गणनसूची, स्वयंरक्षणं च';
 
   @override
   String get helpTopicMalaTitle => '१०८ मणयः एका माला';
 
   @override
-  String get helpTopicMalaSub => 'मालापूर्तिः तस्याः महत्त्वञ्च';
+  String get helpTopicMalaSub =>
+      '108 मण्यावर्तनानि, अधिकगणनाः, दैनिकजीवनलक्ष्याणि च';
 
   @override
   String get helpTopicOpticalSyncTitle => 'प्रकाशसञ्चारः (QR)';
 
   @override
   String get helpTopicOpticalSyncSub =>
-      'अन्तर्जालं विना यन्त्रयोर्मध्ये दत्तांशसञ्चारः';
+      'अन्तर्जालं विना चलेन QR सङ्केतेन दूरवाणीतः दूरवाणीं प्रति स्थानान्तरणम्';
 
   @override
-  String get helpTopicBackupTitle => 'दत्तांशसंरक्षणम्';
+  String get helpTopicBackupTitle => 'प्रतिलिपिः पुनःस्थापनं च';
 
   @override
-  String get helpTopicBackupSub => 'JSON-सञ्चिकायाः आयात-निर्यात-प्रक्रिया';
+  String get helpTopicBackupSub =>
+      'सञ्चिकायां निर्यातः, गूढप्रतिलिपिः, आयातः, सर्वदत्तांशमार्जनं च';
 
   @override
   String get helpTopicAudioTitle => 'ध्वनिः कम्पनञ्च';
 
   @override
-  String get helpTopicAudioSub => 'घण्टानादः, कम्पनम्, मूकसाधना च';
+  String get helpTopicAudioSub => 'मालाध्वनिः, लक्ष्यध्वनयः, सूचनाः, कम्पनं च';
 
   @override
   String get helpTopicPrivacyTitle => 'गोपनीयता दर्शनञ्च';
 
   @override
-  String get helpTopicPrivacySub => 'शून्यनिरीक्षणम्, अन्तर्जालरहितम्';
+  String get helpTopicPrivacySub =>
+      'अन्तर्जालानुमतिः नास्ति, निजसञ्चयः, उपयुक्ताः अनुमतयः च';
 
   @override
   String get helpTopicFaqTitle => 'प्रायिकप्रश्नाः';
@@ -894,328 +910,293 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get helpCountingIntro =>
-      'अयं जपगणकः भवतः एकाग्रसाधनायै सौकर्याय च रचितः अस्ति।';
+      'गणनपटं शान्तध्यानाय निर्मितम्। जपकाले पटं द्रष्टुं न आवश्यकम्।';
 
   @override
-  String get helpCountingTapSection => 'स्पर्शेन गणना';
+  String get helpCountingTapSection => 'कथं गणनीयम्';
 
   @override
-  String get helpCountingTapBold1 => 'यत्र कुत्रापि स्पृशन्तु';
+  String get helpCountingTapBold1 => 'वृत्तस्य अन्तः स्पृशतु:';
 
   @override
   String get helpCountingTapBullet1 =>
-      'फलकस्य यत्र कुत्रापि स्पृष्ट्वा जपगणनां वर्धयितुं शक्नुवन्ति।';
+      'मालावृत्तस्य अन्तः स्पर्शाः एव गण्यन्ते। बहिः स्पर्शाः न गण्यन्ते, अतः आकस्मिकस्पर्शः सङ्ख्यां न वर्धयति।';
 
   @override
-  String get helpCountingTapBold2 => 'वर्धमानपदम्';
+  String get helpCountingTapBold2 => 'वृद्धिपदम्:';
 
   @override
   String get helpCountingTapBullet2 =>
-      'इच्छानुसारेण १ वा अन्यसङ्ख्यायाः वृद्धिक्रमः संयोज्यते।';
+      'प्रतिस्पर्शं गणकस्य पदं (सामान्यतः 1) योज्यते। गणकसम्पादनेन परिवर्तयतु।';
 
   @override
-  String get helpCountingTapBold3 => 'प्रशान्तिः (Stillness)';
+  String get helpCountingTapBold3 => 'शान्ताः स्पर्शाः:';
 
   @override
   String get helpCountingTapBullet3 =>
-      'मन्दप्रकाशेन विक्षेपं विना रात्रौ जपः क्रियताम्।';
+      'स्पर्शेषु कम्पनं नास्ति। कम्पने सक्रिये प्रत्येकमालासमाप्तौ, लक्ष्ये, निवर्तने च कम्पनं भवति।';
 
   @override
-  String get helpCountingUndoSection => 'पूर्ववत्करणम्';
+  String get helpCountingUndoSection => 'गणनानिवर्तनम्';
 
   @override
-  String get helpCountingUndoBold1 => 'प्रमादस्पर्शस्य निराकरणम्';
+  String get helpCountingUndoBold1 => 'अङ्गुलिद्वयचालनम्:';
 
   @override
   String get helpCountingUndoBullet1 =>
-      'पूर्ववत्-चिह्नं स्पृष्ट्वा अन्तिमं जपस्पर्शं निराकुर्वन्तु।';
+      'वृत्ते अङ्गुलिद्वयं निधाय वामतः दक्षिणतः वा चालयतु। एकेन चालनेन एकं पदं न्यूनीभवति, दूरवाणी एकवारं कम्पते च।';
 
   @override
-  String get helpCountingUndoBold2 => 'सत्रसुरक्षा';
+  String get helpCountingUndoBold2 => 'शून्यं प्रति:';
 
   @override
   String get helpCountingUndoBullet2 =>
-      'वर्तमानसत्रस्यैव स्पर्शः निराक्रियते, समग्रदत्तांशो न नश्यति।';
-
-  @override
-  String get helpCountingTimerSection => 'समयमापनम्';
-
-  @override
-  String get helpCountingTimerBold1 => 'स्वचालितसमयः';
-
-  @override
-  String get helpCountingTimerBullet1 => 'जपसत्रस्य कालावधिः स्वयमेव सञ्चीयते।';
-
-  @override
-  String get helpCountingTimerBold2 => 'विश्रामः (Pause)';
-
-  @override
-  String get helpCountingTimerBullet2 => 'जपविरामे सति समयमापनमपि विरमति।';
+      'सत्रसङ्ख्या 0 भवति चेत् उपवेशनं मार्ज्यते, इतिहासे किमपि न योज्यते।';
 
   @override
   String get helpMalaIntro =>
-      '१०८ जपमणयः पारम्परिकसनातनसाधनायाः एकां पूर्णां मालां सूचयन्ति।';
+      'पारम्परिकजपमालायाम् अष्टोत्तरशतं मणयः सन्ति। उपकरणं 108 आवर्तनैः गणयति, प्रत्येकपत्रे लक्ष्याणि च दर्शयति।';
 
   @override
-  String get helpMalaBeadsSection => 'मणियोजनम्';
+  String get helpMalaBeadsSection => '108 मणयः';
 
   @override
-  String get helpMalaBeadsBold1 => '१०८ मणयः';
+  String get helpMalaBeadsBold1 => '1 माला = 108 गणनाः:';
 
   @override
   String get helpMalaBeadsBullet1 =>
-      'प्रत्येकं १०८ जपानां समाप्तौ एका माला स्वयमेव योज्यते।';
+      'प्रत्येकं 108 गणनाः एका पूर्णमाला। गणनपटस्य वृत्तं मणिशः पूर्यते, 108 अनन्तरं पुनः आरभते।';
 
   @override
-  String get helpMalaBeadsBold2 => 'अवशिष्टाः मणयः';
+  String get helpMalaBeadsBold2 => 'अधिकगणनाः:';
 
   @override
   String get helpMalaBeadsBullet2 =>
-      'वर्तमानमालायाः कति मणयः अवशिष्टाः इति स्पष्टं ज्ञायते।';
+      'पूर्णमालायाः परं गणनाः रक्ष्यन्ते दर्श्यन्ते च। यथा, 115 गणनाः = 1 माला 7 गणनाः च।';
 
   @override
-  String get helpMalaBeadsBold3 => 'मालासमाप्तिध्वनिः';
+  String get helpMalaBeadsBold3 => 'बृहत्पदानि:';
 
   @override
   String get helpMalaBeadsBullet3 =>
-      'मालापूर्तौ सौम्यः घण्टानादः श्रूयते, मृदुकम्पनं चानुभूयते।';
+      'पदं 1 तः अधिकं चेत्, एकेन स्पर्शेन अनेके मणयः चलन्ति। मालाः आहत्यगणनातः एव गण्यन्ते।';
 
   @override
-  String get helpMalaGoalsSection => 'लक्ष्यव्यवस्था';
+  String get helpMalaGoalsSection => 'दैनिकलक्ष्यं जीवनलक्ष्यं च';
 
   @override
-  String get helpMalaGoalsBold1 => 'दैनिकलक्ष्यम्';
+  String get helpMalaGoalsBold1 => 'दैनिकलक्ष्यम्:';
 
   @override
   String get helpMalaGoalsBullet1 =>
-      'नित्यं कति जपाः करणीयाः इति निर्धारयन्तु।';
+      'प्रतिदिनं समर्पयितुम् इष्टा जपसङ्ख्या (0 = दैनिकलक्ष्यं नास्ति)। दूरवाण्याः घटिकानुसारम् अर्धरात्रे 0 तः पुनः आरभते।';
 
   @override
-  String get helpMalaGoalsBold2 => 'आजीवनलक्ष्यम्';
+  String get helpMalaGoalsBold2 => 'जीवनलक्ष्यम् (सङ्कल्पः):';
 
   @override
   String get helpMalaGoalsBullet2 =>
-      'दीर्घकालीनसङ्कल्पस्य (यथा लक्षजपस्य) प्रगतिं पश्यन्तु।';
+      'दीर्घकालिकं लक्ष्यं, यथा 1,00,000 जपाः (0 = जीवनलक्ष्यं नास्ति)। दैनिकलक्ष्यं ततः अधिकं न भवेत्।';
 
   @override
   String get helpOpticalIntro =>
-      'अन्तर्जालं विना यन्त्रयोर्मध्ये प्रकाशतरङ्गरूपेण (QR) दत्तांशसञ्चारः क्रियते।';
+      'प्रकाशसञ्चारः पटं छायाग्राहकं च एव उपयुज्य गणकान् इतिहासं च एकस्याः दूरवाण्याः अन्यां प्रति नयति। अन्तर्जालं, वाइ-फाइ, ब्लूटूथ्, तन्त्री वा न आवश्यकम्।';
 
   @override
-  String get helpOpticalHowSection => 'कथं कार्यं करोति';
+  String get helpOpticalHowSection => 'कथं स्थानान्तरणम्';
 
   @override
-  String get helpOpticalHowBold1 => 'प्रेषकयन्त्रम्';
+  String get helpOpticalHowBold1 => 'प्रेषकदूरवाणी:';
 
   @override
   String get helpOpticalHowBullet1 =>
-      'प्रेषकयन्त्रं QR-सङ्केतानां प्रवाहं प्रदर्शयति।';
+      'संयोजनानि → दत्तांशसंरक्षणम् → प्रकाशसञ्चारः (प्रेषणम्)। प्रेषणीयान् गणकान् चिनोतु। चलः QR सङ्केतः आरभते।';
 
   @override
-  String get helpOpticalHowBold2 => 'ग्राहकयन्त्रम्';
+  String get helpOpticalHowBold2 => 'ग्राहकदूरवाणी:';
 
   @override
   String get helpOpticalHowBullet2 =>
-      'ग्राहकयन्त्रस्य चित्रग्राहकेण (Camera) तान् सङ्केतान् पठन्तु।';
+      'प्रकाशसञ्चारः (स्वीकरणम्) उद्घाट्य छायाग्राहकम् अनुमन्य प्रेषकपटं प्रति धारयतु।';
 
   @override
-  String get helpOpticalHowBold3 => 'सम्पूर्णा सुरक्षा';
+  String get helpOpticalHowBold3 => 'पूर्वदर्शनम्:';
 
   @override
   String get helpOpticalHowBullet3 =>
-      'नास्त्यन्तर्जालस्य, ब्लूटूत्-माध्यमस्य वा कोऽपि सम्बन्धः।';
+      'सर्वेषु भागेषु प्राप्तेषु गणकान् सत्राणि च दर्शयत् पूर्वदर्शनं दृश्यते। रक्षणीयान् गणकान् चित्वा पुनःस्थापनगण्डं स्पृशतु।';
 
   @override
-  String get helpOpticalTipsSection => 'उपयुक्तपरामर्शाः';
+  String get helpOpticalTipsSection => 'शीघ्रपरीक्षणाय सूचनाः';
 
   @override
-  String get helpOpticalTipsBold1 => 'प्रकाशस्तरः';
+  String get helpOpticalTipsBold1 => 'दूरता:';
 
   @override
   String get helpOpticalTipsBullet1 =>
-      'प्रेषकफलकस्य प्रकाशं किञ्चिद् वर्धयन्तु।';
+      'ग्राहकदूरवाणीं प्रेषकपटात् प्रायः 15–25 से.मी. दूरे, सङ्केतं मार्गदर्शकपेटिकायाम् अन्तः कृत्वा, स्थिरं धारयतु।';
 
   @override
-  String get helpOpticalTipsBold2 => 'दूरत्वम्';
+  String get helpOpticalTipsBold2 => 'प्रतिबिम्बः:';
 
   @override
-  String get helpOpticalTipsBullet2 =>
-      'यन्त्रद्वयं १५-२० से.मी. दूरे स्थापयन्तु।';
+  String get helpOpticalTipsBullet2 => 'प्रेषकपटे तीव्रप्रतिबिम्बं परिहरतु।';
 
   @override
-  String get helpOpticalTipsBold3 => 'स्थिरता';
+  String get helpOpticalTipsBold3 => 'त्यक्तचित्राणि:';
 
   @override
-  String get helpOpticalTipsBullet3 => 'पठनसमये यन्त्रं स्थिरं धारयन्तु।';
+  String get helpOpticalTipsBullet3 =>
+      'केचन चित्राणि त्यक्तानि चेदपि न दोषः। अधिकमिश्रचित्रैः सह प्रवाहः पुनः पुनः भवति, अतः लुप्तभागाः पुनर्निर्मीयन्ते।';
 
   @override
-  String get helpAudioIntro => 'जपसमये ध्वनिः कम्पनञ्च भवत एकाग्रतां पोषयतः।';
-
-  @override
-  String get helpAudioTonesSection => 'सूचनाध्वनयः';
-
-  @override
-  String get helpAudioTonesBold1 => 'प्रणालीध्वनिः';
-
-  @override
-  String get helpAudioTonesBullet1 =>
-      'यन्त्रस्य पूर्वनिर्धारितध्वनेरुपयोगं कुर्वन्तु।';
-
-  @override
-  String get helpAudioTonesBold2 => 'व्यक्तिगतध्वनिः';
-
-  @override
-  String get helpAudioTonesBullet2 =>
-      'स्वस्य प्रियाम् ओङ्कारनादादिसञ्चिकां योजयन्तु।';
-
-  @override
-  String get helpAudioTonesBold3 => 'मूकसाधना';
-
-  @override
-  String get helpAudioTonesBullet3 =>
-      'इच्छानुसारं ध्वनिं सर्वथा पिधातुं शक्नुवन्ति।';
+  String get helpAudioIntro =>
+      'ध्वनिः स्पन्दनं च मुख्यक्षणान् सूचयतः: प्रत्येकमालां प्रत्येकलक्ष्यं च। संयोजनानि → ध्वनिः स्पन्दनं च इत्यत्र तानि निर्धारयतु।';
 
   @override
   String get helpAudioVibrationSection => 'कम्पनम्';
 
   @override
-  String get helpAudioVibrationBold1 => 'स्पर्शकम्पनम्';
+  String get helpAudioVibrationBold1 => 'कदा कम्पते:';
 
   @override
   String get helpAudioVibrationBullet1 =>
-      'प्रत्येकं जपस्पर्शसमये मृदुकम्पनं भवति।';
+      'प्रत्येकमालायाम् एकं स्पन्दनं, लक्ष्यसिद्धौ त्रीणि, निवर्तने लघु एकम्।';
 
   @override
-  String get helpAudioVibrationBold2 => 'लक्ष्यकम्पनम्';
+  String get helpAudioVibrationBold2 => 'निष्क्रियीकरणम्:';
 
   @override
   String get helpAudioVibrationBullet2 =>
-      'दैनिकलक्ष्यपूर्तौ विशेषकम्पनमनुभूयते।';
+      'पूर्णमौनसाधनायै संयोजनानि → ध्वनिः स्पन्दनं च इत्यत्र कम्पनं निष्क्रियं करोतु।';
 
   @override
   String get helpBackupIntro =>
-      'भवतः साधनादत्तांशोऽत्यन्तमूल्यवान्। सञ्चिकामाध्यमेन तं संरक्षन्तु।';
+      'भवतां दत्तांशः भवताम् एव। कदापि सञ्चिकायां रक्षित्वा अस्यां नूतनायां वा दूरवाण्यां पुनःस्थापयतु।';
 
   @override
-  String get helpBackupExportSection => 'निर्यातप्रक्रिया';
+  String get helpBackupExportSection => 'प्रतिलिपिनिर्यातः';
 
   @override
-  String get helpBackupExportBold1 => 'JSON-सञ्चिकानिर्हारः';
+  String get helpBackupExportBold1 => 'एका सञ्चिका:';
 
   @override
   String get helpBackupExportBullet1 =>
-      'सर्वे गणकाः सत्राणि चैकस्यां सञ्चिकायां संरक्ष्यन्ते।';
+      'सर्वे गणकाः, लक्ष्याणि, सत्रेतिहासः च एकस्यां प्रतिलिपिसञ्चिकायाम्।';
 
   @override
-  String get helpBackupExportBold2 => 'सुरक्षितसञ्चयः';
+  String get helpBackupExportBold2 => 'गूढीकरणम् (ऐच्छिकम्):';
 
   @override
   String get helpBackupExportBullet2 =>
-      'निर्याता सञ्चिकान्यत्र यन्त्रे सञ्चिकारूपेण प्रेषयितुं शक्यते।';
+      'गुप्तवाक्येन सञ्चिकां रक्षितुं शक्यते। दृढेन AES-256-GCM गूढीकरणेन कील्यते।';
 
   @override
-  String get helpBackupExportBold3 => 'नियमितसंरक्षणम्';
+  String get helpBackupExportBold3 => 'गुप्तवाक्यं रक्षतु:';
 
   @override
   String get helpBackupExportBullet3 =>
-      'सप्ताहे सकृद् वा मासे सकृद् दत्तांशं निर्हरन्तु।';
+      'विस्मृतं गुप्तवाक्यं पुनः न लभ्यते, तद्विना सञ्चिका न उद्घाट्यते।';
 
   @override
-  String get helpBackupImportSection => 'आयातप्रक्रिया';
+  String get helpBackupImportSection => 'प्रतिलिपिपुनःस्थापनम्';
 
   @override
-  String get helpBackupImportBold1 => 'JSON-सञ्चिकायाश्चयनम्';
+  String get helpBackupImportBold1 => 'सञ्चिकां चिनोतु:';
 
   @override
   String get helpBackupImportBullet1 =>
-      'पूर्वं संरक्षितां JSON-सञ्चिकां चिनोतु।';
+      'आयातं चित्वा प्रणालीसञ्चिकाचयनके प्रतिलिपिसञ्चिकां चिनोतु।';
 
   @override
-  String get helpBackupImportBold2 => 'दत्तांशपुनःस्थापनम्';
+  String get helpBackupImportBold2 => 'सर्वदत्तांशप्रतिस्थापनम्:';
 
   @override
   String get helpBackupImportBullet2 =>
-      'आयातप्रक्रियया सर्वे गणकाः सत्राणि च पुनःस्थाप्यन्ते।';
+      'आयातः वर्तमानान् सर्वान् गणकान् इतिहासं च सञ्चिकादत्तांशेन प्रतिस्थापयति। दूरवाण्यां स्थितं रक्षितुम् इच्छति चेत् प्रथमं निर्यातं करोतु।';
 
   @override
-  String get helpBackupImportBold3 => 'दत्तांशसङ्गतिः';
+  String get helpBackupImportBold3 => 'गूढसञ्चिकाः:';
 
   @override
   String get helpBackupImportBullet3 =>
-      'आयातात् पूर्वं वर्तमानदत्तांशस्य परीक्षणं क्रियते।';
+      'सञ्चिका गूढा चेत् गुप्तवाक्यं पृच्छ्यते।';
 
   @override
   String get helpPrivacyIntro =>
-      'गोपनीयतास्माकं प्रधानसङ्कल्पः। भवतः दत्तांशः केवलं भवत एव।';
+      'SreerajP MantraJapa Counter गोपनीयतायै एव निर्मितम्। भवतां साधना भवतां दूरवाण्याम् एव तिष्ठति।';
 
   @override
-  String get helpPrivacyOfflineSection => 'सर्वथा अन्तर्जालरहितम्';
+  String get helpPrivacyOfflineSection => 'पूर्णतया अन्तर्जालरहितम्';
 
   @override
-  String get helpPrivacyOfflineBold1 => 'शून्यसंयोगः (No Internet)';
+  String get helpPrivacyOfflineBold1 => 'अन्तर्जालानुमतिः नास्ति:';
 
   @override
   String get helpPrivacyOfflineBullet1 =>
-      'अस्मिन् अनुप्रयोगे अन्तर्जालसम्पर्कस्यानुज्ञा नास्ति।';
+      'उपकरणस्य एण्ड्रॉयड्-अन्तर्जालानुमतिः नास्ति, अतः किमपि कुत्रापि प्रेषयितुं न शक्नोति।';
 
   @override
-  String get helpPrivacyOfflineBold2 => 'शून्यनिरीक्षणम् (Zero Telemetry)';
+  String get helpPrivacyOfflineBold2 => 'अनुवर्तनं नास्ति:';
 
   @override
   String get helpPrivacyOfflineBullet2 =>
-      'कोऽपि विश्लेषणांशो (Analytics) नास्ति, न किमपि बाह्यं प्रेष्यते।';
+      'विश्लेषणं, दोषप्रतिवेदनं, विज्ञापनं वा नास्ति।';
 
   @override
-  String get helpPrivacyOfflineBold3 => 'विज्ञापनरहितम्';
+  String get helpPrivacyOfflineBold3 => 'खाता नावश्यकी:';
 
   @override
-  String get helpPrivacyOfflineBullet3 => 'नास्ति विज्ञापनम्, नास्ति व्यामोहः।';
+  String get helpPrivacyOfflineBullet3 =>
+      'पञ्जीकरणं, ईमेल्, दूरवाणीसङ्ख्या वा कदापि न आवश्यकम्।';
 
   @override
-  String get helpPrivacyStorageSection => 'स्थानिकदत्तांशः';
+  String get helpPrivacyStorageSection => 'दत्तांशः कुत्र रक्ष्यते';
 
   @override
-  String get helpPrivacyStorageBold1 => 'यन्त्रे एव सञ्चयः';
+  String get helpPrivacyStorageBold1 => 'भवतां दूरवाण्याम् एव:';
 
   @override
   String get helpPrivacyStorageBullet1 =>
-      'सर्वे गणकाः सत्राणि च भवतः दूरवाण्यामेव तिष्ठन्ति।';
+      'गणकाः इतिहासः च दूरवाण्याम् उपकरणस्य निजसञ्चये रक्ष्यन्ते। अन्यानि उपकरणानि तं पठितुं न शक्नुवन्ति।';
 
   @override
-  String get helpPrivacyStorageBold2 => 'क्लाउड-रहितम्';
+  String get helpPrivacyStorageBold2 => 'मेघप्रतिलिपिः नास्ति:';
 
   @override
-  String get helpPrivacyStorageBullet2 => 'मेघे (Cloud) किमपि न सञ्चीयते।';
+  String get helpPrivacyStorageBullet2 =>
+      'अस्य उपकरणस्य कृते एण्ड्रॉयड्-स्वयंमेघप्रतिलिपिः निष्क्रिया। प्रतिलिपिरक्षणाय निर्यातं प्रकाशसञ्चारं वा उपयुज्यताम्।';
 
   @override
-  String get helpFaqIntro => 'जपगणकविषये सामान्या जिज्ञासाः।';
+  String get helpFaqIntro => 'सामान्यप्रश्नानां संक्षिप्तोत्तराणि।';
 
   @override
-  String get helpFaqQ1Title => 'किम् अन्तर्जालसम्पर्क आवश्यकः?';
+  String get helpFaqQ1Title => 'मम स्पर्शः किमर्थं न गणितः?';
 
   @override
-  String get helpFaqQ1Answer => 'नहि, अयं गणकः सर्वथा अन्तर्जालरहितोऽस्ति।';
+  String get helpFaqQ1Answer =>
+      'मालावृत्तस्य अन्तः स्पर्शाः एव गण्यन्ते। मेरुविरामे सक्रिये प्रत्येकमालानन्तरं लघुविरामे स्पर्शाः अपि न गण्यन्ते।';
 
   @override
-  String get helpFaqQ2Title => '१०८ जपानां समाप्तौ किं भवति?';
+  String get helpFaqQ2Title => 'अशुद्धगणनां कथं निवर्तयेयम्?';
 
   @override
   String get helpFaqQ2Answer =>
-      '१०८ जपानन्तरमेका माला स्वयमेव योज्यते, सौम्यघण्टानादश्च भवति।';
+      'मालावृत्ते अङ्गुलिद्वयं निधाय वामतः दक्षिणतः वा चालयतु। प्रत्येकचालनेन एकं पदं न्यूनीभवति।';
 
   @override
-  String get helpFaqQ3Title => 'मम दत्तांशः कथं सुरक्षितः?';
+  String get helpFaqQ3Title => 'मम गणकः किमर्थं न उद्घाट्यते?';
 
   @override
   String get helpFaqQ3Answer =>
-      'सर्वो दत्तांशः केवलं भवतः यन्त्र एव तिष्ठति। JSON-सञ्चिकाद्वारा तं संरक्षन्तु।';
+      'सः कीलितः निष्क्रियः वा। उद्घाटनाय पत्रस्य कीलचिह्नं स्पृशतु। निष्क्रियाः गणकाः गणनार्थं न उद्घाट्यन्ते।';
 
   @override
-  String get helpFaqQ4Title => 'प्रमादेन गणना वर्धिता चेत् किं करणीयम्?';
+  String get helpFaqQ4Title => 'मालामध्ये विरमामि चेत् किं भवति?';
 
   @override
   String get helpFaqQ4Answer =>
-      'उपरि दृश्यमानं पूर्ववत्-चिह्नं स्पृष्ट्वा अन्तिमं जपस्पर्शं निराकुर्वन्तु।';
+      'किमपि न नश्यति। गणनाः रक्ष्यन्ते, अन्यस्मिन् दिने अपि अग्रिमवारं माला प्रतीक्षते। 0 तः आरब्धुम् इच्छति चेत् \'नूतनम् आरभ्यताम्\' स्पृशतु।';
 
   @override
   String get lockCounter => 'गणकं कीलयतु';
@@ -1792,56 +1773,57 @@ class AppLocalizationsSa extends AppLocalizations {
   String get tutorialTitle => 'अनुप्रयोगप्रशिक्षणम्';
 
   @override
-  String get tutorialSub => 'सर्वसुविधानां सोपानशः परिदर्शनम्';
+  String get tutorialSub =>
+      'प्रथमगणकात् प्रतिलिपिगोपनीयतापर्यन्तं सर्वासां विशेषतानां क्रमशः परिचयः।';
 
   @override
-  String get tutorialStep1Title => '१. प्रथमगणकनिर्माणम्';
+  String get tutorialStep1Title => 'स्वागतम्';
 
   @override
   String get tutorialStep1Desc =>
-      'मुख्यपुटे धनचिह्नं (+) स्पृशतु। मन्त्रनाम, जपवृद्धिं, दैनिक-जीवनलक्ष्यं च व्यवस्थापयतु।';
+      'इदम् उपकरणं भवतां मन्त्रजपस्य गणनायां साहाय्यं करोति। अष्टोत्तरशतस्य मालाः गणयति, दैनिकं जीवनलक्ष्यं च रक्षति, सम्पूर्णम् इतिहासं च रक्षति। अन्तर्जालं विना पूर्णतया कार्यं करोति।';
 
   @override
-  String get tutorialStep2Title => '२. सर्वाङ्गपटे जपगणनम्';
+  String get tutorialStep2Title => 'भाषां चिनोतु';
 
   @override
   String get tutorialStep2Desc =>
-      'गणनाय पटे यत्र कुत्रापि स्पृशतु। भ्रमे जाते अधः आकर्ष्य अपनयतु। प्रकाशं मन्दं कर्तुं शक्यते।';
+      'संयोजनानि → भाषा इत्यत्र गच्छतु। आङ्ग्लं, मलयाळं, संस्कृतं, प्रणाली-पूर्वनिर्धारितं वा चिनोतु।';
 
   @override
-  String get tutorialStep3Title => '३. अष्टोत्तरशत (१०८) मणिरचिता माला';
+  String get tutorialStep3Title => 'गणकं रचयतु';
 
   @override
   String get tutorialStep3Desc =>
-      'प्रति १०८ जपैः एका माला सिध्यति। घण्टानादेन सह मालागणना रक्षिता भवति।';
+      'मुख्यपटस्य उपरि स्थितं + गण्डं स्पृशतु। मन्त्रनाम लिखतु। ततः आरम्भसङ्ख्यां, वृद्धिपदं, जीवनलक्ष्यं, दैनिकलक्ष्यम्, आरम्भदिनाङ्कं च निर्धारयतु।';
 
   @override
-  String get tutorialStep4Title => '४. दैनिक-जीवनलक्ष्यसिद्धिः';
+  String get tutorialStep4Title => 'गणकपत्रं पठतु';
 
   @override
   String get tutorialStep4Desc =>
-      'दैनिके जीवनलक्ष्ये वा सिद्धे दिव्यध्वनिभिः मुद्राभिः च साफल्यं प्राप्यते।';
+      'प्रत्येकस्मिन् पत्रे आहत्य जपाः मालाः च, अद्यतनजपाः, अद्यतनप्रगतेः 27 मणीनां पङ्क्तिः, जीवनलक्ष्यस्य पट्टिका च दृश्यन्ते।';
 
   @override
-  String get tutorialStep5Title => '५. कीलनं समर्पणं च';
+  String get tutorialStep5Title => 'अद्यतनसारांशः';
 
   @override
   String get tutorialStep5Desc =>
-      'अकाण्डस्पर्शरक्षणाय गणकं कीलयतु; सम्पूर्णां साधनां स्वर्णमुद्रया सङ्गृह्यताम्।';
+      'मुख्यपटस्य उपरि स्थिता गुलिका अद्यतनजपान्, मालाः, अद्य उपयुक्तान् गणकान् च योजयित्वा दर्शयति।';
 
   @override
-  String get tutorialStep6Title => '६. प्रकाशीयं QR-सङ्क्रमणम्';
+  String get tutorialStep6Title => 'गणकविकल्पाः';
 
   @override
   String get tutorialStep6Desc =>
-      'अन्तर्जालं विना चलचित्रित-QR-माध्यमेन अन्ययन्त्रे दत्तांशं प्रेषयतु।';
+      'पत्रं दीर्घं स्पृशतु — \'गणकस्य विषये\', इतिहासः, सम्पादनं, कीलनं, निष्क्रियं (सफलम्), निष्क्रियं (असम्पूर्णम्), अपाकरणं च दृश्यन्ते।';
 
   @override
-  String get tutorialStep7Title => '७. गूढीकृतरक्षणम् (Encrypted Backup)';
+  String get tutorialStep7Title => 'गणकं कीलयतु';
 
   @override
   String get tutorialStep7Desc =>
-      'रहस्यसङ्केतं प्रदाय AES-256 सुरक्षापद्धत्या सर्वं विवरणं रक्षितुं शक्यते।';
+      'पत्रस्य कीलचिह्नं स्पृष्ट्वा कीलयतु। कीलितः गणकः गणनार्थं न उद्घाट्यते। पुनः स्पृष्ट्वा उद्घाटयतु।';
 
   @override
   String get opticalCameraDenied =>
@@ -1905,20 +1887,6 @@ class AppLocalizationsSa extends AppLocalizations {
   String get helpCountingMindfulSection => 'सावधानगणनम्';
 
   @override
-  String get helpCountingMeruBold => 'मेरुविरामः';
-
-  @override
-  String get helpCountingMeruBullet =>
-      'विन्यासेषु → प्रदर्शने सक्रियं कृते, प्रतिमालान्ते अनुप्रयोगः कतिचन क्षणान् विरमति। मेरुमणिः यथा न लङ्घ्यते, तथा विरामकाले स्पर्शाः न गण्यन्ते।';
-
-  @override
-  String get helpCountingPacingBold => 'गतिसूचना';
-
-  @override
-  String get helpCountingPacingBullet =>
-      'प्रतिक्षणं प्रायः त्रिवारात् अधिकं शीघ्रं स्पृश्यते चेत्, माला मृदु प्रकाशते, लघुस्मरणं च दृश्यते। इदं गणनां कदापि न निरुणद्धि।';
-
-  @override
   String get sadhanaFlowTitle => 'साधनाप्रवाहः';
 
   @override
@@ -1958,4 +1926,1159 @@ class AppLocalizationsSa extends AppLocalizations {
   String opticalBrightnessBoost(int percent) {
     return '+$percent%';
   }
+
+  @override
+  String get helpCategoryCounters => 'भवतां गणकाः इतिहासश्च';
+
+  @override
+  String get helpTopicCountersTitle => 'गणकाः मुख्यपटं च';
+
+  @override
+  String get helpTopicCountersSub =>
+      'गणकरचना, सम्पादनं, कीलनं, निष्क्रियीकरणं, विलोपनं, पत्रपठनं च';
+
+  @override
+  String get helpTopicHistoryTitle => 'इतिहासः साङ्ख्यिकी च';
+
+  @override
+  String get helpTopicHistorySub =>
+      'दिनशः इतिहासः, साधनाप्रवाहदिनदर्शिका, गणकविवरणानि च';
+
+  @override
+  String get helpTopicDisplayTitle => 'प्रदर्शनं, स्थिरता, भाषा च';
+
+  @override
+  String get helpTopicDisplaySub =>
+      'प्रकाशः, मन्दविधिः, शान्तिप्रणाली, मेरुविरामः, भाषा, स्वरूपं च';
+
+  @override
+  String get tutorialChapter1 => 'आरम्भः';
+
+  @override
+  String get tutorialChapter2 => 'भवतां गणकाः';
+
+  @override
+  String get tutorialChapter3 => 'गणनम्';
+
+  @override
+  String get tutorialChapter4 => 'मालाः लक्ष्याणि च';
+
+  @override
+  String get tutorialChapter5 => 'इतिहासः साङ्ख्यिकी च';
+
+  @override
+  String get tutorialChapter6 => 'ध्वनिः, कम्पनं, प्रदर्शनं च';
+
+  @override
+  String get tutorialChapter7 => 'भवतां दत्तांशः';
+
+  @override
+  String get tutorialChapter8 => 'गोपनीयता';
+
+  @override
+  String get tutorialStep1Tip =>
+      'इमं मार्गदर्शिकां कदापि संयोजनानि → साहाय्यम् इत्यतः उद्घाटयितुं शक्यते।';
+
+  @override
+  String get tutorialStep2Tip =>
+      'उपकरणस्य भाषा का अपि भवतु, मन्त्रनाम कस्यामपि लिप्यां लेखितुं शक्यते।';
+
+  @override
+  String get tutorialStep3Tip =>
+      'लक्ष्यं नास्ति चेत् 0 लिखतु। दैनिकलक्ष्यं जीवनलक्ष्यात् अधिकं न भवेत्, वृद्धिपदं च दैनिकलक्ष्यात् न्यूनं भवेत्।';
+
+  @override
+  String get tutorialStep4Tip =>
+      'हरितं चिह्नम् अद्यतनलक्ष्यस्य सिद्धिं सूचयति। सुवर्णपारितोषिकं जीवनलक्ष्यस्य सिद्धिं सूचयति।';
+
+  @override
+  String get tutorialStep5Tip =>
+      'दूरवाण्याः घटिकानुसारं प्रतिदिनम् अर्धरात्रे एताः सङ्ख्याः 0 तः पुनः आरभन्ते।';
+
+  @override
+  String get tutorialStep6Tip =>
+      'अपाकरणेन गणकः तस्य सर्वः इतिहासः च नश्यति। पुनः प्राप्तुं न शक्यते।';
+
+  @override
+  String get tutorialStep7Tip =>
+      'समाप्तं विरलोपयुक्तं वा गणकं कीलयतु, येन प्रमादेन सङ्ख्या न परिवर्तते।';
+
+  @override
+  String get tutorialStep8Title => 'गणनपटम् उद्घाटयतु';
+
+  @override
+  String get tutorialStep8Desc =>
+      'गणकपत्रं स्पृशतु। बृहत् मालावृत्तयुक्तं गणनपटम् उद्घाट्यते।';
+
+  @override
+  String get tutorialStep8Tip =>
+      'संयोजनेषु शान्तिप्रणाली सक्रियं चेत्, अस्मिन् पटे उद्घाटिते दूरवाणी शान्ता तिष्ठति।';
+
+  @override
+  String get tutorialStep9Title => 'गणनाय स्पृशतु';
+
+  @override
+  String get tutorialStep9Desc =>
+      'मालावृत्तस्य अन्तः स्पृशतु। प्रतिस्पर्शं वृद्धिपदं (सामान्यतः 1) योज्यते। वृत्तात् बहिः स्पर्शाः न गण्यन्ते।';
+
+  @override
+  String get tutorialStep9Tip =>
+      'नेत्रे निमील्य अपि जपितुं शक्यते। वृत्तं बृहत् अस्ति, प्रत्येकमालासमाप्तौ ध्वनिः कम्पनं च भवति।';
+
+  @override
+  String get tutorialStep10Title => 'गणनां निवर्तयतु';
+
+  @override
+  String get tutorialStep10Desc =>
+      'वृत्ते अङ्गुलिद्वयं निधाय वामतः दक्षिणतः वा चालयतु। एकेन चालनेन एकं पदं न्यूनीभवति।';
+
+  @override
+  String get tutorialStep10Tip =>
+      'निवर्तनस्य पुष्ट्यर्थं दूरवाणी एकवारं कम्पते।';
+
+  @override
+  String get tutorialStep11Title => 'पटं पठतु';
+
+  @override
+  String get tutorialStep11Desc =>
+      'उपरितनी गुलिका अस्य उपवेशनस्य कालं दर्शयति। मध्ये वर्तमानमालायां मणिः, अवशिष्टाः मणयः, समाप्ताः मालाः च दृश्यन्ते। अधस्तनपङ्क्तौ सत्रस्य, दिनस्य, जीवनस्य च सङ्ख्याः दृश्यन्ते।';
+
+  @override
+  String get tutorialStep11Tip =>
+      'लक्ष्ये सिद्धे उपरि स्थितस्य दीपचिह्नस्य वर्णः परिवर्तते।';
+
+  @override
+  String get tutorialStep12Title => 'निर्गत्य पुनः आगच्छतु';
+
+  @override
+  String get tutorialStep12Desc =>
+      'कदापि \'पृष्ठतः\' स्पृशतु। गणना शान्त्या रक्ष्यते। उपकरणे पृष्ठभूमौ सति कालमापकं स्थगितं भवति। असमाप्ता माला अन्यस्मिन् दिने अपि भवन्तं प्रतीक्षते।';
+
+  @override
+  String get tutorialStep12Tip =>
+      'पुरातनसङ्ख्यां रक्षित्वा 0 तः नूतनमालाम् आरब्धुं सूचनापट्टे \'नूतनम् आरभ्यताम्\' स्पृशतु।';
+
+  @override
+  String get tutorialStep13Title => 'गणनसूची';
+
+  @override
+  String get tutorialStep13Desc =>
+      '⋮ सूच्यां इतिहासः, विवरणं, संयोजनानि, समाप्य नूतनम् आरम्भः, सत्रपुनःस्थापनं, गणकपुनःस्थापनं च सन्ति।';
+
+  @override
+  String get tutorialStep13Tip =>
+      'सत्रपुनःस्थापनम् इदम् उपवेशनमात्रं मार्जयति। गणकपुनःस्थापनं गणकस्य सर्वम् इतिहासम् अपाकरोति।';
+
+  @override
+  String get tutorialStep14Title => '108 मणयः = 1 माला';
+
+  @override
+  String get tutorialStep14Desc =>
+      'प्रत्येकं 108 गणनाः एका माला। वृत्तं मणिशः पूर्यते, 108 अनन्तरं पुनः आरभते।';
+
+  @override
+  String get tutorialStep14Tip =>
+      '115 गणनाः = 1 माला 7 गणनाः च। अधिकाः गणनाः कदापि न नश्यन्ति।';
+
+  @override
+  String get tutorialStep15Title => 'लक्ष्याणि प्राप्नोतु';
+
+  @override
+  String get tutorialStep15Desc =>
+      'दैनिकलक्ष्ये सिद्धे ध्वनिः श्रूयते, दूरवाणी कम्पते, सूचना च दृश्यते। जीवनलक्ष्यस्य स्वकीयः ध्वनिः, सूचना, सुवर्णपारितोषिकं च सन्ति।';
+
+  @override
+  String get tutorialStep15Tip =>
+      'एतानि संयोजनानि → ध्वनिः स्पन्दनं च इत्यत्र सक्रियाणि निष्क्रियाणि वा कुर्वन्तु।';
+
+  @override
+  String get tutorialStep16Title => 'मेरुविरामः';
+
+  @override
+  String get tutorialStep16Desc =>
+      'संयोजनानि → प्रदर्शनं स्थिरता च इत्यत्र सक्रियं करोतु। प्रत्येकमालानन्तरं 3, 5, 10 वा निमेषान् उपकरणं विरमति, येन विश्रमितुं श्वसितुं च शक्यते।';
+
+  @override
+  String get tutorialStep16Tip =>
+      'यथा मेरुमणिः कदापि न लङ्घ्यते, तथा विरामकाले स्पर्शाः न गण्यन्ते।';
+
+  @override
+  String get tutorialStep17Title => 'मृदुवेगसूचना';
+
+  @override
+  String get tutorialStep17Desc =>
+      'निमेषे प्रायः त्रिभ्यः अधिकवारं स्पृशति चेत्, वृत्तं पीतवर्णेन दीप्यते, लघुस्मरणं च दृश्यते।';
+
+  @override
+  String get tutorialStep17Tip =>
+      'सर्वे स्पर्शाः गण्यन्ते एव। संयोजनानि → प्रदर्शनं स्थिरता च इत्यत्र एषा सूचना निष्क्रिया कर्तुं शक्यते।';
+
+  @override
+  String get tutorialStep18Title => 'इतिहासः';
+
+  @override
+  String get tutorialStep18Desc =>
+      'गणनसूच्याः दीर्घस्पर्शसूच्याः वा इतिहासम् उद्घाटयतु। उपवेशनानि दिनशः, समयेन, दीर्घतया, सङ्ख्यया, मालाभिः च सह दृश्यन्ते।';
+
+  @override
+  String get tutorialStep18Tip =>
+      'उपवेशनम् अपाकर्तुं तस्य अपाकरणचिह्नं स्पृशतु। आहत्य सङ्ख्याः सद्यः नवीक्रियन्ते।';
+
+  @override
+  String get tutorialStep19Title => 'साधनाप्रवाहः';
+
+  @override
+  String get tutorialStep19Desc =>
+      'इतिहासे स्थिता दिनदर्शिका गतान् 16 सप्ताहान् दर्शयति। साधनादिनानि दीपवत् दीप्यन्ते। अधिका दीप्तिः अधिकं जपं सूचयति।';
+
+  @override
+  String get tutorialStep19Tip =>
+      'अविच्छिन्नदिनगणना वा त्यक्तदिनचिह्नं वा नास्ति। यस्मिन् दिने प्रत्यागच्छति तत् स्वागतम्।';
+
+  @override
+  String get tutorialStep20Title => 'गणकसाङ्ख्यिकी';
+
+  @override
+  String get tutorialStep20Desc =>
+      'प्रगतिवृत्तानि गणकस्य सर्वविवरणानि च द्रष्टुं \'गणकस्य विषये\' (दीर्घस्पर्शसूची) विवरणं (गणनसूची) वा चिनोतु।';
+
+  @override
+  String get tutorialStep20Tip =>
+      'प्रतिदिनं सरासरी जपसङ्ख्या भवता निर्धारितात् आरम्भदिनाङ्कात् गण्यते।';
+
+  @override
+  String get tutorialStep21Title => 'ध्वनयः';
+
+  @override
+  String get tutorialStep21Desc =>
+      'संयोजनानि → ध्वनिः स्पन्दनं च इत्यत्र मालाध्वनिं, दैनिकलक्ष्यध्वनिं, जीवनलक्ष्यध्वनिं च चिनोतु। अन्तर्निहितध्वनिं, दूरवाण्याः घण्टिकाध्वनिं, स्वकीयां ध्वनिसञ्चिकां वा चिनोतु।';
+
+  @override
+  String get tutorialStep21Tip =>
+      'जपात् पूर्वं ध्वनिं श्रोतुं \'ध्वनिं शृणोतु\' स्पृशतु।';
+
+  @override
+  String get tutorialStep22Title => 'कम्पनं सूचनाश्च';
+
+  @override
+  String get tutorialStep22Desc =>
+      'प्रत्येकमालायां, लक्ष्ये, निवर्तने च कम्पनं भवति। लक्ष्यसूचनाः स्थितिपट्टिकायां दृश्यन्ते।';
+
+  @override
+  String get tutorialStep22Tip =>
+      'ध्वनयः जागरणवाहिन्या वाद्यन्ते, अतः दूरवाण्यां मौनस्थितौ अपि श्रूयन्ते।';
+
+  @override
+  String get tutorialStep23Title => 'प्रदर्शनं स्थिरता च';
+
+  @override
+  String get tutorialStep23Desc =>
+      'संयोजनानि → प्रदर्शनं स्थिरता च इत्यत्र प्रकाशं निर्धारयतु, मन्दजपविधिं सक्रियं करोतु, शान्तिप्रणाली इत्यनेन आह्वानानि सूचनाश्च शमयतु वा।';
+
+  @override
+  String get tutorialStep23Tip =>
+      'शान्तिप्रणाली कृते एकवारम् अनुमतिः आवश्यकी। गणनपटात् निर्गमने तत् पुनः निष्क्रियं भवति।';
+
+  @override
+  String get tutorialStep24Title => 'रूपम्';
+
+  @override
+  String get tutorialStep24Desc =>
+      'संयोजनानि → स्वरूपम् इत्यत्र उपकरणे उपयुक्ताः मन्दिरवर्णाः अक्षररूपाणि च दृश्यन्ते।';
+
+  @override
+  String get tutorialStep24Tip =>
+      'एकेन हस्तेन गणनाय उपकरणं सर्वदा ऊर्ध्वस्थितौ (पोर्ट्रेट्) तिष्ठति।';
+
+  @override
+  String get tutorialStep25Title => 'सञ्चिकायां प्रतिलिपिः';
+
+  @override
+  String get tutorialStep25Desc =>
+      'संयोजनानि → दत्तांशसंरक्षणम् → निर्यातः, मुख्यसूच्याम् आयात-निर्यातः वा उपयुज्यताम्। सर्वे गणकाः इतिहासः च एकस्यां सञ्चिकायां रक्ष्यन्ते, वितरणपत्रं च उद्घाट्यते।';
+
+  @override
+  String get tutorialStep25Tip =>
+      'गुप्तवाक्येन सञ्चिकां कीलयितुं शक्यते (AES-256-GCM)। विस्मृतं गुप्तवाक्यं पुनः न लभ्यते।';
+
+  @override
+  String get tutorialStep26Title => 'सञ्चिकातः पुनःस्थापनम्';
+
+  @override
+  String get tutorialStep26Desc =>
+      'आयातं चित्वा प्रतिलिपिसञ्चिकां चिनोतु। सञ्चिका कीलिता चेत् गुप्तवाक्यं लिखतु।';
+
+  @override
+  String get tutorialStep26Tip =>
+      'आयातः अस्यां दूरवाण्यां स्थितं सर्वं दत्तांशं प्रतिस्थापयति। तं रक्षितुम् इच्छति चेत् प्रथमं निर्यातं करोतु।';
+
+  @override
+  String get tutorialStep27Title => 'दूरवाणीतः दूरवाणीं प्रति';
+
+  @override
+  String get tutorialStep27Desc =>
+      'पुरातनदूरवाण्यां प्रकाशसञ्चारः (प्रेषणम्) चित्वा गणकान् चिनोतु। नूतनदूरवाण्यां प्रकाशसञ्चारः (स्वीकरणम्) चित्वा चलं QR सङ्केतं प्रति छायाग्राहकं धारयतु।';
+
+  @override
+  String get tutorialStep27Tip =>
+      'अन्तर्जालं, ब्लूटूथ्, तन्त्री वा न उपयुज्यते। चिताः गणकाः योज्यन्ते; ग्राहकदूरवाण्याम् अन्ये गणकाः तिष्ठन्ति।';
+
+  @override
+  String get tutorialStep28Title => 'सर्वं दत्तांशं मार्जयतु';
+
+  @override
+  String get tutorialStep28Desc =>
+      'संयोजनानि → दत्तांशसंरक्षणम् → सर्वदत्तांशमार्जनं सर्वान् गणकान् सर्वम् इतिहासं च अपाकरोति।';
+
+  @override
+  String get tutorialStep28Tip =>
+      'प्रथमं प्रतिलिपिं करोतु। इदं निवर्तयितुं न शक्यते।';
+
+  @override
+  String get tutorialStep29Title => 'पूर्णतया अन्तर्जालरहितं गोपनीयं च';
+
+  @override
+  String get tutorialStep29Desc =>
+      'उपकरणस्य अन्तर्जालानुमतिः नास्ति, विज्ञापनानि न, अनुवर्तनं न, खाता अपि न। भवतां साधना भवतां दूरवाण्याम् एव तिष्ठति।';
+
+  @override
+  String get tutorialStep29Tip =>
+      'अस्य उपकरणस्य कृते एण्ड्रॉयड्-मेघप्रतिलिपिः निष्क्रिया, अतः प्रतिलिपिरक्षणाय निर्यातं प्रकाशसञ्चारं वा उपयुज्यताम्।';
+
+  @override
+  String get tutorialStep30Title => 'अनुमतयः';
+
+  @override
+  String get tutorialStep30Desc =>
+      'छायाग्राहकः केवलं समन्वयसङ्केतानां परीक्षणाय। सूचनाः लक्ष्यसन्देशाय। कम्पनं ध्वनिश्च प्रतिक्रियायै। शान्तिप्रणाली अनुमतिः भवता सक्रियीकृते एव पृच्छ्यते।';
+
+  @override
+  String get tutorialStep30Tip =>
+      'प्रत्येकम् अनुमतिः किमर्थम् इति संयोजनानि → अनुमतयः इत्यत्र पश्यतु।';
+
+  @override
+  String get helpCountersIntro =>
+      'मुख्यपटे भवतां सर्वे गणकाः दृश्यन्ते। प्रत्येकः गणकः एकः मन्त्रः साधना वा, स्वकीयैः लक्ष्यैः इतिहासेन च सह।';
+
+  @override
+  String get helpCountersCreateSection => 'गणकरचना';
+
+  @override
+  String get helpCountersCreateBold1 => 'योजनगण्डः:';
+
+  @override
+  String get helpCountersCreateBullet1 =>
+      'नूतनगणकाय मुख्यपटस्य उपरि स्थितं + गण्डं स्पृशतु।';
+
+  @override
+  String get helpCountersCreateBold2 => 'नाम:';
+
+  @override
+  String get helpCountersCreateBullet2 =>
+      'मन्त्रनाम कस्यामपि भाषायां लिप्यां वा लिखतु।';
+
+  @override
+  String get helpCountersCreateBold3 => 'आरम्भसङ्ख्या:';
+
+  @override
+  String get helpCountersCreateBullet3 =>
+      'पूर्वकृतान् जपान् योजयितुं, यथा पत्रे लिखितान्। सामान्यतः 0।';
+
+  @override
+  String get helpCountersCreateBold4 => 'वृद्धिपदम्:';
+
+  @override
+  String get helpCountersCreateBullet4 =>
+      'एकेन स्पर्शेन कियत् योज्यते। सामान्यतः 1। दैनिकलक्ष्यात् न्यूनं भवेत्।';
+
+  @override
+  String get helpCountersCreateBold5 => 'लक्ष्याणि:';
+
+  @override
+  String get helpCountersCreateBullet5 =>
+      'दैनिकलक्ष्यं जीवनलक्ष्यं च निर्धारयतु। लक्ष्यं नास्ति चेत् 0। दैनिकलक्ष्यं जीवनलक्ष्यात् अधिकं न भवेत्।';
+
+  @override
+  String get helpCountersCreateBold6 => 'आरम्भदिनाङ्कः:';
+
+  @override
+  String get helpCountersCreateBullet6 =>
+      'अस्याः साधनायाः आरम्भदिनम्। प्रतिदिनं सरासरी जपगणनाय उपयुज्यते।';
+
+  @override
+  String get helpCountersHomeSection => 'मुख्यपटम्';
+
+  @override
+  String get helpCountersHomeBold1 => 'अद्यतनसारांशः:';
+
+  @override
+  String get helpCountersHomeBullet1 =>
+      'उपरितनी गुलिका अद्यतनान् आहत्य जपान्, मालाः, अद्य उपयुक्तानां गणकानां सङ्ख्यां च दर्शयति।';
+
+  @override
+  String get helpCountersHomeBold2 => 'पत्रे प्रगतिः:';
+
+  @override
+  String get helpCountersHomeBullet2 =>
+      'प्रत्येकस्मिन् पत्रे आहत्य जपाः मालाः च, अद्यतनजपाः, अद्यतनलक्ष्याय 27 मणीनां पङ्क्तिः, जीवनलक्ष्यस्य पट्टिका च सन्ति।';
+
+  @override
+  String get helpCountersHomeBold3 => 'चिह्नानि:';
+
+  @override
+  String get helpCountersHomeBullet3 =>
+      'अद्यतनलक्ष्ये सिद्धे हरितचिह्नं दृश्यते। जीवनलक्ष्ये सिद्धे सुवर्णपारितोषिकं दृश्यते।';
+
+  @override
+  String get helpCountersHomeBold4 => 'क्रमः:';
+
+  @override
+  String get helpCountersHomeBullet4 =>
+      'सक्रियाः गणकाः प्रथमं, ततः निष्क्रियाः। नूतनाः प्रथमं दृश्यन्ते।';
+
+  @override
+  String get helpCountersHomeBold5 => 'वर्णाः:';
+
+  @override
+  String get helpCountersHomeBullet5 =>
+      'प्रत्येकः गणकः स्वकीयं वर्णं लभते, सः सर्वदा समानः तिष्ठति।';
+
+  @override
+  String get helpCountersHomeBold6 => 'उपरितनी सूची:';
+
+  @override
+  String get helpCountersHomeBullet6 =>
+      'उपरितन्यां सूच्याम् आयात-निर्यातः, संयोजनानि, विषयपरिचयः च सन्ति।';
+
+  @override
+  String get helpCountersOptionsSection => 'गणकविकल्पाः (पत्रं दीर्घं स्पृशतु)';
+
+  @override
+  String get helpCountersOptionsBold1 => 'गणकस्य विषये:';
+
+  @override
+  String get helpCountersOptionsBullet1 => 'गणकस्य साङ्ख्यिकी विवरणानि च।';
+
+  @override
+  String get helpCountersOptionsBold2 => 'इतिहासः:';
+
+  @override
+  String get helpCountersOptionsBullet2 => 'अस्य गणकस्य सर्वाणि उपवेशनानि।';
+
+  @override
+  String get helpCountersOptionsBold3 => 'सम्पादनम्:';
+
+  @override
+  String get helpCountersOptionsBullet3 =>
+      'नाम, पदं, लक्ष्याणि, आरम्भदिनाङ्कं वा परिवर्तयतु।';
+
+  @override
+  String get helpCountersOptionsBold4 => 'कीलनम् / उद्घाटनम्:';
+
+  @override
+  String get helpCountersOptionsBullet4 => 'पत्रस्य कीलचिह्नवत् एव।';
+
+  @override
+  String get helpCountersOptionsBold5 => 'निष्क्रियीकृतः (सिद्धः):';
+
+  @override
+  String get helpCountersOptionsBullet5 =>
+      'गणकं समाप्तम् इति चिह्नयतु, यथा सङ्कल्पे पूर्णे। कारणं योजयितुं शक्यते।';
+
+  @override
+  String get helpCountersOptionsBold6 => 'निष्क्रियीकृतः (अपूर्णः):';
+
+  @override
+  String get helpCountersOptionsBullet6 =>
+      'असमाप्तं गणकं स्थगयतु। कारणं योजयितुं शक्यते।';
+
+  @override
+  String get helpCountersOptionsBold7 => 'विलोपनम्:';
+
+  @override
+  String get helpCountersOptionsBullet7 =>
+      'पुष्टेः अनन्तरं गणकं तस्य सर्वम् इतिहासं च अपाकरोति। निवर्तयितुं न शक्यते।';
+
+  @override
+  String get helpCountersLockSection => 'कीलिताः निष्क्रियाः च गणकाः';
+
+  @override
+  String get helpCountersLockBold1 => 'कीलचिह्नम्:';
+
+  @override
+  String get helpCountersLockBullet1 =>
+      'कीलनाय उद्घाटनाय वा पत्रस्य कीलचिह्नं स्पृशतु।';
+
+  @override
+  String get helpCountersLockBold2 => 'कीलितः:';
+
+  @override
+  String get helpCountersLockBullet2 =>
+      'कीलितः गणकः गणनार्थं न उद्घाट्यते, अतः प्रमादेन सङ्ख्या न परिवर्तते। स्पर्शे लघुसन्देशः दृश्यते।';
+
+  @override
+  String get helpCountersLockBold3 => 'निष्क्रियः:';
+
+  @override
+  String get helpCountersLockBullet3 =>
+      'निष्क्रियाः गणकाः चिह्नेन सह सूच्यां तिष्ठन्ति, किन्तु गणनार्थं न उद्घाट्यन्ते।';
+
+  @override
+  String get helpCountingScreenSection => 'पटपठनम्';
+
+  @override
+  String get helpCountingScreenBold1 => 'कालमापकम्:';
+
+  @override
+  String get helpCountingScreenBullet1 =>
+      'उपरितनी गुलिका अस्य उपवेशनस्य कालं दर्शयति। उपकरणे पृष्ठभूमौ सति \'स्थगितम्\' इति दर्शयति।';
+
+  @override
+  String get helpCountingScreenBold2 => 'मध्ये:';
+
+  @override
+  String get helpCountingScreenBullet2 =>
+      'बृहत्सङ्ख्या वर्तमानमालायां स्थानम् (0–107)। तदधः अवशिष्टाः मणयः अस्मिन् उपवेशने समाप्ताः मालाः च।';
+
+  @override
+  String get helpCountingScreenBold3 => 'अधस्तनपङ्क्तिः:';
+
+  @override
+  String get helpCountingScreenBullet3 =>
+      'सत्रस्य, दिनस्य, जीवनस्य च सङ्ख्याः लक्ष्यप्रगत्या सह दर्शयति।';
+
+  @override
+  String get helpCountingScreenBold4 => 'दीपः:';
+
+  @override
+  String get helpCountingScreenBullet4 =>
+      'दैनिकलक्ष्ये जीवनलक्ष्ये वा सिद्धे उपरि स्थितस्य दीपचिह्नस्य वर्णः परिवर्तते।';
+
+  @override
+  String get helpCountingSaveSection => 'निर्गमनं रक्षणं च';
+
+  @override
+  String get helpCountingSaveBold1 => 'स्वयंरक्षणम्:';
+
+  @override
+  String get helpCountingSaveBullet1 =>
+      'कदापि \'पृष्ठतः\' स्पृशतु। गणना शान्त्या रक्ष्यते; उपकरणं न पृच्छति।';
+
+  @override
+  String get helpCountingSaveBold2 => 'विघ्नेऽपि सुरक्षितम्:';
+
+  @override
+  String get helpCountingSaveBullet2 =>
+      'प्रति 5 स्पर्शान् 5 निमेषान् वा गणना रक्ष्यते, प्रति 20 स्पर्शान् 30 निमेषान् वा पूर्णतया सञ्चीयते। दूरवाण्यां निष्क्रियायाम् अपि उपकरणोद्घाटने गणना प्रत्यागच्छति।';
+
+  @override
+  String get helpCountingSaveBold3 => 'कालमापकविरामः:';
+
+  @override
+  String get helpCountingSaveBullet3 =>
+      'उपकरणे पृष्ठभूमौ सति कालमापकं स्थगितं भवति, अतः निष्क्रियकालः उपवेशने न योज्यते।';
+
+  @override
+  String get helpCountingSaveBold4 => 'असमाप्ता माला:';
+
+  @override
+  String get helpCountingSaveBullet4 =>
+      '108 पूर्वं विरमति चेत्, अन्यस्मिन् दिने अपि अग्रिमवारं सा माला प्रतीक्षते, सूचनापट्टः तां दर्शयति। स्पर्शाः सर्वदा तस्मिन् एव दिने गण्यन्ते यस्मिन् कृताः। ताः गणनाः रक्षित्वा 0 तः नूतनमालाम् आरब्धुं \'नूतनम् आरभ्यताम्\' स्पृशतु।';
+
+  @override
+  String get helpCountingMenuSection => 'गणनसूची (⋮)';
+
+  @override
+  String get helpCountingMenuBold1 => 'इतिहासः:';
+
+  @override
+  String get helpCountingMenuBullet1 => 'अस्य गणकस्य इतिहासम् उद्घाटयति।';
+
+  @override
+  String get helpCountingMenuBold2 => 'विवरणम्:';
+
+  @override
+  String get helpCountingMenuBullet2 =>
+      'अस्य गणकस्य साङ्ख्यिकीं विवरणानि च दर्शयति।';
+
+  @override
+  String get helpCountingMenuBold3 => 'संयोजनानि:';
+
+  @override
+  String get helpCountingMenuBullet3 => 'उपकरणस्य संयोजनानि उद्घाटयति।';
+
+  @override
+  String get helpCountingMenuBold4 => 'समाप्य नूतनम् आरभ्यताम्:';
+
+  @override
+  String get helpCountingMenuBullet4 =>
+      'वर्तमानाम् असमाप्तमालां समापयति। तस्याः गणनाः इतिहासे रक्ष्यन्ते, अग्रिमः स्पर्शः 0 तः नूतनमालाम् आरभते।';
+
+  @override
+  String get helpCountingMenuBold5 => 'सत्रं पुनःस्थाप्यताम्:';
+
+  @override
+  String get helpCountingMenuBullet5 =>
+      'वर्तमानम् उपवेशनं त्यक्त्वा 0 करोति। पूर्वेतिहासः तिष्ठति।';
+
+  @override
+  String get helpCountingMenuBold6 => 'गणकः पुनःस्थाप्यताम्:';
+
+  @override
+  String get helpCountingMenuBullet6 =>
+      'अस्य गणकस्य सर्वम् इतिहासम् अपाकरोति। निवर्तयितुं न शक्यते।';
+
+  @override
+  String get helpCountingMindfulBold1 => 'मेरुविरामः:';
+
+  @override
+  String get helpCountingMindfulBullet1 =>
+      'संयोजनानि → प्रदर्शनं स्थिरता च इत्यत्र सक्रियीकृते, प्रत्येकमालानन्तरम् उपकरणं 3, 5, 10 वा निमेषान् विरमति। विरामे स्पर्शाः न गण्यन्ते। विरामः स्वयं समाप्यते, निवर्तनचालनेन वा।';
+
+  @override
+  String get helpCountingMindfulBold2 => 'गतिसूचना:';
+
+  @override
+  String get helpCountingMindfulBullet2 =>
+      'निमेषे प्रायः त्रिभ्यः अधिकवारं स्पृशति चेत्, वृत्तं मृदु दीप्यते, लघुस्मरणं च दृश्यते। एतत् कदापि गणनां न निरुणद्धि।';
+
+  @override
+  String get helpMalaBeadsBold4 => 'मालाध्वनिः:';
+
+  @override
+  String get helpMalaBeadsBullet4 =>
+      'सक्रियं चेत् प्रत्येकम् अष्टोत्तरशततमगणनायां मृदुध्वनिः भवति। तेनैव स्पर्शेन लक्ष्ये सिद्धे सः त्यज्यते, येन ध्वनयः न मिश्रीभवन्ति।';
+
+  @override
+  String get helpMalaGoalsBold3 => 'दैनिकलक्ष्यसिद्धौ:';
+
+  @override
+  String get helpMalaGoalsBullet3 =>
+      'दैनिकसूचना सक्रिया चेत् लक्ष्यध्वनिः भवति, दूरवाणी कम्पते, सूचना च दृश्यते। पत्रे हरितचिह्नं दृश्यते।';
+
+  @override
+  String get helpMalaGoalsBold4 => 'जीवनलक्ष्यसिद्धौ:';
+
+  @override
+  String get helpMalaGoalsBullet4 =>
+      'जीवनसूचना सक्रिया चेत् तस्याः ध्वनिः सूचना च भवतः। सुवर्णपारितोषिकं दृश्यते, पत्रं मृदुचन्दनवर्णं भवति।';
+
+  @override
+  String get helpMalaCardSection => 'पत्रे प्रगतिः';
+
+  @override
+  String get helpMalaCardBold1 => 'मणिपङ्क्तिः:';
+
+  @override
+  String get helpMalaCardBullet1 =>
+      '27 लघुमणीनां पङ्क्तिः अद्यतनलक्ष्यप्रगतिं दर्शयति। प्रत्येकः मणिः लक्ष्यस्य 1/27, मालायाः 4 मणिवत्।';
+
+  @override
+  String get helpMalaCardBold2 => 'जीवनपट्टिका:';
+
+  @override
+  String get helpMalaCardBullet2 =>
+      'दीर्घपट्टिका जीवनलक्ष्यस्य कियान् भागः सिद्धः इति दर्शयति।';
+
+  @override
+  String get helpMalaCardBold3 => 'सङ्ख्याः:';
+
+  @override
+  String get helpMalaCardBullet3 =>
+      'पत्रे आहत्य जपाः, आहत्य मालाः, अद्यतनजपाः मालाः च दृश्यन्ते।';
+
+  @override
+  String get helpHistoryIntro =>
+      'इतिहासः प्रत्येकोपवेशनस्य अभिलेखं रक्षति। गणनसूच्याः, गणकस्य दीर्घस्पर्शसूच्याः, गणकविवरणपृष्ठात् वा उद्घाटयतु।';
+
+  @override
+  String get helpHistoryLogSection => 'इतिहाससूची';
+
+  @override
+  String get helpHistoryLogBold1 => 'सारांशः:';
+
+  @override
+  String get helpHistoryLogBullet1 =>
+      'उपरितनं पत्रम् आहत्य जपान्, साधनादिनानि, सङ्कल्पस्य कियान् भागः सिद्धः इति च दर्शयति।';
+
+  @override
+  String get helpHistoryLogBold2 => 'दिनशः:';
+
+  @override
+  String get helpHistoryLogBullet2 =>
+      'उपवेशनानि दिनाङ्कशः, नूतनानि प्रथमम्। प्रत्येकं दिनं स्वकीयम् आहत्यं तद्दिनान्तपर्यन्तम् आहत्यं च दर्शयति।';
+
+  @override
+  String get helpHistoryLogBold3 => 'उपवेशनपङ्क्तयः:';
+
+  @override
+  String get helpHistoryLogBullet3 =>
+      'प्रत्येकम् उपवेशनम् आरम्भसमयं, दीर्घतां, सङ्ख्यां, मालाः च दर्शयति।';
+
+  @override
+  String get helpHistoryDeleteSection => 'इतिहासविलोपनम्';
+
+  @override
+  String get helpHistoryDeleteBold1 => 'एकम् उपवेशनम्:';
+
+  @override
+  String get helpHistoryDeleteBullet1 =>
+      'उपवेशनस्य विलोपनचिह्नं स्पृष्ट्वा पुष्टिं करोतु। आहत्यसङ्ख्याः सद्यः पुनः गण्यन्ते।';
+
+  @override
+  String get helpHistoryDeleteBold2 => 'इतिहासमार्जनम्:';
+
+  @override
+  String get helpHistoryDeleteBullet2 =>
+      'उपरितनः मार्जनगण्डः पुष्टेः अनन्तरम् अस्य गणकस्य सर्वाणि उपवेशनानि अपाकरोति। निवर्तयितुं न शक्यते।';
+
+  @override
+  String get helpHistoryFlowSection => 'साधनाप्रवाहदिनदर्शिका';
+
+  @override
+  String get helpHistoryFlowBold1 => '16 सप्ताहाः:';
+
+  @override
+  String get helpHistoryFlowBullet1 =>
+      'गतानां 16 सप्ताहानां दिनदर्शिका, सोमवासरः उपरि। साधनादिनानि मृदुचन्दनात् गाढकाषायपर्यन्तं दीपवत् दीप्यन्ते।';
+
+  @override
+  String get helpHistoryFlowBold2 => 'दीप्तिः:';
+
+  @override
+  String get helpHistoryFlowBullet2 =>
+      'दैनिकलक्ष्ययुक्तस्य गणकस्य दीप्तिः तल्लक्ष्यप्रगतिं दर्शयति। अन्यथा दर्शितेषु अधिकतमजपदिनेन सह तुल्यते।';
+
+  @override
+  String get helpHistoryFlowBold3 => 'दबावः नास्ति:';
+
+  @override
+  String get helpHistoryFlowBullet3 =>
+      'अविच्छिन्नदिनगणना वा त्यक्तदिनचिह्नं वा नास्ति। त्रिभ्यः अधिकदिनेभ्यः अनन्तरं प्रत्यागमने स्नेहपूर्णा स्वागतपङ्क्तिः दृश्यते।';
+
+  @override
+  String get helpHistoryStatsSection => 'गणकसाङ्ख्यिकी';
+
+  @override
+  String get helpHistoryStatsBold1 => 'उद्घाटनम्:';
+
+  @override
+  String get helpHistoryStatsBullet1 =>
+      'गणकं दीर्घं स्पृष्ट्वा \'गणकस्य विषये\' चिनोतु, गणनसूच्यां \'विवरणम्\' वा उपयुज्यताम्।';
+
+  @override
+  String get helpHistoryStatsBold2 => 'वृत्तानि:';
+
+  @override
+  String get helpHistoryStatsBullet2 =>
+      'त्रीणि वृत्तानि जीवनप्रगतिम्, अद्यतनप्रगतिम्, आहत्य मालाः च दर्शयन्ति।';
+
+  @override
+  String get helpHistoryStatsBold3 => 'विवरणानि:';
+
+  @override
+  String get helpHistoryStatsBullet3 =>
+      'नाम, स्थितिः, पदम्, आरम्भसङ्ख्या, लक्ष्याणि, आरम्भदिनाङ्कः, रचनादिनाङ्कः, प्रतिदिनं सरासरी जपाः, निष्क्रियत्वे तद्दिनाङ्कः कारणं च।';
+
+  @override
+  String get helpAudioMalaSection => 'मालाध्वनिः';
+
+  @override
+  String get helpAudioMalaBold1 => 'मालाध्वनिः:';
+
+  @override
+  String get helpAudioMalaBullet1 =>
+      'प्रत्येकम् अष्टोत्तरशततमगणनायां मृदुध्वनिः कम्पनं च।';
+
+  @override
+  String get helpAudioMalaBold2 => 'विकल्पाः:';
+
+  @override
+  String get helpAudioMalaBullet2 =>
+      'मन्दिरकांस्यघण्टा, तिब्बतीयगायनपात्रं, संश्लिष्टध्वनिः (लघुबीप्) वा।';
+
+  @override
+  String get helpAudioMalaBold3 => 'मिश्रणं नास्ति:';
+
+  @override
+  String get helpAudioMalaBullet3 =>
+      'अष्टोत्तरशततमगणना लक्ष्यम् अपि साधयति चेत् लक्ष्यध्वनिः एव भवति।';
+
+  @override
+  String get helpAudioGoalSection => 'दैनिकलक्ष्यम्';
+
+  @override
+  String get helpAudioGoalBold1 => 'सूचना:';
+
+  @override
+  String get helpAudioGoalBullet1 =>
+      'दैनिकलक्ष्ये सिद्धे ध्वनिः भवति, दूरवाणी कम्पते, स्थितिपट्टिकायां सूचना च दृश्यते।';
+
+  @override
+  String get helpAudioGoalBold2 => 'लक्ष्यध्वनिः:';
+
+  @override
+  String get helpAudioGoalBullet2 =>
+      'प्रणाली-पूर्वनिर्धारितं, दूरवाण्याः घण्टिकाध्वनिं, अन्तर्निहितध्वनिं (मन्दिरघण्टा, गायनपात्रं, संश्लिष्टध्वनिः, पवित्रशङ्खः), स्वकीयां ध्वनिसञ्चिकां (MP3, WAV, AAC) वा चिनोतु।';
+
+  @override
+  String get helpAudioGoalBold3 => 'पूर्वश्रवणम्:';
+
+  @override
+  String get helpAudioGoalBullet3 =>
+      'चितं ध्वनिं श्रोतुं \'ध्वनिं शृणोतु\' स्पृशतु।';
+
+  @override
+  String get helpAudioLifetimeSection => 'जीवनलक्ष्यम्';
+
+  @override
+  String get helpAudioLifetimeBold1 => 'जीवनलक्ष्यध्वनिः:';
+
+  @override
+  String get helpAudioLifetimeBullet1 => 'जीवनलक्ष्यसिद्धिक्षणाय पृथक् ध्वनिः।';
+
+  @override
+  String get helpAudioLifetimeBold2 => 'जीवनलक्ष्यसूचना:';
+
+  @override
+  String get helpAudioLifetimeBullet2 =>
+      'जीवनलक्ष्यसिद्धौ ध्वनिं, कम्पनं, सूचनां च प्राप्तुम् एतत् सक्रियं करोतु।';
+
+  @override
+  String get helpAudioVolumeSection => 'श्रवणयोग्यः ध्वनिः';
+
+  @override
+  String get helpAudioVolumeBold1 => 'जागरणवाहिनी:';
+
+  @override
+  String get helpAudioVolumeBullet1 =>
+      'समाप्तिध्वनयः जागरणवाहिन्या वाद्यन्ते, अतः मौनस्थितौ अपि श्रूयन्ते। कतिपयनिमेषानन्तरं ध्वनिमात्रा पूर्ववत् भवति।';
+
+  @override
+  String get helpDisplayIntro =>
+      'एतानि संयोजनानि शान्तजपे साहाय्यं कुर्वन्ति, उपकरणस्य रूपं भाषां च चेतुम् अपि।';
+
+  @override
+  String get helpDisplayBrightSection => 'प्रकाशः मन्दता च';
+
+  @override
+  String get helpDisplayBrightBold1 => 'प्रकाशस्तरः:';
+
+  @override
+  String get helpDisplayBrightBullet1 =>
+      'संयोजनानि → प्रदर्शनं स्थिरता च इत्यत्र मन्दात् पूर्णपर्यन्तं स्तरं चिनोतु। एतत् उपकरणपटम् एव परिवर्तयति, दूरवाण्याः प्रकाशं न।';
+
+  @override
+  String get helpDisplayBrightBold2 => 'प्रणालीप्रयोगः:';
+
+  @override
+  String get helpDisplayBrightBullet2 =>
+      'दूरवाण्याः सामान्यप्रकाशं प्रति प्रत्यागन्तुं \'प्रणाली\' विकल्पं स्पृशतु।';
+
+  @override
+  String get helpDisplayBrightBold3 => 'मन्दप्रकाशजपविधिः:';
+
+  @override
+  String get helpDisplayBrightBullet3 =>
+      'मालावृत्तं स्पष्टं रक्षित्वा गणनपटस्य पृष्ठभूमिं श्यामां करोति। अन्धकारकक्षेभ्यः उचितम्, विद्युत्कोशं च रक्षति।';
+
+  @override
+  String get helpDisplayDndSection => 'शान्तिप्रणाली';
+
+  @override
+  String get helpDisplayDndBold1 => 'सूचनाशमनम्:';
+
+  @override
+  String get helpDisplayDndBullet1 =>
+      'सक्रिये सति गणनपटे उद्घाटिते दूरवाणी शान्तिप्रणाल्यां गच्छति, निर्गमने पूर्ववत् भवति।';
+
+  @override
+  String get helpDisplayDndBold2 => 'अनुमतिः:';
+
+  @override
+  String get helpDisplayDndBullet2 =>
+      'प्रथमवारं शान्तिप्रणाल्याः अनुमतिं दातुम् उपकरणं पृच्छति। संयोजनानि उद्घाट्य अस्मै उपकरणाय अनुमतिं ददातु।';
+
+  @override
+  String get helpDisplayMindfulSection => 'सावधानगणनम्';
+
+  @override
+  String get helpDisplayMindfulBold1 => 'मेरुविरामः:';
+
+  @override
+  String get helpDisplayMindfulBullet1 =>
+      'प्रत्येकमालानन्तरं 3, 5, 10 वा निमेषाणां लघुविरामः। विरामे स्पर्शाः न गण्यन्ते। सामान्यतः निष्क्रियः।';
+
+  @override
+  String get helpDisplayMindfulBold2 => 'मृदुगतिसूचना:';
+
+  @override
+  String get helpDisplayMindfulBullet2 =>
+      'अतिवेगेन स्पर्शे मृदुदीप्तिः। सर्वे स्पर्शाः गण्यन्ते। सामान्यतः सक्रिया।';
+
+  @override
+  String get helpDisplayLangSection => 'भाषा';
+
+  @override
+  String get helpDisplayLangBold1 => 'भाषाचयनम्:';
+
+  @override
+  String get helpDisplayLangBullet1 =>
+      'संयोजनानि → भाषा इत्यत्र आङ्ग्लं, मलयाळं, संस्कृतं, प्रणाली-पूर्वनिर्धारितं वा चिनोतु।';
+
+  @override
+  String get helpDisplayLangBold2 => 'का अपि लिपिः:';
+
+  @override
+  String get helpDisplayLangBullet2 =>
+      'उपकरणभाषा का अपि भवतु, गणकनाम कस्यामपि लिप्यां लेखितुं शक्यते।';
+
+  @override
+  String get helpDisplayLookSection => 'स्वरूपम्';
+
+  @override
+  String get helpDisplayLookBold1 => 'मन्दिरशैली:';
+
+  @override
+  String get helpDisplayLookBullet1 =>
+      'संयोजनानि → स्वरूपम् इत्यत्र उपकरणस्य वर्णाः (क्षीरवर्णः, सिन्दूरः, चन्दनं, तुलसी, पाटलः) अक्षररूपाणि च दृश्यन्ते।';
+
+  @override
+  String get helpDisplayLookBold2 => 'ऊर्ध्वस्थितिः एव:';
+
+  @override
+  String get helpDisplayLookBullet2 =>
+      'एकेन हस्तेन गणनाय उपकरणं सर्वदा ऊर्ध्वं तिष्ठति।';
+
+  @override
+  String get helpOpticalHowBold4 => 'संयोजनम्:';
+
+  @override
+  String get helpOpticalHowBullet4 =>
+      'चिताः गणकाः ग्राहकदूरवाण्यां योज्यन्ते। तत्र पूर्वमेव स्थितः समानः गणकः प्राप्तप्रतिलिप्या प्रतिस्थाप्यते। तस्यां दूरवाण्याम् अन्ये गणकाः न स्पृश्यन्ते।';
+
+  @override
+  String get helpOpticalSendSection => 'प्रेषकनियन्त्रणानि';
+
+  @override
+  String get helpOpticalSendBold1 => 'वेगः:';
+
+  @override
+  String get helpOpticalSendBullet1 =>
+      'निमेषे 8, 12, 15 वा चित्राणि चिनोतु। 8 पूर्वनिर्धारितम्, बहुषु दूरवाणीषु उत्तमम्।';
+
+  @override
+  String get helpOpticalSendBold2 => 'विरामः प्रवर्तनं च:';
+
+  @override
+  String get helpOpticalSendBullet2 =>
+      'कदापि प्रवाहं स्थगयित्वा पुनः प्रवर्तयतु।';
+
+  @override
+  String get helpOpticalSendBold3 => 'प्रकाशः:';
+
+  @override
+  String get helpOpticalSendBullet3 =>
+      'अन्यछायाग्राहकस्य कष्टे सति सर्पकेण पटं प्रकाशमानतरं कर्तुं शक्यते। प्रेषणे स्थगिते पूर्ववत् भवति। प्रेषणकाले पटं सक्रियं तिष्ठति।';
+
+  @override
+  String get helpOpticalReceiveSection => 'ग्राहकनियन्त्रणानि';
+
+  @override
+  String get helpOpticalReceiveBold1 => 'केन्द्रीकरणाय स्पृशतु:';
+
+  @override
+  String get helpOpticalReceiveBullet1 =>
+      'सङ्केते केन्द्रीकर्तुं छायाग्राहकदृश्यं स्पृशतु।';
+
+  @override
+  String get helpOpticalReceiveBold2 => 'विस्तारणम्:';
+
+  @override
+  String get helpOpticalReceiveBullet2 =>
+      'सङ्केतः लघुः दृश्यते चेत् विस्तारणसर्पकं (4× पर्यन्तम्) उपयुज्यताम्।';
+
+  @override
+  String get helpOpticalReceiveBold3 => 'दीपः:';
+
+  @override
+  String get helpOpticalReceiveBullet3 => 'अन्धकारकक्षे दीपिकां प्रज्वालयतु।';
+
+  @override
+  String get helpOpticalReceiveBold4 => 'प्राप्तचित्राणि:';
+
+  @override
+  String get helpOpticalReceiveBullet4 =>
+      'सर्वभागपूर्तेः पूर्वम् अपि परीक्षणं प्रचलति इति एषा पङ्क्तिः दर्शयति।';
+
+  @override
+  String get helpBackupWhereSection => 'कुत्र लभ्यते';
+
+  @override
+  String get helpBackupWhereBold1 => 'संयोजनानि:';
+
+  @override
+  String get helpBackupWhereBullet1 =>
+      'संयोजनानि → दत्तांशसंरक्षणम् इत्यत्र निर्यातः, आयातः, प्रकाशसञ्चारः, सर्वदत्तांशमार्जनं च सन्ति।';
+
+  @override
+  String get helpBackupWhereBold2 => 'मुख्यसूची:';
+
+  @override
+  String get helpBackupWhereBullet2 =>
+      'मुख्यपटस्य सूच्याम् अपि आयात-निर्यातः अस्ति।';
+
+  @override
+  String get helpBackupExportBold4 => 'वितरणपत्रम्:';
+
+  @override
+  String get helpBackupExportBullet4 =>
+      'निर्यातानन्तरम् एण्ड्रॉयड्-वितरणपत्रम् उद्घाट्यते। सञ्चिकां स्वसञ्चिकासु स्मृतिपत्रे वा रक्षतु, विश्वस्तेन उपकरणेन प्रेषयतु वा।';
+
+  @override
+  String get helpBackupImportBold4 => 'सुरक्षितपुनःस्थापनम्:';
+
+  @override
+  String get helpBackupImportBullet4 =>
+      'सञ्चिका प्रथमं परीक्ष्यते। सा दूषिता गुप्तवाक्यं वा अशुद्धं चेत् किमपि न परिवर्तते, दोषः च दर्श्यते।';
+
+  @override
+  String get helpBackupImportBold5 => 'पुरातनप्रतिलिपयः:';
+
+  @override
+  String get helpBackupImportBullet5 =>
+      'अस्य उपकरणस्य पुरातन-एण्ड्रॉयड्-संस्करणस्य प्रतिलिपिसञ्चिकाः अपि आयातुं शक्यन्ते।';
+
+  @override
+  String get helpBackupClearSection => 'सर्वदत्तांशमार्जनम्';
+
+  @override
+  String get helpBackupClearBold1 => 'सर्वमार्जनम्:';
+
+  @override
+  String get helpBackupClearBullet1 =>
+      'पुष्टेः अनन्तरं सर्वान् गणकान् सर्वम् इतिहासं च अपाकरोति। निवर्तयितुं न शक्यते, अतः प्रथमं प्रतिलिपिं करोतु।';
+
+  @override
+  String get helpPrivacyStorageBold3 => 'सुरक्षितरक्षणम्:';
+
+  @override
+  String get helpPrivacyStorageBullet3 =>
+      'उपकरणे सहसा पिहिते अपि पुनः पुनः रक्षणेन गणना सुरक्षिता तिष्ठति।';
+
+  @override
+  String get helpPrivacyPermsSection => 'उपकरणेन उपयुक्ताः अनुमतयः';
+
+  @override
+  String get helpPrivacyPermsBold1 => 'छायाग्राहकः:';
+
+  @override
+  String get helpPrivacyPermsBullet1 =>
+      'प्रकाशसञ्चारस्वीकरणे QR सङ्केतपरीक्षणाय एव। चित्राणि चलचित्राणि वा न गृह्यन्ते।';
+
+  @override
+  String get helpPrivacyPermsBold2 => 'सूचनाः:';
+
+  @override
+  String get helpPrivacyPermsBullet2 =>
+      'स्थितिपट्टिकायां लक्ष्यसन्देशान् दर्शयितुम्। एण्ड्रॉयड् 13 तः परं पृच्छ्यते।';
+
+  @override
+  String get helpPrivacyPermsBold3 => 'कम्पनं ध्वनिश्च:';
+
+  @override
+  String get helpPrivacyPermsBullet3 =>
+      'माला-लक्ष्य-निवर्तनप्रतिक्रियायै, समाप्तिध्वनीनां स्पष्टवादनाय च।';
+
+  @override
+  String get helpPrivacyPermsBold4 => 'शान्तिप्रणाल्यनुमतिः:';
+
+  @override
+  String get helpPrivacyPermsBullet4 =>
+      'प्रदर्शनं स्थिरता च इत्यत्र शान्तिप्रणाल्यां सक्रियीकृतायाम् एव पृच्छ्यते।';
+
+  @override
+  String get helpPrivacyPermsBold5 => 'भवतां सञ्चिकाः:';
+
+  @override
+  String get helpPrivacyPermsBullet5 =>
+      'उपकरणं भवतां सञ्चिकाः न पठति। आयात-निर्यातौ एण्ड्रॉयड्-सञ्चिकाचयनकम् उपयुञ्जाते, यत्र भवान् सञ्चिकां चिनोति।';
+
+  @override
+  String get helpPrivacyPermsBold6 => 'पूर्णसूची:';
+
+  @override
+  String get helpPrivacyPermsBullet6 =>
+      'संयोजनानि → अनुमतयः इत्यत्र प्रत्येकानुमतिः किमर्थम् इति दृश्यते।';
+
+  @override
+  String get helpFaqQ5Title => 'मम गणनाः कस्मिन् दिने योज्यन्ते?';
+
+  @override
+  String get helpFaqQ5Answer =>
+      'दूरवाण्याः घटिकानुसारं प्रत्येकः स्पर्शः तस्मिन् एव दिने गण्यते यस्मिन् कृतः। दैनिकलक्ष्यम् अर्धरात्रे पुनः आरभते।';
+
+  @override
+  String get helpFaqQ6Title => 'सत्रपुनःस्थापनस्य गणकपुनःस्थापनस्य च भेदः कः?';
+
+  @override
+  String get helpFaqQ6Answer =>
+      'सत्रपुनःस्थापनं वर्तमानम् उपवेशनम् एव त्यजति। गणकपुनःस्थापनं तस्य गणकस्य सर्वम् इतिहासम् अपाकरोति, निवर्तयितुं न शक्यते।';
+
+  @override
+  String get helpFaqQ7Title => 'मालाध्वनिः किमर्थं न श्रुतः?';
+
+  @override
+  String get helpFaqQ7Answer =>
+      'मालाध्वनिः सक्रियः वा इति पश्यतु। तेनैव स्पर्शेन लक्ष्ये सिद्धे लक्ष्यध्वनिः एव भवति।';
+
+  @override
+  String get helpFaqQ8Title => 'मौनस्थितौ अपि ध्वनयः किमर्थं श्रूयन्ते?';
+
+  @override
+  String get helpFaqQ8Answer =>
+      'समाप्तिध्वनयः जागरणवाहिनीम् उपयुञ्जते येन ते न त्यज्यन्ते। मौनम् इच्छति चेत् संयोजनानि → ध्वनिः स्पन्दनं च इत्यत्र ध्वनीन् निष्क्रियान् करोतु।';
+
+  @override
+  String get helpFaqQ9Title => 'प्रतिलिपेः गुप्तवाक्यं विस्मृतम्। किं करवाणि?';
+
+  @override
+  String get helpFaqQ9Answer =>
+      'गुप्तवाक्यं पुनः न लभ्यते, सा सञ्चिका न उद्घाट्यते। यस्यां दूरवाण्यां दत्तांशः अद्यापि अस्ति ततः नूतनप्रतिलिपिं करोतु।';
+
+  @override
+  String get helpFaqQ10Title => 'आयातः वर्तमानगणकान् अपाकरिष्यति वा?';
+
+  @override
+  String get helpFaqQ10Answer =>
+      'प्रतिलिपिसञ्चिकायाः आयातः वर्तमानं सर्वं दत्तांशं प्रतिस्थापयति। प्रकाशसञ्चारः भिन्नः: भवता चितान् गणकान् एव योजयति नवीकरोति वा।';
+
+  @override
+  String get helpFaqQ11Title =>
+      'प्रकाशसञ्चारपरीक्षणं मन्दम्। किं साहाय्यं करोति?';
+
+  @override
+  String get helpFaqQ11Answer =>
+      'दूरवाणीं 15–25 से.मी. दूरे स्थिरं धारयतु, केन्द्रीकरणाय स्पृशतु, प्रतिबिम्बं परिहरतु, प्रेषकस्य प्रकाशं वर्धयतु। निमेषे 8 चित्राणि इति मन्दवेगं प्रयततु।';
+
+  @override
+  String get helpFaqQ12Title => 'दत्तांशं नूतनदूरवाणीं प्रति नेतुं शक्यते वा?';
+
+  @override
+  String get helpFaqQ12Answer =>
+      'आम्। उभे दूरवाण्यौ पार्श्वे निधाय प्रकाशसञ्चारम् उपयुज्यताम्, प्रतिलिपिसञ्चिकां निर्यात्य नूतनदूरवाण्याम् आयातयतु वा।';
+
+  @override
+  String get helpFaqQ13Title => 'उपकरणं किमर्थं पूर्णतया अन्तर्जालरहितम्?';
+
+  @override
+  String get helpFaqQ13Answer =>
+      'जपः वैयक्तिकः पवित्रः च। अन्तर्जालरहितत्वं साधनां गोपनीयां करोति, विद्युत्कोशं रक्षति, विक्षेपान् च निवारयति।';
+
+  @override
+  String get helpFaqQ14Title => 'मम दत्तांशः केनापि सह विभज्यते वा?';
+
+  @override
+  String get helpFaqQ14Answer =>
+      'न। भवान् स्वयं निर्यातं प्रकाशसञ्चारेण प्रेषणं वा विना दत्तांशः दूरवाणीं कदापि न त्यजति।';
 }

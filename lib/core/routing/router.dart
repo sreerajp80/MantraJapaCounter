@@ -21,6 +21,9 @@ import 'package:mantra_japa_counter/screens/help/sound_haptics_help_screen.dart'
 import 'package:mantra_japa_counter/screens/help/backup_help_screen.dart';
 import 'package:mantra_japa_counter/screens/help/privacy_offline_help_screen.dart';
 import 'package:mantra_japa_counter/screens/help/faq_help_screen.dart';
+import 'package:mantra_japa_counter/screens/help/counters_help_screen.dart';
+import 'package:mantra_japa_counter/screens/help/history_help_screen.dart';
+import 'package:mantra_japa_counter/screens/help/display_help_screen.dart';
 import 'package:mantra_japa_counter/screens/about_screen.dart';
 import 'package:mantra_japa_counter/screens/optical_sync_screen.dart';
 
@@ -113,6 +116,18 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/help/faqs',
       builder: (context, state) => const FaqHelpScreen(),
+    ),
+    GoRoute(
+      path: '/help/counters',
+      builder: (context, state) => const CountersHelpScreen(),
+    ),
+    GoRoute(
+      path: '/help/history',
+      builder: (context, state) => const HistoryHelpScreen(),
+    ),
+    GoRoute(
+      path: '/help/display',
+      builder: (context, state) => const DisplayHelpScreen(),
     ),
     GoRoute(path: '/about', builder: (context, state) => AboutScreen()),
     GoRoute(

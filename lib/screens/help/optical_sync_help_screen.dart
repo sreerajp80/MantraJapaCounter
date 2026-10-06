@@ -23,9 +23,8 @@ class OpticalSyncHelpScreen extends StatelessWidget {
                 children: [
                   HelpIntroCard(l.helpOpticalIntro),
                   const SizedBox(height: 20),
-
                   HelpSection(
-                    icon: Icons.qr_code_2_outlined,
+                    icon: Icons.sync_alt,
                     title: l.helpOpticalHowSection,
                     children: [
                       HelpBullet(
@@ -40,10 +39,55 @@ class OpticalSyncHelpScreen extends StatelessWidget {
                         l.helpOpticalHowBullet3,
                         boldPrefix: l.helpOpticalHowBold3,
                       ),
+                      HelpBullet(
+                        l.helpOpticalHowBullet4,
+                        boldPrefix: l.helpOpticalHowBold4,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
-
+                  HelpSection(
+                    icon: Icons.qr_code_2_outlined,
+                    title: l.helpOpticalSendSection,
+                    children: [
+                      HelpBullet(
+                        l.helpOpticalSendBullet1,
+                        boldPrefix: l.helpOpticalSendBold1,
+                      ),
+                      HelpBullet(
+                        l.helpOpticalSendBullet2,
+                        boldPrefix: l.helpOpticalSendBold2,
+                      ),
+                      HelpBullet(
+                        l.helpOpticalSendBullet3,
+                        boldPrefix: l.helpOpticalSendBold3,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  HelpSection(
+                    icon: Icons.qr_code_scanner_outlined,
+                    title: l.helpOpticalReceiveSection,
+                    children: [
+                      HelpBullet(
+                        l.helpOpticalReceiveBullet1,
+                        boldPrefix: l.helpOpticalReceiveBold1,
+                      ),
+                      HelpBullet(
+                        l.helpOpticalReceiveBullet2,
+                        boldPrefix: l.helpOpticalReceiveBold2,
+                      ),
+                      HelpBullet(
+                        l.helpOpticalReceiveBullet3,
+                        boldPrefix: l.helpOpticalReceiveBold3,
+                      ),
+                      HelpBullet(
+                        l.helpOpticalReceiveBullet4,
+                        boldPrefix: l.helpOpticalReceiveBold4,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
                   HelpSection(
                     icon: Icons.tips_and_updates_outlined,
                     title: l.helpOpticalTipsSection,

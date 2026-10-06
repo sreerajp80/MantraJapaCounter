@@ -37,6 +37,26 @@ class HelpHomeScreen extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   _sectionHeader(
+                    l.helpCategoryCounters,
+                    Icons.format_list_bulleted,
+                  ),
+                  const SizedBox(height: 8),
+                  _TopicCard(
+                    icon: Icons.style_outlined,
+                    title: l.helpTopicCountersTitle,
+                    subtitle: l.helpTopicCountersSub,
+                    onTap: () => context.push('/help/counters'),
+                  ),
+                  const SizedBox(height: 10),
+                  _TopicCard(
+                    icon: Icons.history_outlined,
+                    title: l.helpTopicHistoryTitle,
+                    subtitle: l.helpTopicHistorySub,
+                    onTap: () => context.push('/help/history'),
+                  ),
+                  const SizedBox(height: 22),
+
+                  _sectionHeader(
                     l.helpCategoryCounting,
                     Icons.touch_app_outlined,
                   ),
@@ -56,6 +76,26 @@ class HelpHomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 22),
 
+                  _sectionHeader(
+                    l.helpCategoryAudio,
+                    Icons.notifications_active_outlined,
+                  ),
+                  const SizedBox(height: 8),
+                  _TopicCard(
+                    icon: Icons.volume_up_outlined,
+                    title: l.helpTopicAudioTitle,
+                    subtitle: l.helpTopicAudioSub,
+                    onTap: () => context.push('/help/sound-haptics'),
+                  ),
+                  const SizedBox(height: 10),
+                  _TopicCard(
+                    icon: Icons.brightness_medium_outlined,
+                    title: l.helpTopicDisplayTitle,
+                    subtitle: l.helpTopicDisplaySub,
+                    onTap: () => context.push('/help/display'),
+                  ),
+                  const SizedBox(height: 22),
+
                   _sectionHeader(l.helpCategorySync, Icons.sync_outlined),
                   const SizedBox(height: 8),
                   _TopicCard(
@@ -70,19 +110,6 @@ class HelpHomeScreen extends StatelessWidget {
                     title: l.helpTopicBackupTitle,
                     subtitle: l.helpTopicBackupSub,
                     onTap: () => context.push('/help/backup'),
-                  ),
-                  const SizedBox(height: 22),
-
-                  _sectionHeader(
-                    l.helpCategoryAudio,
-                    Icons.notifications_active_outlined,
-                  ),
-                  const SizedBox(height: 8),
-                  _TopicCard(
-                    icon: Icons.volume_up_outlined,
-                    title: l.helpTopicAudioTitle,
-                    subtitle: l.helpTopicAudioSub,
-                    onTap: () => context.push('/help/sound-haptics'),
                   ),
                   const SizedBox(height: 22),
 

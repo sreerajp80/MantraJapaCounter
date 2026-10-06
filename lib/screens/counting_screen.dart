@@ -119,6 +119,14 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
             children: [
               _topBar(context, isDimmed: isDimmed),
               _mantraTitle(session.counterName, isDimmed: isDimmed),
+              if (countingState.resumedFromEarlierDay)
+                _UnfinishedMalaBanner(
+                  chants: sessionInMala,
+                  isDimmed: isDimmed,
+                  onStartNew: () => ref
+                      .read(countingNotifierProvider(widget.counterId).notifier)
+                      .finishAndStartNew(),
+                ),
               Expanded(
                 child: LayoutBuilder(
                   builder: (context, constraints) {
@@ -336,6 +344,17 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
                 itemBuilder: (_) => [
                   PopupMenuItem(value: 'history', child: Text(l.history)),
                   PopupMenuItem(value: 'about', child: Text(l.menuAbout)),
+                  PopupMenuItem(value: 'settings', child: Text(l.menuSettings)),
+                  if ((ref
+                              .read(countingNotifierProvider(widget.counterId))
+                              .session
+                              ?.tapCount ??
+                          0) >
+                      0)
+                    PopupMenuItem(
+                      value: 'finish_start_new',
+                      child: Text(l.finishAndStartNew),
+                    ),
                   PopupMenuItem(
                     value: 'reset_session',
                     child: Text(l.resetSession),
@@ -540,6 +559,12 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
         context.push('/history?counterId=${widget.counterId}');
       case 'about':
         context.push('/counter/${widget.counterId}');
+      case 'settings':
+        context.push('/settings');
+      case 'finish_start_new':
+        ref
+            .read(countingNotifierProvider(widget.counterId).notifier)
+            .finishAndStartNew();
       case 'reset_session':
         _confirmResetSession(context);
       case 'reset_counter':
@@ -1001,6 +1026,59 @@ class _PacingHintPill extends StatelessWidget {
               color: isDimmed ? TempleColors.sandal : TempleColors.ink2,
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Shown when an unfinished mala from an earlier day is resumed. Not a
+/// dialog — the user can just keep tapping to finish the mala, or press
+/// "Start new" to keep those counts in history and begin again at 0.
+class _UnfinishedMalaBanner extends StatelessWidget {
+  final int chants;
+  final bool isDimmed;
+  final VoidCallback onStartNew;
+
+  const _UnfinishedMalaBanner({
+    required this.chants,
+    required this.isDimmed,
+    required this.onStartNew,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final textColor = isDimmed ? TempleColors.sandal : TempleColors.ink2;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(18, 4, 18, 0),
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(14, 4, 4, 4),
+        decoration: BoxDecoration(
+          color: isDimmed
+              ? const Color(0xFF1E1912)
+              : TempleColors.sandal.withValues(alpha: 0.18),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: TempleColors.sandal.withValues(alpha: 0.5)),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                l.unfinishedMalaBanner(chants),
+                style: AppTheme.serif(fontSize: 13, color: textColor),
+              ),
+            ),
+            TextButton(
+              onPressed: onStartNew,
+              style: TextButton.styleFrom(
+                foregroundColor: isDimmed
+                    ? TempleColors.sandal
+                    : TempleColors.vermillion,
+              ),
+              child: Text(l.startNewSession),
+            ),
+          ],
         ),
       ),
     );

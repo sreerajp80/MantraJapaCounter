@@ -229,6 +229,23 @@
   "@resetSession": {
     "description": "Menu option to reset current sitting session"
   },
+  "unfinishedMalaBanner": "Unfinished mala from an earlier day: {chants}/108",
+  "@unfinishedMalaBanner": {
+    "description": "Banner on the counting screen when an unfinished mala from an earlier day is resumed",
+    "placeholders": {
+      "chants": {
+        "type": "int"
+      }
+    }
+  },
+  "startNewSession": "Start new",
+  "@startNewSession": {
+    "description": "Banner button that keeps the unfinished counts and starts a fresh session at 0"
+  },
+  "finishAndStartNew": "Finish & start new",
+  "@finishAndStartNew": {
+    "description": "Menu option that closes the current session, keeping its counts, and starts a fresh one"
+  },
   "resetCounter": "Reset counter",
   "@resetCounter": {
     "description": "Menu option to reset counter and clear its history"
@@ -1119,9 +1136,9 @@
   "@helpHeaderTitle": {
     "description": "Header title on Help hub screen"
   },
-  "helpHeaderSub": "Comprehensive guides to counting gestures, 108 mala calculations, optical air-gap sync, and privacy safeguards.",
+  "helpHeaderSub": "Guides for every part of the app: counters, counting, malas and goals, history, sound, display, backup, optical sync and privacy.",
   "@helpHeaderSub": {
-    "description": "Header subtitle on Help hub screen"
+    "description": "Help hub header subtitle listing all topics"
   },
   "helpCategoryCounting": "Counting & Meditation Practice",
   "@helpCategoryCounting": {
@@ -1131,9 +1148,9 @@
   "@helpCategorySync": {
     "description": "Sync category header in help"
   },
-  "helpCategoryAudio": "Audio & Feedback",
+  "helpCategoryAudio": "Sound, Display & Stillness",
   "@helpCategoryAudio": {
-    "description": "Audio category header in help"
+    "description": "Help hub category: sound, display and stillness"
   },
   "helpCategoryPrivacy": "Privacy & Support",
   "@helpCategoryPrivacy": {
@@ -1143,49 +1160,49 @@
   "@helpTopicCountingTitle": {
     "description": "Counting topic title in help"
   },
-  "helpTopicCountingSub": "Tap anywhere on the ring, two-finger swipe undo, and session persistence",
+  "helpTopicCountingSub": "Tap inside the circle, two-finger undo, the counting menu and auto save",
   "@helpTopicCountingSub": {
-    "description": "Counting topic subtitle in help"
+    "description": "Help topic subtitle: counting"
   },
   "helpTopicMalaTitle": "108 Mala Math & Goals",
   "@helpTopicMalaTitle": {
     "description": "Mala topic title in help"
   },
-  "helpTopicMalaSub": "How 108 bead cycles are calculated, excess counts, and daily goal targets",
+  "helpTopicMalaSub": "108-bead rounds, extra counts, and daily and lifetime goals",
   "@helpTopicMalaSub": {
-    "description": "Mala topic subtitle in help"
+    "description": "Help topic subtitle: mala and goals"
   },
   "helpTopicOpticalSyncTitle": "Optical Air-Gap Sync",
   "@helpTopicOpticalSyncTitle": {
     "description": "Optical sync topic title in help"
   },
-  "helpTopicOpticalSyncSub": "Offline phone-to-phone data transfer via animated QR camera stream",
+  "helpTopicOpticalSyncSub": "Phone-to-phone transfer with a moving QR code, without internet",
   "@helpTopicOpticalSyncSub": {
-    "description": "Optical sync topic subtitle in help"
+    "description": "Help topic subtitle: optical sync"
   },
-  "helpTopicBackupTitle": "JSON Backup & Restore",
+  "helpTopicBackupTitle": "Backup & Restore",
   "@helpTopicBackupTitle": {
-    "description": "Backup topic title in help"
+    "description": "Help topic title: backup and restore"
   },
-  "helpTopicBackupSub": "Exporting local backup files, sharing, and safe database restoration",
+  "helpTopicBackupSub": "Export to a file, encrypted backups, import and clear all data",
   "@helpTopicBackupSub": {
-    "description": "Backup topic subtitle in help"
+    "description": "Help topic subtitle: backup and restore"
   },
   "helpTopicAudioTitle": "Sound & Vibration Settings",
   "@helpTopicAudioTitle": {
     "description": "Audio topic title in help"
   },
-  "helpTopicAudioSub": "Temple bell tones, mala chimes, custom audio files, and haptic feedback",
+  "helpTopicAudioSub": "Mala sound, goal tones, notifications and vibration",
   "@helpTopicAudioSub": {
-    "description": "Audio topic subtitle in help"
+    "description": "Help topic subtitle: sound and vibration"
   },
   "helpTopicPrivacyTitle": "Privacy & Offline-First Core",
   "@helpTopicPrivacyTitle": {
     "description": "Privacy topic title in help"
   },
-  "helpTopicPrivacySub": "Zero internet permissions, local SQLite storage, and zero telemetry",
+  "helpTopicPrivacySub": "No internet permission, private storage, and the permissions used",
   "@helpTopicPrivacySub": {
-    "description": "Privacy topic subtitle in help"
+    "description": "Help topic subtitle: privacy"
   },
   "helpTopicFaqTitle": "FAQs & Troubleshooting",
   "@helpTopicFaqTitle": {
@@ -1195,389 +1212,341 @@
   "@helpTopicFaqSub": {
     "description": "FAQ topic subtitle in help"
   },
-  "helpCountingIntro": "The counting screen is intentionally designed for quiet, mindful focus. You do not need to look at the screen while chanting.",
+  "helpCountingIntro": "The counting screen is made for quiet focus. You do not need to look at it while you chant.",
   "@helpCountingIntro": {
-    "description": "Intro text on Counting Help screen"
+    "description": "Help counting guide: intro text"
   },
-  "helpCountingTapSection": "How to Count",
+  "helpCountingTapSection": "How to count",
   "@helpCountingTapSection": {
-    "description": "Tap section title on Counting Help screen"
+    "description": "Help counting guide: Tap section title"
   },
-  "helpCountingTapBold1": "Tap anywhere:",
+  "helpCountingTapBold1": "Tap inside the circle:",
   "@helpCountingTapBold1": {
-    "description": "Bold prefix 1"
+    "description": "Help counting guide: Tap bullet 1 bold label"
   },
-  "helpCountingTapBullet1": "Tap inside the large circle or anywhere on the central screen to increment by 1 count.",
+  "helpCountingTapBullet1": "Only taps inside the mala circle are counted. Taps outside it are ignored, so a stray touch does not add a count.",
   "@helpCountingTapBullet1": {
-    "description": "Bullet 1"
+    "description": "Help counting guide: Tap bullet 1 text"
   },
-  "helpCountingTapBold2": "Haptic pulse:",
+  "helpCountingTapBold2": "Increment step:",
   "@helpCountingTapBold2": {
-    "description": "Bold prefix 2"
+    "description": "Help counting guide: Tap bullet 2 bold label"
   },
-  "helpCountingTapBullet2": "A gentle vibration confirms every chant so you can keep your eyes closed during meditation.",
+  "helpCountingTapBullet2": "Each tap adds the counter's step (1 by default). Change it by editing the counter.",
   "@helpCountingTapBullet2": {
-    "description": "Bullet 2"
+    "description": "Help counting guide: Tap bullet 2 text"
   },
-  "helpCountingTapBold3": "Crash recovery:",
+  "helpCountingTapBold3": "Quiet taps:",
   "@helpCountingTapBold3": {
-    "description": "Bold prefix 3"
+    "description": "Help counting guide: Tap bullet 3 bold label"
   },
-  "helpCountingTapBullet3": "Every 5 taps are automatically saved to local storage. If your battery dies, not a single count is lost.",
+  "helpCountingTapBullet3": "Taps do not vibrate. You feel a vibration on each full mala, on goals and on undo, if vibration is on.",
   "@helpCountingTapBullet3": {
-    "description": "Bullet 3"
+    "description": "Help counting guide: Tap bullet 3 text"
   },
-  "helpCountingUndoSection": "Undoing an Accidental Count",
+  "helpCountingUndoSection": "Undoing a count",
   "@helpCountingUndoSection": {
-    "description": "Undo section title on Counting Help screen"
+    "description": "Help counting guide: Undo section title"
   },
   "helpCountingUndoBold1": "Two-finger swipe:",
   "@helpCountingUndoBold1": {
-    "description": "Bold prefix 1"
+    "description": "Help counting guide: Undo bullet 1 bold label"
   },
-  "helpCountingUndoBullet1": "Swipe left or right across the mala circle with two fingers to decrement the count by 1.",
+  "helpCountingUndoBullet1": "Place two fingers on the circle and slide them left or right. One swipe removes one step, and the phone vibrates once.",
   "@helpCountingUndoBullet1": {
-    "description": "Bullet 1"
+    "description": "Help counting guide: Undo bullet 1 text"
   },
-  "helpCountingUndoBold2": "Zero count threshold:",
+  "helpCountingUndoBold2": "Back to zero:",
   "@helpCountingUndoBold2": {
-    "description": "Bold prefix 2"
+    "description": "Help counting guide: Undo bullet 2 bold label"
   },
-  "helpCountingUndoBullet2": "If you reduce the session count to zero, the sitting session is gracefully cleared without polluting history.",
+  "helpCountingUndoBullet2": "If the session count goes back to 0, the sitting is cleared and nothing is added to history.",
   "@helpCountingUndoBullet2": {
-    "description": "Bullet 2"
+    "description": "Help counting guide: Undo bullet 2 text"
   },
-  "helpCountingTimerSection": "Session Timing & Status",
-  "@helpCountingTimerSection": {
-    "description": "Timer section title on Counting Help screen"
-  },
-  "helpCountingTimerBold1": "Active timer:",
-  "@helpCountingTimerBold1": {
-    "description": "Bold prefix 1"
-  },
-  "helpCountingTimerBullet1": "The top capsule displays the active duration spent in this sitting.",
-  "@helpCountingTimerBullet1": {
-    "description": "Bullet 1"
-  },
-  "helpCountingTimerBold2": "Progress badge:",
-  "@helpCountingTimerBold2": {
-    "description": "Bold prefix 2"
-  },
-  "helpCountingTimerBullet2": "Shows remaining beads to complete the current 108 cycle or confirms daily goal completion.",
-  "@helpCountingTimerBullet2": {
-    "description": "Bullet 2"
-  },
-  "helpMalaIntro": "In traditional Vedic and Buddhist practices, a Japa Mala consists of 108 beads. The app faithfully calculates rounds and progress based on this sacred principle.",
+  "helpMalaIntro": "A traditional japa mala has 108 beads. The app counts in rounds of 108 and shows your goals on every card.",
   "@helpMalaIntro": {
-    "description": "Intro text on Mala Help screen"
+    "description": "Help mala and goals guide: intro text"
   },
-  "helpMalaBeadsSection": "108 Beads Calculation",
+  "helpMalaBeadsSection": "108 beads",
   "@helpMalaBeadsSection": {
-    "description": "Mala calculation section title"
+    "description": "Help mala and goals guide: Beads section title"
   },
-  "helpMalaBeadsBold1": "1 Mala = 108 counts:",
+  "helpMalaBeadsBold1": "1 mala = 108 counts:",
   "@helpMalaBeadsBold1": {
-    "description": "Bold prefix 1"
+    "description": "Help mala and goals guide: Beads bullet 1 bold label"
   },
-  "helpMalaBeadsBullet1": "Every 108 counts automatically completes 1 full mala round.",
+  "helpMalaBeadsBullet1": "Every 108 counts make one full mala. The circle on the counting screen fills bead by bead and starts again after 108.",
   "@helpMalaBeadsBullet1": {
-    "description": "Bullet 1"
+    "description": "Help mala and goals guide: Beads bullet 1 text"
   },
-  "helpMalaBeadsBold2": "Excess counts:",
+  "helpMalaBeadsBold2": "Extra counts:",
   "@helpMalaBeadsBold2": {
-    "description": "Bold prefix 2"
+    "description": "Help mala and goals guide: Beads bullet 2 bold label"
   },
-  "helpMalaBeadsBullet2": "Counts between mala multiples (e.g. 115 counts = 1 mala + 7 counts) are clearly shown.",
+  "helpMalaBeadsBullet2": "Counts past a full mala are kept and shown. For example, 115 counts = 1 mala and 7 counts.",
   "@helpMalaBeadsBullet2": {
-    "description": "Bullet 2"
+    "description": "Help mala and goals guide: Beads bullet 2 text"
   },
-  "helpMalaBeadsBold3": "Mala chime:",
+  "helpMalaBeadsBold3": "Bigger steps:",
   "@helpMalaBeadsBold3": {
-    "description": "Bold prefix 3"
+    "description": "Help mala and goals guide: Beads bullet 3 bold label"
   },
-  "helpMalaBeadsBullet3": "When enabled, a gentle bell sounds on the exact 108th bead of each round.",
+  "helpMalaBeadsBullet3": "If your step is more than 1, each tap moves several beads at once. Malas are still worked out from the total count.",
   "@helpMalaBeadsBullet3": {
-    "description": "Bullet 3"
+    "description": "Help mala and goals guide: Beads bullet 3 text"
   },
-  "helpMalaGoalsSection": "Setting Goals & Dedications",
+  "helpMalaGoalsSection": "Daily and lifetime goals",
   "@helpMalaGoalsSection": {
-    "description": "Mala goals section title"
+    "description": "Help mala and goals guide: Goals section title"
   },
-  "helpMalaGoalsBold1": "Daily target:",
+  "helpMalaGoalsBold1": "Daily goal:",
   "@helpMalaGoalsBold1": {
-    "description": "Bold prefix 1"
+    "description": "Help mala and goals guide: Goals bullet 1 bold label"
   },
-  "helpMalaGoalsBullet1": "Set how many malas you commit to chanting every day. The card turns green upon reaching the target.",
+  "helpMalaGoalsBullet1": "The number of chants you want to offer each day (0 = no daily goal). It starts again from 0 at midnight, by your phone's clock.",
   "@helpMalaGoalsBullet1": {
-    "description": "Bullet 1"
+    "description": "Help mala and goals guide: Goals bullet 1 text"
   },
-  "helpMalaGoalsBold2": "Lifetime target:",
+  "helpMalaGoalsBold2": "Lifetime goal (vow):",
   "@helpMalaGoalsBold2": {
-    "description": "Bold prefix 2"
+    "description": "Help mala and goals guide: Goals bullet 2 bold label"
   },
-  "helpMalaGoalsBullet2": "Set long-term sadhana goals (e.g. 100,000 chants or 1,000 malas) to track your cumulative spiritual journey.",
+  "helpMalaGoalsBullet2": "Your long-term target, for example 1,00,000 chants (0 = no lifetime goal). The daily goal cannot be more than it.",
   "@helpMalaGoalsBullet2": {
-    "description": "Bullet 2"
+    "description": "Help mala and goals guide: Goals bullet 2 text"
   },
-  "helpOpticalIntro": "Optical Air-Gap Sync allows you to migrate all your counters and history between two phones without Wi-Fi, Bluetooth, or cloud servers.",
+  "helpOpticalIntro": "Optical Sync moves your counters and history from one phone to another using only the screen and the camera. No internet, Wi-Fi, Bluetooth or cable is needed.",
   "@helpOpticalIntro": {
-    "description": "Intro text on Optical Sync Help screen"
+    "description": "Help optical sync guide: intro text"
   },
-  "helpOpticalHowSection": "How to Transfer",
+  "helpOpticalHowSection": "How to transfer",
   "@helpOpticalHowSection": {
-    "description": "Optical how section title"
+    "description": "Help optical sync guide: How section title"
   },
-  "helpOpticalHowBold1": "On the sender phone:",
+  "helpOpticalHowBold1": "Sender phone:",
   "@helpOpticalHowBold1": {
-    "description": "Bold prefix 1"
+    "description": "Help optical sync guide: How bullet 1 bold label"
   },
-  "helpOpticalHowBullet1": "Go to Settings -> Optical Air-Gap Sync (Send). An animated QR stream will begin playing.",
+  "helpOpticalHowBullet1": "Settings → Data Backup & Optical Sync → Optical Air-Gap Sync (Send). Choose the counters to send. A moving QR code starts to play.",
   "@helpOpticalHowBullet1": {
-    "description": "Bullet 1"
+    "description": "Help optical sync guide: How bullet 1 text"
   },
-  "helpOpticalHowBold2": "On the receiver phone:",
+  "helpOpticalHowBold2": "Receiver phone:",
   "@helpOpticalHowBold2": {
-    "description": "Bold prefix 2"
+    "description": "Help optical sync guide: How bullet 2 bold label"
   },
-  "helpOpticalHowBullet2": "Go to Settings -> Optical Air-Gap Sync (Receive) and point the camera at the sender phone's screen.",
+  "helpOpticalHowBullet2": "Open Optical Air-Gap Sync (Receive), allow the camera, and point it at the sender's screen.",
   "@helpOpticalHowBullet2": {
-    "description": "Bullet 2"
+    "description": "Help optical sync guide: How bullet 2 text"
   },
-  "helpOpticalHowBold3": "Automatic assembly:",
+  "helpOpticalHowBold3": "Preview:",
   "@helpOpticalHowBold3": {
-    "description": "Bold prefix 3"
+    "description": "Help optical sync guide: How bullet 3 bold label"
   },
-  "helpOpticalHowBullet3": "The receiver collects stream packets and reconstructs the full database with zero data corruption.",
+  "helpOpticalHowBullet3": "When all parts arrive, a preview shows the counters and sessions. Choose the counters to keep and tap the restore button.",
   "@helpOpticalHowBullet3": {
-    "description": "Bullet 3"
+    "description": "Help optical sync guide: How bullet 3 text"
   },
-  "helpOpticalTipsSection": "Tips for Fast Scanning",
+  "helpOpticalTipsSection": "Tips for fast scanning",
   "@helpOpticalTipsSection": {
-    "description": "Optical tips section title"
+    "description": "Help optical sync guide: Tips section title"
   },
-  "helpOpticalTipsBold1": "Screen brightness:",
+  "helpOpticalTipsBold1": "Distance:",
   "@helpOpticalTipsBold1": {
-    "description": "Bold prefix 1"
+    "description": "Help optical sync guide: Tips bullet 1 bold label"
   },
-  "helpOpticalTipsBullet1": "Ensure the sending screen is at moderate-to-high brightness without screen glare.",
+  "helpOpticalTipsBullet1": "Hold the receiving phone steady, about 15–25 cm from the sender's screen, with the code inside the guide box.",
   "@helpOpticalTipsBullet1": {
-    "description": "Bullet 1"
+    "description": "Help optical sync guide: Tips bullet 1 text"
   },
-  "helpOpticalTipsBold2": "Steady distance:",
+  "helpOpticalTipsBold2": "Glare:",
   "@helpOpticalTipsBold2": {
-    "description": "Bold prefix 2"
+    "description": "Help optical sync guide: Tips bullet 2 bold label"
   },
-  "helpOpticalTipsBullet2": "Hold the receiving phone steadily 15 to 25 cm away from the sender screen.",
+  "helpOpticalTipsBullet2": "Avoid bright reflections on the sender's screen.",
   "@helpOpticalTipsBullet2": {
-    "description": "Bullet 2"
+    "description": "Help optical sync guide: Tips bullet 2 text"
   },
-  "helpOpticalTipsBold3": "Fountain codes:",
+  "helpOpticalTipsBold3": "Missed frames:",
   "@helpOpticalTipsBold3": {
-    "description": "Bold prefix 3"
+    "description": "Help optical sync guide: Tips bullet 3 bold label"
   },
-  "helpOpticalTipsBullet3": "Even if the camera drops a few frames, fountain parity packets will recover the missing data.",
+  "helpOpticalTipsBullet3": "Missed frames are fine. The stream keeps repeating with extra mixed frames, so missing parts are rebuilt.",
   "@helpOpticalTipsBullet3": {
-    "description": "Bullet 3"
+    "description": "Help optical sync guide: Tips bullet 3 text"
   },
-  "helpAudioIntro": "Personalize the soundscape of your practice with gentle bells, temple chimes, and haptic vibrations.",
+  "helpAudioIntro": "Sounds and vibration mark the moments that matter: each full mala and each goal. Set them in Settings → Sound & Haptics.",
   "@helpAudioIntro": {
-    "description": "Intro text on Audio Help screen"
+    "description": "Help sound and vibration guide: intro text"
   },
-  "helpAudioTonesSection": "Chimes & Notification Tones",
-  "@helpAudioTonesSection": {
-    "description": "Audio tones section title"
-  },
-  "helpAudioTonesBold1": "Daily goal tone:",
-  "@helpAudioTonesBold1": {
-    "description": "Bold prefix 1"
-  },
-  "helpAudioTonesBullet1": "Plays a peaceful bell tone when you reach your daily target for any mantra.",
-  "@helpAudioTonesBullet1": {
-    "description": "Bullet 1"
-  },
-  "helpAudioTonesBold2": "Mala chime:",
-  "@helpAudioTonesBold2": {
-    "description": "Bold prefix 2"
-  },
-  "helpAudioTonesBullet2": "Plays a soft chime on the 108th bead of every round.",
-  "@helpAudioTonesBullet2": {
-    "description": "Bullet 2"
-  },
-  "helpAudioTonesBold3": "Custom audio picker:",
-  "@helpAudioTonesBold3": {
-    "description": "Bold prefix 3"
-  },
-  "helpAudioTonesBullet3": "Choose any MP3, WAV, or ringtone audio file from your device.",
-  "@helpAudioTonesBullet3": {
-    "description": "Bullet 3"
-  },
-  "helpAudioVibrationSection": "Haptic Vibration",
+  "helpAudioVibrationSection": "Vibration",
   "@helpAudioVibrationSection": {
-    "description": "Audio vibration section title"
+    "description": "Help sound and vibration guide: Vibration section title"
   },
-  "helpAudioVibrationBold1": "Count pulse:",
+  "helpAudioVibrationBold1": "When it vibrates:",
   "@helpAudioVibrationBold1": {
-    "description": "Bold prefix 1"
+    "description": "Help sound and vibration guide: Vibration bullet 1 bold label"
   },
-  "helpAudioVibrationBullet1": "Subtle tactile pulse with every chant to keep track without looking.",
+  "helpAudioVibrationBullet1": "One pulse on each full mala, three pulses when a goal is reached, and a short tap when you undo.",
   "@helpAudioVibrationBullet1": {
-    "description": "Bullet 1"
+    "description": "Help sound and vibration guide: Vibration bullet 1 text"
   },
-  "helpAudioVibrationBold2": "Disable anytime:",
+  "helpAudioVibrationBold2": "Turn off:",
   "@helpAudioVibrationBold2": {
-    "description": "Bold prefix 2"
+    "description": "Help sound and vibration guide: Vibration bullet 2 bold label"
   },
-  "helpAudioVibrationBullet2": "Turn off vibration under Settings if you prefer silent meditation.",
+  "helpAudioVibrationBullet2": "Switch off Vibration in Settings → Sound & Haptics for fully silent practice.",
   "@helpAudioVibrationBullet2": {
-    "description": "Bullet 2"
+    "description": "Help sound and vibration guide: Vibration bullet 2 text"
   },
-  "helpBackupIntro": "Your practice data is 100% owned by you. You can export complete backups to JSON files at any time.",
+  "helpBackupIntro": "Your data belongs to you. Save it to a file at any time, and restore it on this phone or a new one.",
   "@helpBackupIntro": {
-    "description": "Intro text on Backup Help screen"
+    "description": "Help backup and restore guide: intro text"
   },
-  "helpBackupExportSection": "Exporting Data",
+  "helpBackupExportSection": "Exporting a backup",
   "@helpBackupExportSection": {
-    "description": "Backup export section title"
+    "description": "Help backup and restore guide: Export section title"
   },
-  "helpBackupExportBold1": "Standard JSON file:",
+  "helpBackupExportBold1": "One file:",
   "@helpBackupExportBold1": {
-    "description": "Bold prefix 1"
+    "description": "Help backup and restore guide: Export bullet 1 bold label"
   },
-  "helpBackupExportBullet1": "Exports all counters, daily goals, lifetime progress, and session history into one clean file.",
+  "helpBackupExportBullet1": "All counters, goals and session history go into one backup file.",
   "@helpBackupExportBullet1": {
-    "description": "Bullet 1"
+    "description": "Help backup and restore guide: Export bullet 1 text"
   },
-  "helpBackupExportBold2": "System share sheet:",
+  "helpBackupExportBold2": "Encrypt (optional):",
   "@helpBackupExportBold2": {
-    "description": "Bold prefix 2"
+    "description": "Help backup and restore guide: Export bullet 2 bold label"
   },
-  "helpBackupExportBullet2": "Save the exported file to your local files, SD card, or share it via your favorite offline file transfer app.",
+  "helpBackupExportBullet2": "You can protect the file with a passphrase. It is locked with strong AES-256-GCM encryption.",
   "@helpBackupExportBullet2": {
-    "description": "Bullet 2"
+    "description": "Help backup and restore guide: Export bullet 2 text"
   },
-  "helpBackupExportBold3": "Room & Gson compatible:",
+  "helpBackupExportBold3": "Keep your passphrase safe:",
   "@helpBackupExportBold3": {
-    "description": "Bold prefix 3"
+    "description": "Help backup and restore guide: Export bullet 3 bold label"
   },
-  "helpBackupExportBullet3": "Fully compatible with existing and future versions of the app.",
+  "helpBackupExportBullet3": "A lost passphrase cannot be recovered, and the file cannot be opened without it.",
   "@helpBackupExportBullet3": {
-    "description": "Bullet 3"
+    "description": "Help backup and restore guide: Export bullet 3 text"
   },
-  "helpBackupImportSection": "Restoring Data",
+  "helpBackupImportSection": "Restoring a backup",
   "@helpBackupImportSection": {
-    "description": "Backup import section title"
+    "description": "Help backup and restore guide: Import section title"
   },
-  "helpBackupImportBold1": "File picker:",
+  "helpBackupImportBold1": "Pick the file:",
   "@helpBackupImportBold1": {
-    "description": "Bold prefix 1"
+    "description": "Help backup and restore guide: Import bullet 1 bold label"
   },
-  "helpBackupImportBullet1": "Tap 'Import Backup File' and select your previously saved JSON file.",
+  "helpBackupImportBullet1": "Choose Import and select your backup file in the system file picker.",
   "@helpBackupImportBullet1": {
-    "description": "Bullet 1"
+    "description": "Help backup and restore guide: Import bullet 1 text"
   },
-  "helpBackupImportBold2": "Safe validation:",
+  "helpBackupImportBold2": "Replaces all data:",
   "@helpBackupImportBold2": {
-    "description": "Bold prefix 2"
+    "description": "Help backup and restore guide: Import bullet 2 bold label"
   },
-  "helpBackupImportBullet2": "The file is verified for integrity before restoring to prevent corrupted entries.",
+  "helpBackupImportBullet2": "Import replaces ALL current counters and history with the data in the file. Export first if you want to keep what is on the phone.",
   "@helpBackupImportBullet2": {
-    "description": "Bullet 2"
+    "description": "Help backup and restore guide: Import bullet 2 text"
   },
-  "helpBackupImportBold3": "Instant refresh:",
+  "helpBackupImportBold3": "Encrypted files:",
   "@helpBackupImportBold3": {
-    "description": "Bold prefix 3"
+    "description": "Help backup and restore guide: Import bullet 3 bold label"
   },
-  "helpBackupImportBullet3": "Counters and session history update immediately across the app.",
+  "helpBackupImportBullet3": "If the file is encrypted, you are asked for the passphrase.",
   "@helpBackupImportBullet3": {
-    "description": "Bullet 3"
+    "description": "Help backup and restore guide: Import bullet 3 text"
   },
-  "helpPrivacyIntro": "SreerajP MantraJapa Counter is built with a strict privacy-first and offline-first ethos.",
+  "helpPrivacyIntro": "SreerajP MantraJapa Counter is private by design. Your practice stays on your phone.",
   "@helpPrivacyIntro": {
-    "description": "Intro text on Privacy Help screen"
+    "description": "Help privacy guide: intro text"
   },
-  "helpPrivacyOfflineSection": "100% Offline by Design",
+  "helpPrivacyOfflineSection": "Fully offline",
   "@helpPrivacyOfflineSection": {
-    "description": "Privacy offline section title"
+    "description": "Help privacy guide: Offline section title"
   },
-  "helpPrivacyOfflineBold1": "No INTERNET permission:",
+  "helpPrivacyOfflineBold1": "No internet permission:",
   "@helpPrivacyOfflineBold1": {
-    "description": "Bold prefix 1"
+    "description": "Help privacy guide: Offline bullet 1 bold label"
   },
-  "helpPrivacyOfflineBullet1": "The app does not declare the Android INTERNET permission and cannot access the web.",
+  "helpPrivacyOfflineBullet1": "The app does not have the Android internet permission, so it cannot send anything anywhere.",
   "@helpPrivacyOfflineBullet1": {
-    "description": "Bullet 1"
+    "description": "Help privacy guide: Offline bullet 1 text"
   },
-  "helpPrivacyOfflineBold2": "Zero telemetry & tracking:",
+  "helpPrivacyOfflineBold2": "No tracking:",
   "@helpPrivacyOfflineBold2": {
-    "description": "Bold prefix 2"
+    "description": "Help privacy guide: Offline bullet 2 bold label"
   },
-  "helpPrivacyOfflineBullet2": "No analytics SDKs, crash reporters, or background advertising services are bundled.",
+  "helpPrivacyOfflineBullet2": "No analytics, no crash reporters and no ads.",
   "@helpPrivacyOfflineBullet2": {
-    "description": "Bullet 2"
+    "description": "Help privacy guide: Offline bullet 2 text"
   },
-  "helpPrivacyOfflineBold3": "No cloud login:",
+  "helpPrivacyOfflineBold3": "No account:",
   "@helpPrivacyOfflineBold3": {
-    "description": "Bold prefix 3"
+    "description": "Help privacy guide: Offline bullet 3 bold label"
   },
-  "helpPrivacyOfflineBullet3": "You never need to create an account or provide an email or phone number.",
+  "helpPrivacyOfflineBullet3": "You never need to sign up or give an email or phone number.",
   "@helpPrivacyOfflineBullet3": {
-    "description": "Bullet 3"
+    "description": "Help privacy guide: Offline bullet 3 text"
   },
-  "helpPrivacyStorageSection": "Local Storage & Data Integrity",
+  "helpPrivacyStorageSection": "Where your data is kept",
   "@helpPrivacyStorageSection": {
-    "description": "Privacy storage section title"
+    "description": "Help privacy guide: Storage section title"
   },
-  "helpPrivacyStorageBold1": "SQLite database:",
+  "helpPrivacyStorageBold1": "On your phone only:",
   "@helpPrivacyStorageBold1": {
-    "description": "Bold prefix 1"
+    "description": "Help privacy guide: Storage bullet 1 bold label"
   },
-  "helpPrivacyStorageBullet1": "All counters and session history reside inside an encrypted/isolated SQLite database on your device.",
+  "helpPrivacyStorageBullet1": "Counters and history are kept in the app's private storage on your phone. Other apps cannot read it.",
   "@helpPrivacyStorageBullet1": {
-    "description": "Bullet 1"
+    "description": "Help privacy guide: Storage bullet 1 text"
   },
-  "helpPrivacyStorageBold2": "Crash-proof writes:",
+  "helpPrivacyStorageBold2": "No cloud backup:",
   "@helpPrivacyStorageBold2": {
-    "description": "Bold prefix 2"
+    "description": "Help privacy guide: Storage bullet 2 bold label"
   },
-  "helpPrivacyStorageBullet2": "Frequent recovery checkpoints ensure your count is preserved during sudden app switches.",
+  "helpPrivacyStorageBullet2": "Android's automatic cloud backup is turned off for this app. Use Export or Optical Sync to keep a copy.",
   "@helpPrivacyStorageBullet2": {
-    "description": "Bullet 2"
+    "description": "Help privacy guide: Storage bullet 2 text"
   },
-  "helpFaqIntro": "Quick answers to common questions about SreerajP MantraJapa Counter.",
+  "helpFaqIntro": "Quick answers to common questions.",
   "@helpFaqIntro": {
-    "description": "Intro text on FAQ Help screen"
+    "description": "Help FAQ: intro text"
   },
-  "helpFaqQ1Title": "Why is the app completely offline?",
+  "helpFaqQ1Title": "Why did my tap not count?",
   "@helpFaqQ1Title": {
-    "description": "FAQ Q1 title"
+    "description": "Help FAQ: question 1"
   },
-  "helpFaqQ1Answer": "Japa meditation is a deeply personal and sacred practice. By running strictly offline with no network permissions, we ensure complete privacy, battery efficiency, and zero distractions.",
+  "helpFaqQ1Answer": "Only taps inside the mala circle count. If Meru pause is on, taps during the short pause after each mala are not counted either.",
   "@helpFaqQ1Answer": {
-    "description": "FAQ Q1 answer"
+    "description": "Help FAQ: answer 1"
   },
-  "helpFaqQ2Title": "How does Optical Air-Gap Sync work without internet?",
+  "helpFaqQ2Title": "How do I undo a wrong count?",
   "@helpFaqQ2Title": {
-    "description": "FAQ Q2 title"
+    "description": "Help FAQ: question 2"
   },
-  "helpFaqQ2Answer": "The sending phone converts your backup into an animated stream of QR codes displayed on screen. The receiving phone's camera reads these frames and reassembles the complete database locally in seconds.",
+  "helpFaqQ2Answer": "Put two fingers on the mala circle and slide them left or right. Each swipe removes one step.",
   "@helpFaqQ2Answer": {
-    "description": "FAQ Q2 answer"
+    "description": "Help FAQ: answer 2"
   },
-  "helpFaqQ3Title": "What does Stillness Brightness mode do?",
+  "helpFaqQ3Title": "Why does my counter not open?",
   "@helpFaqQ3Title": {
-    "description": "FAQ Q3 title"
+    "description": "Help FAQ: question 3"
   },
-  "helpFaqQ3Answer": "It allows you to dim the screen to minimal ambient brightness so you can chant in dark rooms or temples without glaring light disturbing others.",
+  "helpFaqQ3Answer": "It is either locked or disabled. Tap the lock icon on the card to unlock it. Disabled counters cannot be opened for counting.",
   "@helpFaqQ3Answer": {
-    "description": "FAQ Q3 answer"
+    "description": "Help FAQ: answer 3"
   },
-  "helpFaqQ4Title": "Can I transfer my data when upgrading to a new phone?",
+  "helpFaqQ4Title": "What happens if I stop in the middle of a mala?",
   "@helpFaqQ4Title": {
-    "description": "FAQ Q4 title"
+    "description": "Help FAQ: question 4"
   },
-  "helpFaqQ4Answer": "Yes! You can either use Optical Air-Gap Sync between both phones side-by-side or export a JSON backup file to restore on the new device.",
+  "helpFaqQ4Answer": "Nothing is lost. The counts are saved, and the mala waits for you next time, even on another day. Tap Start new if you want to begin again at 0.",
   "@helpFaqQ4Answer": {
-    "description": "FAQ Q4 answer"
+    "description": "Help FAQ: answer 4"
   },
   "lockCounter": "Lock counter",
   "@lockCounter": {
@@ -2101,7 +2070,6 @@
   "@opticalStreamCompleteSub": {
     "description": "Subtitle of the sheet shown when a QR stream has been fully received"
   },
-
   "selectCountersTitle": "Select Counters",
   "@selectCountersTitle": {
     "description": "Title of the counter selection sheet"
@@ -2331,63 +2299,63 @@
   "@tutorialTitle": {
     "description": "Title for app tutorial screen"
   },
-  "tutorialSub": "Step-by-step visual walkthrough of all app features",
+  "tutorialSub": "A step-by-step walk through every feature, from your first counter to backup and privacy.",
   "@tutorialSub": {
-    "description": "Subtitle for app tutorial screen"
+    "description": "App tutorial subtitle"
   },
-  "tutorialStep1Title": "1. Create Your First Counter",
+  "tutorialStep1Title": "Welcome",
   "@tutorialStep1Title": {
     "description": "Tutorial step 1 title"
   },
-  "tutorialStep1Desc": "Tap the add button (+) on the home screen. Enter the mantra name, choose an increment step, and set daily and lifetime goals.",
+  "tutorialStep1Desc": "This app helps you count your mantra japa. It counts malas of 108, keeps daily and lifetime goals, and saves a full history. It works fully offline.",
   "@tutorialStep1Desc": {
     "description": "Tutorial step 1 description"
   },
-  "tutorialStep2Title": "2. Sacred Fullscreen Counting",
+  "tutorialStep2Title": "Choose your language",
   "@tutorialStep2Title": {
     "description": "Tutorial step 2 title"
   },
-  "tutorialStep2Desc": "Tap anywhere on the large counting surface to advance counts. Swipe downwards to undo an accidental tap. Use the stillness slider to dim the screen.",
+  "tutorialStep2Desc": "Go to Settings → Language. Pick English, Malayalam, Sanskrit, or System default.",
   "@tutorialStep2Desc": {
     "description": "Tutorial step 2 description"
   },
-  "tutorialStep3Title": "3. 108 Beads Mala System",
+  "tutorialStep3Title": "Create a counter",
   "@tutorialStep3Title": {
     "description": "Tutorial step 3 title"
   },
-  "tutorialStep3Desc": "Every 108 chants automatically complete one mala. The app chimes sacred temple bells and records your completed malas with precision.",
+  "tutorialStep3Desc": "Tap the + button at the top of the home screen. Enter the mantra name. Then set the initial count, increment step, lifetime goal, daily goal and start date.",
   "@tutorialStep3Desc": {
     "description": "Tutorial step 3 description"
   },
-  "tutorialStep4Title": "4. Daily & Lifetime Milestones",
+  "tutorialStep4Title": "Read the counter card",
   "@tutorialStep4Title": {
     "description": "Tutorial step 4 title"
   },
-  "tutorialStep4Desc": "When your daily or lifetime target is met, custom sacred tones and auspicious badges celebrate your spiritual milestone.",
+  "tutorialStep4Desc": "Each card shows total chants and malas, today's chants, a strip of 27 beads for today's progress, and a bar for your lifetime goal.",
   "@tutorialStep4Desc": {
     "description": "Tutorial step 4 description"
   },
-  "tutorialStep5Title": "5. Locking & Archiving",
+  "tutorialStep5Title": "Today summary",
   "@tutorialStep5Title": {
     "description": "Tutorial step 5 title"
   },
-  "tutorialStep5Desc": "Long-press any counter card to lock it against accidental touches, or retire completed mantras with a completion status.",
+  "tutorialStep5Desc": "The pill at the top of the home screen adds up today's chants, malas and the counters you used today.",
   "@tutorialStep5Desc": {
     "description": "Tutorial step 5 description"
   },
-  "tutorialStep6Title": "6. Air-Gapped Optical QR Sync",
+  "tutorialStep6Title": "Counter options",
   "@tutorialStep6Title": {
     "description": "Tutorial step 6 title"
   },
-  "tutorialStep6Desc": "Migrate your japa counters between devices without internet, Bluetooth, or cables using animated QR camera streaming.",
+  "tutorialStep6Desc": "Long-press a card to see Counter info, History, Edit, Lock, Disable (success), Disable (not completed) and Delete.",
   "@tutorialStep6Desc": {
     "description": "Tutorial step 6 description"
   },
-  "tutorialStep7Title": "7. Encrypted Backups",
+  "tutorialStep7Title": "Lock a counter",
   "@tutorialStep7Title": {
     "description": "Tutorial step 7 title"
   },
-  "tutorialStep7Desc": "Export your entire sadhana history to a file protected by AES-256-GCM encryption with your personal passphrase.",
+  "tutorialStep7Desc": "Tap the lock icon on a card to lock it. A locked counter cannot be opened for counting. Tap the icon again to unlock.",
   "@tutorialStep7Desc": {
     "description": "Tutorial step 7 description"
   },
@@ -2466,23 +2434,7 @@
   },
   "helpCountingMindfulSection": "Mindful counting",
   "@helpCountingMindfulSection": {
-    "description": "Help section title for Meru pause and pacing hint"
-  },
-  "helpCountingMeruBold": "Meru pause:",
-  "@helpCountingMeruBold": {
-    "description": "Bold prefix for the Meru pause help bullet"
-  },
-  "helpCountingMeruBullet": "When turned on in Settings → Display, the app pauses for a few seconds after each mala of 108. Taps in the pause are not counted, just as the Meru bead is never crossed.",
-  "@helpCountingMeruBullet": {
-    "description": "Help bullet explaining the Meru pause"
-  },
-  "helpCountingPacingBold": "Pacing hint:",
-  "@helpCountingPacingBold": {
-    "description": "Bold prefix for the pacing hint help bullet"
-  },
-  "helpCountingPacingBullet": "If you tap faster than about 3 times a second, the mala glows softly and a short reminder appears. It never blocks a count.",
-  "@helpCountingPacingBullet": {
-    "description": "Help bullet explaining the pacing hint"
+    "description": "Help counting guide: Mindful section title"
   },
   "sadhanaFlowTitle": "SADHANA FLOW",
   "@sadhanaFlowTitle": {
@@ -2534,5 +2486,1333 @@
         "type": "int"
       }
     }
+  },
+  "helpCategoryCounters": "Your Counters & History",
+  "@helpCategoryCounters": {
+    "description": "Help hub category: counters and history"
+  },
+  "helpTopicCountersTitle": "Counters & Home Screen",
+  "@helpTopicCountersTitle": {
+    "description": "Help topic title: counters and home screen"
+  },
+  "helpTopicCountersSub": "Create, edit, lock, disable and delete counters, and read the cards",
+  "@helpTopicCountersSub": {
+    "description": "Help topic subtitle: counters and home screen"
+  },
+  "helpTopicHistoryTitle": "History & Statistics",
+  "@helpTopicHistoryTitle": {
+    "description": "Help topic title: history and statistics"
+  },
+  "helpTopicHistorySub": "Day-by-day history, the Sadhana Flow calendar and counter details",
+  "@helpTopicHistorySub": {
+    "description": "Help topic subtitle: history and statistics"
+  },
+  "helpTopicDisplayTitle": "Display, Stillness & Language",
+  "@helpTopicDisplayTitle": {
+    "description": "Help topic title: display, stillness and language"
+  },
+  "helpTopicDisplaySub": "Brightness, dimmed mode, Do Not Disturb, Meru pause, language and appearance",
+  "@helpTopicDisplaySub": {
+    "description": "Help topic subtitle: display, stillness and language"
+  },
+  "tutorialChapter1": "Getting started",
+  "@tutorialChapter1": {
+    "description": "Tutorial chapter 1 heading"
+  },
+  "tutorialChapter2": "Your counters",
+  "@tutorialChapter2": {
+    "description": "Tutorial chapter 2 heading"
+  },
+  "tutorialChapter3": "Counting",
+  "@tutorialChapter3": {
+    "description": "Tutorial chapter 3 heading"
+  },
+  "tutorialChapter4": "Malas and goals",
+  "@tutorialChapter4": {
+    "description": "Tutorial chapter 4 heading"
+  },
+  "tutorialChapter5": "History and statistics",
+  "@tutorialChapter5": {
+    "description": "Tutorial chapter 5 heading"
+  },
+  "tutorialChapter6": "Sound, vibration and display",
+  "@tutorialChapter6": {
+    "description": "Tutorial chapter 6 heading"
+  },
+  "tutorialChapter7": "Your data",
+  "@tutorialChapter7": {
+    "description": "Tutorial chapter 7 heading"
+  },
+  "tutorialChapter8": "Privacy",
+  "@tutorialChapter8": {
+    "description": "Tutorial chapter 8 heading"
+  },
+  "tutorialStep1Tip": "Open this guide any time from Settings → Help & User Guides.",
+  "@tutorialStep1Tip": {
+    "description": "Tutorial step 1 tip"
+  },
+  "tutorialStep2Tip": "Mantra names can be typed in any script, whatever app language you choose.",
+  "@tutorialStep2Tip": {
+    "description": "Tutorial step 2 tip"
+  },
+  "tutorialStep3Tip": "Use 0 for no goal. The daily goal cannot be more than the lifetime goal, and the step must be less than the daily goal.",
+  "@tutorialStep3Tip": {
+    "description": "Tutorial step 3 tip"
+  },
+  "tutorialStep4Tip": "A green tick means today's goal is done. A gold trophy means the lifetime goal is reached.",
+  "@tutorialStep4Tip": {
+    "description": "Tutorial step 4 tip"
+  },
+  "tutorialStep5Tip": "These totals start again from 0 each day at midnight, by your phone's clock.",
+  "@tutorialStep5Tip": {
+    "description": "Tutorial step 5 tip"
+  },
+  "tutorialStep6Tip": "Delete removes the counter and all its history. It cannot be undone.",
+  "@tutorialStep6Tip": {
+    "description": "Tutorial step 6 tip"
+  },
+  "tutorialStep7Tip": "Lock a finished or rarely used counter, so its count is never changed by mistake.",
+  "@tutorialStep7Tip": {
+    "description": "Tutorial step 7 tip"
+  },
+  "tutorialStep8Title": "Open the counting screen",
+  "@tutorialStep8Title": {
+    "description": "Tutorial step 8 title"
+  },
+  "tutorialStep8Desc": "Tap a counter card. The counting screen opens with a large mala circle.",
+  "@tutorialStep8Desc": {
+    "description": "Tutorial step 8 description"
+  },
+  "tutorialStep8Tip": "If Do Not Disturb is turned on in settings, the phone stays quiet while this screen is open.",
+  "@tutorialStep8Tip": {
+    "description": "Tutorial step 8 tip"
+  },
+  "tutorialStep9Title": "Tap to count",
+  "@tutorialStep9Title": {
+    "description": "Tutorial step 9 title"
+  },
+  "tutorialStep9Desc": "Tap inside the mala circle. Each tap adds the increment step (1 by default). Taps outside the circle are ignored.",
+  "@tutorialStep9Desc": {
+    "description": "Tutorial step 9 description"
+  },
+  "tutorialStep9Tip": "You can chant with your eyes closed. The circle is large, and a sound and vibration mark each full mala.",
+  "@tutorialStep9Tip": {
+    "description": "Tutorial step 9 tip"
+  },
+  "tutorialStep10Title": "Undo a count",
+  "@tutorialStep10Title": {
+    "description": "Tutorial step 10 title"
+  },
+  "tutorialStep10Desc": "Put two fingers on the circle and slide them left or right. One swipe removes one step.",
+  "@tutorialStep10Desc": {
+    "description": "Tutorial step 10 description"
+  },
+  "tutorialStep10Tip": "The phone vibrates once to confirm the undo.",
+  "@tutorialStep10Tip": {
+    "description": "Tutorial step 10 tip"
+  },
+  "tutorialStep11Title": "Read the screen",
+  "@tutorialStep11Title": {
+    "description": "Tutorial step 11 title"
+  },
+  "tutorialStep11Desc": "The top pill shows the time of this sitting. The centre shows your bead in the current mala, the beads left, and the malas done. The bottom row shows Session, Daily and Lifetime counts.",
+  "@tutorialStep11Desc": {
+    "description": "Tutorial step 11 description"
+  },
+  "tutorialStep11Tip": "The lamp icon at the top changes colour when a goal is reached.",
+  "@tutorialStep11Tip": {
+    "description": "Tutorial step 11 tip"
+  },
+  "tutorialStep12Title": "Leave and come back",
+  "@tutorialStep12Title": {
+    "description": "Tutorial step 12 title"
+  },
+  "tutorialStep12Desc": "Press back at any time. Your counts are saved quietly. The timer pauses while the app is in the background. An unfinished mala waits for you, even on another day.",
+  "@tutorialStep12Desc": {
+    "description": "Tutorial step 12 description"
+  },
+  "tutorialStep12Tip": "Tap Start new on the banner to keep the old counts and begin a new mala at 0.",
+  "@tutorialStep12Tip": {
+    "description": "Tutorial step 12 tip"
+  },
+  "tutorialStep13Title": "The counting menu",
+  "@tutorialStep13Title": {
+    "description": "Tutorial step 13 title"
+  },
+  "tutorialStep13Desc": "The ⋮ menu has History, About, Settings, Finish & start new, Reset session and Reset counter.",
+  "@tutorialStep13Desc": {
+    "description": "Tutorial step 13 description"
+  },
+  "tutorialStep13Tip": "Reset session clears only this sitting. Reset counter deletes all history of the counter.",
+  "@tutorialStep13Tip": {
+    "description": "Tutorial step 13 tip"
+  },
+  "tutorialStep14Title": "108 beads = 1 mala",
+  "@tutorialStep14Title": {
+    "description": "Tutorial step 14 title"
+  },
+  "tutorialStep14Desc": "Every 108 counts make one mala. The circle fills bead by bead and starts again after 108.",
+  "@tutorialStep14Desc": {
+    "description": "Tutorial step 14 description"
+  },
+  "tutorialStep14Tip": "115 counts = 1 mala and 7 counts. Extra counts are never lost.",
+  "@tutorialStep14Tip": {
+    "description": "Tutorial step 14 tip"
+  },
+  "tutorialStep15Title": "Reach your goals",
+  "@tutorialStep15Title": {
+    "description": "Tutorial step 15 title"
+  },
+  "tutorialStep15Desc": "When you reach the daily goal, a tone plays, the phone vibrates and a notification appears. The lifetime goal has its own tone, notification and a gold trophy.",
+  "@tutorialStep15Desc": {
+    "description": "Tutorial step 15 description"
+  },
+  "tutorialStep15Tip": "Turn these on or off in Settings → Sound & Haptics.",
+  "@tutorialStep15Tip": {
+    "description": "Tutorial step 15 tip"
+  },
+  "tutorialStep16Title": "Meru pause",
+  "@tutorialStep16Title": {
+    "description": "Tutorial step 16 title"
+  },
+  "tutorialStep16Desc": "Turn it on in Settings → Display & Stillness. After each mala the app pauses for 3, 5 or 10 seconds, so you can rest and breathe.",
+  "@tutorialStep16Desc": {
+    "description": "Tutorial step 16 description"
+  },
+  "tutorialStep16Tip": "Taps during the pause are not counted, just as the Meru bead is never crossed.",
+  "@tutorialStep16Tip": {
+    "description": "Tutorial step 16 tip"
+  },
+  "tutorialStep17Title": "Gentle pacing hint",
+  "@tutorialStep17Title": {
+    "description": "Tutorial step 17 title"
+  },
+  "tutorialStep17Desc": "If you tap faster than about 3 times a second, the circle glows amber and a short reminder appears.",
+  "@tutorialStep17Desc": {
+    "description": "Tutorial step 17 description"
+  },
+  "tutorialStep17Tip": "Every tap still counts. You can turn the hint off in Settings → Display & Stillness.",
+  "@tutorialStep17Tip": {
+    "description": "Tutorial step 17 tip"
+  },
+  "tutorialStep18Title": "History",
+  "@tutorialStep18Title": {
+    "description": "Tutorial step 18 title"
+  },
+  "tutorialStep18Desc": "Open History from the counting menu or the long-press menu. Sittings are grouped by day, with time, length, count and malas.",
+  "@tutorialStep18Desc": {
+    "description": "Tutorial step 18 description"
+  },
+  "tutorialStep18Tip": "Tap the delete icon on a sitting to remove it. Totals update at once.",
+  "@tutorialStep18Tip": {
+    "description": "Tutorial step 18 tip"
+  },
+  "tutorialStep19Title": "Sadhana Flow",
+  "@tutorialStep19Title": {
+    "description": "Tutorial step 19 title"
+  },
+  "tutorialStep19Desc": "The calendar in History shows the last 16 weeks. Days with practice glow like a lamp. A brighter glow means more chanting.",
+  "@tutorialStep19Desc": {
+    "description": "Tutorial step 19 description"
+  },
+  "tutorialStep19Tip": "There are no streaks and no missed-day marks. Every day you return is welcome.",
+  "@tutorialStep19Tip": {
+    "description": "Tutorial step 19 tip"
+  },
+  "tutorialStep20Title": "Counter statistics",
+  "@tutorialStep20Title": {
+    "description": "Tutorial step 20 title"
+  },
+  "tutorialStep20Desc": "Choose Counter info (long-press menu) or About (counting menu) to see progress rings and all details of the counter.",
+  "@tutorialStep20Desc": {
+    "description": "Tutorial step 20 description"
+  },
+  "tutorialStep20Tip": "The average chants per day is worked out from the start date you set.",
+  "@tutorialStep20Tip": {
+    "description": "Tutorial step 20 tip"
+  },
+  "tutorialStep21Title": "Sounds",
+  "@tutorialStep21Title": {
+    "description": "Tutorial step 21 title"
+  },
+  "tutorialStep21Desc": "In Settings → Sound & Haptics choose the mala sound, the daily goal tone and the lifetime goal tone. Pick a built-in sound, a phone ringtone, or your own audio file.",
+  "@tutorialStep21Desc": {
+    "description": "Tutorial step 21 description"
+  },
+  "tutorialStep21Tip": "Tap Preview to hear the tone before you chant.",
+  "@tutorialStep21Tip": {
+    "description": "Tutorial step 21 tip"
+  },
+  "tutorialStep22Title": "Vibration and notifications",
+  "@tutorialStep22Title": {
+    "description": "Tutorial step 22 title"
+  },
+  "tutorialStep22Desc": "Vibration marks each mala, each goal and each undo. Goal notifications appear in the status bar.",
+  "@tutorialStep22Desc": {
+    "description": "Tutorial step 22 description"
+  },
+  "tutorialStep22Tip": "Sounds play through the alarm channel, so you hear them even when the phone is on silent.",
+  "@tutorialStep22Tip": {
+    "description": "Tutorial step 22 tip"
+  },
+  "tutorialStep23Title": "Display and stillness",
+  "@tutorialStep23Title": {
+    "description": "Tutorial step 23 title"
+  },
+  "tutorialStep23Desc": "In Settings → Display & Stillness set the brightness, turn on Dimmed chanting mode, or silence calls and alerts with Do Not Disturb.",
+  "@tutorialStep23Desc": {
+    "description": "Tutorial step 23 description"
+  },
+  "tutorialStep23Tip": "Do Not Disturb needs a one-time permission. It is turned off again when you leave the counting screen.",
+  "@tutorialStep23Tip": {
+    "description": "Tutorial step 23 tip"
+  },
+  "tutorialStep24Title": "Appearance",
+  "@tutorialStep24Title": {
+    "description": "Tutorial step 24 title"
+  },
+  "tutorialStep24Desc": "Settings → Appearance shows the temple colours and fonts used in the app.",
+  "@tutorialStep24Desc": {
+    "description": "Tutorial step 24 description"
+  },
+  "tutorialStep24Tip": "The app always stays upright (portrait), so you can count with one hand.",
+  "@tutorialStep24Tip": {
+    "description": "Tutorial step 24 tip"
+  },
+  "tutorialStep25Title": "Back up to a file",
+  "@tutorialStep25Title": {
+    "description": "Tutorial step 25 title"
+  },
+  "tutorialStep25Desc": "Use Settings → Data Backup & Optical Sync → Export, or Import / Export in the home menu. All counters and history are saved to one file, and the share sheet opens.",
+  "@tutorialStep25Desc": {
+    "description": "Tutorial step 25 description"
+  },
+  "tutorialStep25Tip": "You can lock the file with a passphrase (AES-256-GCM). A lost passphrase cannot be recovered.",
+  "@tutorialStep25Tip": {
+    "description": "Tutorial step 25 tip"
+  },
+  "tutorialStep26Title": "Restore from a file",
+  "@tutorialStep26Title": {
+    "description": "Tutorial step 26 title"
+  },
+  "tutorialStep26Desc": "Choose Import and pick your backup file. Enter the passphrase if the file is encrypted.",
+  "@tutorialStep26Desc": {
+    "description": "Tutorial step 26 description"
+  },
+  "tutorialStep26Tip": "Import replaces ALL current data on this phone. Export first if you want to keep it.",
+  "@tutorialStep26Tip": {
+    "description": "Tutorial step 26 tip"
+  },
+  "tutorialStep27Title": "Phone-to-phone sync",
+  "@tutorialStep27Title": {
+    "description": "Tutorial step 27 title"
+  },
+  "tutorialStep27Desc": "On the old phone choose Optical Sync (Send) and pick the counters. On the new phone choose Optical Sync (Receive) and point the camera at the moving QR code.",
+  "@tutorialStep27Desc": {
+    "description": "Tutorial step 27 description"
+  },
+  "tutorialStep27Tip": "No internet, Bluetooth or cable is used. Chosen counters are added; other counters on the receiving phone are kept.",
+  "@tutorialStep27Tip": {
+    "description": "Tutorial step 27 tip"
+  },
+  "tutorialStep28Title": "Clear all data",
+  "@tutorialStep28Title": {
+    "description": "Tutorial step 28 title"
+  },
+  "tutorialStep28Desc": "Settings → Data Backup & Optical Sync → Clear all data deletes every counter and all history.",
+  "@tutorialStep28Desc": {
+    "description": "Tutorial step 28 description"
+  },
+  "tutorialStep28Tip": "Make a backup first. This cannot be undone.",
+  "@tutorialStep28Tip": {
+    "description": "Tutorial step 28 tip"
+  },
+  "tutorialStep29Title": "Fully offline and private",
+  "@tutorialStep29Title": {
+    "description": "Tutorial step 29 title"
+  },
+  "tutorialStep29Desc": "The app has no internet permission, no ads, no tracking and no account. Your practice stays on your phone.",
+  "@tutorialStep29Desc": {
+    "description": "Tutorial step 29 description"
+  },
+  "tutorialStep29Tip": "Android cloud backup is off for this app, so use Export or Optical Sync to keep a copy.",
+  "@tutorialStep29Tip": {
+    "description": "Tutorial step 29 tip"
+  },
+  "tutorialStep30Title": "Permissions",
+  "@tutorialStep30Title": {
+    "description": "Tutorial step 30 title"
+  },
+  "tutorialStep30Desc": "The camera is used only to scan sync codes. Notifications show goal messages. Vibration and audio give feedback. Do Not Disturb access is asked only if you turn it on.",
+  "@tutorialStep30Desc": {
+    "description": "Tutorial step 30 description"
+  },
+  "tutorialStep30Tip": "See every permission and why it is used in Settings → Permissions.",
+  "@tutorialStep30Tip": {
+    "description": "Tutorial step 30 tip"
+  },
+  "helpCountersIntro": "The home screen lists all your counters. Each counter is one mantra or practice, with its own goals and history.",
+  "@helpCountersIntro": {
+    "description": "Help counters guide: intro text"
+  },
+  "helpCountersCreateSection": "Creating a counter",
+  "@helpCountersCreateSection": {
+    "description": "Help counters guide: Create section title"
+  },
+  "helpCountersCreateBold1": "Add button:",
+  "@helpCountersCreateBold1": {
+    "description": "Help counters guide: Create bullet 1 bold label"
+  },
+  "helpCountersCreateBullet1": "Tap the + button at the top of the home screen to make a new counter.",
+  "@helpCountersCreateBullet1": {
+    "description": "Help counters guide: Create bullet 1 text"
+  },
+  "helpCountersCreateBold2": "Name:",
+  "@helpCountersCreateBold2": {
+    "description": "Help counters guide: Create bullet 2 bold label"
+  },
+  "helpCountersCreateBullet2": "Type the mantra name in any language or script.",
+  "@helpCountersCreateBullet2": {
+    "description": "Help counters guide: Create bullet 2 text"
+  },
+  "helpCountersCreateBold3": "Initial count:",
+  "@helpCountersCreateBold3": {
+    "description": "Help counters guide: Create bullet 3 bold label"
+  },
+  "helpCountersCreateBullet3": "Bring in counts you made before, for example from a paper log. The default is 0.",
+  "@helpCountersCreateBullet3": {
+    "description": "Help counters guide: Create bullet 3 text"
+  },
+  "helpCountersCreateBold4": "Increment step:",
+  "@helpCountersCreateBold4": {
+    "description": "Help counters guide: Create bullet 4 bold label"
+  },
+  "helpCountersCreateBullet4": "How much one tap adds. The default is 1. It must be less than the daily goal.",
+  "@helpCountersCreateBullet4": {
+    "description": "Help counters guide: Create bullet 4 text"
+  },
+  "helpCountersCreateBold5": "Goals:",
+  "@helpCountersCreateBold5": {
+    "description": "Help counters guide: Create bullet 5 bold label"
+  },
+  "helpCountersCreateBullet5": "Set a daily goal and a lifetime goal. Use 0 for no goal. The daily goal cannot be more than the lifetime goal.",
+  "@helpCountersCreateBullet5": {
+    "description": "Help counters guide: Create bullet 5 text"
+  },
+  "helpCountersCreateBold6": "Start date:",
+  "@helpCountersCreateBold6": {
+    "description": "Help counters guide: Create bullet 6 bold label"
+  },
+  "helpCountersCreateBullet6": "The day you started this practice. It is used to work out your average chants per day.",
+  "@helpCountersCreateBullet6": {
+    "description": "Help counters guide: Create bullet 6 text"
+  },
+  "helpCountersHomeSection": "The home screen",
+  "@helpCountersHomeSection": {
+    "description": "Help counters guide: Home section title"
+  },
+  "helpCountersHomeBold1": "Today summary:",
+  "@helpCountersHomeBold1": {
+    "description": "Help counters guide: Home bullet 1 bold label"
+  },
+  "helpCountersHomeBullet1": "The pill at the top shows today's total chants, total malas, and how many counters you used today.",
+  "@helpCountersHomeBullet1": {
+    "description": "Help counters guide: Home bullet 1 text"
+  },
+  "helpCountersHomeBold2": "Card progress:",
+  "@helpCountersHomeBold2": {
+    "description": "Help counters guide: Home bullet 2 bold label"
+  },
+  "helpCountersHomeBullet2": "Each card shows total chants and malas, today's chants, a strip of 27 beads for today's goal, and a bar for the lifetime goal.",
+  "@helpCountersHomeBullet2": {
+    "description": "Help counters guide: Home bullet 2 text"
+  },
+  "helpCountersHomeBold3": "Badges:",
+  "@helpCountersHomeBold3": {
+    "description": "Help counters guide: Home bullet 3 bold label"
+  },
+  "helpCountersHomeBullet3": "A green tick appears when today's goal is done. A gold trophy appears when the lifetime goal is reached.",
+  "@helpCountersHomeBullet3": {
+    "description": "Help counters guide: Home bullet 3 text"
+  },
+  "helpCountersHomeBold4": "Order:",
+  "@helpCountersHomeBold4": {
+    "description": "Help counters guide: Home bullet 4 bold label"
+  },
+  "helpCountersHomeBullet4": "Active counters come first, then disabled ones. Newer counters are shown first.",
+  "@helpCountersHomeBullet4": {
+    "description": "Help counters guide: Home bullet 4 text"
+  },
+  "helpCountersHomeBold5": "Colours:",
+  "@helpCountersHomeBold5": {
+    "description": "Help counters guide: Home bullet 5 bold label"
+  },
+  "helpCountersHomeBullet5": "Each counter gets its own accent colour, and it always stays the same.",
+  "@helpCountersHomeBullet5": {
+    "description": "Help counters guide: Home bullet 5 text"
+  },
+  "helpCountersHomeBold6": "Top menu:",
+  "@helpCountersHomeBold6": {
+    "description": "Help counters guide: Home bullet 6 bold label"
+  },
+  "helpCountersHomeBullet6": "The menu at the top has Import / Export, Settings and About.",
+  "@helpCountersHomeBullet6": {
+    "description": "Help counters guide: Home bullet 6 text"
+  },
+  "helpCountersOptionsSection": "Counter options (long-press a card)",
+  "@helpCountersOptionsSection": {
+    "description": "Help counters guide: Options section title"
+  },
+  "helpCountersOptionsBold1": "About counter:",
+  "@helpCountersOptionsBold1": {
+    "description": "Help counters guide: Options bullet 1 bold label"
+  },
+  "helpCountersOptionsBullet1": "Statistics and details of the counter.",
+  "@helpCountersOptionsBullet1": {
+    "description": "Help counters guide: Options bullet 1 text"
+  },
+  "helpCountersOptionsBold2": "History:",
+  "@helpCountersOptionsBold2": {
+    "description": "Help counters guide: Options bullet 2 bold label"
+  },
+  "helpCountersOptionsBullet2": "All sittings of this counter.",
+  "@helpCountersOptionsBullet2": {
+    "description": "Help counters guide: Options bullet 2 text"
+  },
+  "helpCountersOptionsBold3": "Edit:",
+  "@helpCountersOptionsBold3": {
+    "description": "Help counters guide: Options bullet 3 bold label"
+  },
+  "helpCountersOptionsBullet3": "Change the name, step, goals or start date.",
+  "@helpCountersOptionsBullet3": {
+    "description": "Help counters guide: Options bullet 3 text"
+  },
+  "helpCountersOptionsBold4": "Lock / Unlock:",
+  "@helpCountersOptionsBold4": {
+    "description": "Help counters guide: Options bullet 4 bold label"
+  },
+  "helpCountersOptionsBullet4": "Same as the lock icon on the card.",
+  "@helpCountersOptionsBullet4": {
+    "description": "Help counters guide: Options bullet 4 text"
+  },
+  "helpCountersOptionsBold5": "Disable (success):",
+  "@helpCountersOptionsBold5": {
+    "description": "Help counters guide: Options bullet 5 bold label"
+  },
+  "helpCountersOptionsBullet5": "Mark the counter as completed, for example when a vow is finished. You can add a reason.",
+  "@helpCountersOptionsBullet5": {
+    "description": "Help counters guide: Options bullet 5 text"
+  },
+  "helpCountersOptionsBold6": "Disable (not completed):",
+  "@helpCountersOptionsBold6": {
+    "description": "Help counters guide: Options bullet 6 bold label"
+  },
+  "helpCountersOptionsBullet6": "Stop a counter that was not finished. You can add a reason.",
+  "@helpCountersOptionsBullet6": {
+    "description": "Help counters guide: Options bullet 6 text"
+  },
+  "helpCountersOptionsBold7": "Delete:",
+  "@helpCountersOptionsBold7": {
+    "description": "Help counters guide: Options bullet 7 bold label"
+  },
+  "helpCountersOptionsBullet7": "Removes the counter and all its history after you confirm. This cannot be undone.",
+  "@helpCountersOptionsBullet7": {
+    "description": "Help counters guide: Options bullet 7 text"
+  },
+  "helpCountersLockSection": "Locked and disabled counters",
+  "@helpCountersLockSection": {
+    "description": "Help counters guide: Lock section title"
+  },
+  "helpCountersLockBold1": "Lock icon:",
+  "@helpCountersLockBold1": {
+    "description": "Help counters guide: Lock bullet 1 bold label"
+  },
+  "helpCountersLockBullet1": "Tap the lock icon on a card to lock or unlock it.",
+  "@helpCountersLockBullet1": {
+    "description": "Help counters guide: Lock bullet 1 text"
+  },
+  "helpCountersLockBold2": "Locked:",
+  "@helpCountersLockBold2": {
+    "description": "Help counters guide: Lock bullet 2 bold label"
+  },
+  "helpCountersLockBullet2": "A locked counter cannot be opened for counting, so its count cannot change by mistake. Tapping it shows a short message.",
+  "@helpCountersLockBullet2": {
+    "description": "Help counters guide: Lock bullet 2 text"
+  },
+  "helpCountersLockBold3": "Disabled:",
+  "@helpCountersLockBold3": {
+    "description": "Help counters guide: Lock bullet 3 bold label"
+  },
+  "helpCountersLockBullet3": "Disabled counters stay in the list with a tick or cross mark, but cannot be opened for counting.",
+  "@helpCountersLockBullet3": {
+    "description": "Help counters guide: Lock bullet 3 text"
+  },
+  "helpCountingScreenSection": "Reading the screen",
+  "@helpCountingScreenSection": {
+    "description": "Help counting guide: Screen section title"
+  },
+  "helpCountingScreenBold1": "Timer:",
+  "@helpCountingScreenBold1": {
+    "description": "Help counting guide: Screen bullet 1 bold label"
+  },
+  "helpCountingScreenBullet1": "The pill at the top shows how long this sitting has lasted. It shows PAUSED when the app is in the background.",
+  "@helpCountingScreenBullet1": {
+    "description": "Help counting guide: Screen bullet 1 text"
+  },
+  "helpCountingScreenBold2": "Centre:",
+  "@helpCountingScreenBold2": {
+    "description": "Help counting guide: Screen bullet 2 bold label"
+  },
+  "helpCountingScreenBullet2": "The big number is your place in the current mala (0–107). Below it are the beads left and the malas done in this sitting.",
+  "@helpCountingScreenBullet2": {
+    "description": "Help counting guide: Screen bullet 2 text"
+  },
+  "helpCountingScreenBold3": "Bottom row:",
+  "@helpCountingScreenBold3": {
+    "description": "Help counting guide: Screen bullet 3 bold label"
+  },
+  "helpCountingScreenBullet3": "Shows the Session, Daily and Lifetime counts with progress towards your goals.",
+  "@helpCountingScreenBullet3": {
+    "description": "Help counting guide: Screen bullet 3 text"
+  },
+  "helpCountingScreenBold4": "Lamp:",
+  "@helpCountingScreenBold4": {
+    "description": "Help counting guide: Screen bullet 4 bold label"
+  },
+  "helpCountingScreenBullet4": "The lamp icon at the top changes colour when your daily or lifetime goal is reached.",
+  "@helpCountingScreenBullet4": {
+    "description": "Help counting guide: Screen bullet 4 text"
+  },
+  "helpCountingSaveSection": "Leaving and saving",
+  "@helpCountingSaveSection": {
+    "description": "Help counting guide: Save section title"
+  },
+  "helpCountingSaveBold1": "Auto save:",
+  "@helpCountingSaveBold1": {
+    "description": "Help counting guide: Save bullet 1 bold label"
+  },
+  "helpCountingSaveBullet1": "Press back at any time. Your counts are saved quietly; the app does not ask you to save.",
+  "@helpCountingSaveBullet1": {
+    "description": "Help counting guide: Save bullet 1 text"
+  },
+  "helpCountingSaveBold2": "Crash safe:",
+  "@helpCountingSaveBold2": {
+    "description": "Help counting guide: Save bullet 2 bold label"
+  },
+  "helpCountingSaveBullet2": "Your count is saved every 5 taps or 5 seconds, and fully stored every 20 taps or 30 seconds. If the phone switches off, the count comes back when you open the app.",
+  "@helpCountingSaveBullet2": {
+    "description": "Help counting guide: Save bullet 2 text"
+  },
+  "helpCountingSaveBold3": "Timer pause:",
+  "@helpCountingSaveBold3": {
+    "description": "Help counting guide: Save bullet 3 bold label"
+  },
+  "helpCountingSaveBullet3": "The timer stops while the app is in the background, so idle time is not added to your sitting.",
+  "@helpCountingSaveBullet3": {
+    "description": "Help counting guide: Save bullet 3 text"
+  },
+  "helpCountingSaveBold4": "Unfinished mala:",
+  "@helpCountingSaveBold4": {
+    "description": "Help counting guide: Save bullet 4 bold label"
+  },
+  "helpCountingSaveBullet4": "If you stop before 108, the mala waits for you next time, even on another day, and a banner shows it. Taps always count on the day you make them. Tap Start new to keep those counts and begin a new mala at 0.",
+  "@helpCountingSaveBullet4": {
+    "description": "Help counting guide: Save bullet 4 text"
+  },
+  "helpCountingMenuSection": "The counting menu (⋮)",
+  "@helpCountingMenuSection": {
+    "description": "Help counting guide: Menu section title"
+  },
+  "helpCountingMenuBold1": "History:",
+  "@helpCountingMenuBold1": {
+    "description": "Help counting guide: Menu bullet 1 bold label"
+  },
+  "helpCountingMenuBullet1": "Opens the history of this counter.",
+  "@helpCountingMenuBullet1": {
+    "description": "Help counting guide: Menu bullet 1 text"
+  },
+  "helpCountingMenuBold2": "About:",
+  "@helpCountingMenuBold2": {
+    "description": "Help counting guide: Menu bullet 2 bold label"
+  },
+  "helpCountingMenuBullet2": "Shows the statistics and details of this counter.",
+  "@helpCountingMenuBullet2": {
+    "description": "Help counting guide: Menu bullet 2 text"
+  },
+  "helpCountingMenuBold3": "Settings:",
+  "@helpCountingMenuBold3": {
+    "description": "Help counting guide: Menu bullet 3 bold label"
+  },
+  "helpCountingMenuBullet3": "Opens the app settings.",
+  "@helpCountingMenuBullet3": {
+    "description": "Help counting guide: Menu bullet 3 text"
+  },
+  "helpCountingMenuBold4": "Finish & start new:",
+  "@helpCountingMenuBold4": {
+    "description": "Help counting guide: Menu bullet 4 bold label"
+  },
+  "helpCountingMenuBullet4": "Closes the current unfinished mala. Its counts are kept in history, and the next tap starts a new mala at 0.",
+  "@helpCountingMenuBullet4": {
+    "description": "Help counting guide: Menu bullet 4 text"
+  },
+  "helpCountingMenuBold5": "Reset session:",
+  "@helpCountingMenuBold5": {
+    "description": "Help counting guide: Menu bullet 5 bold label"
+  },
+  "helpCountingMenuBullet5": "Throws away the current sitting and sets it back to 0. Past history is kept.",
+  "@helpCountingMenuBullet5": {
+    "description": "Help counting guide: Menu bullet 5 text"
+  },
+  "helpCountingMenuBold6": "Reset counter:",
+  "@helpCountingMenuBold6": {
+    "description": "Help counting guide: Menu bullet 6 bold label"
+  },
+  "helpCountingMenuBullet6": "Deletes all history of this counter. This cannot be undone.",
+  "@helpCountingMenuBullet6": {
+    "description": "Help counting guide: Menu bullet 6 text"
+  },
+  "helpCountingMindfulBold1": "Meru pause:",
+  "@helpCountingMindfulBold1": {
+    "description": "Help counting guide: Mindful bullet 1 bold label"
+  },
+  "helpCountingMindfulBullet1": "When turned on in Settings → Display & Stillness, the app pauses for 3, 5 or 10 seconds after each mala. Taps in the pause are not counted. The pause ends by itself, or with the undo swipe.",
+  "@helpCountingMindfulBullet1": {
+    "description": "Help counting guide: Mindful bullet 1 text"
+  },
+  "helpCountingMindfulBold2": "Pacing hint:",
+  "@helpCountingMindfulBold2": {
+    "description": "Help counting guide: Mindful bullet 2 bold label"
+  },
+  "helpCountingMindfulBullet2": "If you tap faster than about 3 times a second, the circle glows softly and a short reminder appears. It never blocks a count.",
+  "@helpCountingMindfulBullet2": {
+    "description": "Help counting guide: Mindful bullet 2 text"
+  },
+  "helpMalaBeadsBold4": "Mala sound:",
+  "@helpMalaBeadsBold4": {
+    "description": "Help mala and goals guide: Beads bullet 4 bold label"
+  },
+  "helpMalaBeadsBullet4": "If it is on, a soft sound plays on every 108th count. It is skipped when the same tap also reaches a goal, so sounds do not overlap.",
+  "@helpMalaBeadsBullet4": {
+    "description": "Help mala and goals guide: Beads bullet 4 text"
+  },
+  "helpMalaGoalsBold3": "Daily goal reached:",
+  "@helpMalaGoalsBold3": {
+    "description": "Help mala and goals guide: Goals bullet 3 bold label"
+  },
+  "helpMalaGoalsBullet3": "If the daily notification is on, the goal tone plays, the phone vibrates and a notification appears. A green tick shows on the card.",
+  "@helpMalaGoalsBullet3": {
+    "description": "Help mala and goals guide: Goals bullet 3 text"
+  },
+  "helpMalaGoalsBold4": "Lifetime goal reached:",
+  "@helpMalaGoalsBold4": {
+    "description": "Help mala and goals guide: Goals bullet 4 bold label"
+  },
+  "helpMalaGoalsBullet4": "If the lifetime notification is on, the lifetime tone and notification play. A gold trophy shows and the card turns a soft sandal colour.",
+  "@helpMalaGoalsBullet4": {
+    "description": "Help mala and goals guide: Goals bullet 4 text"
+  },
+  "helpMalaCardSection": "Progress on the card",
+  "@helpMalaCardSection": {
+    "description": "Help mala and goals guide: Card section title"
+  },
+  "helpMalaCardBold1": "Bead strip:",
+  "@helpMalaCardBold1": {
+    "description": "Help mala and goals guide: Card bullet 1 bold label"
+  },
+  "helpMalaCardBullet1": "The row of 27 small beads shows today's progress towards the daily goal. Each bead is 1/27 of the goal, like 4 beads of a mala.",
+  "@helpMalaCardBullet1": {
+    "description": "Help mala and goals guide: Card bullet 1 text"
+  },
+  "helpMalaCardBold2": "Lifetime bar:",
+  "@helpMalaCardBold2": {
+    "description": "Help mala and goals guide: Card bullet 2 bold label"
+  },
+  "helpMalaCardBullet2": "The long bar shows how much of your lifetime goal is done.",
+  "@helpMalaCardBullet2": {
+    "description": "Help mala and goals guide: Card bullet 2 text"
+  },
+  "helpMalaCardBold3": "Numbers:",
+  "@helpMalaCardBold3": {
+    "description": "Help mala and goals guide: Card bullet 3 bold label"
+  },
+  "helpMalaCardBullet3": "The card shows total chants, total malas, and today's chants and malas.",
+  "@helpMalaCardBullet3": {
+    "description": "Help mala and goals guide: Card bullet 3 text"
+  },
+  "helpHistoryIntro": "History keeps a record of every sitting. Open it from the counting menu, from the long-press menu of a counter, or from the counter's details page.",
+  "@helpHistoryIntro": {
+    "description": "Help history guide: intro text"
+  },
+  "helpHistoryLogSection": "The history list",
+  "@helpHistoryLogSection": {
+    "description": "Help history guide: Log section title"
+  },
+  "helpHistoryLogBold1": "Summary:",
+  "@helpHistoryLogBold1": {
+    "description": "Help history guide: Log bullet 1 bold label"
+  },
+  "helpHistoryLogBullet1": "The top card shows total chants, days of practice, and how much of your vow is done.",
+  "@helpHistoryLogBullet1": {
+    "description": "Help history guide: Log bullet 1 text"
+  },
+  "helpHistoryLogBold2": "Grouped by day:",
+  "@helpHistoryLogBold2": {
+    "description": "Help history guide: Log bullet 2 bold label"
+  },
+  "helpHistoryLogBullet2": "Sittings are grouped by date, newest first. Each day shows its total and the running total at the end of that day.",
+  "@helpHistoryLogBullet2": {
+    "description": "Help history guide: Log bullet 2 text"
+  },
+  "helpHistoryLogBold3": "Sitting rows:",
+  "@helpHistoryLogBold3": {
+    "description": "Help history guide: Log bullet 3 bold label"
+  },
+  "helpHistoryLogBullet3": "Each sitting shows the start time, how long it lasted, the count and the malas.",
+  "@helpHistoryLogBullet3": {
+    "description": "Help history guide: Log bullet 3 text"
+  },
+  "helpHistoryDeleteSection": "Deleting history",
+  "@helpHistoryDeleteSection": {
+    "description": "Help history guide: Delete section title"
+  },
+  "helpHistoryDeleteBold1": "One sitting:",
+  "@helpHistoryDeleteBold1": {
+    "description": "Help history guide: Delete bullet 1 bold label"
+  },
+  "helpHistoryDeleteBullet1": "Tap the delete icon on a sitting and confirm. Totals are worked out again at once.",
+  "@helpHistoryDeleteBullet1": {
+    "description": "Help history guide: Delete bullet 1 text"
+  },
+  "helpHistoryDeleteBold2": "Clear history:",
+  "@helpHistoryDeleteBold2": {
+    "description": "Help history guide: Delete bullet 2 bold label"
+  },
+  "helpHistoryDeleteBullet2": "The clear button at the top deletes all sittings of this counter after you confirm. This cannot be undone.",
+  "@helpHistoryDeleteBullet2": {
+    "description": "Help history guide: Delete bullet 2 text"
+  },
+  "helpHistoryFlowSection": "Sadhana Flow calendar",
+  "@helpHistoryFlowSection": {
+    "description": "Help history guide: Flow section title"
+  },
+  "helpHistoryFlowBold1": "16 weeks:",
+  "@helpHistoryFlowBold1": {
+    "description": "Help history guide: Flow bullet 1 bold label"
+  },
+  "helpHistoryFlowBullet1": "A calendar of the last 16 weeks, with Monday at the top. Days with practice glow like a lamp, from soft sandal to deep saffron.",
+  "@helpHistoryFlowBullet1": {
+    "description": "Help history guide: Flow bullet 1 text"
+  },
+  "helpHistoryFlowBold2": "Glow:",
+  "@helpHistoryFlowBold2": {
+    "description": "Help history guide: Flow bullet 2 bold label"
+  },
+  "helpHistoryFlowBullet2": "For a counter with a daily goal, the glow shows progress towards that goal. Otherwise it is compared with your busiest day shown.",
+  "@helpHistoryFlowBullet2": {
+    "description": "Help history guide: Flow bullet 2 text"
+  },
+  "helpHistoryFlowBold3": "No pressure:",
+  "@helpHistoryFlowBold3": {
+    "description": "Help history guide: Flow bullet 3 bold label"
+  },
+  "helpHistoryFlowBullet3": "There are no streaks and no missed-day marks. If you return after 3 or more days, a warm welcome line appears.",
+  "@helpHistoryFlowBullet3": {
+    "description": "Help history guide: Flow bullet 3 text"
+  },
+  "helpHistoryStatsSection": "Counter statistics",
+  "@helpHistoryStatsSection": {
+    "description": "Help history guide: Stats section title"
+  },
+  "helpHistoryStatsBold1": "Open:",
+  "@helpHistoryStatsBold1": {
+    "description": "Help history guide: Stats bullet 1 bold label"
+  },
+  "helpHistoryStatsBullet1": "Long-press a counter and choose About counter, or use About in the counting menu.",
+  "@helpHistoryStatsBullet1": {
+    "description": "Help history guide: Stats bullet 1 text"
+  },
+  "helpHistoryStatsBold2": "Rings:",
+  "@helpHistoryStatsBold2": {
+    "description": "Help history guide: Stats bullet 2 bold label"
+  },
+  "helpHistoryStatsBullet2": "Three rings show lifetime progress, today's progress and total malas.",
+  "@helpHistoryStatsBullet2": {
+    "description": "Help history guide: Stats bullet 2 text"
+  },
+  "helpHistoryStatsBold3": "Details:",
+  "@helpHistoryStatsBold3": {
+    "description": "Help history guide: Stats bullet 3 bold label"
+  },
+  "helpHistoryStatsBullet3": "Name, status, step, initial count, goals, start date, created date, average chants per day, and the disabled date and reason, if any.",
+  "@helpHistoryStatsBullet3": {
+    "description": "Help history guide: Stats bullet 3 text"
+  },
+  "helpAudioMalaSection": "Mala sound",
+  "@helpAudioMalaSection": {
+    "description": "Help sound and vibration guide: Mala section title"
+  },
+  "helpAudioMalaBold1": "Enable mala sound:",
+  "@helpAudioMalaBold1": {
+    "description": "Help sound and vibration guide: Mala bullet 1 bold label"
+  },
+  "helpAudioMalaBullet1": "Plays a soft sound and a vibration on every 108th count.",
+  "@helpAudioMalaBullet1": {
+    "description": "Help sound and vibration guide: Mala bullet 1 text"
+  },
+  "helpAudioMalaBold2": "Choices:",
+  "@helpAudioMalaBold2": {
+    "description": "Help sound and vibration guide: Mala bullet 2 bold label"
+  },
+  "helpAudioMalaBullet2": "Temple Bronze Bell, Tibetan Singing Bowl, or Synthesized Tone (a short beep).",
+  "@helpAudioMalaBullet2": {
+    "description": "Help sound and vibration guide: Mala bullet 2 text"
+  },
+  "helpAudioMalaBold3": "No overlap:",
+  "@helpAudioMalaBold3": {
+    "description": "Help sound and vibration guide: Mala bullet 3 bold label"
+  },
+  "helpAudioMalaBullet3": "If the 108th count also reaches a goal, only the goal tone plays.",
+  "@helpAudioMalaBullet3": {
+    "description": "Help sound and vibration guide: Mala bullet 3 text"
+  },
+  "helpAudioGoalSection": "Daily goal",
+  "@helpAudioGoalSection": {
+    "description": "Help sound and vibration guide: Goal section title"
+  },
+  "helpAudioGoalBold1": "Enable notification:",
+  "@helpAudioGoalBold1": {
+    "description": "Help sound and vibration guide: Goal bullet 1 bold label"
+  },
+  "helpAudioGoalBullet1": "When the daily goal is reached, a tone plays, the phone vibrates, and a notification appears in the status bar.",
+  "@helpAudioGoalBullet1": {
+    "description": "Help sound and vibration guide: Goal bullet 1 text"
+  },
+  "helpAudioGoalBold2": "Goal tone:",
+  "@helpAudioGoalBold2": {
+    "description": "Help sound and vibration guide: Goal bullet 2 bold label"
+  },
+  "helpAudioGoalBullet2": "Pick System default, a phone ringtone, a built-in sound (Temple Bell, Singing Bowl, Synthesized Tone, Sacred Shankha), or your own audio file (MP3, WAV, AAC).",
+  "@helpAudioGoalBullet2": {
+    "description": "Help sound and vibration guide: Goal bullet 2 text"
+  },
+  "helpAudioGoalBold3": "Preview:",
+  "@helpAudioGoalBold3": {
+    "description": "Help sound and vibration guide: Goal bullet 3 bold label"
+  },
+  "helpAudioGoalBullet3": "Tap Preview tone to hear the chosen tone.",
+  "@helpAudioGoalBullet3": {
+    "description": "Help sound and vibration guide: Goal bullet 3 text"
+  },
+  "helpAudioLifetimeSection": "Lifetime goal",
+  "@helpAudioLifetimeSection": {
+    "description": "Help sound and vibration guide: Lifetime section title"
+  },
+  "helpAudioLifetimeBold1": "Lifetime goal tone:",
+  "@helpAudioLifetimeBold1": {
+    "description": "Help sound and vibration guide: Lifetime bullet 1 bold label"
+  },
+  "helpAudioLifetimeBullet1": "A separate tone for the moment your lifetime goal is reached.",
+  "@helpAudioLifetimeBullet1": {
+    "description": "Help sound and vibration guide: Lifetime bullet 1 text"
+  },
+  "helpAudioLifetimeBold2": "Lifetime goal notification:",
+  "@helpAudioLifetimeBold2": {
+    "description": "Help sound and vibration guide: Lifetime bullet 2 bold label"
+  },
+  "helpAudioLifetimeBullet2": "Turn it on to get the tone, vibration and a notification when the lifetime goal is reached.",
+  "@helpAudioLifetimeBullet2": {
+    "description": "Help sound and vibration guide: Lifetime bullet 2 text"
+  },
+  "helpAudioVolumeSection": "Loud enough to hear",
+  "@helpAudioVolumeSection": {
+    "description": "Help sound and vibration guide: Volume section title"
+  },
+  "helpAudioVolumeBold1": "Alarm channel:",
+  "@helpAudioVolumeBold1": {
+    "description": "Help sound and vibration guide: Volume bullet 1 bold label"
+  },
+  "helpAudioVolumeBullet1": "Completion sounds play through the alarm sound channel, so you hear them even when the phone is on silent. The volume goes back to normal after a few seconds.",
+  "@helpAudioVolumeBullet1": {
+    "description": "Help sound and vibration guide: Volume bullet 1 text"
+  },
+  "helpDisplayIntro": "These settings help you chant in a calm, quiet way, and let you choose how the app looks and speaks.",
+  "@helpDisplayIntro": {
+    "description": "Help display, stillness and language guide: intro text"
+  },
+  "helpDisplayBrightSection": "Brightness and dimming",
+  "@helpDisplayBrightSection": {
+    "description": "Help display, stillness and language guide: Bright section title"
+  },
+  "helpDisplayBrightBold1": "Brightness level:",
+  "@helpDisplayBrightBold1": {
+    "description": "Help display, stillness and language guide: Bright bullet 1 bold label"
+  },
+  "helpDisplayBrightBullet1": "In Settings → Display & Stillness, choose a level from 'still' (dim) to 'full'. It changes the app screen only, not your phone's brightness.",
+  "@helpDisplayBrightBullet1": {
+    "description": "Help display, stillness and language guide: Bright bullet 1 text"
+  },
+  "helpDisplayBrightBold2": "Use system:",
+  "@helpDisplayBrightBold2": {
+    "description": "Help display, stillness and language guide: Bright bullet 2 bold label"
+  },
+  "helpDisplayBrightBullet2": "Tap 'use system' to go back to your phone's normal brightness.",
+  "@helpDisplayBrightBullet2": {
+    "description": "Help display, stillness and language guide: Bright bullet 2 text"
+  },
+  "helpDisplayBrightBold3": "Dimmed chanting mode:",
+  "@helpDisplayBrightBold3": {
+    "description": "Help display, stillness and language guide: Bright bullet 3 bold label"
+  },
+  "helpDisplayBrightBullet3": "Darkens the background of the counting screen while the mala circle stays clear. Good for dark rooms, and it saves battery.",
+  "@helpDisplayBrightBullet3": {
+    "description": "Help display, stillness and language guide: Bright bullet 3 text"
+  },
+  "helpDisplayDndSection": "Do Not Disturb",
+  "@helpDisplayDndSection": {
+    "description": "Help display, stillness and language guide: Dnd section title"
+  },
+  "helpDisplayDndBold1": "Silence alerts:",
+  "@helpDisplayDndBold1": {
+    "description": "Help display, stillness and language guide: Dnd bullet 1 bold label"
+  },
+  "helpDisplayDndBullet1": "When on, the phone goes into Do Not Disturb while the counting screen is open, and goes back to normal when you leave it.",
+  "@helpDisplayDndBullet1": {
+    "description": "Help display, stillness and language guide: Dnd bullet 1 text"
+  },
+  "helpDisplayDndBold2": "Permission:",
+  "@helpDisplayDndBold2": {
+    "description": "Help display, stillness and language guide: Dnd bullet 2 bold label"
+  },
+  "helpDisplayDndBullet2": "The first time, the app asks you to allow Do Not Disturb access. Tap Open Settings and allow it for this app.",
+  "@helpDisplayDndBullet2": {
+    "description": "Help display, stillness and language guide: Dnd bullet 2 text"
+  },
+  "helpDisplayMindfulSection": "Mindful counting",
+  "@helpDisplayMindfulSection": {
+    "description": "Help display, stillness and language guide: Mindful section title"
+  },
+  "helpDisplayMindfulBold1": "Meru pause:",
+  "@helpDisplayMindfulBold1": {
+    "description": "Help display, stillness and language guide: Mindful bullet 1 bold label"
+  },
+  "helpDisplayMindfulBullet1": "A short pause of 3, 5 or 10 seconds after each mala. Taps during the pause are not counted. Off by default.",
+  "@helpDisplayMindfulBullet1": {
+    "description": "Help display, stillness and language guide: Mindful bullet 1 text"
+  },
+  "helpDisplayMindfulBold2": "Gentle pacing hint:",
+  "@helpDisplayMindfulBold2": {
+    "description": "Help display, stillness and language guide: Mindful bullet 2 bold label"
+  },
+  "helpDisplayMindfulBullet2": "A soft glow when you tap very fast. Every tap still counts. On by default.",
+  "@helpDisplayMindfulBullet2": {
+    "description": "Help display, stillness and language guide: Mindful bullet 2 text"
+  },
+  "helpDisplayLangSection": "Language",
+  "@helpDisplayLangSection": {
+    "description": "Help display, stillness and language guide: Lang section title"
+  },
+  "helpDisplayLangBold1": "Choose language:",
+  "@helpDisplayLangBold1": {
+    "description": "Help display, stillness and language guide: Lang bullet 1 bold label"
+  },
+  "helpDisplayLangBullet1": "In Settings → Language pick English, Malayalam, Sanskrit, or System default.",
+  "@helpDisplayLangBullet1": {
+    "description": "Help display, stillness and language guide: Lang bullet 1 text"
+  },
+  "helpDisplayLangBold2": "Any script:",
+  "@helpDisplayLangBold2": {
+    "description": "Help display, stillness and language guide: Lang bullet 2 bold label"
+  },
+  "helpDisplayLangBullet2": "Counter names can be written in any script, whatever app language you choose.",
+  "@helpDisplayLangBullet2": {
+    "description": "Help display, stillness and language guide: Lang bullet 2 text"
+  },
+  "helpDisplayLookSection": "Appearance",
+  "@helpDisplayLookSection": {
+    "description": "Help display, stillness and language guide: Look section title"
+  },
+  "helpDisplayLookBold1": "Temple theme:",
+  "@helpDisplayLookBold1": {
+    "description": "Help display, stillness and language guide: Look bullet 1 bold label"
+  },
+  "helpDisplayLookBullet1": "Settings → Appearance shows the colours (cream, vermillion, sandal, tulsi, rose) and the fonts used in the app.",
+  "@helpDisplayLookBullet1": {
+    "description": "Help display, stillness and language guide: Look bullet 1 text"
+  },
+  "helpDisplayLookBold2": "Portrait only:",
+  "@helpDisplayLookBold2": {
+    "description": "Help display, stillness and language guide: Look bullet 2 bold label"
+  },
+  "helpDisplayLookBullet2": "The app always stays upright, so you can count with one hand.",
+  "@helpDisplayLookBullet2": {
+    "description": "Help display, stillness and language guide: Look bullet 2 text"
+  },
+  "helpOpticalHowBold4": "Merge:",
+  "@helpOpticalHowBold4": {
+    "description": "Help optical sync guide: How bullet 4 bold label"
+  },
+  "helpOpticalHowBullet4": "Chosen counters are added to the receiving phone. A counter that already exists there is replaced by the received copy. Other counters on that phone are not touched.",
+  "@helpOpticalHowBullet4": {
+    "description": "Help optical sync guide: How bullet 4 text"
+  },
+  "helpOpticalSendSection": "Sender controls",
+  "@helpOpticalSendSection": {
+    "description": "Help optical sync guide: Send section title"
+  },
+  "helpOpticalSendBold1": "Speed:",
+  "@helpOpticalSendBold1": {
+    "description": "Help optical sync guide: Send bullet 1 bold label"
+  },
+  "helpOpticalSendBullet1": "Choose 8, 12 or 15 frames per second. 8 is the default and works best on most phones.",
+  "@helpOpticalSendBullet1": {
+    "description": "Help optical sync guide: Send bullet 1 text"
+  },
+  "helpOpticalSendBold2": "Pause and play:",
+  "@helpOpticalSendBold2": {
+    "description": "Help optical sync guide: Send bullet 2 bold label"
+  },
+  "helpOpticalSendBullet2": "Pause the stream and play it again at any time.",
+  "@helpOpticalSendBullet2": {
+    "description": "Help optical sync guide: Send bullet 2 text"
+  },
+  "helpOpticalSendBold3": "Brightness:",
+  "@helpOpticalSendBold3": {
+    "description": "Help optical sync guide: Send bullet 3 bold label"
+  },
+  "helpOpticalSendBullet3": "A slider can make the screen brighter if the other camera has trouble. It goes back to normal when sending stops. The screen stays on while sending.",
+  "@helpOpticalSendBullet3": {
+    "description": "Help optical sync guide: Send bullet 3 text"
+  },
+  "helpOpticalReceiveSection": "Receiver controls",
+  "@helpOpticalReceiveSection": {
+    "description": "Help optical sync guide: Receive section title"
+  },
+  "helpOpticalReceiveBold1": "Tap to focus:",
+  "@helpOpticalReceiveBold1": {
+    "description": "Help optical sync guide: Receive bullet 1 bold label"
+  },
+  "helpOpticalReceiveBullet1": "Tap the camera view to focus on the code.",
+  "@helpOpticalReceiveBullet1": {
+    "description": "Help optical sync guide: Receive bullet 1 text"
+  },
+  "helpOpticalReceiveBold2": "Zoom:",
+  "@helpOpticalReceiveBold2": {
+    "description": "Help optical sync guide: Receive bullet 2 bold label"
+  },
+  "helpOpticalReceiveBullet2": "Use the zoom slider (up to 4×) if the code looks small.",
+  "@helpOpticalReceiveBullet2": {
+    "description": "Help optical sync guide: Receive bullet 2 text"
+  },
+  "helpOpticalReceiveBold3": "Light:",
+  "@helpOpticalReceiveBold3": {
+    "description": "Help optical sync guide: Receive bullet 3 bold label"
+  },
+  "helpOpticalReceiveBullet3": "Turn on the torch in a dark room.",
+  "@helpOpticalReceiveBullet3": {
+    "description": "Help optical sync guide: Receive bullet 3 text"
+  },
+  "helpOpticalReceiveBold4": "Frames received:",
+  "@helpOpticalReceiveBold4": {
+    "description": "Help optical sync guide: Receive bullet 4 bold label"
+  },
+  "helpOpticalReceiveBullet4": "This line shows that scanning is working, even before all parts are complete.",
+  "@helpOpticalReceiveBullet4": {
+    "description": "Help optical sync guide: Receive bullet 4 text"
+  },
+  "helpBackupWhereSection": "Where to find it",
+  "@helpBackupWhereSection": {
+    "description": "Help backup and restore guide: Where section title"
+  },
+  "helpBackupWhereBold1": "Settings:",
+  "@helpBackupWhereBold1": {
+    "description": "Help backup and restore guide: Where bullet 1 bold label"
+  },
+  "helpBackupWhereBullet1": "Settings → Data Backup & Optical Sync has Export, Import, Optical Sync and Clear all data.",
+  "@helpBackupWhereBullet1": {
+    "description": "Help backup and restore guide: Where bullet 1 text"
+  },
+  "helpBackupWhereBold2": "Home menu:",
+  "@helpBackupWhereBold2": {
+    "description": "Help backup and restore guide: Where bullet 2 bold label"
+  },
+  "helpBackupWhereBullet2": "The menu on the home screen also has Import / Export.",
+  "@helpBackupWhereBullet2": {
+    "description": "Help backup and restore guide: Where bullet 2 text"
+  },
+  "helpBackupExportBold4": "Share sheet:",
+  "@helpBackupExportBold4": {
+    "description": "Help backup and restore guide: Export bullet 4 bold label"
+  },
+  "helpBackupExportBullet4": "After export, the Android share sheet opens. Save the file to your files or a memory card, or send it with an app you trust.",
+  "@helpBackupExportBullet4": {
+    "description": "Help backup and restore guide: Export bullet 4 text"
+  },
+  "helpBackupImportBold4": "Safe restore:",
+  "@helpBackupImportBold4": {
+    "description": "Help backup and restore guide: Import bullet 4 bold label"
+  },
+  "helpBackupImportBullet4": "The file is checked first. If it is damaged or the passphrase is wrong, nothing is changed and an error is shown.",
+  "@helpBackupImportBullet4": {
+    "description": "Help backup and restore guide: Import bullet 4 text"
+  },
+  "helpBackupImportBold5": "Older backups:",
+  "@helpBackupImportBold5": {
+    "description": "Help backup and restore guide: Import bullet 5 bold label"
+  },
+  "helpBackupImportBullet5": "Backup files from the older Android version of this app can also be imported.",
+  "@helpBackupImportBullet5": {
+    "description": "Help backup and restore guide: Import bullet 5 text"
+  },
+  "helpBackupClearSection": "Clear all data",
+  "@helpBackupClearSection": {
+    "description": "Help backup and restore guide: Clear section title"
+  },
+  "helpBackupClearBold1": "Erase everything:",
+  "@helpBackupClearBold1": {
+    "description": "Help backup and restore guide: Clear bullet 1 bold label"
+  },
+  "helpBackupClearBullet1": "Clear all data deletes all counters and all history after you confirm. This cannot be undone, so make a backup first.",
+  "@helpBackupClearBullet1": {
+    "description": "Help backup and restore guide: Clear bullet 1 text"
+  },
+  "helpPrivacyStorageBold3": "Crash-safe saving:",
+  "@helpPrivacyStorageBold3": {
+    "description": "Help privacy guide: Storage bullet 3 bold label"
+  },
+  "helpPrivacyStorageBullet3": "Frequent save points keep your count safe if the app closes suddenly.",
+  "@helpPrivacyStorageBullet3": {
+    "description": "Help privacy guide: Storage bullet 3 text"
+  },
+  "helpPrivacyPermsSection": "Permissions the app uses",
+  "@helpPrivacyPermsSection": {
+    "description": "Help privacy guide: Perms section title"
+  },
+  "helpPrivacyPermsBold1": "Camera:",
+  "@helpPrivacyPermsBold1": {
+    "description": "Help privacy guide: Perms bullet 1 bold label"
+  },
+  "helpPrivacyPermsBullet1": "Only to scan the QR code when receiving Optical Sync. No photos or videos are taken.",
+  "@helpPrivacyPermsBullet1": {
+    "description": "Help privacy guide: Perms bullet 1 text"
+  },
+  "helpPrivacyPermsBold2": "Notifications:",
+  "@helpPrivacyPermsBold2": {
+    "description": "Help privacy guide: Perms bullet 2 bold label"
+  },
+  "helpPrivacyPermsBullet2": "To show goal messages in the status bar. Asked on Android 13 and later.",
+  "@helpPrivacyPermsBullet2": {
+    "description": "Help privacy guide: Perms bullet 2 text"
+  },
+  "helpPrivacyPermsBold3": "Vibration and audio:",
+  "@helpPrivacyPermsBold3": {
+    "description": "Help privacy guide: Perms bullet 3 bold label"
+  },
+  "helpPrivacyPermsBullet3": "For the mala, goal and undo feedback, and to play completion sounds clearly.",
+  "@helpPrivacyPermsBullet3": {
+    "description": "Help privacy guide: Perms bullet 3 text"
+  },
+  "helpPrivacyPermsBold4": "Do Not Disturb access:",
+  "@helpPrivacyPermsBold4": {
+    "description": "Help privacy guide: Perms bullet 4 bold label"
+  },
+  "helpPrivacyPermsBullet4": "Asked only if you turn on Do Not Disturb in Display & Stillness.",
+  "@helpPrivacyPermsBullet4": {
+    "description": "Help privacy guide: Perms bullet 4 text"
+  },
+  "helpPrivacyPermsBold5": "Your files:",
+  "@helpPrivacyPermsBold5": {
+    "description": "Help privacy guide: Perms bullet 5 bold label"
+  },
+  "helpPrivacyPermsBullet5": "The app does not read your files. Import and export use the Android file picker, where you choose the file.",
+  "@helpPrivacyPermsBullet5": {
+    "description": "Help privacy guide: Perms bullet 5 text"
+  },
+  "helpPrivacyPermsBold6": "Full list:",
+  "@helpPrivacyPermsBold6": {
+    "description": "Help privacy guide: Perms bullet 6 bold label"
+  },
+  "helpPrivacyPermsBullet6": "Settings → Permissions lists every permission and why it is used.",
+  "@helpPrivacyPermsBullet6": {
+    "description": "Help privacy guide: Perms bullet 6 text"
+  },
+  "helpFaqQ5Title": "Which day do my counts go to?",
+  "@helpFaqQ5Title": {
+    "description": "Help FAQ: question 5"
+  },
+  "helpFaqQ5Answer": "Each tap counts on the day you make it, by your phone's clock. The daily goal starts again at midnight.",
+  "@helpFaqQ5Answer": {
+    "description": "Help FAQ: answer 5"
+  },
+  "helpFaqQ6Title": "What is the difference between Reset session and Reset counter?",
+  "@helpFaqQ6Title": {
+    "description": "Help FAQ: question 6"
+  },
+  "helpFaqQ6Answer": "Reset session throws away only the current sitting. Reset counter deletes all history of that counter and cannot be undone.",
+  "@helpFaqQ6Answer": {
+    "description": "Help FAQ: answer 6"
+  },
+  "helpFaqQ7Title": "Why did the mala sound not play?",
+  "@helpFaqQ7Title": {
+    "description": "Help FAQ: question 7"
+  },
+  "helpFaqQ7Answer": "Check that Enable mala sound is on. If the same tap also reached a goal, only the goal tone plays.",
+  "@helpFaqQ7Answer": {
+    "description": "Help FAQ: answer 7"
+  },
+  "helpFaqQ8Title": "Why do sounds play when my phone is on silent?",
+  "@helpFaqQ8Title": {
+    "description": "Help FAQ: question 8"
+  },
+  "helpFaqQ8Answer": "Completion sounds use the alarm channel so you do not miss them. Turn off the sounds in Settings → Sound & Haptics if you want silence.",
+  "@helpFaqQ8Answer": {
+    "description": "Help FAQ: answer 8"
+  },
+  "helpFaqQ9Title": "I forgot my backup passphrase. What can I do?",
+  "@helpFaqQ9Title": {
+    "description": "Help FAQ: question 9"
+  },
+  "helpFaqQ9Answer": "The passphrase cannot be recovered, and that file cannot be opened. Make a new backup from a phone that still has your data.",
+  "@helpFaqQ9Answer": {
+    "description": "Help FAQ: answer 9"
+  },
+  "helpFaqQ10Title": "Will import remove my current counters?",
+  "@helpFaqQ10Title": {
+    "description": "Help FAQ: question 10"
+  },
+  "helpFaqQ10Answer": "Importing a backup file replaces all current data. Optical Sync is different: it only adds or updates the counters you choose.",
+  "@helpFaqQ10Answer": {
+    "description": "Help FAQ: answer 10"
+  },
+  "helpFaqQ11Title": "Optical Sync scanning is slow. What helps?",
+  "@helpFaqQ11Title": {
+    "description": "Help FAQ: question 11"
+  },
+  "helpFaqQ11Answer": "Hold the phone steady 15–25 cm away, tap to focus, avoid glare, and raise the sender's brightness. Try a lower speed such as 8 frames per second.",
+  "@helpFaqQ11Answer": {
+    "description": "Help FAQ: answer 11"
+  },
+  "helpFaqQ12Title": "Can I move my data to a new phone?",
+  "@helpFaqQ12Title": {
+    "description": "Help FAQ: question 12"
+  },
+  "helpFaqQ12Answer": "Yes. Use Optical Sync with both phones side by side, or export a backup file and import it on the new phone.",
+  "@helpFaqQ12Answer": {
+    "description": "Help FAQ: answer 12"
+  },
+  "helpFaqQ13Title": "Why is the app fully offline?",
+  "@helpFaqQ13Title": {
+    "description": "Help FAQ: question 13"
+  },
+  "helpFaqQ13Answer": "Japa is personal and sacred. Staying offline keeps your practice private, saves battery, and removes distractions.",
+  "@helpFaqQ13Answer": {
+    "description": "Help FAQ: answer 13"
+  },
+  "helpFaqQ14Title": "Is my data shared with anyone?",
+  "@helpFaqQ14Title": {
+    "description": "Help FAQ: question 14"
+  },
+  "helpFaqQ14Answer": "No. Your data never leaves your phone unless you export it or send it with Optical Sync yourself.",
+  "@helpFaqQ14Answer": {
+    "description": "Help FAQ: answer 14"
   }
 }

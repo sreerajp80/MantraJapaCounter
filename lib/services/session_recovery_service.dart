@@ -49,6 +49,12 @@ class SessionRecoveryService {
       return;
     }
 
+    // A session carried over from an earlier day may have no taps yet in
+    // today's row. Earlier-day rows are already stored — keep the prefs
+    // entry so the unfinished mala resumes, but write nothing.
+    final rowCount = saved.rowCount;
+    if (rowCount <= 0) return;
+
     final existing = await _repo.getSessionById(saved.sessionId);
     if (existing == null) {
       // Prefs reports taps but no DB row exists — write it now for safety.
@@ -57,21 +63,21 @@ class SessionRecoveryService {
           id: saved.sessionId,
           counterId: saved.counterId,
           counterName: saved.counterName,
-          count: saved.tapCount,
-          malas: saved.tapCount ~/ 108,
-          chants: saved.tapCount % 108,
+          count: rowCount,
+          malas: rowCount ~/ 108,
+          chants: rowCount % 108,
           timestamp: saved.startTime,
-          duration: saved.duration,
+          duration: saved.rowDuration,
         ),
       );
-    } else if (saved.tapCount > existing.count) {
+    } else if (rowCount > existing.count) {
       // Prefs has a more recent count than DB — sync it forward.
       await _repo.updateSession(
         existing.copyWith(
-          count: saved.tapCount,
-          malas: saved.tapCount ~/ 108,
-          chants: saved.tapCount % 108,
-          duration: saved.duration,
+          count: rowCount,
+          malas: rowCount ~/ 108,
+          chants: rowCount % 108,
+          duration: saved.rowDuration,
         ),
       );
     }

@@ -177,6 +177,17 @@ class AppLocalizationsMl extends AppLocalizations {
   String get resetSession => 'സെഷൻ പുനഃസജ്ജമാക്കുക';
 
   @override
+  String unfinishedMalaBanner(int chants) {
+    return 'മുൻ ദിവസത്തെ പൂർത്തിയാകാത്ത മാല: $chants/108';
+  }
+
+  @override
+  String get startNewSession => 'പുതിയത് തുടങ്ങുക';
+
+  @override
+  String get finishAndStartNew => 'പൂർത്തിയാക്കി പുതിയത് തുടങ്ങുക';
+
+  @override
   String get resetCounter => 'കൗണ്ടർ പുനഃസജ്ജമാക്കുക';
 
   @override
@@ -859,7 +870,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpHeaderSub =>
-      'എണ്ണൽ രീതികൾ, 108 മാല കണക്കുകൂട്ടൽ, ഒപ്റ്റിക്കൽ എയർ-ഗ്യാപ്പ് സിങ്ക്, സ്വകാര്യത എന്നിവയ്ക്കുള്ള ഗൈഡുകൾ.';
+      'ആപ്പിന്റെ എല്ലാ ഭാഗങ്ങൾക്കുമുള്ള ഗൈഡുകൾ: കൗണ്ടറുകൾ, എണ്ണൽ, മാലയും ലക്ഷ്യങ്ങളും, ചരിത്രം, ശബ്ദം, പ്രദർശനം, ബാക്കപ്പ്, ഒപ്റ്റിക്കൽ സിങ്ക്, സ്വകാര്യത.';
 
   @override
   String get helpCategoryCounting => 'എണ്ണലും ധ്യാന സാധനയും';
@@ -868,7 +879,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get helpCategorySync => 'ഡാറ്റ സിങ്കും ബാക്കപ്പും';
 
   @override
-  String get helpCategoryAudio => 'ഓഡിയോയും ഫീഡ്‌ബാക്കും';
+  String get helpCategoryAudio => 'ശബ്ദം, പ്രദർശനം, നിശ്ശബ്ദത';
 
   @override
   String get helpCategoryPrivacy => 'സ്വകാര്യതയും പിന്തുണയും';
@@ -878,42 +889,42 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpTopicCountingSub =>
-      'വളയത്തിൽ എവിടെയും ടാപ്പ് ചെയ്യുക, രണ്ട് വിരൽ സ്വൈപ്പ് വഴി പഴയപടിയാക്കൽ';
+      'വൃത്തത്തിനുള്ളിൽ തൊടൽ, രണ്ട് വിരൽ തിരുത്തൽ, എണ്ണൽ മെനു, സ്വയം സേവ്';
 
   @override
   String get helpTopicMalaTitle => '108 മാല കണക്കുകൂട്ടലും ലക്ഷ്യങ്ങളും';
 
   @override
   String get helpTopicMalaSub =>
-      '108 മണി ചക്രങ്ങൾ, അധിക എണ്ണങ്ങൾ, ദൈനംദിന ലക്ഷ്യങ്ങൾ';
+      '108 മണി ചുറ്റുകൾ, അധിക എണ്ണം, ദിവസ ലക്ഷ്യവും ആജീവനാന്ത ലക്ഷ്യവും';
 
   @override
   String get helpTopicOpticalSyncTitle => 'ഒപ്റ്റിക്കൽ എയർ-ഗ്യാപ്പ് സിങ്ക്';
 
   @override
   String get helpTopicOpticalSyncSub =>
-      'ആനിമേഷൻ ചെയ്ത ക്യുആർ സ്ട്രീം വഴി ഫോണുകൾ തമ്മിൽ ഓഫ്‌ലൈൻ കൈമാറ്റം';
+      'ഇന്റർനെറ്റ് ഇല്ലാതെ, ചലിക്കുന്ന QR കോഡ് വഴി ഫോണിൽ നിന്ന് ഫോണിലേക്ക്';
 
   @override
-  String get helpTopicBackupTitle => 'JSON ബാക്കപ്പും പുനഃസ്ഥാപനവും';
+  String get helpTopicBackupTitle => 'ബാക്കപ്പും പുനഃസ്ഥാപനവും';
 
   @override
   String get helpTopicBackupSub =>
-      'ലോക്കൽ ബാക്കപ്പ് ഫയലുകൾ എക്സ്പോർട്ട് ചെയ്യലും സുരക്ഷിത പുനഃസ്ഥാപനവും';
+      'ഫയലിലേക്ക് എക്സ്പോർട്ട്, എൻക്രിപ്റ്റ് ചെയ്ത ബാക്കപ്പ്, ഇംപോർട്ട്, ഡാറ്റ മുഴുവൻ മായ്ക്കൽ';
 
   @override
   String get helpTopicAudioTitle => 'ശബ്ദവും വൈബ്രേഷനും ക്രമീകരണങ്ങൾ';
 
   @override
   String get helpTopicAudioSub =>
-      'ക്ഷേത്ര മണി ശബ്ദങ്ങൾ, മാല നാദങ്ങൾ, വൈബ്രേഷൻ ഫീഡ്‌ബാക്ക്';
+      'മാല ശബ്ദം, ലക്ഷ്യ ശബ്ദങ്ങൾ, അറിയിപ്പുകൾ, വൈബ്രേഷൻ';
 
   @override
   String get helpTopicPrivacyTitle => 'സ്വകാര്യതയും ഓഫ്‌ലൈൻ രൂപകൽപ്പനയും';
 
   @override
   String get helpTopicPrivacySub =>
-      'ഇന്റർനെറ്റ് അനുമതികളില്ല, ലോക്കൽ SQLite സ്റ്റോറേജ്, സീറോ ടെലിമെട്രി';
+      'ഇന്റർനെറ്റ് അനുമതിയില്ല, സ്വകാര്യ സംഭരണം, ഉപയോഗിക്കുന്ന അനുമതികൾ';
 
   @override
   String get helpTopicFaqTitle => 'പതിവുചോദ്യങ്ങളും പരിഹാരങ്ങളും';
@@ -924,336 +935,294 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpCountingIntro =>
-      'ധ്യാനത്തിൽ പൂർണ്ണമായി മുഴുകാൻ വേണ്ടിയാണ് എണ്ണൽ സ്ക്രീൻ രൂപകൽപ്പന ചെയ്തിരിക്കുന്നത്. ജപിക്കുമ്പോൾ സ്ക്രീനിലേക്ക് നോക്കേണ്ടതില്ല.';
+      'എണ്ണൽ സ്ക്രീൻ ശാന്തമായ ശ്രദ്ധയ്ക്കായി ഉണ്ടാക്കിയതാണ്. ജപിക്കുമ്പോൾ സ്ക്രീനിൽ നോക്കേണ്ടതില്ല.';
 
   @override
   String get helpCountingTapSection => 'എങ്ങനെ എണ്ണാം';
 
   @override
-  String get helpCountingTapBold1 => 'എവിടെയും ടാപ്പ് ചെയ്യുക:';
+  String get helpCountingTapBold1 => 'വൃത്തത്തിനുള്ളിൽ തൊടുക:';
 
   @override
   String get helpCountingTapBullet1 =>
-      '1 എണ്ണം കൂട്ടാൻ വലിയ വൃത്തത്തിനുള്ളിലോ സ്ക്രീനിലോ എവിടെയും ടാപ്പ് ചെയ്യുക.';
+      'മാലാവൃത്തത്തിനുള്ളിലെ തൊടൽ മാത്രമേ എണ്ണൂ. പുറത്തെ തൊടൽ എണ്ണില്ല, അതിനാൽ അബദ്ധ തൊടൽ എണ്ണം കൂട്ടില്ല.';
 
   @override
-  String get helpCountingTapBold2 => 'ഹാപ്റ്റിക് പൾസ്:';
+  String get helpCountingTapBold2 => 'ഓരോ തൊടലിലെ എണ്ണം:';
 
   @override
   String get helpCountingTapBullet2 =>
-      'ഓരോ ജപത്തിനും മൃദുവായ വൈബ്രേഷൻ ലഭിക്കുന്നു, അതിനാൽ കണ്ണുകൾ അടച്ച് ജപിക്കാം.';
+      'ഓരോ തൊടലിലും കൗണ്ടറിന്റെ എണ്ണം (സാധാരണ 1) കൂടും. കൗണ്ടർ എഡിറ്റ് ചെയ്ത് മാറ്റാം.';
 
   @override
-  String get helpCountingTapBold3 => 'ക്രാഷ് റിക്കവറി:';
+  String get helpCountingTapBold3 => 'ശാന്തമായ തൊടൽ:';
 
   @override
   String get helpCountingTapBullet3 =>
-      'ഓരോ 5 ടാപ്പുകളും സ്വയമേവ സേവ് ചെയ്യപ്പെടുന്നു.';
+      'തൊടലിന് വൈബ്രേഷൻ ഇല്ല. വൈബ്രേഷൻ ഓൺ ആണെങ്കിൽ ഓരോ മാല തീരുമ്പോഴും ലക്ഷ്യത്തിലും തിരുത്തലിലും വൈബ്രേഷൻ ഉണ്ടാകും.';
 
   @override
-  String get helpCountingUndoSection => 'തെറ്റായ എണ്ണം തിരുത്തൽ';
+  String get helpCountingUndoSection => 'എണ്ണം തിരുത്തൽ';
 
   @override
   String get helpCountingUndoBold1 => 'രണ്ട് വിരൽ സ്വൈപ്പ്:';
 
   @override
   String get helpCountingUndoBullet1 =>
-      'എണ്ണം 1 കുറയ്ക്കാൻ മാല വൃത്തത്തിൽ രണ്ട് വിരലുകൾ വെച്ച് ഇടത്തോട്ടോ വലത്തോട്ടോ സ്വൈപ്പ് ചെയ്യുക.';
+      'രണ്ട് വിരലുകൾ വൃത്തത്തിൽ വച്ച് ഇടത്തോട്ടോ വലത്തോട്ടോ നീക്കുക. ഒരു സ്വൈപ്പിൽ ഒരു എണ്ണം കുറയും, ഫോൺ ഒരിക്കൽ വൈബ്രേറ്റ് ചെയ്യും.';
 
   @override
-  String get helpCountingUndoBold2 => 'പൂജ്യം എണ്ണം:';
+  String get helpCountingUndoBold2 => 'പൂജ്യത്തിലേക്ക്:';
 
   @override
   String get helpCountingUndoBullet2 =>
-      'എണ്ണം പൂജ്യമായാൽ സെഷൻ മായ്ച്ചു കളയുന്നു.';
-
-  @override
-  String get helpCountingTimerSection => 'സെഷൻ സമയവും നിലയും';
-
-  @override
-  String get helpCountingTimerBold1 => 'ടൈമർ:';
-
-  @override
-  String get helpCountingTimerBullet1 =>
-      'മുകളിലെ പിൽ ഈ സെഷനിൽ ചെലവഴിച്ച സമയം കാണിക്കുന്നു.';
-
-  @override
-  String get helpCountingTimerBold2 => 'പുരോഗതി ബാഡ്ജ്:';
-
-  @override
-  String get helpCountingTimerBullet2 =>
-      'നിലവിലെ 108 ചക്രം പൂർത്തിയാക്കാൻ ബാക്കിയുള്ള മണികൾ കാണിക്കുന്നു.';
+      'സെഷൻ എണ്ണം 0 ആയാൽ ആ ഇരിപ്പ് മായ്ക്കും, ചരിത്രത്തിൽ ഒന്നും ചേർക്കില്ല.';
 
   @override
   String get helpMalaIntro =>
-      'പരമ്പരാഗത സാധനയിൽ ഒരു ജപമാലയിൽ 108 മണികൾ അടങ്ങിയിരിക്കുന്നു.';
+      'പരമ്പരാഗത ജപമാലയിൽ 108 മണികളുണ്ട്. ആപ്പ് 108-ന്റെ ചുറ്റുകളായി എണ്ണുന്നു, ഓരോ കാർഡിലും ലക്ഷ്യങ്ങൾ കാണിക്കുന്നു.';
 
   @override
-  String get helpMalaBeadsSection => '108 മണികളുടെ കണക്കുകൂട്ടൽ';
+  String get helpMalaBeadsSection => '108 മണികൾ';
 
   @override
-  String get helpMalaBeadsBold1 => '1 മാല = 108 ജപങ്ങൾ:';
+  String get helpMalaBeadsBold1 => '1 മാല = 108 എണ്ണം:';
 
   @override
   String get helpMalaBeadsBullet1 =>
-      'ഓരോ 108 ജപങ്ങളും 1 പൂർണ്ണ മാലയായി മാറുന്നു.';
+      'ഓരോ 108 എണ്ണവും ഒരു മുഴുവൻ മാല. എണ്ണൽ സ്ക്രീനിലെ വൃത്തം മണി മണിയായി നിറയും, 108-ന് ശേഷം വീണ്ടും തുടങ്ങും.';
 
   @override
-  String get helpMalaBeadsBold2 => 'അധിക എണ്ണങ്ങൾ:';
+  String get helpMalaBeadsBold2 => 'അധിക എണ്ണം:';
 
   @override
   String get helpMalaBeadsBullet2 =>
-      'മാല കഴിഞ്ഞുള്ള അധിക ജപങ്ങൾ വ്യക്തമായി കാണിക്കുന്നു.';
+      'മുഴുവൻ മാലയ്ക്ക് ശേഷമുള്ള എണ്ണം സൂക്ഷിച്ച് കാണിക്കും. ഉദാഹരണം: 115 എണ്ണം = 1 മാലയും 7 എണ്ണവും.';
 
   @override
-  String get helpMalaBeadsBold3 => 'മാല മണിനാദം:';
+  String get helpMalaBeadsBold3 => 'വലിയ എണ്ണം:';
 
   @override
   String get helpMalaBeadsBullet3 =>
-      'ഓരോ 108-ാമത്തെ ജപത്തിലും മൃദുവായ മണി മുഴങ്ങുന്നു.';
+      'ഓരോ തൊടലിലെ എണ്ണം 1-ൽ കൂടുതലാണെങ്കിൽ, ഒരു തൊടലിൽ പല മണികൾ നീങ്ങും. മാലകൾ ആകെ എണ്ണത്തിൽ നിന്ന് തന്നെ കണക്കാക്കും.';
 
   @override
-  String get helpMalaGoalsSection => 'ലക്ഷ്യങ്ങൾ ക്രമീകരിക്കൽ';
+  String get helpMalaGoalsSection => 'ദിവസ ലക്ഷ്യവും ആജീവനാന്ത ലക്ഷ്യവും';
 
   @override
-  String get helpMalaGoalsBold1 => 'ദൈനംദിന ലക്ഷ്യം:';
+  String get helpMalaGoalsBold1 => 'ദിവസ ലക്ഷ്യം:';
 
   @override
   String get helpMalaGoalsBullet1 =>
-      'ദിവസേന എത്ര മാല ജപിക്കണമെന്ന് ക്രമീകരിക്കാം.';
+      'ഓരോ ദിവസവും ജപിക്കാൻ ആഗ്രഹിക്കുന്ന എണ്ണം (0 = ദിവസ ലക്ഷ്യമില്ല). ഫോണിലെ സമയം അനുസരിച്ച് അർദ്ധരാത്രിയിൽ 0-ൽ നിന്ന് വീണ്ടും തുടങ്ങും.';
 
   @override
-  String get helpMalaGoalsBold2 => 'ആജീവനാന്ത ലക്ഷ്യം:';
+  String get helpMalaGoalsBold2 => 'ആജീവനാന്ത ലക്ഷ്യം (സങ്കല്പം):';
 
   @override
-  String get helpMalaGoalsBullet2 => 'ദീർഘകാല സാധനാ ലക്ഷ്യങ്ങൾ നിശ്ചയിക്കാം.';
+  String get helpMalaGoalsBullet2 =>
+      'ദീർഘകാല ലക്ഷ്യം, ഉദാഹരണം 1,00,000 ജപം (0 = ആജീവനാന്ത ലക്ഷ്യമില്ല). ദിവസ ലക്ഷ്യം ഇതിനേക്കാൾ കൂടരുത്.';
 
   @override
   String get helpOpticalIntro =>
-      'ഇന്റർനെറ്റോ ബ്ലൂടൂത്തോ ഇല്ലാതെ രണ്ട് ഫോണുകൾ തമ്മിൽ ഡാറ്റ മാറ്റാൻ ഒപ്റ്റിക്കൽ എയർ-ഗ്യാപ്പ് സിങ്ക് സഹായിക്കുന്നു.';
+      'ഒപ്റ്റിക്കൽ സിങ്ക് സ്ക്രീനും ക്യാമറയും മാത്രം ഉപയോഗിച്ച് കൗണ്ടറുകളും ചരിത്രവും ഒരു ഫോണിൽ നിന്ന് മറ്റൊന്നിലേക്ക് മാറ്റുന്നു. ഇന്റർനെറ്റ്, വൈ-ഫൈ, ബ്ലൂടൂത്ത്, കേബിൾ ഒന്നും വേണ്ട.';
 
   @override
-  String get helpOpticalHowSection => 'എങ്ങനെ കൈമാറാം';
+  String get helpOpticalHowSection => 'എങ്ങനെ മാറ്റാം';
 
   @override
-  String get helpOpticalHowBold1 => 'അയക്കുന്ന ഫോണിൽ:';
+  String get helpOpticalHowBold1 => 'അയയ്ക്കുന്ന ഫോൺ:';
 
   @override
   String get helpOpticalHowBullet1 =>
-      'Settings -> Optical Air-Gap Sync (Send) തുറക്കുക. ആനിമേറ്റഡ് ക്യുആർ കാണാം.';
+      'ക്രമീകരണങ്ങൾ → ഡാറ്റ ബാക്കപ്പും ഒപ്റ്റിക്കൽ സിങ്കും → ഒപ്റ്റിക്കൽ എയർ-ഗ്യാപ് സിങ്ക് (അയയ്ക്കുക). അയയ്ക്കേണ്ട കൗണ്ടറുകൾ തിരഞ്ഞെടുക്കുക. ചലിക്കുന്ന QR കോഡ് തുടങ്ങും.';
 
   @override
-  String get helpOpticalHowBold2 => 'സ്വീകരിക്കുന്ന ഫോണിൽ:';
+  String get helpOpticalHowBold2 => 'സ്വീകരിക്കുന്ന ഫോൺ:';
 
   @override
   String get helpOpticalHowBullet2 =>
-      'Settings -> Optical Air-Gap Sync (Receive) തുറന്ന് ക്യാമറ കാണിക്കുക.';
+      'ഒപ്റ്റിക്കൽ എയർ-ഗ്യാപ് സിങ്ക് (സ്വീകരിക്കുക) തുറന്ന് ക്യാമറ അനുവദിച്ച് അയയ്ക്കുന്ന ഫോണിന്റെ സ്ക്രീനിലേക്ക് പിടിക്കുക.';
 
   @override
-  String get helpOpticalHowBold3 => 'ഡാറ്റ പുനഃസൃഷ്ടി:';
+  String get helpOpticalHowBold3 => 'പ്രിവ്യൂ:';
 
   @override
   String get helpOpticalHowBullet3 =>
-      'ഡാറ്റ നിമിഷങ്ങൾക്കകം പൂർണ്ണമായി ഫോണിൽ ലഭിക്കുന്നു.';
+      'എല്ലാ ഭാഗങ്ങളും എത്തുമ്പോൾ കൗണ്ടറുകളും സെഷനുകളും കാണിക്കുന്ന പ്രിവ്യൂ വരും. സൂക്ഷിക്കേണ്ട കൗണ്ടറുകൾ തിരഞ്ഞെടുത്ത് പുനഃസ്ഥാപിക്കൽ ബട്ടൺ തൊടുക.';
 
   @override
   String get helpOpticalTipsSection => 'വേഗത്തിൽ സ്കാൻ ചെയ്യാൻ';
 
   @override
-  String get helpOpticalTipsBold1 => 'തെളിച്ചം:';
+  String get helpOpticalTipsBold1 => 'അകലം:';
 
   @override
   String get helpOpticalTipsBullet1 =>
-      'അയക്കുന്ന സ്ക്രീൻ തെളിച്ചമുള്ളതാണെന്ന് ഉറപ്പാക്കുക.';
+      'സ്വീകരിക്കുന്ന ഫോൺ അയയ്ക്കുന്ന സ്ക്രീനിൽ നിന്ന് ഏകദേശം 15–25 സെ.മീ. അകലെ, കോഡ് ഗൈഡ് ബോക്സിനുള്ളിൽ വരുന്ന രീതിയിൽ ഇളകാതെ പിടിക്കുക.';
 
   @override
-  String get helpOpticalTipsBold2 => 'അകലം:';
+  String get helpOpticalTipsBold2 => 'പ്രതിഫലനം:';
 
   @override
   String get helpOpticalTipsBullet2 =>
-      '15 മുതൽ 25 സെന്റിമീറ്റർ അകലെ ക്യാമറ പിടിക്കുക.';
+      'അയയ്ക്കുന്ന സ്ക്രീനിൽ തിളക്കമുള്ള പ്രതിഫലനം ഒഴിവാക്കുക.';
 
   @override
-  String get helpOpticalTipsBold3 => 'ഫൗണ്ടൻ കോഡുകൾ:';
+  String get helpOpticalTipsBold3 => 'നഷ്ടപ്പെട്ട ഫ്രെയിമുകൾ:';
 
   @override
   String get helpOpticalTipsBullet3 =>
-      'ചില ഫ്രെയിമുകൾ നഷ്ടപ്പെട്ടാലും ഡാറ്റ കൃത്യമായി ലഭിക്കുന്നു.';
+      'ചില ഫ്രെയിമുകൾ നഷ്ടപ്പെട്ടാലും കുഴപ്പമില്ല. അധിക മിശ്ര ഫ്രെയിമുകളോടെ സ്ട്രീം ആവർത്തിക്കുന്നതിനാൽ നഷ്ടപ്പെട്ട ഭാഗങ്ങൾ വീണ്ടും ഉണ്ടാക്കും.';
 
   @override
   String get helpAudioIntro =>
-      'മണി ശബ്ദങ്ങളും വൈബ്രേഷനും ഉപയോഗിച്ച് നിങ്ങളുടെ ജപ സാധന ക്രമീകരിക്കുക.';
-
-  @override
-  String get helpAudioTonesSection => 'നാദങ്ങളും ശബ്ദങ്ങളും';
-
-  @override
-  String get helpAudioTonesBold1 => 'ദൈനംദിന ലക്ഷ്യ ശബ്ദം:';
-
-  @override
-  String get helpAudioTonesBullet1 =>
-      'ലക്ഷ്യം പൂർത്തിയാകുമ്പോൾ ശാന്തമായ മണി മുഴങ്ങുന്നു.';
-
-  @override
-  String get helpAudioTonesBold2 => 'മാല നാദം:';
-
-  @override
-  String get helpAudioTonesBullet2 =>
-      'ഓരോ 108 മണി പൂർത്തിയാകുമ്പോൾ നേർത്ത മണിനാദം കേൾക്കാം.';
-
-  @override
-  String get helpAudioTonesBold3 => 'ഇഷ്ടാനുസൃത ഓഡിയോ:';
-
-  @override
-  String get helpAudioTonesBullet3 =>
-      'നിങ്ങളുടെ ഫോണിലെ ഏത് ഓഡിയോ ഫയലും തിരഞ്ഞെടുക്കാം.';
+      'ശബ്ദവും സ്പന്ദനവും പ്രധാന നിമിഷങ്ങൾ അറിയിക്കുന്നു: ഓരോ മാലയും ഓരോ ലക്ഷ്യവും. ക്രമീകരണങ്ങൾ → ശബ്ദവും സ്പന്ദനവും എന്നതിൽ ഇവ സജ്ജമാക്കാം.';
 
   @override
   String get helpAudioVibrationSection => 'വൈബ്രേഷൻ';
 
   @override
-  String get helpAudioVibrationBold1 => 'എണ്ണൽ സ്പന്ദനം:';
+  String get helpAudioVibrationBold1 => 'എപ്പോൾ വൈബ്രേറ്റ് ചെയ്യും:';
 
   @override
   String get helpAudioVibrationBullet1 =>
-      'സ്ക്രീനിൽ നോക്കാതെ എണ്ണാൻ സഹായിക്കുന്ന മൃദു സ്പന്ദനം.';
+      'ഓരോ മാലയിലും ഒരു സ്പന്ദനം, ലക്ഷ്യം എത്തുമ്പോൾ മൂന്ന് സ്പന്ദനം, തിരുത്തുമ്പോൾ ചെറിയ ഒന്ന്.';
 
   @override
-  String get helpAudioVibrationBold2 => 'ഓഫ് ചെയ്യാം:';
+  String get helpAudioVibrationBold2 => 'ഓഫ് ചെയ്യാൻ:';
 
   @override
   String get helpAudioVibrationBullet2 =>
-      'ക്രമീകരണങ്ങളിൽ നിന്ന് എപ്പോൾ വേണമെങ്കിലും വൈബ്രേഷൻ മാറ്റാം.';
+      'പൂർണ്ണ നിശബ്ദ സാധനയ്ക്ക് ക്രമീകരണങ്ങൾ → ശബ്ദവും സ്പന്ദനവും എന്നതിൽ വൈബ്രേഷൻ ഓഫ് ചെയ്യുക.';
 
   @override
   String get helpBackupIntro =>
-      'നിങ്ങളുടെ ജപ ഡാറ്റ നിങ്ങളുടെ സ്വന്തമാണ്. എപ്പോൾ വേണമെങ്കിലും ബാക്കപ്പ് ഫയൽ എക്സ്പോർട്ട് ചെയ്യാം.';
+      'നിങ്ങളുടെ ഡാറ്റ നിങ്ങളുടേതാണ്. എപ്പോൾ വേണമെങ്കിലും ഫയലിലേക്ക് സേവ് ചെയ്ത് ഈ ഫോണിലോ പുതിയ ഫോണിലോ പുനഃസ്ഥാപിക്കാം.';
 
   @override
-  String get helpBackupExportSection => 'ഡാറ്റ എക്സ്പോർട്ട് ചെയ്യൽ';
+  String get helpBackupExportSection => 'ബാക്കപ്പ് എക്സ്പോർട്ട് ചെയ്യൽ';
 
   @override
-  String get helpBackupExportBold1 => 'JSON ഫയൽ:';
+  String get helpBackupExportBold1 => 'ഒരു ഫയൽ:';
 
   @override
   String get helpBackupExportBullet1 =>
-      'എല്ലാ കൗണ്ടറുകളും ചരിത്രവും ഒറ്റ ഫയലിലേക്ക് എക്സ്പോർട്ട് ചെയ്യുന്നു.';
+      'എല്ലാ കൗണ്ടറുകളും ലക്ഷ്യങ്ങളും സെഷൻ ചരിത്രവും ഒരു ബാക്കപ്പ് ഫയലിൽ.';
 
   @override
-  String get helpBackupExportBold2 => 'ഷെയർ ഷീറ്റ്:';
+  String get helpBackupExportBold2 => 'എൻക്രിപ്റ്റ് (ഐച്ഛികം):';
 
   @override
   String get helpBackupExportBullet2 =>
-      'ലോക്കൽ ഫയലുകളിലോ എസ്ഡി കാർഡിലോ സൂക്ഷിക്കാം.';
+      'പാസ്ഫ്രേസ് ഉപയോഗിച്ച് ഫയൽ സംരക്ഷിക്കാം. ശക്തമായ AES-256-GCM എൻക്രിപ്ഷൻ കൊണ്ട് പൂട്ടും.';
 
   @override
-  String get helpBackupExportBold3 => 'പൂർണ്ണ അനുയോജ്യത:';
+  String get helpBackupExportBold3 => 'പാസ്ഫ്രേസ് സൂക്ഷിക്കുക:';
 
   @override
   String get helpBackupExportBullet3 =>
-      'ഭാവിയിലെ എല്ലാ പതിപ്പുകളിലും പ്രവർത്തിക്കും.';
+      'മറന്ന പാസ്ഫ്രേസ് തിരികെ കിട്ടില്ല, അതില്ലാതെ ഫയൽ തുറക്കാനാവില്ല.';
 
   @override
-  String get helpBackupImportSection => 'ഡാറ്റ പുനഃസ്ഥാപിക്കൽ';
+  String get helpBackupImportSection => 'ബാക്കപ്പ് പുനഃസ്ഥാപിക്കൽ';
 
   @override
-  String get helpBackupImportBold1 => 'ഫയൽ തിരഞ്ഞെടുക്കൽ:';
+  String get helpBackupImportBold1 => 'ഫയൽ തിരഞ്ഞെടുക്കുക:';
 
   @override
   String get helpBackupImportBullet1 =>
-      '\'ബാക്കപ്പ് ഫയൽ ഇംപോർട്ട് ചെയ്യുക\' അമർത്തി ഫയൽ തിരഞ്ഞെടുക്കുക.';
+      'ഇംപോർട്ട് തിരഞ്ഞെടുത്ത് സിസ്റ്റം ഫയൽ പിക്കറിൽ ബാക്കപ്പ് ഫയൽ തിരഞ്ഞെടുക്കുക.';
 
   @override
-  String get helpBackupImportBold2 => 'സുരക്ഷിത പരിശോധന:';
+  String get helpBackupImportBold2 => 'എല്ലാ ഡാറ്റയും മാറ്റും:';
 
   @override
   String get helpBackupImportBullet2 =>
-      'ഡാറ്റ തകരാറുകളില്ലെന്ന് പരിശോധിച്ച ശേഷം പുനഃസ്ഥാപിക്കുന്നു.';
+      'ഇംപോർട്ട് ഇപ്പോഴത്തെ എല്ലാ കൗണ്ടറുകളും ചരിത്രവും ഫയലിലെ ഡാറ്റ കൊണ്ട് മാറ്റും. ഫോണിലുള്ളത് സൂക്ഷിക്കണമെങ്കിൽ ആദ്യം എക്സ്പോർട്ട് ചെയ്യുക.';
 
   @override
-  String get helpBackupImportBold3 => 'തൽക്ഷണ മാറ്റം:';
+  String get helpBackupImportBold3 => 'എൻക്രിപ്റ്റ് ചെയ്ത ഫയലുകൾ:';
 
   @override
   String get helpBackupImportBullet3 =>
-      'എല്ലാ കൗണ്ടറുകളും ഉടൻ തന്നെ അപ്‌ഡേറ്റ് ആകുന്നു.';
+      'ഫയൽ എൻക്രിപ്റ്റ് ചെയ്തതാണെങ്കിൽ പാസ്ഫ്രേസ് ചോദിക്കും.';
 
   @override
   String get helpPrivacyIntro =>
-      'പൂർണ്ണ സ്വകാര്യതയോടെയും ഓഫ്‌ലൈനായും പ്രവർത്തിക്കുന്ന ആപ്പാണിത്.';
+      'SreerajP MantraJapa Counter സ്വകാര്യതയ്ക്കായി രൂപകൽപ്പന ചെയ്തതാണ്. നിങ്ങളുടെ സാധന നിങ്ങളുടെ ഫോണിൽ തന്നെ.';
 
   @override
-  String get helpPrivacyOfflineSection => '100% ഓഫ്‌ലൈൻ രൂപകൽപ്പന';
+  String get helpPrivacyOfflineSection => 'പൂർണ്ണമായി ഓഫ്‌ലൈൻ';
 
   @override
   String get helpPrivacyOfflineBold1 => 'ഇന്റർനെറ്റ് അനുമതിയില്ല:';
 
   @override
   String get helpPrivacyOfflineBullet1 =>
-      'ആപ്പിൽ ഇന്റർനെറ്റ് അനുമതി പൂർണ്ണമായും ഒഴിവാക്കിയിരിക്കുന്നു.';
+      'ആപ്പിന് ആൻഡ്രോയിഡ് ഇന്റർനെറ്റ് അനുമതിയില്ല, അതിനാൽ ഒന്നും എവിടേക്കും അയയ്ക്കാനാവില്ല.';
 
   @override
-  String get helpPrivacyOfflineBold2 => 'സീറോ ട്രാക്കിംഗ്:';
+  String get helpPrivacyOfflineBold2 => 'നിരീക്ഷണമില്ല:';
 
   @override
   String get helpPrivacyOfflineBullet2 =>
-      'പരസ്യങ്ങളോ ട്രാക്കിംഗ് സോഫ്റ്റ്‌വെയറോ ഇല്ല.';
+      'അനലിറ്റിക്സോ ക്രാഷ് റിപ്പോർട്ടറോ പരസ്യമോ ഇല്ല.';
 
   @override
-  String get helpPrivacyOfflineBold3 => 'ലോഗിൻ ആവശ്യമില്ല:';
+  String get helpPrivacyOfflineBold3 => 'അക്കൗണ്ട് വേണ്ട:';
 
   @override
-  String get helpPrivacyOfflineBullet3 => 'അക്കൗണ്ടോ ഇമെയിലോ ആവശ്യമില്ല.';
+  String get helpPrivacyOfflineBullet3 =>
+      'ഒരിക്കലും സൈൻ അപ്പ് ചെയ്യുകയോ ഇമെയിലോ ഫോൺ നമ്പറോ നൽകുകയോ വേണ്ട.';
 
   @override
-  String get helpPrivacyStorageSection => 'ഡാറ്റ സംരക്ഷണം';
+  String get helpPrivacyStorageSection => 'ഡാറ്റ എവിടെ സൂക്ഷിക്കുന്നു';
 
   @override
-  String get helpPrivacyStorageBold1 => 'SQLite ഡാറ്റാബേസ്:';
+  String get helpPrivacyStorageBold1 => 'നിങ്ങളുടെ ഫോണിൽ മാത്രം:';
 
   @override
   String get helpPrivacyStorageBullet1 =>
-      'എല്ലാ ഡാറ്റയും നിങ്ങളുടെ ഉപകരണത്തിൽ മാത്രം സുരക്ഷിതമായി സൂക്ഷിക്കുന്നു.';
+      'കൗണ്ടറുകളും ചരിത്രവും ഫോണിലെ ആപ്പിന്റെ സ്വകാര്യ സംഭരണിയിൽ സൂക്ഷിക്കുന്നു. മറ്റ് ആപ്പുകൾക്ക് അത് വായിക്കാനാവില്ല.';
 
   @override
-  String get helpPrivacyStorageBold2 => 'ക്രാഷ് പ്രൂഫ്:';
+  String get helpPrivacyStorageBold2 => 'ക്ലൗഡ് ബാക്കപ്പ് ഇല്ല:';
 
   @override
   String get helpPrivacyStorageBullet2 =>
-      'എണ്ണങ്ങൾ നഷ്ടപ്പെടാതിരിക്കാൻ കൃത്യമായ ഇടവേളകളിൽ സേവ് ചെയ്യുന്നു.';
+      'ഈ ആപ്പിന് ആൻഡ്രോയിഡിന്റെ സ്വയം ക്ലൗഡ് ബാക്കപ്പ് ഓഫ് ആണ്. പകർപ്പ് സൂക്ഷിക്കാൻ എക്സ്പോർട്ട് അല്ലെങ്കിൽ ഒപ്റ്റിക്കൽ സിങ്ക് ഉപയോഗിക്കുക.';
 
   @override
-  String get helpFaqIntro =>
-      'മന്ത്രജപ കൗണ്ടറിനെക്കുറിച്ചുള്ള പ്രധാന ചോദ്യങ്ങൾക്ക് ഉത്തരങ്ങൾ.';
+  String get helpFaqIntro => 'സാധാരണ ചോദ്യങ്ങൾക്ക് ചുരുങ്ങിയ ഉത്തരങ്ങൾ.';
 
   @override
-  String get helpFaqQ1Title =>
-      'എന്തുകൊണ്ടാണ് ആപ്പ് പൂർണ്ണമായും ഓഫ്‌ലൈൻ ആയിരിക്കുന്നത്?';
+  String get helpFaqQ1Title => 'എന്റെ തൊടൽ എന്തുകൊണ്ട് എണ്ണിയില്ല?';
 
   @override
   String get helpFaqQ1Answer =>
-      'ജപ ധ്യാനം തികച്ചും വ്യക്തിപരമാണ്. യാതൊരു ശ്രദ്ധാശൈഥില്യങ്ങളും ഇല്ലാതെ പൂർണ്ണ സ്വകാര്യതയോടെ ജപിക്കാൻ വേണ്ടിയാണിത്.';
+      'മാലാവൃത്തത്തിനുള്ളിലെ തൊടൽ മാത്രമേ എണ്ണൂ. മേരു വിരാമം ഓൺ ആണെങ്കിൽ, ഓരോ മാലയ്ക്കും ശേഷമുള്ള ചെറിയ വിരാമ സമയത്തെ തൊടലും എണ്ണില്ല.';
 
   @override
-  String get helpFaqQ2Title =>
-      'ഇന്റർനെറ്റ് ഇല്ലാതെ ഒപ്റ്റിക്കൽ സിങ്ക് എങ്ങനെ പ്രവർത്തിക്കുന്നു?';
+  String get helpFaqQ2Title => 'തെറ്റായ എണ്ണം എങ്ങനെ തിരുത്താം?';
 
   @override
   String get helpFaqQ2Answer =>
-      'ആനിമേറ്റഡ് ക്യുആർ കോഡുകൾ സ്ക്രീനിൽ കാണിച്ച് ക്യാമറ വഴി ഡാറ്റ ഓഫ്‌ലൈനായി കൈമാറുന്നു.';
+      'രണ്ട് വിരലുകൾ മാലാവൃത്തത്തിൽ വച്ച് ഇടത്തോട്ടോ വലത്തോട്ടോ നീക്കുക. ഓരോ സ്വൈപ്പിലും ഒരു എണ്ണം കുറയും.';
 
   @override
-  String get helpFaqQ3Title => 'നിശ്ചല തെളിച്ചം മോഡ് എന്തിനാണ്?';
+  String get helpFaqQ3Title => 'എന്റെ കൗണ്ടർ എന്തുകൊണ്ട് തുറക്കുന്നില്ല?';
 
   @override
   String get helpFaqQ3Answer =>
-      'ഇരുട്ടുള്ള മുറികളിലും ക്ഷേത്രങ്ങളിലും മറ്റുള്ളവർക്ക് ബുദ്ധിമുട്ടുണ്ടാക്കാതെ ജപിക്കാൻ സ്ക്രീൻ തെളിച്ചം കുറയ്ക്കുന്നു.';
+      'അത് ലോക്ക് ചെയ്തതോ നിർത്തിയതോ ആകാം. അൺലോക്ക് ചെയ്യാൻ കാർഡിലെ പൂട്ട് ഐക്കൺ തൊടുക. നിർത്തിയ കൗണ്ടറുകൾ എണ്ണാനായി തുറക്കില്ല.';
 
   @override
-  String get helpFaqQ4Title => 'പുതിയ ഫോണിലേക്ക് ഡാറ്റ മാറ്റാൻ കഴിയുമോ?';
+  String get helpFaqQ4Title => 'മാലയുടെ നടുവിൽ നിർത്തിയാൽ എന്ത് സംഭവിക്കും?';
 
   @override
   String get helpFaqQ4Answer =>
-      'അതെ! ഒപ്റ്റിക്കൽ എയർ-ഗ്യാപ്പ് സിങ്ക് വഴിയോ JSON ബാക്കപ്പ് ഫയൽ വഴിയോ ഡാറ്റ മാറ്റാം.';
+      'ഒന്നും നഷ്ടപ്പെടില്ല. എണ്ണം സേവ് ആകും, മറ്റൊരു ദിവസമായാലും അടുത്ത തവണ ആ മാല കാത്തിരിക്കും. 0-ൽ നിന്ന് തുടങ്ങണമെങ്കിൽ \'പുതിയത് തുടങ്ങുക\' തൊടുക.';
 
   @override
   String get lockCounter => 'കൗണ്ടർ ലോക്ക് ചെയ്യുക';
@@ -1858,56 +1827,57 @@ class AppLocalizationsMl extends AppLocalizations {
   String get tutorialTitle => 'ആപ്പ് ട്യൂട്ടോറിയൽ';
 
   @override
-  String get tutorialSub => 'ആപ്പിലെ എല്ലാ സവിശേഷതകളും എളുപ്പത്തിൽ പഠിക്കാം';
+  String get tutorialSub =>
+      'ആദ്യ കൗണ്ടർ മുതൽ ബാക്കപ്പും സ്വകാര്യതയും വരെ, എല്ലാ സവിശേഷതകളിലൂടെയും ഘട്ടം ഘട്ടമായുള്ള യാത്ര.';
 
   @override
-  String get tutorialStep1Title => '1. പുതിയ കൗണ്ടർ നിർമ്മിക്കുക';
+  String get tutorialStep1Title => 'സ്വാഗതം';
 
   @override
   String get tutorialStep1Desc =>
-      'ഹോം സ്ക്രീനിലെ പ്ലസ് (+) ബട്ടൺ അമർത്തുക. മന്ത്രത്തിന്റെ പേര് നൽകി, ഘട്ടവും പ്രതിദിന-ജീവിതകാല ലക്ഷ്യങ്ങളും നിശ്ചയിക്കുക.';
+      'നിങ്ങളുടെ മന്ത്രജപം എണ്ണാൻ ഈ ആപ്പ് സഹായിക്കുന്നു. 108-ന്റെ മാലകൾ എണ്ണുന്നു, ദിവസ ലക്ഷ്യവും ആജീവനാന്ത ലക്ഷ്യവും സൂക്ഷിക്കുന്നു, മുഴുവൻ ചരിത്രവും സേവ് ചെയ്യുന്നു. ഇന്റർനെറ്റ് ഇല്ലാതെ പൂർണ്ണമായി പ്രവർത്തിക്കുന്നു.';
 
   @override
-  String get tutorialStep2Title => '2. പൂർണ്ണ സ്ക്രീൻ ജപം';
+  String get tutorialStep2Title => 'ഭാഷ തിരഞ്ഞെടുക്കുക';
 
   @override
   String get tutorialStep2Desc =>
-      'എണ്ണാൻ സ്ക്രീനിൽ എവിടെയും തൊടാം. തെറ്റിയാൽ താഴോട്ട് സ്വൈപ്പ് ചെയ്തു ഒഴിവാക്കാം. ഏകാഗ്രതയ്ക്ക് സ്ക്രീൻ മങ്ങിക്കാം.';
+      'ക്രമീകരണങ്ങൾ → ഭാഷ തുറക്കുക. ഇംഗ്ലീഷ്, മലയാളം, സംസ്കൃതം, അല്ലെങ്കിൽ സിസ്റ്റം ഡിഫോൾട്ട് തിരഞ്ഞെടുക്കുക.';
 
   @override
-  String get tutorialStep3Title => '3. 108 മണികളുടെ മാല';
+  String get tutorialStep3Title => 'കൗണ്ടർ ഉണ്ടാക്കുക';
 
   @override
   String get tutorialStep3Desc =>
-      'ഓരോ 108 ജപത്തിലും ഒരു മാല പൂർത്തിയാകുന്നു. പവിത്രമായ മണിനാദത്തോടെ മാലയുടെ കണക്കുകൾ രേഖപ്പെടുത്തുന്നു.';
+      'ഹോം സ്ക്രീനിന്റെ മുകളിലുള്ള + ബട്ടൺ തൊടുക. മന്ത്രത്തിന്റെ പേര് നൽകുക. പിന്നെ തുടക്ക എണ്ണം, ഓരോ തൊടലിലും കൂടുന്ന എണ്ണം, ആജീവനാന്ത ലക്ഷ്യം, ദിവസ ലക്ഷ്യം, തുടങ്ങിയ തീയതി എന്നിവ നൽകുക.';
 
   @override
-  String get tutorialStep4Title => '4. ലക്ഷ്യ നേട്ടങ്ങൾ';
+  String get tutorialStep4Title => 'കൗണ്ടർ കാർഡ് മനസ്സിലാക്കുക';
 
   @override
   String get tutorialStep4Desc =>
-      'പ്രതിദിന അല്ലെങ്കിൽ ജീവിതകാല ലക്ഷ്യം കൈവരിക്കുമ്പോൾ പ്രത്യേക ധ്വനികളും മുദ്രകളും കൊണ്ട് അനുഗ്രഹീത നിമിഷം ആഘോഷിക്കാം.';
+      'ഓരോ കാർഡിലും ആകെ ജപം, ആകെ മാല, ഇന്നത്തെ ജപം, ഇന്നത്തെ പുരോഗതി കാണിക്കുന്ന 27 മണികളുടെ നിര, ആജീവനാന്ത ലക്ഷ്യത്തിന്റെ ബാർ എന്നിവ കാണാം.';
 
   @override
-  String get tutorialStep5Title => '5. ലോക്കും പൂർത്തീകരണവും';
+  String get tutorialStep5Title => 'ഇന്നത്തെ സംഗ്രഹം';
 
   @override
   String get tutorialStep5Desc =>
-      'സ്പർശനം ഒഴിവാക്കാൻ കൗണ്ടർ ലോക്ക് ചെയ്യാം; പൂർത്തിയായ സാധനകൾ സുവർണ്ണ ചിഹ്നത്തോടെ ഭദ്രമായി സൂക്ഷിക്കാം.';
+      'ഹോം സ്ക്രീനിന്റെ മുകളിലുള്ള ചെറിയ പെട്ടി ഇന്നത്തെ ആകെ ജപം, മാല, ഇന്ന് ഉപയോഗിച്ച കൗണ്ടറുകൾ എന്നിവ കാണിക്കുന്നു.';
 
   @override
-  String get tutorialStep6Title => '6. എയർ-ഗ്യാപ്ഡ് ഒപ്റ്റിക്കൽ സിങ്ക്';
+  String get tutorialStep6Title => 'കൗണ്ടർ ഓപ്ഷനുകൾ';
 
   @override
   String get tutorialStep6Desc =>
-      'ഇന്റർനെറ്റോ ബ്ലൂടൂത്തോ ഇല്ലാതെ ക്യാമറ ക്യുആർ ആനിമേഷൻ വഴി മറ്റൊരു ഉപകരണത്തിലേക്ക് വിവരങ്ങൾ കൈമാറാം.';
+      'കാർഡിൽ അമർത്തിപ്പിടിച്ചാൽ കൗണ്ടറിനെക്കുറിച്ച്, ചരിത്രം, തിരുത്തുക, ലോക്ക്, നിർത്തുക (പൂർത്തിയായി), നിർത്തുക (പൂർത്തിയായില്ല), ഡിലീറ്റ് എന്നിവ കാണാം.';
 
   @override
-  String get tutorialStep7Title => '7. എൻക്രിപ്റ്റഡ് ബാക്കപ്പ്';
+  String get tutorialStep7Title => 'കൗണ്ടർ ലോക്ക് ചെയ്യുക';
 
   @override
   String get tutorialStep7Desc =>
-      'രഹസ്യ പാസ്സ്‌ഫ്രെയ്‌സ് നൽകി എഇഎസ്-256 സുരക്ഷയോടെ മുഴുവൻ സാധനാ ചരിത്രവും ഫയലായി സംരക്ഷിക്കാം.';
+      'കാർഡിലെ പൂട്ട് ഐക്കൺ തൊട്ട് ലോക്ക് ചെയ്യാം. ലോക്ക് ചെയ്ത കൗണ്ടർ എണ്ണാനായി തുറക്കില്ല. വീണ്ടും തൊട്ടാൽ അൺലോക്ക് ആകും.';
 
   @override
   String get opticalCameraDenied =>
@@ -1970,21 +1940,7 @@ class AppLocalizationsMl extends AppLocalizations {
       'വളരെ വേഗത്തിൽ സ്പർശിക്കുമ്പോൾ മൃദുവായ തിളക്കം. എല്ലാ സ്പർശനവും എണ്ണും.';
 
   @override
-  String get helpCountingMindfulSection => 'ശ്രദ്ധയോടെ എണ്ണൽ';
-
-  @override
-  String get helpCountingMeruBold => 'മേരു വിരാമം:';
-
-  @override
-  String get helpCountingMeruBullet =>
-      'ക്രമീകരണങ്ങൾ → ഡിസ്‌പ്ലേയിൽ ഓണാക്കിയാൽ, 108-ന്റെ ഓരോ മാലയ്ക്കും ശേഷം ആപ്പ് ഏതാനും നിമിഷം നിർത്തും. മേരു മണി കടക്കാത്തതുപോലെ, ഈ സമയത്തെ സ്പർശനങ്ങൾ എണ്ണില്ല.';
-
-  @override
-  String get helpCountingPacingBold => 'വേഗ സൂചന:';
-
-  @override
-  String get helpCountingPacingBullet =>
-      'സെക്കൻഡിൽ ഏകദേശം 3 തവണയിൽ കൂടുതൽ വേഗത്തിൽ സ്പർശിച്ചാൽ, മാല മൃദുവായി തിളങ്ങുകയും ചെറിയ ഓർമ്മപ്പെടുത്തൽ കാണിക്കുകയും ചെയ്യും. ഇത് ഒരിക്കലും എണ്ണം തടയില്ല.';
+  String get helpCountingMindfulSection => 'ശ്രദ്ധാപൂർവ്വമായ എണ്ണൽ';
 
   @override
   String get sadhanaFlowTitle => 'സാധനാ പ്രവാഹം';
@@ -2026,4 +1982,1166 @@ class AppLocalizationsMl extends AppLocalizations {
   String opticalBrightnessBoost(int percent) {
     return '+$percent%';
   }
+
+  @override
+  String get helpCategoryCounters => 'നിങ്ങളുടെ കൗണ്ടറുകളും ചരിത്രവും';
+
+  @override
+  String get helpTopicCountersTitle => 'കൗണ്ടറുകളും ഹോം സ്ക്രീനും';
+
+  @override
+  String get helpTopicCountersSub =>
+      'കൗണ്ടർ ഉണ്ടാക്കൽ, എഡിറ്റ്, ലോക്ക്, നിർത്തൽ, ഡിലീറ്റ്, കാർഡ് മനസ്സിലാക്കൽ';
+
+  @override
+  String get helpTopicHistoryTitle => 'ചരിത്രവും സ്ഥിതിവിവരവും';
+
+  @override
+  String get helpTopicHistorySub =>
+      'ദിവസം തിരിച്ചുള്ള ചരിത്രം, സാധനാ പ്രവാഹ കലണ്ടർ, കൗണ്ടർ വിവരങ്ങൾ';
+
+  @override
+  String get helpTopicDisplayTitle => 'പ്രദർശനം, നിശ്ശബ്ദത, ഭാഷ';
+
+  @override
+  String get helpTopicDisplaySub =>
+      'പ്രകാശം, മങ്ങിയ രീതി, DND, മേരു വിരാമം, ഭാഷ, രൂപഭാവം';
+
+  @override
+  String get tutorialChapter1 => 'തുടക്കം';
+
+  @override
+  String get tutorialChapter2 => 'നിങ്ങളുടെ കൗണ്ടറുകൾ';
+
+  @override
+  String get tutorialChapter3 => 'എണ്ണൽ';
+
+  @override
+  String get tutorialChapter4 => 'മാലകളും ലക്ഷ്യങ്ങളും';
+
+  @override
+  String get tutorialChapter5 => 'ചരിത്രവും സ്ഥിതിവിവരവും';
+
+  @override
+  String get tutorialChapter6 => 'ശബ്ദം, വൈബ്രേഷൻ, ഡിസ്‌പ്ലേ';
+
+  @override
+  String get tutorialChapter7 => 'നിങ്ങളുടെ ഡാറ്റ';
+
+  @override
+  String get tutorialChapter8 => 'സ്വകാര്യത';
+
+  @override
+  String get tutorialStep1Tip =>
+      'ഈ ഗൈഡ് എപ്പോൾ വേണമെങ്കിലും ക്രമീകരണങ്ങൾ → സഹായവും ഉപയോക്തൃ ഗൈഡുകളും എന്നതിൽ നിന്ന് തുറക്കാം.';
+
+  @override
+  String get tutorialStep2Tip =>
+      'ആപ്പിന്റെ ഭാഷ ഏതായാലും, മന്ത്രത്തിന്റെ പേര് ഏത് ലിപിയിലും എഴുതാം.';
+
+  @override
+  String get tutorialStep3Tip =>
+      'ലക്ഷ്യം വേണ്ടെങ്കിൽ 0 നൽകുക. ദിവസ ലക്ഷ്യം ആജീവനാന്ത ലക്ഷ്യത്തേക്കാൾ കൂടരുത്. ഓരോ തൊടലിലെ എണ്ണം ദിവസ ലക്ഷ്യത്തേക്കാൾ കുറവായിരിക്കണം.';
+
+  @override
+  String get tutorialStep4Tip =>
+      'പച്ച ടിക്ക് എന്നാൽ ഇന്നത്തെ ലക്ഷ്യം പൂർത്തിയായി. സ്വർണ്ണ ട്രോഫി എന്നാൽ ആജീവനാന്ത ലക്ഷ്യം എത്തി.';
+
+  @override
+  String get tutorialStep5Tip =>
+      'ഫോണിലെ സമയം അനുസരിച്ച് ഓരോ ദിവസവും അർദ്ധരാത്രിയിൽ ഇവ 0-ൽ നിന്ന് വീണ്ടും തുടങ്ങും.';
+
+  @override
+  String get tutorialStep6Tip =>
+      'ഡിലീറ്റ് ചെയ്താൽ കൗണ്ടറും അതിന്റെ മുഴുവൻ ചരിത്രവും പോകും. തിരികെ കിട്ടില്ല.';
+
+  @override
+  String get tutorialStep7Tip =>
+      'പൂർത്തിയായതോ അപൂർവ്വമായി ഉപയോഗിക്കുന്നതോ ആയ കൗണ്ടർ ലോക്ക് ചെയ്യുക. അപ്പോൾ അബദ്ധത്തിൽ എണ്ണം മാറില്ല.';
+
+  @override
+  String get tutorialStep8Title => 'എണ്ണൽ സ്ക്രീൻ തുറക്കുക';
+
+  @override
+  String get tutorialStep8Desc =>
+      'ഒരു കൗണ്ടർ കാർഡ് തൊടുക. വലിയ മാലാവൃത്തമുള്ള എണ്ണൽ സ്ക്രീൻ തുറക്കും.';
+
+  @override
+  String get tutorialStep8Tip =>
+      'ക്രമീകരണങ്ങളിൽ \'ശല്യപ്പെടുത്തരുത്\' ഓൺ ആണെങ്കിൽ, ഈ സ്ക്രീൻ തുറന്നിരിക്കുമ്പോൾ ഫോൺ നിശബ്ദമായിരിക്കും.';
+
+  @override
+  String get tutorialStep9Title => 'എണ്ണാൻ തൊടുക';
+
+  @override
+  String get tutorialStep9Desc =>
+      'മാലാവൃത്തത്തിനുള്ളിൽ തൊടുക. ഓരോ തൊടലിലും നിശ്ചയിച്ച എണ്ണം (സാധാരണ 1) കൂടും. വൃത്തത്തിന് പുറത്തുള്ള തൊടൽ എണ്ണില്ല.';
+
+  @override
+  String get tutorialStep9Tip =>
+      'കണ്ണടച്ചും ജപിക്കാം. വൃത്തം വലുതാണ്. ഓരോ മാല തീരുമ്പോഴും ശബ്ദവും സ്പന്ദനവും ഉണ്ടാകും.';
+
+  @override
+  String get tutorialStep10Title => 'എണ്ണം തിരുത്തുക';
+
+  @override
+  String get tutorialStep10Desc =>
+      'രണ്ട് വിരലുകൾ വൃത്തത്തിൽ വച്ച് ഇടത്തോട്ടോ വലത്തോട്ടോ നീക്കുക. ഒരു സ്വൈപ്പിൽ ഒരു എണ്ണം കുറയും.';
+
+  @override
+  String get tutorialStep10Tip =>
+      'തിരുത്തിയെന്ന് ഉറപ്പാക്കാൻ ഫോൺ ഒരിക്കൽ വൈബ്രേറ്റ് ചെയ്യും.';
+
+  @override
+  String get tutorialStep11Title => 'സ്ക്രീൻ മനസ്സിലാക്കുക';
+
+  @override
+  String get tutorialStep11Desc =>
+      'മുകളിലെ പെട്ടി ഈ ഇരിപ്പിന്റെ സമയം കാണിക്കുന്നു. നടുവിൽ ഇപ്പോഴത്തെ മാലയിലെ മണി, ബാക്കിയുള്ള മണികൾ, തീർന്ന മാലകൾ എന്നിവ കാണാം. താഴത്തെ നിരയിൽ സെഷൻ, ദിവസം, ആജീവനാന്തം എന്നീ എണ്ണങ്ങൾ കാണാം.';
+
+  @override
+  String get tutorialStep11Tip =>
+      'ലക്ഷ്യം എത്തുമ്പോൾ മുകളിലെ വിളക്ക് ഐക്കണിന്റെ നിറം മാറും.';
+
+  @override
+  String get tutorialStep12Title => 'പുറത്തുപോയി തിരികെ വരിക';
+
+  @override
+  String get tutorialStep12Desc =>
+      'എപ്പോൾ വേണമെങ്കിലും ബാക്ക് അമർത്താം. എണ്ണം നിശബ്ദമായി സേവ് ആകും. ആപ്പ് പിന്നിലായിരിക്കുമ്പോൾ ടൈമർ നിൽക്കും. പൂർത്തിയാകാത്ത മാല മറ്റൊരു ദിവസമായാലും നിങ്ങളെ കാത്തിരിക്കും.';
+
+  @override
+  String get tutorialStep12Tip =>
+      'പഴയ എണ്ണം സൂക്ഷിച്ച് 0-ൽ നിന്ന് പുതിയ മാല തുടങ്ങാൻ ബാനറിലെ \'പുതിയത് തുടങ്ങുക\' തൊടുക.';
+
+  @override
+  String get tutorialStep13Title => 'എണ്ണൽ മെനു';
+
+  @override
+  String get tutorialStep13Desc =>
+      '⋮ മെനുവിൽ ചരിത്രം, വിവരം, ക്രമീകരണങ്ങൾ, പൂർത്തിയാക്കി പുതിയത് തുടങ്ങുക, സെഷൻ പുനഃസജ്ജമാക്കൽ, കൗണ്ടർ പുനഃസജ്ജമാക്കൽ എന്നിവയുണ്ട്.';
+
+  @override
+  String get tutorialStep13Tip =>
+      'സെഷൻ പുനഃസജ്ജമാക്കൽ ഈ ഇരിപ്പ് മാത്രം മായ്ക്കും. കൗണ്ടർ പുനഃസജ്ജമാക്കൽ ആ കൗണ്ടറിന്റെ മുഴുവൻ ചരിത്രവും ഡിലീറ്റ് ചെയ്യും.';
+
+  @override
+  String get tutorialStep14Title => '108 മണി = 1 മാല';
+
+  @override
+  String get tutorialStep14Desc =>
+      'ഓരോ 108 എണ്ണവും ഒരു മാലയാണ്. വൃത്തം മണി മണിയായി നിറയും, 108-ന് ശേഷം വീണ്ടും തുടങ്ങും.';
+
+  @override
+  String get tutorialStep14Tip =>
+      '115 എണ്ണം = 1 മാലയും 7 എണ്ണവും. അധിക എണ്ണം ഒരിക്കലും നഷ്ടപ്പെടില്ല.';
+
+  @override
+  String get tutorialStep15Title => 'ലക്ഷ്യങ്ങളിൽ എത്തുക';
+
+  @override
+  String get tutorialStep15Desc =>
+      'ദിവസ ലക്ഷ്യം എത്തുമ്പോൾ ശബ്ദം കേൾക്കും, ഫോൺ വൈബ്രേറ്റ് ചെയ്യും, അറിയിപ്പ് വരും. ആജീവനാന്ത ലക്ഷ്യത്തിന് സ്വന്തം ശബ്ദവും അറിയിപ്പും സ്വർണ്ണ ട്രോഫിയും ഉണ്ട്.';
+
+  @override
+  String get tutorialStep15Tip =>
+      'ഇവ ക്രമീകരണങ്ങൾ → ശബ്ദവും സ്പന്ദനവും എന്നതിൽ ഓൺ/ഓഫ് ചെയ്യാം.';
+
+  @override
+  String get tutorialStep16Title => 'മേരു വിരാമം';
+
+  @override
+  String get tutorialStep16Desc =>
+      'ക്രമീകരണങ്ങൾ → പ്രദർശനവും നിശ്ശബ്ദതയും എന്നതിൽ ഓൺ ചെയ്യുക. ഓരോ മാലയ്ക്കും ശേഷം 3, 5 അല്ലെങ്കിൽ 10 സെക്കൻഡ് ആപ്പ് നിൽക്കും, വിശ്രമിക്കാനും ശ്വസിക്കാനും.';
+
+  @override
+  String get tutorialStep16Tip =>
+      'മേരു മണി ഒരിക്കലും കടക്കാത്തതുപോലെ, വിരാമ സമയത്തെ തൊടൽ എണ്ണില്ല.';
+
+  @override
+  String get tutorialStep17Title => 'മൃദുവായ വേഗ സൂചന';
+
+  @override
+  String get tutorialStep17Desc =>
+      'സെക്കൻഡിൽ ഏകദേശം 3-ൽ കൂടുതൽ വേഗത്തിൽ തൊട്ടാൽ, വൃത്തം മഞ്ഞ നിറത്തിൽ തിളങ്ങും, ഒരു ചെറിയ ഓർമ്മപ്പെടുത്തൽ വരും.';
+
+  @override
+  String get tutorialStep17Tip =>
+      'എല്ലാ തൊടലും എണ്ണും. ഈ സൂചന ക്രമീകരണങ്ങൾ → പ്രദർശനവും നിശ്ശബ്ദതയും എന്നതിൽ ഓഫ് ചെയ്യാം.';
+
+  @override
+  String get tutorialStep18Title => 'ചരിത്രം';
+
+  @override
+  String get tutorialStep18Desc =>
+      'എണ്ണൽ മെനുവിൽ നിന്നോ അമർത്തിപ്പിടിക്കുന്ന മെനുവിൽ നിന്നോ ചരിത്രം തുറക്കാം. ഇരിപ്പുകൾ ദിവസം തിരിച്ച്, സമയം, ദൈർഘ്യം, എണ്ണം, മാല എന്നിവയോടെ കാണാം.';
+
+  @override
+  String get tutorialStep18Tip =>
+      'ഒരു ഇരിപ്പ് നീക്കാൻ അതിലെ ഡിലീറ്റ് ഐക്കൺ തൊടുക. ആകെ എണ്ണം ഉടൻ പുതുക്കും.';
+
+  @override
+  String get tutorialStep19Title => 'സാധനാ പ്രവാഹം';
+
+  @override
+  String get tutorialStep19Desc =>
+      'ചരിത്രത്തിലെ കലണ്ടർ കഴിഞ്ഞ 16 ആഴ്ച കാണിക്കുന്നു. ജപിച്ച ദിവസങ്ങൾ വിളക്കുപോലെ തിളങ്ങും. കൂടുതൽ തിളക്കം എന്നാൽ കൂടുതൽ ജപം.';
+
+  @override
+  String get tutorialStep19Tip =>
+      'തുടർച്ച എണ്ണലോ നഷ്ടപ്പെട്ട ദിവസത്തിന്റെ അടയാളമോ ഇല്ല. തിരികെ വരുന്ന ഓരോ ദിവസവും സ്വാഗതം.';
+
+  @override
+  String get tutorialStep20Title => 'കൗണ്ടർ സ്ഥിതിവിവരം';
+
+  @override
+  String get tutorialStep20Desc =>
+      'പുരോഗതി വൃത്തങ്ങളും കൗണ്ടറിന്റെ എല്ലാ വിവരങ്ങളും കാണാൻ \'കൗണ്ടറിനെക്കുറിച്ച്\' (അമർത്തിപ്പിടിക്കുന്ന മെനു) അല്ലെങ്കിൽ വിവരം (എണ്ണൽ മെനു) തിരഞ്ഞെടുക്കുക.';
+
+  @override
+  String get tutorialStep20Tip =>
+      'ദിവസ ശരാശരി ജപം നിങ്ങൾ നൽകിയ തുടങ്ങിയ തീയതി മുതൽ കണക്കാക്കുന്നു.';
+
+  @override
+  String get tutorialStep21Title => 'ശബ്ദങ്ങൾ';
+
+  @override
+  String get tutorialStep21Desc =>
+      'ക്രമീകരണങ്ങൾ → ശബ്ദവും സ്പന്ദനവും എന്നതിൽ മാല ശബ്ദം, ദിവസ ലക്ഷ്യ ശബ്ദം, ആജീവനാന്ത ലക്ഷ്യ ശബ്ദം എന്നിവ തിരഞ്ഞെടുക്കുക. ആപ്പിലെ ശബ്ദം, ഫോണിലെ റിംഗ്‌ടോൺ, അല്ലെങ്കിൽ സ്വന്തം ഓഡിയോ ഫയൽ ഉപയോഗിക്കാം.';
+
+  @override
+  String get tutorialStep21Tip =>
+      'ജപിക്കുന്നതിന് മുമ്പ് ശബ്ദം കേൾക്കാൻ \'ടോൺ പ്രിവ്യൂ\' തൊടുക.';
+
+  @override
+  String get tutorialStep22Title => 'വൈബ്രേഷനും അറിയിപ്പുകളും';
+
+  @override
+  String get tutorialStep22Desc =>
+      'ഓരോ മാലയ്ക്കും ലക്ഷ്യത്തിനും തിരുത്തലിനും വൈബ്രേഷൻ ഉണ്ട്. ലക്ഷ്യ അറിയിപ്പുകൾ സ്റ്റാറ്റസ് ബാറിൽ വരും.';
+
+  @override
+  String get tutorialStep22Tip =>
+      'ശബ്ദങ്ങൾ അലാറം ചാനലിലൂടെ വരുന്നതിനാൽ ഫോൺ സൈലന്റിൽ ആണെങ്കിലും കേൾക്കാം.';
+
+  @override
+  String get tutorialStep23Title => 'പ്രദർശനവും നിശ്ശബ്ദതയും';
+
+  @override
+  String get tutorialStep23Desc =>
+      'ക്രമീകരണങ്ങൾ → പ്രദർശനവും നിശ്ശബ്ദതയും എന്നതിൽ പ്രകാശം ക്രമീകരിക്കാം, മങ്ങിയ ജപ മോഡ് ഓൺ ചെയ്യാം, \'ശല്യപ്പെടുത്തരുത്\' വഴി കോളുകളും അറിയിപ്പുകളും നിശബ്ദമാക്കാം.';
+
+  @override
+  String get tutorialStep23Tip =>
+      '\'ശല്യപ്പെടുത്തരുത്\' ഒരിക്കൽ അനുമതി നൽകണം. എണ്ണൽ സ്ക്രീനിൽ നിന്ന് പുറത്തുപോകുമ്പോൾ അത് വീണ്ടും ഓഫ് ആകും.';
+
+  @override
+  String get tutorialStep24Title => 'രൂപഭാവം';
+
+  @override
+  String get tutorialStep24Desc =>
+      'ക്രമീകരണങ്ങൾ → രൂപഭാവം എന്നതിൽ ആപ്പിലെ ക്ഷേത്ര നിറങ്ങളും അക്ഷരരൂപങ്ങളും കാണാം.';
+
+  @override
+  String get tutorialStep24Tip =>
+      'ഒറ്റക്കൈ കൊണ്ട് എണ്ണാൻ ആപ്പ് എപ്പോഴും നിവർന്ന (പോർട്രെയ്റ്റ്) നിലയിൽ ആയിരിക്കും.';
+
+  @override
+  String get tutorialStep25Title => 'ഫയലിലേക്ക് ബാക്കപ്പ്';
+
+  @override
+  String get tutorialStep25Desc =>
+      'ക്രമീകരണങ്ങൾ → ഡാറ്റ ബാക്കപ്പും ഒപ്റ്റിക്കൽ സിങ്കും → എക്സ്പോർട്ട്, അല്ലെങ്കിൽ ഹോം മെനുവിലെ ഇംപോർട്ട് / എക്സ്പോർട്ട് ഉപയോഗിക്കുക. എല്ലാ കൗണ്ടറുകളും ചരിത്രവും ഒരു ഫയലിൽ സേവ് ആകും, ഷെയർ ഷീറ്റ് തുറക്കും.';
+
+  @override
+  String get tutorialStep25Tip =>
+      'പാസ്ഫ്രേസ് ഉപയോഗിച്ച് ഫയൽ പൂട്ടാം (AES-256-GCM). മറന്ന പാസ്ഫ്രേസ് തിരികെ കിട്ടില്ല.';
+
+  @override
+  String get tutorialStep26Title => 'ഫയലിൽ നിന്ന് പുനഃസ്ഥാപിക്കുക';
+
+  @override
+  String get tutorialStep26Desc =>
+      'ഇംപോർട്ട് തിരഞ്ഞെടുത്ത് ബാക്കപ്പ് ഫയൽ തിരഞ്ഞെടുക്കുക. ഫയൽ പൂട്ടിയതാണെങ്കിൽ പാസ്ഫ്രേസ് നൽകുക.';
+
+  @override
+  String get tutorialStep26Tip =>
+      'ഇംപോർട്ട് ഈ ഫോണിലെ എല്ലാ ഡാറ്റയും മാറ്റിസ്ഥാപിക്കും. അത് സൂക്ഷിക്കണമെങ്കിൽ ആദ്യം എക്സ്പോർട്ട് ചെയ്യുക.';
+
+  @override
+  String get tutorialStep27Title => 'ഫോണിൽ നിന്ന് ഫോണിലേക്ക്';
+
+  @override
+  String get tutorialStep27Desc =>
+      'പഴയ ഫോണിൽ ഒപ്റ്റിക്കൽ സിങ്ക് (അയയ്ക്കുക) തിരഞ്ഞെടുത്ത് കൗണ്ടറുകൾ തിരഞ്ഞെടുക്കുക. പുതിയ ഫോണിൽ ഒപ്റ്റിക്കൽ സിങ്ക് (സ്വീകരിക്കുക) തിരഞ്ഞെടുത്ത് ചലിക്കുന്ന QR കോഡിലേക്ക് ക്യാമറ പിടിക്കുക.';
+
+  @override
+  String get tutorialStep27Tip =>
+      'ഇന്റർനെറ്റോ ബ്ലൂടൂത്തോ കേബിളോ വേണ്ട. തിരഞ്ഞെടുത്ത കൗണ്ടറുകൾ ചേർക്കും; സ്വീകരിക്കുന്ന ഫോണിലെ മറ്റ് കൗണ്ടറുകൾ നിലനിൽക്കും.';
+
+  @override
+  String get tutorialStep28Title => 'എല്ലാ ഡാറ്റയും മായ്ക്കുക';
+
+  @override
+  String get tutorialStep28Desc =>
+      'ക്രമീകരണങ്ങൾ → ഡാറ്റ ബാക്കപ്പും ഒപ്റ്റിക്കൽ സിങ്കും → ഡാറ്റ മുഴുവൻ മായ്ക്കുക എന്നത് എല്ലാ കൗണ്ടറുകളും മുഴുവൻ ചരിത്രവും ഡിലീറ്റ് ചെയ്യും.';
+
+  @override
+  String get tutorialStep28Tip =>
+      'ആദ്യം ബാക്കപ്പ് എടുക്കുക. ഇത് തിരികെ എടുക്കാനാവില്ല.';
+
+  @override
+  String get tutorialStep29Title => 'പൂർണ്ണമായി ഓഫ്‌ലൈൻ, സ്വകാര്യം';
+
+  @override
+  String get tutorialStep29Desc =>
+      'ആപ്പിന് ഇന്റർനെറ്റ് അനുമതിയില്ല, പരസ്യമില്ല, നിരീക്ഷണമില്ല, അക്കൗണ്ടുമില്ല. നിങ്ങളുടെ സാധന നിങ്ങളുടെ ഫോണിൽ തന്നെ.';
+
+  @override
+  String get tutorialStep29Tip =>
+      'ഈ ആപ്പിന് ആൻഡ്രോയിഡ് ക്ലൗഡ് ബാക്കപ്പ് ഓഫ് ആണ്. പകർപ്പ് സൂക്ഷിക്കാൻ എക്സ്പോർട്ട് അല്ലെങ്കിൽ ഒപ്റ്റിക്കൽ സിങ്ക് ഉപയോഗിക്കുക.';
+
+  @override
+  String get tutorialStep30Title => 'അനുമതികൾ';
+
+  @override
+  String get tutorialStep30Desc =>
+      'ക്യാമറ സിങ്ക് കോഡ് സ്കാൻ ചെയ്യാൻ മാത്രം. അറിയിപ്പുകൾ ലക്ഷ്യ സന്ദേശങ്ങൾക്ക്. വൈബ്രേഷനും ഓഡിയോയും പ്രതികരണത്തിന്. \'ശല്യപ്പെടുത്തരുത്\' അനുമതി നിങ്ങൾ ഓൺ ചെയ്താൽ മാത്രം ചോദിക്കും.';
+
+  @override
+  String get tutorialStep30Tip =>
+      'ഓരോ അനുമതിയും എന്തിനെന്ന് ക്രമീകരണങ്ങൾ → അനുമതികൾ എന്നതിൽ കാണാം.';
+
+  @override
+  String get helpCountersIntro =>
+      'ഹോം സ്ക്രീനിൽ നിങ്ങളുടെ എല്ലാ കൗണ്ടറുകളും കാണാം. ഓരോ കൗണ്ടറും ഒരു മന്ത്രമോ സാധനയോ ആണ്, അതിന് സ്വന്തം ലക്ഷ്യങ്ങളും ചരിത്രവും ഉണ്ട്.';
+
+  @override
+  String get helpCountersCreateSection => 'കൗണ്ടർ ഉണ്ടാക്കൽ';
+
+  @override
+  String get helpCountersCreateBold1 => 'ചേർക്കൽ ബട്ടൺ:';
+
+  @override
+  String get helpCountersCreateBullet1 =>
+      'പുതിയ കൗണ്ടർ ഉണ്ടാക്കാൻ ഹോം സ്ക്രീനിന്റെ മുകളിലുള്ള + ബട്ടൺ തൊടുക.';
+
+  @override
+  String get helpCountersCreateBold2 => 'പേര്:';
+
+  @override
+  String get helpCountersCreateBullet2 =>
+      'മന്ത്രത്തിന്റെ പേര് ഏത് ഭാഷയിലും ലിപിയിലും എഴുതാം.';
+
+  @override
+  String get helpCountersCreateBold3 => 'തുടക്ക എണ്ണം:';
+
+  @override
+  String get helpCountersCreateBullet3 =>
+      'മുമ്പ് ചെയ്ത ജപം ചേർക്കാൻ, ഉദാഹരണത്തിന് കടലാസിൽ എഴുതിയത്. സാധാരണ 0.';
+
+  @override
+  String get helpCountersCreateBold4 => 'ഓരോ തൊടലിലെ എണ്ണം:';
+
+  @override
+  String get helpCountersCreateBullet4 =>
+      'ഒരു തൊടലിൽ എത്ര കൂടണം. സാധാരണ 1. ഇത് ദിവസ ലക്ഷ്യത്തേക്കാൾ കുറവായിരിക്കണം.';
+
+  @override
+  String get helpCountersCreateBold5 => 'ലക്ഷ്യങ്ങൾ:';
+
+  @override
+  String get helpCountersCreateBullet5 =>
+      'ദിവസ ലക്ഷ്യവും ആജീവനാന്ത ലക്ഷ്യവും നൽകുക. ലക്ഷ്യം വേണ്ടെങ്കിൽ 0. ദിവസ ലക്ഷ്യം ആജീവനാന്ത ലക്ഷ്യത്തേക്കാൾ കൂടരുത്.';
+
+  @override
+  String get helpCountersCreateBold6 => 'തുടങ്ങിയ തീയതി:';
+
+  @override
+  String get helpCountersCreateBullet6 =>
+      'ഈ സാധന തുടങ്ങിയ ദിവസം. ദിവസ ശരാശരി ജപം കണക്കാക്കാൻ ഇത് ഉപയോഗിക്കുന്നു.';
+
+  @override
+  String get helpCountersHomeSection => 'ഹോം സ്ക്രീൻ';
+
+  @override
+  String get helpCountersHomeBold1 => 'ഇന്നത്തെ സംഗ്രഹം:';
+
+  @override
+  String get helpCountersHomeBullet1 =>
+      'മുകളിലെ ചെറിയ പെട്ടി ഇന്നത്തെ ആകെ ജപം, ആകെ മാല, ഇന്ന് ഉപയോഗിച്ച കൗണ്ടറുകളുടെ എണ്ണം എന്നിവ കാണിക്കുന്നു.';
+
+  @override
+  String get helpCountersHomeBold2 => 'കാർഡിലെ പുരോഗതി:';
+
+  @override
+  String get helpCountersHomeBullet2 =>
+      'ഓരോ കാർഡിലും ആകെ ജപം, മാല, ഇന്നത്തെ ജപം, ഇന്നത്തെ ലക്ഷ്യത്തിന് 27 മണികളുടെ നിര, ആജീവനാന്ത ലക്ഷ്യത്തിന്റെ ബാർ എന്നിവയുണ്ട്.';
+
+  @override
+  String get helpCountersHomeBold3 => 'അടയാളങ്ങൾ:';
+
+  @override
+  String get helpCountersHomeBullet3 =>
+      'ഇന്നത്തെ ലക്ഷ്യം തീരുമ്പോൾ പച്ച ടിക്ക് വരും. ആജീവനാന്ത ലക്ഷ്യം എത്തുമ്പോൾ സ്വർണ്ണ ട്രോഫി വരും.';
+
+  @override
+  String get helpCountersHomeBold4 => 'ക്രമം:';
+
+  @override
+  String get helpCountersHomeBullet4 =>
+      'സജീവ കൗണ്ടറുകൾ ആദ്യം, പിന്നെ നിർത്തിയവ. പുതിയവ ആദ്യം കാണിക്കും.';
+
+  @override
+  String get helpCountersHomeBold5 => 'നിറങ്ങൾ:';
+
+  @override
+  String get helpCountersHomeBullet5 =>
+      'ഓരോ കൗണ്ടറിനും സ്വന്തം നിറം ലഭിക്കും, അത് എപ്പോഴും ഒന്നുതന്നെ.';
+
+  @override
+  String get helpCountersHomeBold6 => 'മുകളിലെ മെനു:';
+
+  @override
+  String get helpCountersHomeBullet6 =>
+      'മുകളിലെ മെനുവിൽ ഇംപോർട്ട് / എക്സ്പോർട്ട്, ക്രമീകരണങ്ങൾ, ആപ്പിനെക്കുറിച്ച് എന്നിവയുണ്ട്.';
+
+  @override
+  String get helpCountersOptionsSection =>
+      'കൗണ്ടർ ഓപ്ഷനുകൾ (കാർഡിൽ അമർത്തിപ്പിടിക്കുക)';
+
+  @override
+  String get helpCountersOptionsBold1 => 'കൗണ്ടറിനെക്കുറിച്ച്:';
+
+  @override
+  String get helpCountersOptionsBullet1 =>
+      'കൗണ്ടറിന്റെ സ്ഥിതിവിവരവും വിശദാംശങ്ങളും.';
+
+  @override
+  String get helpCountersOptionsBold2 => 'ചരിത്രം:';
+
+  @override
+  String get helpCountersOptionsBullet2 => 'ഈ കൗണ്ടറിന്റെ എല്ലാ ഇരിപ്പുകളും.';
+
+  @override
+  String get helpCountersOptionsBold3 => 'എഡിറ്റ്:';
+
+  @override
+  String get helpCountersOptionsBullet3 =>
+      'പേര്, എണ്ണം, ലക്ഷ്യങ്ങൾ, തുടങ്ങിയ തീയതി എന്നിവ മാറ്റാം.';
+
+  @override
+  String get helpCountersOptionsBold4 => 'ലോക്ക് / അൺലോക്ക്:';
+
+  @override
+  String get helpCountersOptionsBullet4 => 'കാർഡിലെ പൂട്ട് ഐക്കൺ പോലെ തന്നെ.';
+
+  @override
+  String get helpCountersOptionsBold5 => 'പ്രവർത്തനരഹിതമാക്കുക (വിജയം):';
+
+  @override
+  String get helpCountersOptionsBullet5 =>
+      'കൗണ്ടർ പൂർത്തിയായി എന്ന് അടയാളപ്പെടുത്തുക, ഉദാഹരണത്തിന് സങ്കല്പം തീരുമ്പോൾ. കാരണം ചേർക്കാം.';
+
+  @override
+  String get helpCountersOptionsBold6 =>
+      'പ്രവർത്തനരഹിതമാക്കുക (പൂർത്തിയായില്ല):';
+
+  @override
+  String get helpCountersOptionsBullet6 =>
+      'പൂർത്തിയാകാത്ത കൗണ്ടർ നിർത്തുക. കാരണം ചേർക്കാം.';
+
+  @override
+  String get helpCountersOptionsBold7 => 'ഇല്ലാതാക്കുക:';
+
+  @override
+  String get helpCountersOptionsBullet7 =>
+      'ഉറപ്പാക്കിയ ശേഷം കൗണ്ടറും അതിന്റെ മുഴുവൻ ചരിത്രവും നീക്കും. തിരികെ കിട്ടില്ല.';
+
+  @override
+  String get helpCountersLockSection =>
+      'ലോക്ക് ചെയ്തതും നിർത്തിയതുമായ കൗണ്ടറുകൾ';
+
+  @override
+  String get helpCountersLockBold1 => 'പൂട്ട് ഐക്കൺ:';
+
+  @override
+  String get helpCountersLockBullet1 =>
+      'ലോക്ക് ചെയ്യാനോ അൺലോക്ക് ചെയ്യാനോ കാർഡിലെ പൂട്ട് ഐക്കൺ തൊടുക.';
+
+  @override
+  String get helpCountersLockBold2 => 'ലോക്ക് ചെയ്തത്:';
+
+  @override
+  String get helpCountersLockBullet2 =>
+      'ലോക്ക് ചെയ്ത കൗണ്ടർ എണ്ണാനായി തുറക്കില്ല, അതിനാൽ അബദ്ധത്തിൽ എണ്ണം മാറില്ല. തൊട്ടാൽ ഒരു ചെറിയ സന്ദേശം കാണിക്കും.';
+
+  @override
+  String get helpCountersLockBold3 => 'നിർത്തിയത്:';
+
+  @override
+  String get helpCountersLockBullet3 =>
+      'നിർത്തിയ കൗണ്ടറുകൾ ടിക്ക് അല്ലെങ്കിൽ ക്രോസ് അടയാളത്തോടെ പട്ടികയിൽ ഉണ്ടാകും, പക്ഷേ എണ്ണാനായി തുറക്കില്ല.';
+
+  @override
+  String get helpCountingScreenSection => 'സ്ക്രീൻ മനസ്സിലാക്കൽ';
+
+  @override
+  String get helpCountingScreenBold1 => 'ടൈമർ:';
+
+  @override
+  String get helpCountingScreenBullet1 =>
+      'മുകളിലെ പെട്ടി ഈ ഇരിപ്പ് എത്ര സമയമായി എന്ന് കാണിക്കുന്നു. ആപ്പ് പിന്നിലായിരിക്കുമ്പോൾ \'നിർത്തി\' എന്ന് കാണിക്കും.';
+
+  @override
+  String get helpCountingScreenBold2 => 'നടുവിൽ:';
+
+  @override
+  String get helpCountingScreenBullet2 =>
+      'വലിയ സംഖ്യ ഇപ്പോഴത്തെ മാലയിലെ സ്ഥാനമാണ് (0–107). അതിന് താഴെ ബാക്കിയുള്ള മണികളും ഈ ഇരിപ്പിൽ തീർന്ന മാലകളും.';
+
+  @override
+  String get helpCountingScreenBold3 => 'താഴത്തെ നിര:';
+
+  @override
+  String get helpCountingScreenBullet3 =>
+      'സെഷൻ, ദിവസം, ആജീവനാന്തം എന്നീ എണ്ണങ്ങളും ലക്ഷ്യത്തിലേക്കുള്ള പുരോഗതിയും കാണിക്കുന്നു.';
+
+  @override
+  String get helpCountingScreenBold4 => 'വിളക്ക്:';
+
+  @override
+  String get helpCountingScreenBullet4 =>
+      'ദിവസ ലക്ഷ്യമോ ആജീവനാന്ത ലക്ഷ്യമോ എത്തുമ്പോൾ മുകളിലെ വിളക്ക് ഐക്കണിന്റെ നിറം മാറും.';
+
+  @override
+  String get helpCountingSaveSection => 'പുറത്തുപോകലും സേവ് ചെയ്യലും';
+
+  @override
+  String get helpCountingSaveBold1 => 'സ്വയം സേവ്:';
+
+  @override
+  String get helpCountingSaveBullet1 =>
+      'എപ്പോൾ വേണമെങ്കിലും ബാക്ക് അമർത്താം. എണ്ണം നിശബ്ദമായി സേവ് ആകും; ആപ്പ് ചോദിക്കില്ല.';
+
+  @override
+  String get helpCountingSaveBold2 => 'തകരാറിലും സുരക്ഷിതം:';
+
+  @override
+  String get helpCountingSaveBullet2 =>
+      'ഓരോ 5 തൊടലിലും അല്ലെങ്കിൽ 5 സെക്കൻഡിലും എണ്ണം സേവ് ആകും, ഓരോ 20 തൊടലിലും അല്ലെങ്കിൽ 30 സെക്കൻഡിലും പൂർണ്ണമായി സൂക്ഷിക്കും. ഫോൺ ഓഫായാലും ആപ്പ് തുറക്കുമ്പോൾ എണ്ണം തിരികെ വരും.';
+
+  @override
+  String get helpCountingSaveBold3 => 'ടൈമർ നിർത്തൽ:';
+
+  @override
+  String get helpCountingSaveBullet3 =>
+      'ആപ്പ് പിന്നിലായിരിക്കുമ്പോൾ ടൈമർ നിൽക്കും, അതിനാൽ വെറുതെയുള്ള സമയം ഇരിപ്പിൽ ചേർക്കില്ല.';
+
+  @override
+  String get helpCountingSaveBold4 => 'പൂർത്തിയാകാത്ത മാല:';
+
+  @override
+  String get helpCountingSaveBullet4 =>
+      '108-ന് മുമ്പ് നിർത്തിയാൽ, മറ്റൊരു ദിവസമായാലും അടുത്ത തവണ ആ മാല കാത്തിരിക്കും, ഒരു ബാനർ അത് കാണിക്കും. തൊടൽ എപ്പോഴും തൊട്ട ദിവസത്തിൽ തന്നെ എണ്ണും. ആ എണ്ണം സൂക്ഷിച്ച് 0-ൽ നിന്ന് പുതിയ മാല തുടങ്ങാൻ \'പുതിയത് തുടങ്ങുക\' തൊടുക.';
+
+  @override
+  String get helpCountingMenuSection => 'എണ്ണൽ മെനു (⋮)';
+
+  @override
+  String get helpCountingMenuBold1 => 'ചരിത്രം:';
+
+  @override
+  String get helpCountingMenuBullet1 => 'ഈ കൗണ്ടറിന്റെ ചരിത്രം തുറക്കും.';
+
+  @override
+  String get helpCountingMenuBold2 => 'വിവരം:';
+
+  @override
+  String get helpCountingMenuBullet2 =>
+      'ഈ കൗണ്ടറിന്റെ സ്ഥിതിവിവരവും വിശദാംശങ്ങളും കാണിക്കും.';
+
+  @override
+  String get helpCountingMenuBold3 => 'ക്രമീകരണങ്ങൾ:';
+
+  @override
+  String get helpCountingMenuBullet3 => 'ആപ്പിന്റെ ക്രമീകരണങ്ങൾ തുറക്കും.';
+
+  @override
+  String get helpCountingMenuBold4 => 'പൂർത്തിയാക്കി പുതിയത് തുടങ്ങുക:';
+
+  @override
+  String get helpCountingMenuBullet4 =>
+      'ഇപ്പോഴത്തെ പൂർത്തിയാകാത്ത മാല അവസാനിപ്പിക്കും. അതിന്റെ എണ്ണം ചരിത്രത്തിൽ സൂക്ഷിക്കും, അടുത്ത തൊടൽ 0-ൽ നിന്ന് പുതിയ മാല തുടങ്ങും.';
+
+  @override
+  String get helpCountingMenuBold5 => 'സെഷൻ പുനഃസജ്ജമാക്കുക:';
+
+  @override
+  String get helpCountingMenuBullet5 =>
+      'ഇപ്പോഴത്തെ ഇരിപ്പ് ഉപേക്ഷിച്ച് 0 ആക്കും. പഴയ ചരിത്രം നിലനിൽക്കും.';
+
+  @override
+  String get helpCountingMenuBold6 => 'കൗണ്ടർ പുനഃസജ്ജമാക്കുക:';
+
+  @override
+  String get helpCountingMenuBullet6 =>
+      'ഈ കൗണ്ടറിന്റെ മുഴുവൻ ചരിത്രവും ഡിലീറ്റ് ചെയ്യും. തിരികെ കിട്ടില്ല.';
+
+  @override
+  String get helpCountingMindfulBold1 => 'മേരു വിരാമം:';
+
+  @override
+  String get helpCountingMindfulBullet1 =>
+      'ക്രമീകരണങ്ങൾ → പ്രദർശനവും നിശ്ശബ്ദതയും എന്നതിൽ ഓൺ ചെയ്താൽ, ഓരോ മാലയ്ക്കും ശേഷം ആപ്പ് 3, 5 അല്ലെങ്കിൽ 10 സെക്കൻഡ് നിൽക്കും. ആ സമയത്തെ തൊടൽ എണ്ണില്ല. വിരാമം സ്വയം തീരും, അല്ലെങ്കിൽ തിരുത്തൽ സ്വൈപ്പ് കൊണ്ട് തീർക്കാം.';
+
+  @override
+  String get helpCountingMindfulBold2 => 'വേഗ സൂചന:';
+
+  @override
+  String get helpCountingMindfulBullet2 =>
+      'സെക്കൻഡിൽ ഏകദേശം 3-ൽ കൂടുതൽ വേഗത്തിൽ തൊട്ടാൽ, വൃത്തം മൃദുവായി തിളങ്ങും, ചെറിയ ഓർമ്മപ്പെടുത്തൽ വരും. ഇത് ഒരിക്കലും എണ്ണം തടയില്ല.';
+
+  @override
+  String get helpMalaBeadsBold4 => 'മാല ശബ്ദം:';
+
+  @override
+  String get helpMalaBeadsBullet4 =>
+      'ഓൺ ആണെങ്കിൽ ഓരോ 108-ാം എണ്ണത്തിലും മൃദുവായ ശബ്ദം കേൾക്കും. അതേ തൊടലിൽ ലക്ഷ്യം എത്തിയാൽ ഇത് ഒഴിവാക്കും, ശബ്ദങ്ങൾ കൂടിക്കലരാതിരിക്കാൻ.';
+
+  @override
+  String get helpMalaGoalsBold3 => 'ദിവസ ലക്ഷ്യം എത്തുമ്പോൾ:';
+
+  @override
+  String get helpMalaGoalsBullet3 =>
+      'ദിവസ അറിയിപ്പ് ഓൺ ആണെങ്കിൽ ലക്ഷ്യ ശബ്ദം കേൾക്കും, ഫോൺ വൈബ്രേറ്റ് ചെയ്യും, അറിയിപ്പ് വരും. കാർഡിൽ പച്ച ടിക്ക് വരും.';
+
+  @override
+  String get helpMalaGoalsBold4 => 'ആജീവനാന്ത ലക്ഷ്യം എത്തുമ്പോൾ:';
+
+  @override
+  String get helpMalaGoalsBullet4 =>
+      'ആജീവനാന്ത അറിയിപ്പ് ഓൺ ആണെങ്കിൽ അതിന്റെ ശബ്ദവും അറിയിപ്പും വരും. സ്വർണ്ണ ട്രോഫി വരും, കാർഡ് ഇളം ചന്ദന നിറമാകും.';
+
+  @override
+  String get helpMalaCardSection => 'കാർഡിലെ പുരോഗതി';
+
+  @override
+  String get helpMalaCardBold1 => 'മണി നിര:';
+
+  @override
+  String get helpMalaCardBullet1 =>
+      '27 ചെറിയ മണികളുടെ നിര ഇന്നത്തെ ലക്ഷ്യത്തിലേക്കുള്ള പുരോഗതി കാണിക്കുന്നു. ഓരോ മണിയും ലക്ഷ്യത്തിന്റെ 1/27, മാലയിലെ 4 മണി പോലെ.';
+
+  @override
+  String get helpMalaCardBold2 => 'ആജീവനാന്ത ബാർ:';
+
+  @override
+  String get helpMalaCardBullet2 =>
+      'നീണ്ട ബാർ ആജീവനാന്ത ലക്ഷ്യത്തിന്റെ എത്ര ഭാഗം തീർന്നു എന്ന് കാണിക്കുന്നു.';
+
+  @override
+  String get helpMalaCardBold3 => 'സംഖ്യകൾ:';
+
+  @override
+  String get helpMalaCardBullet3 =>
+      'കാർഡിൽ ആകെ ജപം, ആകെ മാല, ഇന്നത്തെ ജപം, മാല എന്നിവ കാണാം.';
+
+  @override
+  String get helpHistoryIntro =>
+      'ചരിത്രം ഓരോ ഇരിപ്പിന്റെയും രേഖ സൂക്ഷിക്കുന്നു. എണ്ണൽ മെനുവിൽ നിന്നോ, കൗണ്ടറിൽ അമർത്തിപ്പിടിക്കുന്ന മെനുവിൽ നിന്നോ, കൗണ്ടർ വിവര പേജിൽ നിന്നോ തുറക്കാം.';
+
+  @override
+  String get helpHistoryLogSection => 'ചരിത്ര പട്ടിക';
+
+  @override
+  String get helpHistoryLogBold1 => 'സംഗ്രഹം:';
+
+  @override
+  String get helpHistoryLogBullet1 =>
+      'മുകളിലെ കാർഡ് ആകെ ജപം, സാധന ചെയ്ത ദിവസങ്ങൾ, സങ്കല്പത്തിന്റെ എത്ര ഭാഗം തീർന്നു എന്നിവ കാണിക്കുന്നു.';
+
+  @override
+  String get helpHistoryLogBold2 => 'ദിവസം തിരിച്ച്:';
+
+  @override
+  String get helpHistoryLogBullet2 =>
+      'ഇരിപ്പുകൾ തീയതി തിരിച്ച്, പുതിയത് ആദ്യം. ഓരോ ദിവസവും അന്നത്തെ ആകെയും ആ ദിവസം വരെയുള്ള ആകെയും കാണിക്കും.';
+
+  @override
+  String get helpHistoryLogBold3 => 'ഇരിപ്പ് വരികൾ:';
+
+  @override
+  String get helpHistoryLogBullet3 =>
+      'ഓരോ ഇരിപ്പും തുടങ്ങിയ സമയം, ദൈർഘ്യം, എണ്ണം, മാല എന്നിവ കാണിക്കും.';
+
+  @override
+  String get helpHistoryDeleteSection => 'ചരിത്രം ഡിലീറ്റ് ചെയ്യൽ';
+
+  @override
+  String get helpHistoryDeleteBold1 => 'ഒരു ഇരിപ്പ്:';
+
+  @override
+  String get helpHistoryDeleteBullet1 =>
+      'ഇരിപ്പിലെ ഡിലീറ്റ് ഐക്കൺ തൊട്ട് ഉറപ്പാക്കുക. ആകെ എണ്ണം ഉടൻ വീണ്ടും കണക്കാക്കും.';
+
+  @override
+  String get helpHistoryDeleteBold2 => 'ചരിത്രം മായ്ക്കുക:';
+
+  @override
+  String get helpHistoryDeleteBullet2 =>
+      'മുകളിലെ മായ്ക്കൽ ബട്ടൺ ഉറപ്പാക്കിയ ശേഷം ഈ കൗണ്ടറിന്റെ എല്ലാ ഇരിപ്പുകളും ഡിലീറ്റ് ചെയ്യും. തിരികെ കിട്ടില്ല.';
+
+  @override
+  String get helpHistoryFlowSection => 'സാധനാ പ്രവാഹ കലണ്ടർ';
+
+  @override
+  String get helpHistoryFlowBold1 => '16 ആഴ്ച:';
+
+  @override
+  String get helpHistoryFlowBullet1 =>
+      'കഴിഞ്ഞ 16 ആഴ്ചയുടെ കലണ്ടർ, തിങ്കൾ മുകളിൽ. ജപിച്ച ദിവസങ്ങൾ ഇളം ചന്ദനം മുതൽ കടും കാവി വരെ വിളക്കുപോലെ തിളങ്ങും.';
+
+  @override
+  String get helpHistoryFlowBold2 => 'തിളക്കം:';
+
+  @override
+  String get helpHistoryFlowBullet2 =>
+      'ദിവസ ലക്ഷ്യമുള്ള കൗണ്ടറിന് തിളക്കം ആ ലക്ഷ്യത്തിലേക്കുള്ള പുരോഗതി കാണിക്കും. അല്ലെങ്കിൽ കാണിച്ചിട്ടുള്ള ഏറ്റവും കൂടുതൽ ജപിച്ച ദിവസവുമായി താരതമ്യം ചെയ്യും.';
+
+  @override
+  String get helpHistoryFlowBold3 => 'സമ്മർദ്ദമില്ല:';
+
+  @override
+  String get helpHistoryFlowBullet3 =>
+      'തുടർച്ച എണ്ണലോ നഷ്ടപ്പെട്ട ദിവസത്തിന്റെ അടയാളമോ ഇല്ല. 3-ഓ അതിൽ കൂടുതലോ ദിവസത്തിന് ശേഷം തിരികെ വന്നാൽ സ്നേഹത്തോടെ ഒരു സ്വാഗത വരി കാണിക്കും.';
+
+  @override
+  String get helpHistoryStatsSection => 'കൗണ്ടർ സ്ഥിതിവിവരം';
+
+  @override
+  String get helpHistoryStatsBold1 => 'തുറക്കാൻ:';
+
+  @override
+  String get helpHistoryStatsBullet1 =>
+      'കൗണ്ടറിൽ അമർത്തിപ്പിടിച്ച് \'കൗണ്ടറിനെക്കുറിച്ച്\' തിരഞ്ഞെടുക്കുക, അല്ലെങ്കിൽ എണ്ണൽ മെനുവിലെ \'വിവരം\' ഉപയോഗിക്കുക.';
+
+  @override
+  String get helpHistoryStatsBold2 => 'വൃത്തങ്ങൾ:';
+
+  @override
+  String get helpHistoryStatsBullet2 =>
+      'മൂന്ന് വൃത്തങ്ങൾ ആജീവനാന്ത പുരോഗതി, ഇന്നത്തെ പുരോഗതി, ആകെ മാല എന്നിവ കാണിക്കുന്നു.';
+
+  @override
+  String get helpHistoryStatsBold3 => 'വിശദാംശങ്ങൾ:';
+
+  @override
+  String get helpHistoryStatsBullet3 =>
+      'പേര്, നില, എണ്ണം, തുടക്ക എണ്ണം, ലക്ഷ്യങ്ങൾ, തുടങ്ങിയ തീയതി, ഉണ്ടാക്കിയ തീയതി, ദിവസ ശരാശരി ജപം, നിർത്തിയെങ്കിൽ ആ തീയതിയും കാരണവും.';
+
+  @override
+  String get helpAudioMalaSection => 'മാല ശബ്ദം';
+
+  @override
+  String get helpAudioMalaBold1 => 'മാല ശബ്ദം:';
+
+  @override
+  String get helpAudioMalaBullet1 =>
+      'ഓരോ 108-ാം എണ്ണത്തിലും മൃദുവായ ശബ്ദവും വൈബ്രേഷനും.';
+
+  @override
+  String get helpAudioMalaBold2 => 'തിരഞ്ഞെടുപ്പുകൾ:';
+
+  @override
+  String get helpAudioMalaBullet2 =>
+      'ക്ഷേത്ര വെങ്കല മണി, ടിബറ്റൻ സിംഗിംഗ് ബൗൾ, അല്ലെങ്കിൽ ഇലക്ട്രോണിക് ടോൺ (ചെറിയ ബീപ്).';
+
+  @override
+  String get helpAudioMalaBold3 => 'കൂടിക്കലരില്ല:';
+
+  @override
+  String get helpAudioMalaBullet3 =>
+      '108-ാം എണ്ണം ലക്ഷ്യവും എത്തിച്ചാൽ ലക്ഷ്യ ശബ്ദം മാത്രം കേൾക്കും.';
+
+  @override
+  String get helpAudioGoalSection => 'ദിവസ ലക്ഷ്യം';
+
+  @override
+  String get helpAudioGoalBold1 => 'അറിയിപ്പ്:';
+
+  @override
+  String get helpAudioGoalBullet1 =>
+      'ദിവസ ലക്ഷ്യം എത്തുമ്പോൾ ശബ്ദം കേൾക്കും, ഫോൺ വൈബ്രേറ്റ് ചെയ്യും, സ്റ്റാറ്റസ് ബാറിൽ അറിയിപ്പ് വരും.';
+
+  @override
+  String get helpAudioGoalBold2 => 'ലക്ഷ്യ ശബ്ദം:';
+
+  @override
+  String get helpAudioGoalBullet2 =>
+      'സിസ്റ്റം സ്ഥിരസ്ഥിതി, ഫോണിലെ റിംഗ്‌ടോൺ, ആപ്പിലെ ശബ്ദം (ക്ഷേത്ര മണി, സിംഗിംഗ് ബൗൾ, ഇലക്ട്രോണിക് ടോൺ, ശംഖ്), അല്ലെങ്കിൽ സ്വന്തം ഓഡിയോ ഫയൽ (MP3, WAV, AAC) തിരഞ്ഞെടുക്കാം.';
+
+  @override
+  String get helpAudioGoalBold3 => 'കേട്ടുനോക്കുക:';
+
+  @override
+  String get helpAudioGoalBullet3 =>
+      'തിരഞ്ഞെടുത്ത ശബ്ദം കേൾക്കാൻ \'ടോൺ പ്രിവ്യൂ\' തൊടുക.';
+
+  @override
+  String get helpAudioLifetimeSection => 'ആജീവനാന്ത ലക്ഷ്യം';
+
+  @override
+  String get helpAudioLifetimeBold1 => 'ആജീവനാന്ത ലക്ഷ്യ ശബ്ദം:';
+
+  @override
+  String get helpAudioLifetimeBullet1 =>
+      'ആജീവനാന്ത ലക്ഷ്യം എത്തുന്ന നിമിഷത്തിന് പ്രത്യേക ശബ്ദം.';
+
+  @override
+  String get helpAudioLifetimeBold2 => 'ആജീവനാന്ത ലക്ഷ്യ അറിയിപ്പ്:';
+
+  @override
+  String get helpAudioLifetimeBullet2 =>
+      'ആജീവനാന്ത ലക്ഷ്യം എത്തുമ്പോൾ ശബ്ദവും വൈബ്രേഷനും അറിയിപ്പും ലഭിക്കാൻ ഇത് ഓൺ ചെയ്യുക.';
+
+  @override
+  String get helpAudioVolumeSection => 'കേൾക്കാൻ മതിയായ ശബ്ദം';
+
+  @override
+  String get helpAudioVolumeBold1 => 'അലാറം ചാനൽ:';
+
+  @override
+  String get helpAudioVolumeBullet1 =>
+      'പൂർത്തീകരണ ശബ്ദങ്ങൾ അലാറം ചാനലിലൂടെ വരുന്നതിനാൽ ഫോൺ സൈലന്റിൽ ആണെങ്കിലും കേൾക്കാം. കുറച്ച് സെക്കൻഡിന് ശേഷം ശബ്ദനില സാധാരണ നിലയിലാകും.';
+
+  @override
+  String get helpDisplayIntro =>
+      'ശാന്തമായി ജപിക്കാൻ ഈ ക്രമീകരണങ്ങൾ സഹായിക്കുന്നു, ആപ്പിന്റെ രൂപവും ഭാഷയും തിരഞ്ഞെടുക്കാനും.';
+
+  @override
+  String get helpDisplayBrightSection => 'പ്രകാശവും മങ്ങലും';
+
+  @override
+  String get helpDisplayBrightBold1 => 'പ്രകാശ നില:';
+
+  @override
+  String get helpDisplayBrightBullet1 =>
+      'ക്രമീകരണങ്ങൾ → പ്രദർശനവും നിശ്ശബ്ദതയും എന്നതിൽ \'still\' (മങ്ങിയ) മുതൽ \'full\' വരെ ഒരു നില തിരഞ്ഞെടുക്കുക. ഇത് ആപ്പിന്റെ സ്ക്രീൻ മാത്രം മാറ്റും, ഫോണിന്റെ പ്രകാശം മാറില്ല.';
+
+  @override
+  String get helpDisplayBrightBold2 => 'സിസ്റ്റം ഉപയോഗിക്കുക:';
+
+  @override
+  String get helpDisplayBrightBullet2 =>
+      'ഫോണിന്റെ സാധാരണ പ്രകാശത്തിലേക്ക് മടങ്ങാൻ \'use system\' തൊടുക.';
+
+  @override
+  String get helpDisplayBrightBold3 => 'മങ്ങിയ ജപ രീതി:';
+
+  @override
+  String get helpDisplayBrightBullet3 =>
+      'മാലാവൃത്തം വ്യക്തമായി നിലനിർത്തി എണ്ണൽ സ്ക്രീനിന്റെ പശ്ചാത്തലം ഇരുണ്ടതാക്കും. ഇരുണ്ട മുറികൾക്ക് നല്ലത്, ബാറ്ററിയും ലാഭിക്കും.';
+
+  @override
+  String get helpDisplayDndSection => 'ശല്യപ്പെടുത്തരുത് (DND)';
+
+  @override
+  String get helpDisplayDndBold1 => 'അറിയിപ്പുകൾ നിശബ്ദമാക്കുക:';
+
+  @override
+  String get helpDisplayDndBullet1 =>
+      'ഓൺ ആണെങ്കിൽ, എണ്ണൽ സ്ക്രീൻ തുറന്നിരിക്കുമ്പോൾ ഫോൺ DND-യിലാകും, പുറത്തുപോകുമ്പോൾ സാധാരണ നിലയിലാകും.';
+
+  @override
+  String get helpDisplayDndBold2 => 'അനുമതി:';
+
+  @override
+  String get helpDisplayDndBullet2 =>
+      'ആദ്യ തവണ DND അനുമതി നൽകാൻ ആപ്പ് ആവശ്യപ്പെടും. \'ക്രമീകരണങ്ങൾ തുറക്കുക\' തൊട്ട് ഈ ആപ്പിന് അനുമതി നൽകുക.';
+
+  @override
+  String get helpDisplayMindfulSection => 'ശ്രദ്ധാപൂർവ്വമായ എണ്ണൽ';
+
+  @override
+  String get helpDisplayMindfulBold1 => 'മേരു വിരാമം:';
+
+  @override
+  String get helpDisplayMindfulBullet1 =>
+      'ഓരോ മാലയ്ക്കും ശേഷം 3, 5 അല്ലെങ്കിൽ 10 സെക്കൻഡ് ചെറിയ വിരാമം. ആ സമയത്തെ തൊടൽ എണ്ണില്ല. സാധാരണ ഓഫ്.';
+
+  @override
+  String get helpDisplayMindfulBold2 => 'സൗമ്യമായ വേഗ സൂചന:';
+
+  @override
+  String get helpDisplayMindfulBullet2 =>
+      'വളരെ വേഗത്തിൽ തൊടുമ്പോൾ മൃദുവായ തിളക്കം. എല്ലാ തൊടലും എണ്ണും. സാധാരണ ഓൺ.';
+
+  @override
+  String get helpDisplayLangSection => 'ഭാഷ';
+
+  @override
+  String get helpDisplayLangBold1 => 'ഭാഷ തിരഞ്ഞെടുക്കുക:';
+
+  @override
+  String get helpDisplayLangBullet1 =>
+      'ക്രമീകരണങ്ങൾ → ഭാഷ എന്നതിൽ ഇംഗ്ലീഷ്, മലയാളം, സംസ്കൃതം, അല്ലെങ്കിൽ സിസ്റ്റം സ്ഥിരസ്ഥിതി തിരഞ്ഞെടുക്കുക.';
+
+  @override
+  String get helpDisplayLangBold2 => 'ഏത് ലിപിയും:';
+
+  @override
+  String get helpDisplayLangBullet2 =>
+      'ആപ്പിന്റെ ഭാഷ ഏതായാലും കൗണ്ടറിന്റെ പേര് ഏത് ലിപിയിലും എഴുതാം.';
+
+  @override
+  String get helpDisplayLookSection => 'രൂപഭാവം';
+
+  @override
+  String get helpDisplayLookBold1 => 'ക്ഷേത്ര ശൈലി:';
+
+  @override
+  String get helpDisplayLookBullet1 =>
+      'ക്രമീകരണങ്ങൾ → രൂപഭാവം എന്നതിൽ ആപ്പിലെ നിറങ്ങളും (ക്രീം, സിന്ദൂരം, ചന്ദനം, തുളസി, റോസ്) അക്ഷരരൂപങ്ങളും കാണാം.';
+
+  @override
+  String get helpDisplayLookBold2 => 'നിവർന്ന നില മാത്രം:';
+
+  @override
+  String get helpDisplayLookBullet2 =>
+      'ഒറ്റക്കൈ കൊണ്ട് എണ്ണാൻ ആപ്പ് എപ്പോഴും നിവർന്ന നിലയിൽ ആയിരിക്കും.';
+
+  @override
+  String get helpOpticalHowBold4 => 'ലയനം:';
+
+  @override
+  String get helpOpticalHowBullet4 =>
+      'തിരഞ്ഞെടുത്ത കൗണ്ടറുകൾ സ്വീകരിക്കുന്ന ഫോണിൽ ചേർക്കും. അവിടെ നേരത്തേ ഉള്ള അതേ കൗണ്ടർ ലഭിച്ച പകർപ്പ് കൊണ്ട് മാറ്റും. ആ ഫോണിലെ മറ്റ് കൗണ്ടറുകൾ മാറില്ല.';
+
+  @override
+  String get helpOpticalSendSection => 'അയയ്ക്കുന്ന ഫോണിലെ നിയന്ത്രണങ്ങൾ';
+
+  @override
+  String get helpOpticalSendBold1 => 'വേഗം:';
+
+  @override
+  String get helpOpticalSendBullet1 =>
+      'സെക്കൻഡിൽ 8, 12 അല്ലെങ്കിൽ 15 ഫ്രെയിം തിരഞ്ഞെടുക്കാം. 8 ആണ് സാധാരണ, മിക്ക ഫോണുകളിലും ഏറ്റവും നല്ലത്.';
+
+  @override
+  String get helpOpticalSendBold2 => 'നിർത്തലും തുടരലും:';
+
+  @override
+  String get helpOpticalSendBullet2 =>
+      'എപ്പോൾ വേണമെങ്കിലും നിർത്തി വീണ്ടും തുടരാം.';
+
+  @override
+  String get helpOpticalSendBold3 => 'പ്രകാശം:';
+
+  @override
+  String get helpOpticalSendBullet3 =>
+      'മറ്റേ ക്യാമറയ്ക്ക് ബുദ്ധിമുട്ടുണ്ടെങ്കിൽ സ്ലൈഡർ ഉപയോഗിച്ച് സ്ക്രീൻ കൂടുതൽ പ്രകാശമുള്ളതാക്കാം. അയയ്ക്കൽ നിർത്തുമ്പോൾ സാധാരണ നിലയിലാകും. അയയ്ക്കുമ്പോൾ സ്ക്രീൻ ഓഫാകില്ല.';
+
+  @override
+  String get helpOpticalReceiveSection => 'സ്വീകരിക്കുന്ന ഫോണിലെ നിയന്ത്രണങ്ങൾ';
+
+  @override
+  String get helpOpticalReceiveBold1 => 'ഫോക്കസ് ചെയ്യാൻ തൊടുക:';
+
+  @override
+  String get helpOpticalReceiveBullet1 =>
+      'കോഡിൽ ഫോക്കസ് ചെയ്യാൻ ക്യാമറ ദൃശ്യത്തിൽ തൊടുക.';
+
+  @override
+  String get helpOpticalReceiveBold2 => 'സൂം:';
+
+  @override
+  String get helpOpticalReceiveBullet2 =>
+      'കോഡ് ചെറുതായി തോന്നിയാൽ സൂം സ്ലൈഡർ (4× വരെ) ഉപയോഗിക്കുക.';
+
+  @override
+  String get helpOpticalReceiveBold3 => 'വെളിച്ചം:';
+
+  @override
+  String get helpOpticalReceiveBullet3 => 'ഇരുണ്ട മുറിയിൽ ടോർച്ച് ഓൺ ചെയ്യുക.';
+
+  @override
+  String get helpOpticalReceiveBold4 => 'ലഭിച്ച ഫ്രെയിമുകൾ:';
+
+  @override
+  String get helpOpticalReceiveBullet4 =>
+      'എല്ലാ ഭാഗങ്ങളും പൂർത്തിയാകുന്നതിന് മുമ്പുതന്നെ സ്കാനിംഗ് നടക്കുന്നുണ്ടെന്ന് ഈ വരി കാണിക്കും.';
+
+  @override
+  String get helpBackupWhereSection => 'എവിടെ കാണാം';
+
+  @override
+  String get helpBackupWhereBold1 => 'ക്രമീകരണങ്ങൾ:';
+
+  @override
+  String get helpBackupWhereBullet1 =>
+      'ക്രമീകരണങ്ങൾ → ഡാറ്റ ബാക്കപ്പും ഒപ്റ്റിക്കൽ സിങ്കും എന്നതിൽ എക്സ്പോർട്ട്, ഇംപോർട്ട്, ഒപ്റ്റിക്കൽ സിങ്ക്, ഡാറ്റ മുഴുവൻ മായ്ക്കുക എന്നിവയുണ്ട്.';
+
+  @override
+  String get helpBackupWhereBold2 => 'ഹോം മെനു:';
+
+  @override
+  String get helpBackupWhereBullet2 =>
+      'ഹോം സ്ക്രീനിലെ മെനുവിലും ഇംപോർട്ട് / എക്സ്പോർട്ട് ഉണ്ട്.';
+
+  @override
+  String get helpBackupExportBold4 => 'ഷെയർ ഷീറ്റ്:';
+
+  @override
+  String get helpBackupExportBullet4 =>
+      'എക്സ്പോർട്ടിന് ശേഷം ആൻഡ്രോയിഡ് ഷെയർ ഷീറ്റ് തുറക്കും. ഫയൽ ഫോണിലോ മെമ്മറി കാർഡിലോ സേവ് ചെയ്യുക, അല്ലെങ്കിൽ വിശ്വസിക്കുന്ന ആപ്പ് വഴി അയയ്ക്കുക.';
+
+  @override
+  String get helpBackupImportBold4 => 'സുരക്ഷിത പുനഃസ്ഥാപനം:';
+
+  @override
+  String get helpBackupImportBullet4 =>
+      'ഫയൽ ആദ്യം പരിശോധിക്കും. കേടായതാണെങ്കിലോ പാസ്ഫ്രേസ് തെറ്റാണെങ്കിലോ ഒന്നും മാറില്ല, പിശക് കാണിക്കും.';
+
+  @override
+  String get helpBackupImportBold5 => 'പഴയ ബാക്കപ്പുകൾ:';
+
+  @override
+  String get helpBackupImportBullet5 =>
+      'ഈ ആപ്പിന്റെ പഴയ ആൻഡ്രോയിഡ് പതിപ്പിലെ ബാക്കപ്പ് ഫയലുകളും ഇംപോർട്ട് ചെയ്യാം.';
+
+  @override
+  String get helpBackupClearSection => 'ഡാറ്റ മുഴുവൻ മായ്ക്കുക';
+
+  @override
+  String get helpBackupClearBold1 => 'എല്ലാം മായ്ക്കുക:';
+
+  @override
+  String get helpBackupClearBullet1 =>
+      'ഉറപ്പാക്കിയ ശേഷം എല്ലാ കൗണ്ടറുകളും മുഴുവൻ ചരിത്രവും ഡിലീറ്റ് ചെയ്യും. തിരികെ കിട്ടില്ല, അതിനാൽ ആദ്യം ബാക്കപ്പ് എടുക്കുക.';
+
+  @override
+  String get helpPrivacyStorageBold3 => 'സുരക്ഷിത സേവ്:';
+
+  @override
+  String get helpPrivacyStorageBullet3 =>
+      'ആപ്പ് പെട്ടെന്ന് അടഞ്ഞാലും ഇടയ്ക്കിടെയുള്ള സേവ് എണ്ണം സുരക്ഷിതമാക്കും.';
+
+  @override
+  String get helpPrivacyPermsSection => 'ആപ്പ് ഉപയോഗിക്കുന്ന അനുമതികൾ';
+
+  @override
+  String get helpPrivacyPermsBold1 => 'ക്യാമറ:';
+
+  @override
+  String get helpPrivacyPermsBullet1 =>
+      'ഒപ്റ്റിക്കൽ സിങ്ക് സ്വീകരിക്കുമ്പോൾ QR കോഡ് സ്കാൻ ചെയ്യാൻ മാത്രം. ഫോട്ടോയോ വീഡിയോയോ എടുക്കില്ല.';
+
+  @override
+  String get helpPrivacyPermsBold2 => 'അറിയിപ്പുകൾ:';
+
+  @override
+  String get helpPrivacyPermsBullet2 =>
+      'സ്റ്റാറ്റസ് ബാറിൽ ലക്ഷ്യ സന്ദേശങ്ങൾ കാണിക്കാൻ. ആൻഡ്രോയിഡ് 13-ലും പിന്നീടും ചോദിക്കും.';
+
+  @override
+  String get helpPrivacyPermsBold3 => 'വൈബ്രേഷനും ഓഡിയോയും:';
+
+  @override
+  String get helpPrivacyPermsBullet3 =>
+      'മാല, ലക്ഷ്യം, തിരുത്തൽ എന്നിവയുടെ പ്രതികരണത്തിനും പൂർത്തീകരണ ശബ്ദം വ്യക്തമായി കേൾപ്പിക്കാനും.';
+
+  @override
+  String get helpPrivacyPermsBold4 => 'DND അനുമതി:';
+
+  @override
+  String get helpPrivacyPermsBullet4 =>
+      'പ്രദർശനവും നിശ്ശബ്ദതയും എന്നതിൽ DND ഓൺ ചെയ്താൽ മാത്രം ചോദിക്കും.';
+
+  @override
+  String get helpPrivacyPermsBold5 => 'നിങ്ങളുടെ ഫയലുകൾ:';
+
+  @override
+  String get helpPrivacyPermsBullet5 =>
+      'ആപ്പ് നിങ്ങളുടെ ഫയലുകൾ വായിക്കില്ല. ഇംപോർട്ടും എക്സ്പോർട്ടും ആൻഡ്രോയിഡ് ഫയൽ പിക്കർ ഉപയോഗിക്കുന്നു, അവിടെ നിങ്ങൾ ഫയൽ തിരഞ്ഞെടുക്കുന്നു.';
+
+  @override
+  String get helpPrivacyPermsBold6 => 'മുഴുവൻ പട്ടിക:';
+
+  @override
+  String get helpPrivacyPermsBullet6 =>
+      'ക്രമീകരണങ്ങൾ → അനുമതികൾ എന്നതിൽ ഓരോ അനുമതിയും എന്തിനെന്ന് കാണാം.';
+
+  @override
+  String get helpFaqQ5Title => 'എന്റെ എണ്ണം ഏത് ദിവസത്തിൽ ചേരും?';
+
+  @override
+  String get helpFaqQ5Answer =>
+      'ഫോണിലെ സമയം അനുസരിച്ച് ഓരോ തൊടലും തൊട്ട ദിവസത്തിൽ തന്നെ എണ്ണും. ദിവസ ലക്ഷ്യം അർദ്ധരാത്രിയിൽ വീണ്ടും തുടങ്ങും.';
+
+  @override
+  String get helpFaqQ6Title =>
+      'സെഷൻ പുനഃസജ്ജമാക്കലും കൗണ്ടർ പുനഃസജ്ജമാക്കലും തമ്മിലുള്ള വ്യത്യാസം എന്ത്?';
+
+  @override
+  String get helpFaqQ6Answer =>
+      'സെഷൻ പുനഃസജ്ജമാക്കൽ ഇപ്പോഴത്തെ ഇരിപ്പ് മാത്രം ഉപേക്ഷിക്കും. കൗണ്ടർ പുനഃസജ്ജമാക്കൽ ആ കൗണ്ടറിന്റെ മുഴുവൻ ചരിത്രവും ഡിലീറ്റ് ചെയ്യും, തിരികെ കിട്ടില്ല.';
+
+  @override
+  String get helpFaqQ7Title => 'മാല ശബ്ദം എന്തുകൊണ്ട് കേട്ടില്ല?';
+
+  @override
+  String get helpFaqQ7Answer =>
+      'മാല ശബ്ദം ഓൺ ആണോ എന്ന് നോക്കുക. അതേ തൊടലിൽ ലക്ഷ്യവും എത്തിയാൽ ലക്ഷ്യ ശബ്ദം മാത്രം കേൾക്കും.';
+
+  @override
+  String get helpFaqQ8Title =>
+      'ഫോൺ സൈലന്റിൽ ആയിട്ടും ശബ്ദം എന്തുകൊണ്ട് കേൾക്കുന്നു?';
+
+  @override
+  String get helpFaqQ8Answer =>
+      'നഷ്ടപ്പെടാതിരിക്കാൻ പൂർത്തീകരണ ശബ്ദങ്ങൾ അലാറം ചാനൽ ഉപയോഗിക്കുന്നു. നിശബ്ദത വേണമെങ്കിൽ ക്രമീകരണങ്ങൾ → ശബ്ദവും സ്പന്ദനവും എന്നതിൽ ശബ്ദങ്ങൾ ഓഫ് ചെയ്യുക.';
+
+  @override
+  String get helpFaqQ9Title => 'ബാക്കപ്പ് പാസ്ഫ്രേസ് മറന്നു. എന്ത് ചെയ്യാം?';
+
+  @override
+  String get helpFaqQ9Answer =>
+      'പാസ്ഫ്രേസ് തിരികെ കിട്ടില്ല, ആ ഫയൽ തുറക്കാനുമാവില്ല. ഡാറ്റ ഇപ്പോഴുമുള്ള ഫോണിൽ നിന്ന് പുതിയ ബാക്കപ്പ് എടുക്കുക.';
+
+  @override
+  String get helpFaqQ10Title => 'ഇംപോർട്ട് ഇപ്പോഴത്തെ കൗണ്ടറുകൾ നീക്കുമോ?';
+
+  @override
+  String get helpFaqQ10Answer =>
+      'ബാക്കപ്പ് ഫയൽ ഇംപോർട്ട് ചെയ്താൽ ഇപ്പോഴത്തെ എല്ലാ ഡാറ്റയും മാറും. ഒപ്റ്റിക്കൽ സിങ്ക് വ്യത്യസ്തമാണ്: നിങ്ങൾ തിരഞ്ഞെടുക്കുന്ന കൗണ്ടറുകൾ മാത്രം ചേർക്കുകയോ പുതുക്കുകയോ ചെയ്യും.';
+
+  @override
+  String get helpFaqQ11Title =>
+      'ഒപ്റ്റിക്കൽ സിങ്ക് സ്കാനിംഗ് മന്ദഗതിയിലാണ്. എന്ത് ചെയ്യാം?';
+
+  @override
+  String get helpFaqQ11Answer =>
+      'ഫോൺ 15–25 സെ.മീ. അകലെ ഇളകാതെ പിടിക്കുക, ഫോക്കസിനായി തൊടുക, പ്രതിഫലനം ഒഴിവാക്കുക, അയയ്ക്കുന്ന ഫോണിന്റെ പ്രകാശം കൂട്ടുക. സെക്കൻഡിൽ 8 ഫ്രെയിം പോലുള്ള കുറഞ്ഞ വേഗം പരീക്ഷിക്കുക.';
+
+  @override
+  String get helpFaqQ12Title => 'ഡാറ്റ പുതിയ ഫോണിലേക്ക് മാറ്റാമോ?';
+
+  @override
+  String get helpFaqQ12Answer =>
+      'അതെ. രണ്ട് ഫോണുകളും അടുത്തടുത്ത് വച്ച് ഒപ്റ്റിക്കൽ സിങ്ക് ഉപയോഗിക്കുക, അല്ലെങ്കിൽ ബാക്കപ്പ് ഫയൽ എക്സ്പോർട്ട് ചെയ്ത് പുതിയ ഫോണിൽ ഇംപോർട്ട് ചെയ്യുക.';
+
+  @override
+  String get helpFaqQ13Title => 'ആപ്പ് എന്തുകൊണ്ട് പൂർണ്ണമായി ഓഫ്‌ലൈൻ ആണ്?';
+
+  @override
+  String get helpFaqQ13Answer =>
+      'ജപം വ്യക്തിപരവും പവിത്രവുമാണ്. ഓഫ്‌ലൈൻ ആയിരിക്കുന്നത് സാധന സ്വകാര്യമാക്കുന്നു, ബാറ്ററി ലാഭിക്കുന്നു, ശ്രദ്ധ തിരിയൽ ഒഴിവാക്കുന്നു.';
+
+  @override
+  String get helpFaqQ14Title => 'എന്റെ ഡാറ്റ ആരുമായെങ്കിലും പങ്കിടുന്നുണ്ടോ?';
+
+  @override
+  String get helpFaqQ14Answer =>
+      'ഇല്ല. നിങ്ങൾ തന്നെ എക്സ്പോർട്ട് ചെയ്യുകയോ ഒപ്റ്റിക്കൽ സിങ്ക് വഴി അയയ്ക്കുകയോ ചെയ്യാതെ ഡാറ്റ ഫോണിൽ നിന്ന് പുറത്തുപോകില്ല.';
 }

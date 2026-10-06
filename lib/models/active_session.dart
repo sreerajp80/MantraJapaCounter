@@ -15,6 +15,13 @@ import 'dart:convert';
 /// segment (equal to [startTime] on first start). When [isPaused] is
 /// true, no segment is in progress and [duration] equals
 /// [accumulatedMs].
+///
+/// A session can carry over to a later day (an unfinished mala). Taps are
+/// stored on the day they were made, so on a new day the session gets a new
+/// database row. [carriedCount] and [carriedDurationMs] hold what is already
+/// stored in earlier-day rows of this same session. [tapCount] and
+/// [duration] stay whole-session numbers (they drive the mala ring), while
+/// [rowCount] and [rowDuration] are what goes into the current row.
 class ActiveSession {
   final String sessionId;
   final String counterId;
@@ -25,6 +32,8 @@ class ActiveSession {
   final int accumulatedMs; // active duration from completed segments
   final int lastResumeTimeMs; // epoch ms — start of current active segment
   final bool isPaused; // true while waiting to resume on next tap
+  final int carriedCount; // taps stored in earlier-day rows
+  final int carriedDurationMs; // active time stored in earlier-day rows
 
   const ActiveSession({
     required this.sessionId,
@@ -36,6 +45,8 @@ class ActiveSession {
     this.accumulatedMs = 0,
     required this.lastResumeTimeMs,
     this.isPaused = false,
+    this.carriedCount = 0,
+    this.carriedDurationMs = 0,
   });
 
   int get malas => tapCount ~/ 108;
@@ -48,6 +59,15 @@ class ActiveSession {
         (DateTime.now().millisecondsSinceEpoch - lastResumeTimeMs);
   }
 
+  /// Taps that belong in the current database row.
+  int get rowCount => tapCount - carriedCount;
+
+  /// Active time that belongs in the current database row.
+  int get rowDuration {
+    final d = duration - carriedDurationMs;
+    return d < 0 ? 0 : d;
+  }
+
   ActiveSession copyWith({
     String? sessionId,
     String? counterId,
@@ -58,6 +78,8 @@ class ActiveSession {
     int? accumulatedMs,
     int? lastResumeTimeMs,
     bool? isPaused,
+    int? carriedCount,
+    int? carriedDurationMs,
   }) {
     return ActiveSession(
       sessionId: sessionId ?? this.sessionId,
@@ -69,6 +91,8 @@ class ActiveSession {
       accumulatedMs: accumulatedMs ?? this.accumulatedMs,
       lastResumeTimeMs: lastResumeTimeMs ?? this.lastResumeTimeMs,
       isPaused: isPaused ?? this.isPaused,
+      carriedCount: carriedCount ?? this.carriedCount,
+      carriedDurationMs: carriedDurationMs ?? this.carriedDurationMs,
     );
   }
 
@@ -82,6 +106,8 @@ class ActiveSession {
     'accumulatedMs': accumulatedMs,
     'lastResumeTimeMs': lastResumeTimeMs,
     'isPaused': isPaused,
+    'carriedCount': carriedCount,
+    'carriedDurationMs': carriedDurationMs,
   };
 
   factory ActiveSession.fromMap(Map<String, dynamic> map) {
@@ -96,6 +122,8 @@ class ActiveSession {
       accumulatedMs: (map['accumulatedMs'] as num?)?.toInt() ?? 0,
       lastResumeTimeMs: (map['lastResumeTimeMs'] as num?)?.toInt() ?? start,
       isPaused: map['isPaused'] as bool? ?? false,
+      carriedCount: (map['carriedCount'] as num?)?.toInt() ?? 0,
+      carriedDurationMs: (map['carriedDurationMs'] as num?)?.toInt() ?? 0,
     );
   }
 

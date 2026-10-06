@@ -92,7 +92,7 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
   - Pause-aware: Automatically pauses timer when app is backgrounded or inactive (`WidgetsBindingObserver` lifecycle handling), excluding idle time between pause and resume.
 - **Smart Session Finalization**:
   - Mid-mala exits (`tapCount % 108 != 0`) automatically pause the active session so the user can resume from the exact same bead upon returning.
-  - Exception: When a sub-mala daily goal (e.g., 50 chants) was set and already met today, exiting mid-mala auto-finalizes the session instead of pausing.
+  - This also applies after the daily goal is met, so the leftover count is never lost. To close an unfinished mala, use **Finish & start new** in the counting screen menu.
 - **Goal Achievement Visual Highlights**:
   - Top bar diya flame icon and indicator dot change color upon reaching daily or lifetime goals.
   - Medallion background glow shifts to deep vermillion when daily goal is completed.
@@ -211,9 +211,12 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 
 ---
 
-### 11. Help & Practice Guide (`HelpScreen`)
-- **In-App Practice Guide (`HelpScreen`)**:
-  - Explains counting gestures (tap to count inside bead circle).
-  - Explains two-finger horizontal swipe for undo.
-  - Explains session timer, pause state, and goal completion indicators.
-  - Explains session reset vs. counter reset functionality.
+### 11. Help & User Guides (`HelpHomeScreen`)
+Reached from **Settings → Help & User Guides**. All text is localized in English, Malayalam and Sanskrit.
+- **App Tutorial** (`TutorialHelpScreen`): 30 steps in 8 chapters — Getting started, Your counters, Counting, Malas and goals, History and statistics, Sound/vibration/display, Your data, and Privacy. Each step has a title, a description and a tip.
+- **Topic guides** (grouped on the Help hub):
+  - *Your Counters & History*: Counters & Home Screen (`CountersHelpScreen`), History & Statistics (`HistoryHelpScreen`).
+  - *Counting & Meditation Practice*: Counting & Gestures (`CountingHelpScreen` — tap inside the circle, two-finger undo, reading the screen, auto save, unfinished mala, counting menu, Meru pause, pacing hint), 108 Mala Math & Goals (`MalaMathHelpScreen`).
+  - *Sound, Display & Stillness*: Sound & Vibration (`SoundHapticsHelpScreen`), Display, Stillness & Language (`DisplayHelpScreen`).
+  - *Data Sync & Backup*: Optical Air-Gap Sync (`OpticalSyncHelpScreen`), Backup & Restore (`BackupHelpScreen` — plain and encrypted export, import replaces all data, clear all data).
+  - *Privacy & Support*: Privacy & Offline-First Core (`PrivacyOfflineHelpScreen` — includes the permissions list), FAQs & Troubleshooting (`FaqHelpScreen`, 14 questions).

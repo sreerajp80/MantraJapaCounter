@@ -23,7 +23,6 @@ class CountingHelpScreen extends StatelessWidget {
                 children: [
                   HelpIntroCard(l.helpCountingIntro),
                   const SizedBox(height: 20),
-
                   HelpSection(
                     icon: Icons.touch_app_outlined,
                     title: l.helpCountingTapSection,
@@ -43,7 +42,6 @@ class CountingHelpScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-
                   HelpSection(
                     icon: Icons.swipe_outlined,
                     title: l.helpCountingUndoSection,
@@ -59,34 +57,94 @@ class CountingHelpScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-
                   HelpSection(
-                    icon: Icons.timer_outlined,
-                    title: l.helpCountingTimerSection,
+                    icon: Icons.visibility_outlined,
+                    title: l.helpCountingScreenSection,
                     children: [
                       HelpBullet(
-                        l.helpCountingTimerBullet1,
-                        boldPrefix: l.helpCountingTimerBold1,
+                        l.helpCountingScreenBullet1,
+                        boldPrefix: l.helpCountingScreenBold1,
                       ),
                       HelpBullet(
-                        l.helpCountingTimerBullet2,
-                        boldPrefix: l.helpCountingTimerBold2,
+                        l.helpCountingScreenBullet2,
+                        boldPrefix: l.helpCountingScreenBold2,
+                      ),
+                      HelpBullet(
+                        l.helpCountingScreenBullet3,
+                        boldPrefix: l.helpCountingScreenBold3,
+                      ),
+                      HelpBullet(
+                        l.helpCountingScreenBullet4,
+                        boldPrefix: l.helpCountingScreenBold4,
                       ),
                     ],
                   ),
                   const SizedBox(height: 20),
-
+                  HelpSection(
+                    icon: Icons.save_outlined,
+                    title: l.helpCountingSaveSection,
+                    children: [
+                      HelpBullet(
+                        l.helpCountingSaveBullet1,
+                        boldPrefix: l.helpCountingSaveBold1,
+                      ),
+                      HelpBullet(
+                        l.helpCountingSaveBullet2,
+                        boldPrefix: l.helpCountingSaveBold2,
+                      ),
+                      HelpBullet(
+                        l.helpCountingSaveBullet3,
+                        boldPrefix: l.helpCountingSaveBold3,
+                      ),
+                      HelpBullet(
+                        l.helpCountingSaveBullet4,
+                        boldPrefix: l.helpCountingSaveBold4,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  HelpSection(
+                    icon: Icons.more_vert,
+                    title: l.helpCountingMenuSection,
+                    children: [
+                      HelpBullet(
+                        l.helpCountingMenuBullet1,
+                        boldPrefix: l.helpCountingMenuBold1,
+                      ),
+                      HelpBullet(
+                        l.helpCountingMenuBullet2,
+                        boldPrefix: l.helpCountingMenuBold2,
+                      ),
+                      HelpBullet(
+                        l.helpCountingMenuBullet3,
+                        boldPrefix: l.helpCountingMenuBold3,
+                      ),
+                      HelpBullet(
+                        l.helpCountingMenuBullet4,
+                        boldPrefix: l.helpCountingMenuBold4,
+                      ),
+                      HelpBullet(
+                        l.helpCountingMenuBullet5,
+                        boldPrefix: l.helpCountingMenuBold5,
+                      ),
+                      HelpBullet(
+                        l.helpCountingMenuBullet6,
+                        boldPrefix: l.helpCountingMenuBold6,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
                   HelpSection(
                     icon: Icons.spa_outlined,
                     title: l.helpCountingMindfulSection,
                     children: [
                       HelpBullet(
-                        l.helpCountingMeruBullet,
-                        boldPrefix: l.helpCountingMeruBold,
+                        l.helpCountingMindfulBullet1,
+                        boldPrefix: l.helpCountingMindfulBold1,
                       ),
                       HelpBullet(
-                        l.helpCountingPacingBullet,
-                        boldPrefix: l.helpCountingPacingBold,
+                        l.helpCountingMindfulBullet2,
+                        boldPrefix: l.helpCountingMindfulBold2,
                       ),
                     ],
                   ),

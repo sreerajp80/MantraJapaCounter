@@ -175,6 +175,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resetSession => 'Reset session';
 
   @override
+  String unfinishedMalaBanner(int chants) {
+    return 'Unfinished mala from an earlier day: $chants/108';
+  }
+
+  @override
+  String get startNewSession => 'Start new';
+
+  @override
+  String get finishAndStartNew => 'Finish & start new';
+
+  @override
   String get resetCounter => 'Reset counter';
 
   @override
@@ -859,7 +870,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpHeaderSub =>
-      'Comprehensive guides to counting gestures, 108 mala calculations, optical air-gap sync, and privacy safeguards.';
+      'Guides for every part of the app: counters, counting, malas and goals, history, sound, display, backup, optical sync and privacy.';
 
   @override
   String get helpCategoryCounting => 'Counting & Meditation Practice';
@@ -868,7 +879,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpCategorySync => 'Data Sync & Backup';
 
   @override
-  String get helpCategoryAudio => 'Audio & Feedback';
+  String get helpCategoryAudio => 'Sound, Display & Stillness';
 
   @override
   String get helpCategoryPrivacy => 'Privacy & Support';
@@ -878,42 +889,42 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpTopicCountingSub =>
-      'Tap anywhere on the ring, two-finger swipe undo, and session persistence';
+      'Tap inside the circle, two-finger undo, the counting menu and auto save';
 
   @override
   String get helpTopicMalaTitle => '108 Mala Math & Goals';
 
   @override
   String get helpTopicMalaSub =>
-      'How 108 bead cycles are calculated, excess counts, and daily goal targets';
+      '108-bead rounds, extra counts, and daily and lifetime goals';
 
   @override
   String get helpTopicOpticalSyncTitle => 'Optical Air-Gap Sync';
 
   @override
   String get helpTopicOpticalSyncSub =>
-      'Offline phone-to-phone data transfer via animated QR camera stream';
+      'Phone-to-phone transfer with a moving QR code, without internet';
 
   @override
-  String get helpTopicBackupTitle => 'JSON Backup & Restore';
+  String get helpTopicBackupTitle => 'Backup & Restore';
 
   @override
   String get helpTopicBackupSub =>
-      'Exporting local backup files, sharing, and safe database restoration';
+      'Export to a file, encrypted backups, import and clear all data';
 
   @override
   String get helpTopicAudioTitle => 'Sound & Vibration Settings';
 
   @override
   String get helpTopicAudioSub =>
-      'Temple bell tones, mala chimes, custom audio files, and haptic feedback';
+      'Mala sound, goal tones, notifications and vibration';
 
   @override
   String get helpTopicPrivacyTitle => 'Privacy & Offline-First Core';
 
   @override
   String get helpTopicPrivacySub =>
-      'Zero internet permissions, local SQLite storage, and zero telemetry';
+      'No internet permission, private storage, and the permissions used';
 
   @override
   String get helpTopicFaqTitle => 'FAQs & Troubleshooting';
@@ -924,338 +935,295 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpCountingIntro =>
-      'The counting screen is intentionally designed for quiet, mindful focus. You do not need to look at the screen while chanting.';
+      'The counting screen is made for quiet focus. You do not need to look at it while you chant.';
 
   @override
-  String get helpCountingTapSection => 'How to Count';
+  String get helpCountingTapSection => 'How to count';
 
   @override
-  String get helpCountingTapBold1 => 'Tap anywhere:';
+  String get helpCountingTapBold1 => 'Tap inside the circle:';
 
   @override
   String get helpCountingTapBullet1 =>
-      'Tap inside the large circle or anywhere on the central screen to increment by 1 count.';
+      'Only taps inside the mala circle are counted. Taps outside it are ignored, so a stray touch does not add a count.';
 
   @override
-  String get helpCountingTapBold2 => 'Haptic pulse:';
+  String get helpCountingTapBold2 => 'Increment step:';
 
   @override
   String get helpCountingTapBullet2 =>
-      'A gentle vibration confirms every chant so you can keep your eyes closed during meditation.';
+      'Each tap adds the counter\'s step (1 by default). Change it by editing the counter.';
 
   @override
-  String get helpCountingTapBold3 => 'Crash recovery:';
+  String get helpCountingTapBold3 => 'Quiet taps:';
 
   @override
   String get helpCountingTapBullet3 =>
-      'Every 5 taps are automatically saved to local storage. If your battery dies, not a single count is lost.';
+      'Taps do not vibrate. You feel a vibration on each full mala, on goals and on undo, if vibration is on.';
 
   @override
-  String get helpCountingUndoSection => 'Undoing an Accidental Count';
+  String get helpCountingUndoSection => 'Undoing a count';
 
   @override
   String get helpCountingUndoBold1 => 'Two-finger swipe:';
 
   @override
   String get helpCountingUndoBullet1 =>
-      'Swipe left or right across the mala circle with two fingers to decrement the count by 1.';
+      'Place two fingers on the circle and slide them left or right. One swipe removes one step, and the phone vibrates once.';
 
   @override
-  String get helpCountingUndoBold2 => 'Zero count threshold:';
+  String get helpCountingUndoBold2 => 'Back to zero:';
 
   @override
   String get helpCountingUndoBullet2 =>
-      'If you reduce the session count to zero, the sitting session is gracefully cleared without polluting history.';
-
-  @override
-  String get helpCountingTimerSection => 'Session Timing & Status';
-
-  @override
-  String get helpCountingTimerBold1 => 'Active timer:';
-
-  @override
-  String get helpCountingTimerBullet1 =>
-      'The top capsule displays the active duration spent in this sitting.';
-
-  @override
-  String get helpCountingTimerBold2 => 'Progress badge:';
-
-  @override
-  String get helpCountingTimerBullet2 =>
-      'Shows remaining beads to complete the current 108 cycle or confirms daily goal completion.';
+      'If the session count goes back to 0, the sitting is cleared and nothing is added to history.';
 
   @override
   String get helpMalaIntro =>
-      'In traditional Vedic and Buddhist practices, a Japa Mala consists of 108 beads. The app faithfully calculates rounds and progress based on this sacred principle.';
+      'A traditional japa mala has 108 beads. The app counts in rounds of 108 and shows your goals on every card.';
 
   @override
-  String get helpMalaBeadsSection => '108 Beads Calculation';
+  String get helpMalaBeadsSection => '108 beads';
 
   @override
-  String get helpMalaBeadsBold1 => '1 Mala = 108 counts:';
+  String get helpMalaBeadsBold1 => '1 mala = 108 counts:';
 
   @override
   String get helpMalaBeadsBullet1 =>
-      'Every 108 counts automatically completes 1 full mala round.';
+      'Every 108 counts make one full mala. The circle on the counting screen fills bead by bead and starts again after 108.';
 
   @override
-  String get helpMalaBeadsBold2 => 'Excess counts:';
+  String get helpMalaBeadsBold2 => 'Extra counts:';
 
   @override
   String get helpMalaBeadsBullet2 =>
-      'Counts between mala multiples (e.g. 115 counts = 1 mala + 7 counts) are clearly shown.';
+      'Counts past a full mala are kept and shown. For example, 115 counts = 1 mala and 7 counts.';
 
   @override
-  String get helpMalaBeadsBold3 => 'Mala chime:';
+  String get helpMalaBeadsBold3 => 'Bigger steps:';
 
   @override
   String get helpMalaBeadsBullet3 =>
-      'When enabled, a gentle bell sounds on the exact 108th bead of each round.';
+      'If your step is more than 1, each tap moves several beads at once. Malas are still worked out from the total count.';
 
   @override
-  String get helpMalaGoalsSection => 'Setting Goals & Dedications';
+  String get helpMalaGoalsSection => 'Daily and lifetime goals';
 
   @override
-  String get helpMalaGoalsBold1 => 'Daily target:';
+  String get helpMalaGoalsBold1 => 'Daily goal:';
 
   @override
   String get helpMalaGoalsBullet1 =>
-      'Set how many malas you commit to chanting every day. The card turns green upon reaching the target.';
+      'The number of chants you want to offer each day (0 = no daily goal). It starts again from 0 at midnight, by your phone\'s clock.';
 
   @override
-  String get helpMalaGoalsBold2 => 'Lifetime target:';
+  String get helpMalaGoalsBold2 => 'Lifetime goal (vow):';
 
   @override
   String get helpMalaGoalsBullet2 =>
-      'Set long-term sadhana goals (e.g. 100,000 chants or 1,000 malas) to track your cumulative spiritual journey.';
+      'Your long-term target, for example 1,00,000 chants (0 = no lifetime goal). The daily goal cannot be more than it.';
 
   @override
   String get helpOpticalIntro =>
-      'Optical Air-Gap Sync allows you to migrate all your counters and history between two phones without Wi-Fi, Bluetooth, or cloud servers.';
+      'Optical Sync moves your counters and history from one phone to another using only the screen and the camera. No internet, Wi-Fi, Bluetooth or cable is needed.';
 
   @override
-  String get helpOpticalHowSection => 'How to Transfer';
+  String get helpOpticalHowSection => 'How to transfer';
 
   @override
-  String get helpOpticalHowBold1 => 'On the sender phone:';
+  String get helpOpticalHowBold1 => 'Sender phone:';
 
   @override
   String get helpOpticalHowBullet1 =>
-      'Go to Settings -> Optical Air-Gap Sync (Send). An animated QR stream will begin playing.';
+      'Settings → Data Backup & Optical Sync → Optical Air-Gap Sync (Send). Choose the counters to send. A moving QR code starts to play.';
 
   @override
-  String get helpOpticalHowBold2 => 'On the receiver phone:';
+  String get helpOpticalHowBold2 => 'Receiver phone:';
 
   @override
   String get helpOpticalHowBullet2 =>
-      'Go to Settings -> Optical Air-Gap Sync (Receive) and point the camera at the sender phone\'s screen.';
+      'Open Optical Air-Gap Sync (Receive), allow the camera, and point it at the sender\'s screen.';
 
   @override
-  String get helpOpticalHowBold3 => 'Automatic assembly:';
+  String get helpOpticalHowBold3 => 'Preview:';
 
   @override
   String get helpOpticalHowBullet3 =>
-      'The receiver collects stream packets and reconstructs the full database with zero data corruption.';
+      'When all parts arrive, a preview shows the counters and sessions. Choose the counters to keep and tap the restore button.';
 
   @override
-  String get helpOpticalTipsSection => 'Tips for Fast Scanning';
+  String get helpOpticalTipsSection => 'Tips for fast scanning';
 
   @override
-  String get helpOpticalTipsBold1 => 'Screen brightness:';
+  String get helpOpticalTipsBold1 => 'Distance:';
 
   @override
   String get helpOpticalTipsBullet1 =>
-      'Ensure the sending screen is at moderate-to-high brightness without screen glare.';
+      'Hold the receiving phone steady, about 15–25 cm from the sender\'s screen, with the code inside the guide box.';
 
   @override
-  String get helpOpticalTipsBold2 => 'Steady distance:';
+  String get helpOpticalTipsBold2 => 'Glare:';
 
   @override
   String get helpOpticalTipsBullet2 =>
-      'Hold the receiving phone steadily 15 to 25 cm away from the sender screen.';
+      'Avoid bright reflections on the sender\'s screen.';
 
   @override
-  String get helpOpticalTipsBold3 => 'Fountain codes:';
+  String get helpOpticalTipsBold3 => 'Missed frames:';
 
   @override
   String get helpOpticalTipsBullet3 =>
-      'Even if the camera drops a few frames, fountain parity packets will recover the missing data.';
+      'Missed frames are fine. The stream keeps repeating with extra mixed frames, so missing parts are rebuilt.';
 
   @override
   String get helpAudioIntro =>
-      'Personalize the soundscape of your practice with gentle bells, temple chimes, and haptic vibrations.';
+      'Sounds and vibration mark the moments that matter: each full mala and each goal. Set them in Settings → Sound & Haptics.';
 
   @override
-  String get helpAudioTonesSection => 'Chimes & Notification Tones';
+  String get helpAudioVibrationSection => 'Vibration';
 
   @override
-  String get helpAudioTonesBold1 => 'Daily goal tone:';
-
-  @override
-  String get helpAudioTonesBullet1 =>
-      'Plays a peaceful bell tone when you reach your daily target for any mantra.';
-
-  @override
-  String get helpAudioTonesBold2 => 'Mala chime:';
-
-  @override
-  String get helpAudioTonesBullet2 =>
-      'Plays a soft chime on the 108th bead of every round.';
-
-  @override
-  String get helpAudioTonesBold3 => 'Custom audio picker:';
-
-  @override
-  String get helpAudioTonesBullet3 =>
-      'Choose any MP3, WAV, or ringtone audio file from your device.';
-
-  @override
-  String get helpAudioVibrationSection => 'Haptic Vibration';
-
-  @override
-  String get helpAudioVibrationBold1 => 'Count pulse:';
+  String get helpAudioVibrationBold1 => 'When it vibrates:';
 
   @override
   String get helpAudioVibrationBullet1 =>
-      'Subtle tactile pulse with every chant to keep track without looking.';
+      'One pulse on each full mala, three pulses when a goal is reached, and a short tap when you undo.';
 
   @override
-  String get helpAudioVibrationBold2 => 'Disable anytime:';
+  String get helpAudioVibrationBold2 => 'Turn off:';
 
   @override
   String get helpAudioVibrationBullet2 =>
-      'Turn off vibration under Settings if you prefer silent meditation.';
+      'Switch off Vibration in Settings → Sound & Haptics for fully silent practice.';
 
   @override
   String get helpBackupIntro =>
-      'Your practice data is 100% owned by you. You can export complete backups to JSON files at any time.';
+      'Your data belongs to you. Save it to a file at any time, and restore it on this phone or a new one.';
 
   @override
-  String get helpBackupExportSection => 'Exporting Data';
+  String get helpBackupExportSection => 'Exporting a backup';
 
   @override
-  String get helpBackupExportBold1 => 'Standard JSON file:';
+  String get helpBackupExportBold1 => 'One file:';
 
   @override
   String get helpBackupExportBullet1 =>
-      'Exports all counters, daily goals, lifetime progress, and session history into one clean file.';
+      'All counters, goals and session history go into one backup file.';
 
   @override
-  String get helpBackupExportBold2 => 'System share sheet:';
+  String get helpBackupExportBold2 => 'Encrypt (optional):';
 
   @override
   String get helpBackupExportBullet2 =>
-      'Save the exported file to your local files, SD card, or share it via your favorite offline file transfer app.';
+      'You can protect the file with a passphrase. It is locked with strong AES-256-GCM encryption.';
 
   @override
-  String get helpBackupExportBold3 => 'Room & Gson compatible:';
+  String get helpBackupExportBold3 => 'Keep your passphrase safe:';
 
   @override
   String get helpBackupExportBullet3 =>
-      'Fully compatible with existing and future versions of the app.';
+      'A lost passphrase cannot be recovered, and the file cannot be opened without it.';
 
   @override
-  String get helpBackupImportSection => 'Restoring Data';
+  String get helpBackupImportSection => 'Restoring a backup';
 
   @override
-  String get helpBackupImportBold1 => 'File picker:';
+  String get helpBackupImportBold1 => 'Pick the file:';
 
   @override
   String get helpBackupImportBullet1 =>
-      'Tap \'Import Backup File\' and select your previously saved JSON file.';
+      'Choose Import and select your backup file in the system file picker.';
 
   @override
-  String get helpBackupImportBold2 => 'Safe validation:';
+  String get helpBackupImportBold2 => 'Replaces all data:';
 
   @override
   String get helpBackupImportBullet2 =>
-      'The file is verified for integrity before restoring to prevent corrupted entries.';
+      'Import replaces ALL current counters and history with the data in the file. Export first if you want to keep what is on the phone.';
 
   @override
-  String get helpBackupImportBold3 => 'Instant refresh:';
+  String get helpBackupImportBold3 => 'Encrypted files:';
 
   @override
   String get helpBackupImportBullet3 =>
-      'Counters and session history update immediately across the app.';
+      'If the file is encrypted, you are asked for the passphrase.';
 
   @override
   String get helpPrivacyIntro =>
-      'SreerajP MantraJapa Counter is built with a strict privacy-first and offline-first ethos.';
+      'SreerajP MantraJapa Counter is private by design. Your practice stays on your phone.';
 
   @override
-  String get helpPrivacyOfflineSection => '100% Offline by Design';
+  String get helpPrivacyOfflineSection => 'Fully offline';
 
   @override
-  String get helpPrivacyOfflineBold1 => 'No INTERNET permission:';
+  String get helpPrivacyOfflineBold1 => 'No internet permission:';
 
   @override
   String get helpPrivacyOfflineBullet1 =>
-      'The app does not declare the Android INTERNET permission and cannot access the web.';
+      'The app does not have the Android internet permission, so it cannot send anything anywhere.';
 
   @override
-  String get helpPrivacyOfflineBold2 => 'Zero telemetry & tracking:';
+  String get helpPrivacyOfflineBold2 => 'No tracking:';
 
   @override
   String get helpPrivacyOfflineBullet2 =>
-      'No analytics SDKs, crash reporters, or background advertising services are bundled.';
+      'No analytics, no crash reporters and no ads.';
 
   @override
-  String get helpPrivacyOfflineBold3 => 'No cloud login:';
+  String get helpPrivacyOfflineBold3 => 'No account:';
 
   @override
   String get helpPrivacyOfflineBullet3 =>
-      'You never need to create an account or provide an email or phone number.';
+      'You never need to sign up or give an email or phone number.';
 
   @override
-  String get helpPrivacyStorageSection => 'Local Storage & Data Integrity';
+  String get helpPrivacyStorageSection => 'Where your data is kept';
 
   @override
-  String get helpPrivacyStorageBold1 => 'SQLite database:';
+  String get helpPrivacyStorageBold1 => 'On your phone only:';
 
   @override
   String get helpPrivacyStorageBullet1 =>
-      'All counters and session history reside inside an encrypted/isolated SQLite database on your device.';
+      'Counters and history are kept in the app\'s private storage on your phone. Other apps cannot read it.';
 
   @override
-  String get helpPrivacyStorageBold2 => 'Crash-proof writes:';
+  String get helpPrivacyStorageBold2 => 'No cloud backup:';
 
   @override
   String get helpPrivacyStorageBullet2 =>
-      'Frequent recovery checkpoints ensure your count is preserved during sudden app switches.';
+      'Android\'s automatic cloud backup is turned off for this app. Use Export or Optical Sync to keep a copy.';
 
   @override
-  String get helpFaqIntro =>
-      'Quick answers to common questions about SreerajP MantraJapa Counter.';
+  String get helpFaqIntro => 'Quick answers to common questions.';
 
   @override
-  String get helpFaqQ1Title => 'Why is the app completely offline?';
+  String get helpFaqQ1Title => 'Why did my tap not count?';
 
   @override
   String get helpFaqQ1Answer =>
-      'Japa meditation is a deeply personal and sacred practice. By running strictly offline with no network permissions, we ensure complete privacy, battery efficiency, and zero distractions.';
+      'Only taps inside the mala circle count. If Meru pause is on, taps during the short pause after each mala are not counted either.';
 
   @override
-  String get helpFaqQ2Title =>
-      'How does Optical Air-Gap Sync work without internet?';
+  String get helpFaqQ2Title => 'How do I undo a wrong count?';
 
   @override
   String get helpFaqQ2Answer =>
-      'The sending phone converts your backup into an animated stream of QR codes displayed on screen. The receiving phone\'s camera reads these frames and reassembles the complete database locally in seconds.';
+      'Put two fingers on the mala circle and slide them left or right. Each swipe removes one step.';
 
   @override
-  String get helpFaqQ3Title => 'What does Stillness Brightness mode do?';
+  String get helpFaqQ3Title => 'Why does my counter not open?';
 
   @override
   String get helpFaqQ3Answer =>
-      'It allows you to dim the screen to minimal ambient brightness so you can chant in dark rooms or temples without glaring light disturbing others.';
+      'It is either locked or disabled. Tap the lock icon on the card to unlock it. Disabled counters cannot be opened for counting.';
 
   @override
   String get helpFaqQ4Title =>
-      'Can I transfer my data when upgrading to a new phone?';
+      'What happens if I stop in the middle of a mala?';
 
   @override
   String get helpFaqQ4Answer =>
-      'Yes! You can either use Optical Air-Gap Sync between both phones side-by-side or export a JSON backup file to restore on the new device.';
+      'Nothing is lost. The counts are saved, and the mala waits for you next time, even on another day. Tap Start new if you want to begin again at 0.';
 
   @override
   String get lockCounter => 'Lock counter';
@@ -1855,56 +1823,56 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tutorialSub =>
-      'Step-by-step visual walkthrough of all app features';
+      'A step-by-step walk through every feature, from your first counter to backup and privacy.';
 
   @override
-  String get tutorialStep1Title => '1. Create Your First Counter';
+  String get tutorialStep1Title => 'Welcome';
 
   @override
   String get tutorialStep1Desc =>
-      'Tap the add button (+) on the home screen. Enter the mantra name, choose an increment step, and set daily and lifetime goals.';
+      'This app helps you count your mantra japa. It counts malas of 108, keeps daily and lifetime goals, and saves a full history. It works fully offline.';
 
   @override
-  String get tutorialStep2Title => '2. Sacred Fullscreen Counting';
+  String get tutorialStep2Title => 'Choose your language';
 
   @override
   String get tutorialStep2Desc =>
-      'Tap anywhere on the large counting surface to advance counts. Swipe downwards to undo an accidental tap. Use the stillness slider to dim the screen.';
+      'Go to Settings → Language. Pick English, Malayalam, Sanskrit, or System default.';
 
   @override
-  String get tutorialStep3Title => '3. 108 Beads Mala System';
+  String get tutorialStep3Title => 'Create a counter';
 
   @override
   String get tutorialStep3Desc =>
-      'Every 108 chants automatically complete one mala. The app chimes sacred temple bells and records your completed malas with precision.';
+      'Tap the + button at the top of the home screen. Enter the mantra name. Then set the initial count, increment step, lifetime goal, daily goal and start date.';
 
   @override
-  String get tutorialStep4Title => '4. Daily & Lifetime Milestones';
+  String get tutorialStep4Title => 'Read the counter card';
 
   @override
   String get tutorialStep4Desc =>
-      'When your daily or lifetime target is met, custom sacred tones and auspicious badges celebrate your spiritual milestone.';
+      'Each card shows total chants and malas, today\'s chants, a strip of 27 beads for today\'s progress, and a bar for your lifetime goal.';
 
   @override
-  String get tutorialStep5Title => '5. Locking & Archiving';
+  String get tutorialStep5Title => 'Today summary';
 
   @override
   String get tutorialStep5Desc =>
-      'Long-press any counter card to lock it against accidental touches, or retire completed mantras with a completion status.';
+      'The pill at the top of the home screen adds up today\'s chants, malas and the counters you used today.';
 
   @override
-  String get tutorialStep6Title => '6. Air-Gapped Optical QR Sync';
+  String get tutorialStep6Title => 'Counter options';
 
   @override
   String get tutorialStep6Desc =>
-      'Migrate your japa counters between devices without internet, Bluetooth, or cables using animated QR camera streaming.';
+      'Long-press a card to see Counter info, History, Edit, Lock, Disable (success), Disable (not completed) and Delete.';
 
   @override
-  String get tutorialStep7Title => '7. Encrypted Backups';
+  String get tutorialStep7Title => 'Lock a counter';
 
   @override
   String get tutorialStep7Desc =>
-      'Export your entire sadhana history to a file protected by AES-256-GCM encryption with your personal passphrase.';
+      'Tap the lock icon on a card to lock it. A locked counter cannot be opened for counting. Tap the icon again to unlock.';
 
   @override
   String get opticalCameraDenied =>
@@ -1970,20 +1938,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpCountingMindfulSection => 'Mindful counting';
 
   @override
-  String get helpCountingMeruBold => 'Meru pause:';
-
-  @override
-  String get helpCountingMeruBullet =>
-      'When turned on in Settings → Display, the app pauses for a few seconds after each mala of 108. Taps in the pause are not counted, just as the Meru bead is never crossed.';
-
-  @override
-  String get helpCountingPacingBold => 'Pacing hint:';
-
-  @override
-  String get helpCountingPacingBullet =>
-      'If you tap faster than about 3 times a second, the mala glows softly and a short reminder appears. It never blocks a count.';
-
-  @override
   String get sadhanaFlowTitle => 'SADHANA FLOW';
 
   @override
@@ -2023,4 +1977,1161 @@ class AppLocalizationsEn extends AppLocalizations {
   String opticalBrightnessBoost(int percent) {
     return '+$percent%';
   }
+
+  @override
+  String get helpCategoryCounters => 'Your Counters & History';
+
+  @override
+  String get helpTopicCountersTitle => 'Counters & Home Screen';
+
+  @override
+  String get helpTopicCountersSub =>
+      'Create, edit, lock, disable and delete counters, and read the cards';
+
+  @override
+  String get helpTopicHistoryTitle => 'History & Statistics';
+
+  @override
+  String get helpTopicHistorySub =>
+      'Day-by-day history, the Sadhana Flow calendar and counter details';
+
+  @override
+  String get helpTopicDisplayTitle => 'Display, Stillness & Language';
+
+  @override
+  String get helpTopicDisplaySub =>
+      'Brightness, dimmed mode, Do Not Disturb, Meru pause, language and appearance';
+
+  @override
+  String get tutorialChapter1 => 'Getting started';
+
+  @override
+  String get tutorialChapter2 => 'Your counters';
+
+  @override
+  String get tutorialChapter3 => 'Counting';
+
+  @override
+  String get tutorialChapter4 => 'Malas and goals';
+
+  @override
+  String get tutorialChapter5 => 'History and statistics';
+
+  @override
+  String get tutorialChapter6 => 'Sound, vibration and display';
+
+  @override
+  String get tutorialChapter7 => 'Your data';
+
+  @override
+  String get tutorialChapter8 => 'Privacy';
+
+  @override
+  String get tutorialStep1Tip =>
+      'Open this guide any time from Settings → Help & User Guides.';
+
+  @override
+  String get tutorialStep2Tip =>
+      'Mantra names can be typed in any script, whatever app language you choose.';
+
+  @override
+  String get tutorialStep3Tip =>
+      'Use 0 for no goal. The daily goal cannot be more than the lifetime goal, and the step must be less than the daily goal.';
+
+  @override
+  String get tutorialStep4Tip =>
+      'A green tick means today\'s goal is done. A gold trophy means the lifetime goal is reached.';
+
+  @override
+  String get tutorialStep5Tip =>
+      'These totals start again from 0 each day at midnight, by your phone\'s clock.';
+
+  @override
+  String get tutorialStep6Tip =>
+      'Delete removes the counter and all its history. It cannot be undone.';
+
+  @override
+  String get tutorialStep7Tip =>
+      'Lock a finished or rarely used counter, so its count is never changed by mistake.';
+
+  @override
+  String get tutorialStep8Title => 'Open the counting screen';
+
+  @override
+  String get tutorialStep8Desc =>
+      'Tap a counter card. The counting screen opens with a large mala circle.';
+
+  @override
+  String get tutorialStep8Tip =>
+      'If Do Not Disturb is turned on in settings, the phone stays quiet while this screen is open.';
+
+  @override
+  String get tutorialStep9Title => 'Tap to count';
+
+  @override
+  String get tutorialStep9Desc =>
+      'Tap inside the mala circle. Each tap adds the increment step (1 by default). Taps outside the circle are ignored.';
+
+  @override
+  String get tutorialStep9Tip =>
+      'You can chant with your eyes closed. The circle is large, and a sound and vibration mark each full mala.';
+
+  @override
+  String get tutorialStep10Title => 'Undo a count';
+
+  @override
+  String get tutorialStep10Desc =>
+      'Put two fingers on the circle and slide them left or right. One swipe removes one step.';
+
+  @override
+  String get tutorialStep10Tip =>
+      'The phone vibrates once to confirm the undo.';
+
+  @override
+  String get tutorialStep11Title => 'Read the screen';
+
+  @override
+  String get tutorialStep11Desc =>
+      'The top pill shows the time of this sitting. The centre shows your bead in the current mala, the beads left, and the malas done. The bottom row shows Session, Daily and Lifetime counts.';
+
+  @override
+  String get tutorialStep11Tip =>
+      'The lamp icon at the top changes colour when a goal is reached.';
+
+  @override
+  String get tutorialStep12Title => 'Leave and come back';
+
+  @override
+  String get tutorialStep12Desc =>
+      'Press back at any time. Your counts are saved quietly. The timer pauses while the app is in the background. An unfinished mala waits for you, even on another day.';
+
+  @override
+  String get tutorialStep12Tip =>
+      'Tap Start new on the banner to keep the old counts and begin a new mala at 0.';
+
+  @override
+  String get tutorialStep13Title => 'The counting menu';
+
+  @override
+  String get tutorialStep13Desc =>
+      'The ⋮ menu has History, About, Settings, Finish & start new, Reset session and Reset counter.';
+
+  @override
+  String get tutorialStep13Tip =>
+      'Reset session clears only this sitting. Reset counter deletes all history of the counter.';
+
+  @override
+  String get tutorialStep14Title => '108 beads = 1 mala';
+
+  @override
+  String get tutorialStep14Desc =>
+      'Every 108 counts make one mala. The circle fills bead by bead and starts again after 108.';
+
+  @override
+  String get tutorialStep14Tip =>
+      '115 counts = 1 mala and 7 counts. Extra counts are never lost.';
+
+  @override
+  String get tutorialStep15Title => 'Reach your goals';
+
+  @override
+  String get tutorialStep15Desc =>
+      'When you reach the daily goal, a tone plays, the phone vibrates and a notification appears. The lifetime goal has its own tone, notification and a gold trophy.';
+
+  @override
+  String get tutorialStep15Tip =>
+      'Turn these on or off in Settings → Sound & Haptics.';
+
+  @override
+  String get tutorialStep16Title => 'Meru pause';
+
+  @override
+  String get tutorialStep16Desc =>
+      'Turn it on in Settings → Display & Stillness. After each mala the app pauses for 3, 5 or 10 seconds, so you can rest and breathe.';
+
+  @override
+  String get tutorialStep16Tip =>
+      'Taps during the pause are not counted, just as the Meru bead is never crossed.';
+
+  @override
+  String get tutorialStep17Title => 'Gentle pacing hint';
+
+  @override
+  String get tutorialStep17Desc =>
+      'If you tap faster than about 3 times a second, the circle glows amber and a short reminder appears.';
+
+  @override
+  String get tutorialStep17Tip =>
+      'Every tap still counts. You can turn the hint off in Settings → Display & Stillness.';
+
+  @override
+  String get tutorialStep18Title => 'History';
+
+  @override
+  String get tutorialStep18Desc =>
+      'Open History from the counting menu or the long-press menu. Sittings are grouped by day, with time, length, count and malas.';
+
+  @override
+  String get tutorialStep18Tip =>
+      'Tap the delete icon on a sitting to remove it. Totals update at once.';
+
+  @override
+  String get tutorialStep19Title => 'Sadhana Flow';
+
+  @override
+  String get tutorialStep19Desc =>
+      'The calendar in History shows the last 16 weeks. Days with practice glow like a lamp. A brighter glow means more chanting.';
+
+  @override
+  String get tutorialStep19Tip =>
+      'There are no streaks and no missed-day marks. Every day you return is welcome.';
+
+  @override
+  String get tutorialStep20Title => 'Counter statistics';
+
+  @override
+  String get tutorialStep20Desc =>
+      'Choose Counter info (long-press menu) or About (counting menu) to see progress rings and all details of the counter.';
+
+  @override
+  String get tutorialStep20Tip =>
+      'The average chants per day is worked out from the start date you set.';
+
+  @override
+  String get tutorialStep21Title => 'Sounds';
+
+  @override
+  String get tutorialStep21Desc =>
+      'In Settings → Sound & Haptics choose the mala sound, the daily goal tone and the lifetime goal tone. Pick a built-in sound, a phone ringtone, or your own audio file.';
+
+  @override
+  String get tutorialStep21Tip =>
+      'Tap Preview to hear the tone before you chant.';
+
+  @override
+  String get tutorialStep22Title => 'Vibration and notifications';
+
+  @override
+  String get tutorialStep22Desc =>
+      'Vibration marks each mala, each goal and each undo. Goal notifications appear in the status bar.';
+
+  @override
+  String get tutorialStep22Tip =>
+      'Sounds play through the alarm channel, so you hear them even when the phone is on silent.';
+
+  @override
+  String get tutorialStep23Title => 'Display and stillness';
+
+  @override
+  String get tutorialStep23Desc =>
+      'In Settings → Display & Stillness set the brightness, turn on Dimmed chanting mode, or silence calls and alerts with Do Not Disturb.';
+
+  @override
+  String get tutorialStep23Tip =>
+      'Do Not Disturb needs a one-time permission. It is turned off again when you leave the counting screen.';
+
+  @override
+  String get tutorialStep24Title => 'Appearance';
+
+  @override
+  String get tutorialStep24Desc =>
+      'Settings → Appearance shows the temple colours and fonts used in the app.';
+
+  @override
+  String get tutorialStep24Tip =>
+      'The app always stays upright (portrait), so you can count with one hand.';
+
+  @override
+  String get tutorialStep25Title => 'Back up to a file';
+
+  @override
+  String get tutorialStep25Desc =>
+      'Use Settings → Data Backup & Optical Sync → Export, or Import / Export in the home menu. All counters and history are saved to one file, and the share sheet opens.';
+
+  @override
+  String get tutorialStep25Tip =>
+      'You can lock the file with a passphrase (AES-256-GCM). A lost passphrase cannot be recovered.';
+
+  @override
+  String get tutorialStep26Title => 'Restore from a file';
+
+  @override
+  String get tutorialStep26Desc =>
+      'Choose Import and pick your backup file. Enter the passphrase if the file is encrypted.';
+
+  @override
+  String get tutorialStep26Tip =>
+      'Import replaces ALL current data on this phone. Export first if you want to keep it.';
+
+  @override
+  String get tutorialStep27Title => 'Phone-to-phone sync';
+
+  @override
+  String get tutorialStep27Desc =>
+      'On the old phone choose Optical Sync (Send) and pick the counters. On the new phone choose Optical Sync (Receive) and point the camera at the moving QR code.';
+
+  @override
+  String get tutorialStep27Tip =>
+      'No internet, Bluetooth or cable is used. Chosen counters are added; other counters on the receiving phone are kept.';
+
+  @override
+  String get tutorialStep28Title => 'Clear all data';
+
+  @override
+  String get tutorialStep28Desc =>
+      'Settings → Data Backup & Optical Sync → Clear all data deletes every counter and all history.';
+
+  @override
+  String get tutorialStep28Tip => 'Make a backup first. This cannot be undone.';
+
+  @override
+  String get tutorialStep29Title => 'Fully offline and private';
+
+  @override
+  String get tutorialStep29Desc =>
+      'The app has no internet permission, no ads, no tracking and no account. Your practice stays on your phone.';
+
+  @override
+  String get tutorialStep29Tip =>
+      'Android cloud backup is off for this app, so use Export or Optical Sync to keep a copy.';
+
+  @override
+  String get tutorialStep30Title => 'Permissions';
+
+  @override
+  String get tutorialStep30Desc =>
+      'The camera is used only to scan sync codes. Notifications show goal messages. Vibration and audio give feedback. Do Not Disturb access is asked only if you turn it on.';
+
+  @override
+  String get tutorialStep30Tip =>
+      'See every permission and why it is used in Settings → Permissions.';
+
+  @override
+  String get helpCountersIntro =>
+      'The home screen lists all your counters. Each counter is one mantra or practice, with its own goals and history.';
+
+  @override
+  String get helpCountersCreateSection => 'Creating a counter';
+
+  @override
+  String get helpCountersCreateBold1 => 'Add button:';
+
+  @override
+  String get helpCountersCreateBullet1 =>
+      'Tap the + button at the top of the home screen to make a new counter.';
+
+  @override
+  String get helpCountersCreateBold2 => 'Name:';
+
+  @override
+  String get helpCountersCreateBullet2 =>
+      'Type the mantra name in any language or script.';
+
+  @override
+  String get helpCountersCreateBold3 => 'Initial count:';
+
+  @override
+  String get helpCountersCreateBullet3 =>
+      'Bring in counts you made before, for example from a paper log. The default is 0.';
+
+  @override
+  String get helpCountersCreateBold4 => 'Increment step:';
+
+  @override
+  String get helpCountersCreateBullet4 =>
+      'How much one tap adds. The default is 1. It must be less than the daily goal.';
+
+  @override
+  String get helpCountersCreateBold5 => 'Goals:';
+
+  @override
+  String get helpCountersCreateBullet5 =>
+      'Set a daily goal and a lifetime goal. Use 0 for no goal. The daily goal cannot be more than the lifetime goal.';
+
+  @override
+  String get helpCountersCreateBold6 => 'Start date:';
+
+  @override
+  String get helpCountersCreateBullet6 =>
+      'The day you started this practice. It is used to work out your average chants per day.';
+
+  @override
+  String get helpCountersHomeSection => 'The home screen';
+
+  @override
+  String get helpCountersHomeBold1 => 'Today summary:';
+
+  @override
+  String get helpCountersHomeBullet1 =>
+      'The pill at the top shows today\'s total chants, total malas, and how many counters you used today.';
+
+  @override
+  String get helpCountersHomeBold2 => 'Card progress:';
+
+  @override
+  String get helpCountersHomeBullet2 =>
+      'Each card shows total chants and malas, today\'s chants, a strip of 27 beads for today\'s goal, and a bar for the lifetime goal.';
+
+  @override
+  String get helpCountersHomeBold3 => 'Badges:';
+
+  @override
+  String get helpCountersHomeBullet3 =>
+      'A green tick appears when today\'s goal is done. A gold trophy appears when the lifetime goal is reached.';
+
+  @override
+  String get helpCountersHomeBold4 => 'Order:';
+
+  @override
+  String get helpCountersHomeBullet4 =>
+      'Active counters come first, then disabled ones. Newer counters are shown first.';
+
+  @override
+  String get helpCountersHomeBold5 => 'Colours:';
+
+  @override
+  String get helpCountersHomeBullet5 =>
+      'Each counter gets its own accent colour, and it always stays the same.';
+
+  @override
+  String get helpCountersHomeBold6 => 'Top menu:';
+
+  @override
+  String get helpCountersHomeBullet6 =>
+      'The menu at the top has Import / Export, Settings and About.';
+
+  @override
+  String get helpCountersOptionsSection =>
+      'Counter options (long-press a card)';
+
+  @override
+  String get helpCountersOptionsBold1 => 'About counter:';
+
+  @override
+  String get helpCountersOptionsBullet1 =>
+      'Statistics and details of the counter.';
+
+  @override
+  String get helpCountersOptionsBold2 => 'History:';
+
+  @override
+  String get helpCountersOptionsBullet2 => 'All sittings of this counter.';
+
+  @override
+  String get helpCountersOptionsBold3 => 'Edit:';
+
+  @override
+  String get helpCountersOptionsBullet3 =>
+      'Change the name, step, goals or start date.';
+
+  @override
+  String get helpCountersOptionsBold4 => 'Lock / Unlock:';
+
+  @override
+  String get helpCountersOptionsBullet4 => 'Same as the lock icon on the card.';
+
+  @override
+  String get helpCountersOptionsBold5 => 'Disable (success):';
+
+  @override
+  String get helpCountersOptionsBullet5 =>
+      'Mark the counter as completed, for example when a vow is finished. You can add a reason.';
+
+  @override
+  String get helpCountersOptionsBold6 => 'Disable (not completed):';
+
+  @override
+  String get helpCountersOptionsBullet6 =>
+      'Stop a counter that was not finished. You can add a reason.';
+
+  @override
+  String get helpCountersOptionsBold7 => 'Delete:';
+
+  @override
+  String get helpCountersOptionsBullet7 =>
+      'Removes the counter and all its history after you confirm. This cannot be undone.';
+
+  @override
+  String get helpCountersLockSection => 'Locked and disabled counters';
+
+  @override
+  String get helpCountersLockBold1 => 'Lock icon:';
+
+  @override
+  String get helpCountersLockBullet1 =>
+      'Tap the lock icon on a card to lock or unlock it.';
+
+  @override
+  String get helpCountersLockBold2 => 'Locked:';
+
+  @override
+  String get helpCountersLockBullet2 =>
+      'A locked counter cannot be opened for counting, so its count cannot change by mistake. Tapping it shows a short message.';
+
+  @override
+  String get helpCountersLockBold3 => 'Disabled:';
+
+  @override
+  String get helpCountersLockBullet3 =>
+      'Disabled counters stay in the list with a tick or cross mark, but cannot be opened for counting.';
+
+  @override
+  String get helpCountingScreenSection => 'Reading the screen';
+
+  @override
+  String get helpCountingScreenBold1 => 'Timer:';
+
+  @override
+  String get helpCountingScreenBullet1 =>
+      'The pill at the top shows how long this sitting has lasted. It shows PAUSED when the app is in the background.';
+
+  @override
+  String get helpCountingScreenBold2 => 'Centre:';
+
+  @override
+  String get helpCountingScreenBullet2 =>
+      'The big number is your place in the current mala (0–107). Below it are the beads left and the malas done in this sitting.';
+
+  @override
+  String get helpCountingScreenBold3 => 'Bottom row:';
+
+  @override
+  String get helpCountingScreenBullet3 =>
+      'Shows the Session, Daily and Lifetime counts with progress towards your goals.';
+
+  @override
+  String get helpCountingScreenBold4 => 'Lamp:';
+
+  @override
+  String get helpCountingScreenBullet4 =>
+      'The lamp icon at the top changes colour when your daily or lifetime goal is reached.';
+
+  @override
+  String get helpCountingSaveSection => 'Leaving and saving';
+
+  @override
+  String get helpCountingSaveBold1 => 'Auto save:';
+
+  @override
+  String get helpCountingSaveBullet1 =>
+      'Press back at any time. Your counts are saved quietly; the app does not ask you to save.';
+
+  @override
+  String get helpCountingSaveBold2 => 'Crash safe:';
+
+  @override
+  String get helpCountingSaveBullet2 =>
+      'Your count is saved every 5 taps or 5 seconds, and fully stored every 20 taps or 30 seconds. If the phone switches off, the count comes back when you open the app.';
+
+  @override
+  String get helpCountingSaveBold3 => 'Timer pause:';
+
+  @override
+  String get helpCountingSaveBullet3 =>
+      'The timer stops while the app is in the background, so idle time is not added to your sitting.';
+
+  @override
+  String get helpCountingSaveBold4 => 'Unfinished mala:';
+
+  @override
+  String get helpCountingSaveBullet4 =>
+      'If you stop before 108, the mala waits for you next time, even on another day, and a banner shows it. Taps always count on the day you make them. Tap Start new to keep those counts and begin a new mala at 0.';
+
+  @override
+  String get helpCountingMenuSection => 'The counting menu (⋮)';
+
+  @override
+  String get helpCountingMenuBold1 => 'History:';
+
+  @override
+  String get helpCountingMenuBullet1 => 'Opens the history of this counter.';
+
+  @override
+  String get helpCountingMenuBold2 => 'About:';
+
+  @override
+  String get helpCountingMenuBullet2 =>
+      'Shows the statistics and details of this counter.';
+
+  @override
+  String get helpCountingMenuBold3 => 'Settings:';
+
+  @override
+  String get helpCountingMenuBullet3 => 'Opens the app settings.';
+
+  @override
+  String get helpCountingMenuBold4 => 'Finish & start new:';
+
+  @override
+  String get helpCountingMenuBullet4 =>
+      'Closes the current unfinished mala. Its counts are kept in history, and the next tap starts a new mala at 0.';
+
+  @override
+  String get helpCountingMenuBold5 => 'Reset session:';
+
+  @override
+  String get helpCountingMenuBullet5 =>
+      'Throws away the current sitting and sets it back to 0. Past history is kept.';
+
+  @override
+  String get helpCountingMenuBold6 => 'Reset counter:';
+
+  @override
+  String get helpCountingMenuBullet6 =>
+      'Deletes all history of this counter. This cannot be undone.';
+
+  @override
+  String get helpCountingMindfulBold1 => 'Meru pause:';
+
+  @override
+  String get helpCountingMindfulBullet1 =>
+      'When turned on in Settings → Display & Stillness, the app pauses for 3, 5 or 10 seconds after each mala. Taps in the pause are not counted. The pause ends by itself, or with the undo swipe.';
+
+  @override
+  String get helpCountingMindfulBold2 => 'Pacing hint:';
+
+  @override
+  String get helpCountingMindfulBullet2 =>
+      'If you tap faster than about 3 times a second, the circle glows softly and a short reminder appears. It never blocks a count.';
+
+  @override
+  String get helpMalaBeadsBold4 => 'Mala sound:';
+
+  @override
+  String get helpMalaBeadsBullet4 =>
+      'If it is on, a soft sound plays on every 108th count. It is skipped when the same tap also reaches a goal, so sounds do not overlap.';
+
+  @override
+  String get helpMalaGoalsBold3 => 'Daily goal reached:';
+
+  @override
+  String get helpMalaGoalsBullet3 =>
+      'If the daily notification is on, the goal tone plays, the phone vibrates and a notification appears. A green tick shows on the card.';
+
+  @override
+  String get helpMalaGoalsBold4 => 'Lifetime goal reached:';
+
+  @override
+  String get helpMalaGoalsBullet4 =>
+      'If the lifetime notification is on, the lifetime tone and notification play. A gold trophy shows and the card turns a soft sandal colour.';
+
+  @override
+  String get helpMalaCardSection => 'Progress on the card';
+
+  @override
+  String get helpMalaCardBold1 => 'Bead strip:';
+
+  @override
+  String get helpMalaCardBullet1 =>
+      'The row of 27 small beads shows today\'s progress towards the daily goal. Each bead is 1/27 of the goal, like 4 beads of a mala.';
+
+  @override
+  String get helpMalaCardBold2 => 'Lifetime bar:';
+
+  @override
+  String get helpMalaCardBullet2 =>
+      'The long bar shows how much of your lifetime goal is done.';
+
+  @override
+  String get helpMalaCardBold3 => 'Numbers:';
+
+  @override
+  String get helpMalaCardBullet3 =>
+      'The card shows total chants, total malas, and today\'s chants and malas.';
+
+  @override
+  String get helpHistoryIntro =>
+      'History keeps a record of every sitting. Open it from the counting menu, from the long-press menu of a counter, or from the counter\'s details page.';
+
+  @override
+  String get helpHistoryLogSection => 'The history list';
+
+  @override
+  String get helpHistoryLogBold1 => 'Summary:';
+
+  @override
+  String get helpHistoryLogBullet1 =>
+      'The top card shows total chants, days of practice, and how much of your vow is done.';
+
+  @override
+  String get helpHistoryLogBold2 => 'Grouped by day:';
+
+  @override
+  String get helpHistoryLogBullet2 =>
+      'Sittings are grouped by date, newest first. Each day shows its total and the running total at the end of that day.';
+
+  @override
+  String get helpHistoryLogBold3 => 'Sitting rows:';
+
+  @override
+  String get helpHistoryLogBullet3 =>
+      'Each sitting shows the start time, how long it lasted, the count and the malas.';
+
+  @override
+  String get helpHistoryDeleteSection => 'Deleting history';
+
+  @override
+  String get helpHistoryDeleteBold1 => 'One sitting:';
+
+  @override
+  String get helpHistoryDeleteBullet1 =>
+      'Tap the delete icon on a sitting and confirm. Totals are worked out again at once.';
+
+  @override
+  String get helpHistoryDeleteBold2 => 'Clear history:';
+
+  @override
+  String get helpHistoryDeleteBullet2 =>
+      'The clear button at the top deletes all sittings of this counter after you confirm. This cannot be undone.';
+
+  @override
+  String get helpHistoryFlowSection => 'Sadhana Flow calendar';
+
+  @override
+  String get helpHistoryFlowBold1 => '16 weeks:';
+
+  @override
+  String get helpHistoryFlowBullet1 =>
+      'A calendar of the last 16 weeks, with Monday at the top. Days with practice glow like a lamp, from soft sandal to deep saffron.';
+
+  @override
+  String get helpHistoryFlowBold2 => 'Glow:';
+
+  @override
+  String get helpHistoryFlowBullet2 =>
+      'For a counter with a daily goal, the glow shows progress towards that goal. Otherwise it is compared with your busiest day shown.';
+
+  @override
+  String get helpHistoryFlowBold3 => 'No pressure:';
+
+  @override
+  String get helpHistoryFlowBullet3 =>
+      'There are no streaks and no missed-day marks. If you return after 3 or more days, a warm welcome line appears.';
+
+  @override
+  String get helpHistoryStatsSection => 'Counter statistics';
+
+  @override
+  String get helpHistoryStatsBold1 => 'Open:';
+
+  @override
+  String get helpHistoryStatsBullet1 =>
+      'Long-press a counter and choose About counter, or use About in the counting menu.';
+
+  @override
+  String get helpHistoryStatsBold2 => 'Rings:';
+
+  @override
+  String get helpHistoryStatsBullet2 =>
+      'Three rings show lifetime progress, today\'s progress and total malas.';
+
+  @override
+  String get helpHistoryStatsBold3 => 'Details:';
+
+  @override
+  String get helpHistoryStatsBullet3 =>
+      'Name, status, step, initial count, goals, start date, created date, average chants per day, and the disabled date and reason, if any.';
+
+  @override
+  String get helpAudioMalaSection => 'Mala sound';
+
+  @override
+  String get helpAudioMalaBold1 => 'Enable mala sound:';
+
+  @override
+  String get helpAudioMalaBullet1 =>
+      'Plays a soft sound and a vibration on every 108th count.';
+
+  @override
+  String get helpAudioMalaBold2 => 'Choices:';
+
+  @override
+  String get helpAudioMalaBullet2 =>
+      'Temple Bronze Bell, Tibetan Singing Bowl, or Synthesized Tone (a short beep).';
+
+  @override
+  String get helpAudioMalaBold3 => 'No overlap:';
+
+  @override
+  String get helpAudioMalaBullet3 =>
+      'If the 108th count also reaches a goal, only the goal tone plays.';
+
+  @override
+  String get helpAudioGoalSection => 'Daily goal';
+
+  @override
+  String get helpAudioGoalBold1 => 'Enable notification:';
+
+  @override
+  String get helpAudioGoalBullet1 =>
+      'When the daily goal is reached, a tone plays, the phone vibrates, and a notification appears in the status bar.';
+
+  @override
+  String get helpAudioGoalBold2 => 'Goal tone:';
+
+  @override
+  String get helpAudioGoalBullet2 =>
+      'Pick System default, a phone ringtone, a built-in sound (Temple Bell, Singing Bowl, Synthesized Tone, Sacred Shankha), or your own audio file (MP3, WAV, AAC).';
+
+  @override
+  String get helpAudioGoalBold3 => 'Preview:';
+
+  @override
+  String get helpAudioGoalBullet3 =>
+      'Tap Preview tone to hear the chosen tone.';
+
+  @override
+  String get helpAudioLifetimeSection => 'Lifetime goal';
+
+  @override
+  String get helpAudioLifetimeBold1 => 'Lifetime goal tone:';
+
+  @override
+  String get helpAudioLifetimeBullet1 =>
+      'A separate tone for the moment your lifetime goal is reached.';
+
+  @override
+  String get helpAudioLifetimeBold2 => 'Lifetime goal notification:';
+
+  @override
+  String get helpAudioLifetimeBullet2 =>
+      'Turn it on to get the tone, vibration and a notification when the lifetime goal is reached.';
+
+  @override
+  String get helpAudioVolumeSection => 'Loud enough to hear';
+
+  @override
+  String get helpAudioVolumeBold1 => 'Alarm channel:';
+
+  @override
+  String get helpAudioVolumeBullet1 =>
+      'Completion sounds play through the alarm sound channel, so you hear them even when the phone is on silent. The volume goes back to normal after a few seconds.';
+
+  @override
+  String get helpDisplayIntro =>
+      'These settings help you chant in a calm, quiet way, and let you choose how the app looks and speaks.';
+
+  @override
+  String get helpDisplayBrightSection => 'Brightness and dimming';
+
+  @override
+  String get helpDisplayBrightBold1 => 'Brightness level:';
+
+  @override
+  String get helpDisplayBrightBullet1 =>
+      'In Settings → Display & Stillness, choose a level from \'still\' (dim) to \'full\'. It changes the app screen only, not your phone\'s brightness.';
+
+  @override
+  String get helpDisplayBrightBold2 => 'Use system:';
+
+  @override
+  String get helpDisplayBrightBullet2 =>
+      'Tap \'use system\' to go back to your phone\'s normal brightness.';
+
+  @override
+  String get helpDisplayBrightBold3 => 'Dimmed chanting mode:';
+
+  @override
+  String get helpDisplayBrightBullet3 =>
+      'Darkens the background of the counting screen while the mala circle stays clear. Good for dark rooms, and it saves battery.';
+
+  @override
+  String get helpDisplayDndSection => 'Do Not Disturb';
+
+  @override
+  String get helpDisplayDndBold1 => 'Silence alerts:';
+
+  @override
+  String get helpDisplayDndBullet1 =>
+      'When on, the phone goes into Do Not Disturb while the counting screen is open, and goes back to normal when you leave it.';
+
+  @override
+  String get helpDisplayDndBold2 => 'Permission:';
+
+  @override
+  String get helpDisplayDndBullet2 =>
+      'The first time, the app asks you to allow Do Not Disturb access. Tap Open Settings and allow it for this app.';
+
+  @override
+  String get helpDisplayMindfulSection => 'Mindful counting';
+
+  @override
+  String get helpDisplayMindfulBold1 => 'Meru pause:';
+
+  @override
+  String get helpDisplayMindfulBullet1 =>
+      'A short pause of 3, 5 or 10 seconds after each mala. Taps during the pause are not counted. Off by default.';
+
+  @override
+  String get helpDisplayMindfulBold2 => 'Gentle pacing hint:';
+
+  @override
+  String get helpDisplayMindfulBullet2 =>
+      'A soft glow when you tap very fast. Every tap still counts. On by default.';
+
+  @override
+  String get helpDisplayLangSection => 'Language';
+
+  @override
+  String get helpDisplayLangBold1 => 'Choose language:';
+
+  @override
+  String get helpDisplayLangBullet1 =>
+      'In Settings → Language pick English, Malayalam, Sanskrit, or System default.';
+
+  @override
+  String get helpDisplayLangBold2 => 'Any script:';
+
+  @override
+  String get helpDisplayLangBullet2 =>
+      'Counter names can be written in any script, whatever app language you choose.';
+
+  @override
+  String get helpDisplayLookSection => 'Appearance';
+
+  @override
+  String get helpDisplayLookBold1 => 'Temple theme:';
+
+  @override
+  String get helpDisplayLookBullet1 =>
+      'Settings → Appearance shows the colours (cream, vermillion, sandal, tulsi, rose) and the fonts used in the app.';
+
+  @override
+  String get helpDisplayLookBold2 => 'Portrait only:';
+
+  @override
+  String get helpDisplayLookBullet2 =>
+      'The app always stays upright, so you can count with one hand.';
+
+  @override
+  String get helpOpticalHowBold4 => 'Merge:';
+
+  @override
+  String get helpOpticalHowBullet4 =>
+      'Chosen counters are added to the receiving phone. A counter that already exists there is replaced by the received copy. Other counters on that phone are not touched.';
+
+  @override
+  String get helpOpticalSendSection => 'Sender controls';
+
+  @override
+  String get helpOpticalSendBold1 => 'Speed:';
+
+  @override
+  String get helpOpticalSendBullet1 =>
+      'Choose 8, 12 or 15 frames per second. 8 is the default and works best on most phones.';
+
+  @override
+  String get helpOpticalSendBold2 => 'Pause and play:';
+
+  @override
+  String get helpOpticalSendBullet2 =>
+      'Pause the stream and play it again at any time.';
+
+  @override
+  String get helpOpticalSendBold3 => 'Brightness:';
+
+  @override
+  String get helpOpticalSendBullet3 =>
+      'A slider can make the screen brighter if the other camera has trouble. It goes back to normal when sending stops. The screen stays on while sending.';
+
+  @override
+  String get helpOpticalReceiveSection => 'Receiver controls';
+
+  @override
+  String get helpOpticalReceiveBold1 => 'Tap to focus:';
+
+  @override
+  String get helpOpticalReceiveBullet1 =>
+      'Tap the camera view to focus on the code.';
+
+  @override
+  String get helpOpticalReceiveBold2 => 'Zoom:';
+
+  @override
+  String get helpOpticalReceiveBullet2 =>
+      'Use the zoom slider (up to 4×) if the code looks small.';
+
+  @override
+  String get helpOpticalReceiveBold3 => 'Light:';
+
+  @override
+  String get helpOpticalReceiveBullet3 => 'Turn on the torch in a dark room.';
+
+  @override
+  String get helpOpticalReceiveBold4 => 'Frames received:';
+
+  @override
+  String get helpOpticalReceiveBullet4 =>
+      'This line shows that scanning is working, even before all parts are complete.';
+
+  @override
+  String get helpBackupWhereSection => 'Where to find it';
+
+  @override
+  String get helpBackupWhereBold1 => 'Settings:';
+
+  @override
+  String get helpBackupWhereBullet1 =>
+      'Settings → Data Backup & Optical Sync has Export, Import, Optical Sync and Clear all data.';
+
+  @override
+  String get helpBackupWhereBold2 => 'Home menu:';
+
+  @override
+  String get helpBackupWhereBullet2 =>
+      'The menu on the home screen also has Import / Export.';
+
+  @override
+  String get helpBackupExportBold4 => 'Share sheet:';
+
+  @override
+  String get helpBackupExportBullet4 =>
+      'After export, the Android share sheet opens. Save the file to your files or a memory card, or send it with an app you trust.';
+
+  @override
+  String get helpBackupImportBold4 => 'Safe restore:';
+
+  @override
+  String get helpBackupImportBullet4 =>
+      'The file is checked first. If it is damaged or the passphrase is wrong, nothing is changed and an error is shown.';
+
+  @override
+  String get helpBackupImportBold5 => 'Older backups:';
+
+  @override
+  String get helpBackupImportBullet5 =>
+      'Backup files from the older Android version of this app can also be imported.';
+
+  @override
+  String get helpBackupClearSection => 'Clear all data';
+
+  @override
+  String get helpBackupClearBold1 => 'Erase everything:';
+
+  @override
+  String get helpBackupClearBullet1 =>
+      'Clear all data deletes all counters and all history after you confirm. This cannot be undone, so make a backup first.';
+
+  @override
+  String get helpPrivacyStorageBold3 => 'Crash-safe saving:';
+
+  @override
+  String get helpPrivacyStorageBullet3 =>
+      'Frequent save points keep your count safe if the app closes suddenly.';
+
+  @override
+  String get helpPrivacyPermsSection => 'Permissions the app uses';
+
+  @override
+  String get helpPrivacyPermsBold1 => 'Camera:';
+
+  @override
+  String get helpPrivacyPermsBullet1 =>
+      'Only to scan the QR code when receiving Optical Sync. No photos or videos are taken.';
+
+  @override
+  String get helpPrivacyPermsBold2 => 'Notifications:';
+
+  @override
+  String get helpPrivacyPermsBullet2 =>
+      'To show goal messages in the status bar. Asked on Android 13 and later.';
+
+  @override
+  String get helpPrivacyPermsBold3 => 'Vibration and audio:';
+
+  @override
+  String get helpPrivacyPermsBullet3 =>
+      'For the mala, goal and undo feedback, and to play completion sounds clearly.';
+
+  @override
+  String get helpPrivacyPermsBold4 => 'Do Not Disturb access:';
+
+  @override
+  String get helpPrivacyPermsBullet4 =>
+      'Asked only if you turn on Do Not Disturb in Display & Stillness.';
+
+  @override
+  String get helpPrivacyPermsBold5 => 'Your files:';
+
+  @override
+  String get helpPrivacyPermsBullet5 =>
+      'The app does not read your files. Import and export use the Android file picker, where you choose the file.';
+
+  @override
+  String get helpPrivacyPermsBold6 => 'Full list:';
+
+  @override
+  String get helpPrivacyPermsBullet6 =>
+      'Settings → Permissions lists every permission and why it is used.';
+
+  @override
+  String get helpFaqQ5Title => 'Which day do my counts go to?';
+
+  @override
+  String get helpFaqQ5Answer =>
+      'Each tap counts on the day you make it, by your phone\'s clock. The daily goal starts again at midnight.';
+
+  @override
+  String get helpFaqQ6Title =>
+      'What is the difference between Reset session and Reset counter?';
+
+  @override
+  String get helpFaqQ6Answer =>
+      'Reset session throws away only the current sitting. Reset counter deletes all history of that counter and cannot be undone.';
+
+  @override
+  String get helpFaqQ7Title => 'Why did the mala sound not play?';
+
+  @override
+  String get helpFaqQ7Answer =>
+      'Check that Enable mala sound is on. If the same tap also reached a goal, only the goal tone plays.';
+
+  @override
+  String get helpFaqQ8Title => 'Why do sounds play when my phone is on silent?';
+
+  @override
+  String get helpFaqQ8Answer =>
+      'Completion sounds use the alarm channel so you do not miss them. Turn off the sounds in Settings → Sound & Haptics if you want silence.';
+
+  @override
+  String get helpFaqQ9Title => 'I forgot my backup passphrase. What can I do?';
+
+  @override
+  String get helpFaqQ9Answer =>
+      'The passphrase cannot be recovered, and that file cannot be opened. Make a new backup from a phone that still has your data.';
+
+  @override
+  String get helpFaqQ10Title => 'Will import remove my current counters?';
+
+  @override
+  String get helpFaqQ10Answer =>
+      'Importing a backup file replaces all current data. Optical Sync is different: it only adds or updates the counters you choose.';
+
+  @override
+  String get helpFaqQ11Title => 'Optical Sync scanning is slow. What helps?';
+
+  @override
+  String get helpFaqQ11Answer =>
+      'Hold the phone steady 15–25 cm away, tap to focus, avoid glare, and raise the sender\'s brightness. Try a lower speed such as 8 frames per second.';
+
+  @override
+  String get helpFaqQ12Title => 'Can I move my data to a new phone?';
+
+  @override
+  String get helpFaqQ12Answer =>
+      'Yes. Use Optical Sync with both phones side by side, or export a backup file and import it on the new phone.';
+
+  @override
+  String get helpFaqQ13Title => 'Why is the app fully offline?';
+
+  @override
+  String get helpFaqQ13Answer =>
+      'Japa is personal and sacred. Staying offline keeps your practice private, saves battery, and removes distractions.';
+
+  @override
+  String get helpFaqQ14Title => 'Is my data shared with anyone?';
+
+  @override
+  String get helpFaqQ14Answer =>
+      'No. Your data never leaves your phone unless you export it or send it with Optical Sync yourself.';
 }

@@ -31,10 +31,14 @@ void main() {
 
     expect(find.text('Help & User Guides'), findsWidgets);
     expect(find.text('Counting & Meditation Practice'), findsOneWidget);
+    expect(find.text('Your Counters & History'), findsOneWidget);
+    expect(find.text('Counters & Home Screen'), findsOneWidget);
+    expect(find.text('History & Statistics'), findsOneWidget);
+    expect(find.text('Display, Stillness & Language'), findsOneWidget);
     expect(find.text('Counting & Gestures Guide'), findsOneWidget);
     expect(find.text('108 Mala Math & Goals'), findsOneWidget);
     expect(find.text('Optical Air-Gap Sync'), findsOneWidget);
-    expect(find.text('JSON Backup & Restore'), findsOneWidget);
+    expect(find.text('Backup & Restore'), findsOneWidget);
   });
 
   testWidgets('CountingHelpScreen renders sections and bullets', (
@@ -56,8 +60,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Counting & Gestures Guide'), findsWidgets);
-    expect(find.text('How to Count'), findsOneWidget);
-    expect(find.text('Undoing an Accidental Count'), findsOneWidget);
+    expect(find.text('How to count'), findsOneWidget);
+    expect(find.text('Undoing a count'), findsOneWidget);
   });
 
   testWidgets('MalaMathHelpScreen renders calculations', (tester) async {
@@ -77,7 +81,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('108 Mala Math & Goals'), findsWidgets);
-    expect(find.text('108 Beads Calculation'), findsOneWidget);
+    expect(find.text('108 beads'), findsOneWidget);
   });
 
   testWidgets('OpticalSyncHelpScreen renders air-gap instructions', (
@@ -99,7 +103,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Optical Air-Gap Sync'), findsWidgets);
-    expect(find.text('How to Transfer'), findsOneWidget);
+    expect(find.text('How to transfer'), findsOneWidget);
   });
 
   testWidgets('SoundHapticsHelpScreen renders audio help', (tester) async {
@@ -137,7 +141,7 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    expect(find.text('JSON Backup & Restore'), findsWidgets);
+    expect(find.text('Backup & Restore'), findsWidgets);
   });
 
   testWidgets('PrivacyOfflineHelpScreen renders privacy details', (

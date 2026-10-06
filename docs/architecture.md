@@ -252,7 +252,21 @@ Migration history:
 | `JapaSession` | Single completed counting session (count, malas, chants, timestamp, duration) | No | Append-only; never edited after creation |
 | `CounterStatus` | Enum: ACTIVE, DISABLED_SUCCESS, DISABLED_FAILURE | No | Controls counter visibility in the active list |
 | `DailySummary` | Sessions grouped by date with aggregated totals | No | Computed at read time; not stored in DB |
-| `ActiveSession` | In-progress session state during counting | Yes | Held in `CountingNotifier`; serialized to SharedPreferences for crash recovery |
+| `ActiveSession` | In-progress session state during counting | Yes | Held in `CountingNotifier`; serialized to SharedPreferences for crash recovery. `carriedCount` / `carriedDurationMs` hold the part of an unfinished mala already stored in earlier-day rows (see below) |
+
+### Unfinished Mala Across Days
+
+- When the user leaves mid-mala, the session is paused and resumes next time, even on a later day.
+- Taps are stored on the day they are made. On the first tap of a new day (or when counting goes
+  past midnight), `CountingNotifier` closes the current `japa_sessions` row with its own day's taps
+  and starts a new row dated today. `ActiveSession.tapCount` stays the whole-session total (it drives
+  the mala ring and the 108 checks); the row stores `tapCount - carriedCount`.
+- Undo cannot go below `carriedCount` — taps stored on an earlier day are not undone.
+- The counting screen shows a non-blocking "Unfinished mala from an earlier day" banner with a
+  **Start new** button, and the menu has **Finish & start new**. Both call
+  `CountingNotifier.finishAndStartNew()`, which keeps the counts made so far and starts a fresh
+  session at 0 (unlike **Reset session**, which deletes the current session's counts).
+- No schema change and no export format change: each day's part is a normal session row.
 | `ExportData` | Top-level wrapper for JSON import/export (list of counters + sessions) | No | Must be compatible with Android Gson export format |
 
 ### Serialization Strategy
