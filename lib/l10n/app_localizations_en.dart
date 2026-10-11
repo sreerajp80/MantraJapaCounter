@@ -147,7 +147,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dailyExceedsLifetime => 'Daily goal cannot exceed lifetime goal';
 
   @override
-  String get stepExceedsDaily => 'Increment step must be less than daily goal';
+  String get stepExceedsDaily => 'Increment step cannot exceed daily goal';
+
+  @override
+  String get malaSizeLabel => 'Mala count';
+
+  @override
+  String get noMalaCountLabel => 'No mala count';
+
+  @override
+  String get malaSizeTooSmall => 'Mala count must be at least 1';
+
+  @override
+  String get malaSizeBelowStep =>
+      'Mala count must be at least the increment step';
+
+  @override
+  String get malaSizeExceedsDaily => 'Mala count cannot exceed daily goal';
+
+  @override
+  String get malaSizeExceedsLifetime =>
+      'Mala count cannot exceed lifetime goal';
 
   @override
   String get importExportBody =>
@@ -175,9 +195,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resetSession => 'Reset session';
 
   @override
-  String unfinishedMalaBanner(int chants) {
-    return 'Unfinished mala from an earlier day: $chants/108';
+  String unfinishedMalaBanner(int chants, int malaSize) {
+    return 'Unfinished mala from an earlier day: $chants/$malaSize';
   }
+
+  @override
+  String get earlierDaySessionBanner =>
+      'This session started on an earlier day';
 
   @override
   String get startNewSession => 'Start new';
@@ -190,6 +214,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ofOneHundredEight => 'of one hundred eight';
+
+  @override
+  String ofMalaCount(int count) {
+    return 'of $count';
+  }
 
   @override
   String get lifetimeGoalCaps => 'LIFETIME GOAL';
@@ -788,7 +817,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appearanceHeaderSub =>
-      'Custom stillness brightness, sacred South Indian temple palette, and classical typography for distraction-free chanting.';
+      'Set a calm screen brightness for distraction-free chanting.';
 
   @override
   String get appearanceBrightnessSection => 'Screen Brightness & Stillness';

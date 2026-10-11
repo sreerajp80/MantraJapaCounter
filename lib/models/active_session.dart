@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
+
 /// Mutable in-progress session state held by CountingNotifier.
 ///
 /// Serialised to SharedPreferences for crash recovery and pause/resume.
@@ -34,6 +36,7 @@ class ActiveSession {
   final bool isPaused; // true while waiting to resume on next tap
   final int carriedCount; // taps stored in earlier-day rows
   final int carriedDurationMs; // active time stored in earlier-day rows
+  final int malaSize; // counts per mala, from the counter; 0 = no mala
 
   const ActiveSession({
     required this.sessionId,
@@ -47,10 +50,19 @@ class ActiveSession {
     this.isPaused = false,
     this.carriedCount = 0,
     this.carriedDurationMs = 0,
+    this.malaSize = AppConstants.defaultMalaSize,
   });
 
-  int get malas => tapCount ~/ 108;
-  int get chants => tapCount % 108;
+  bool get hasMala => malaSize > 0;
+
+  /// Whole malas done. 0 when there is no mala count.
+  int get malas => hasMala ? tapCount ~/ malaSize : 0;
+
+  /// Counts in the mala in progress. All counts when there is no mala count.
+  int get chants => hasMala ? tapCount % malaSize : tapCount;
+
+  /// True when there is a mala count and the current mala is part-way done.
+  bool get isMidMala => hasMala && tapCount % malaSize != 0;
 
   /// Active counting time so far. Excludes paused gaps.
   int get duration {
@@ -80,6 +92,7 @@ class ActiveSession {
     bool? isPaused,
     int? carriedCount,
     int? carriedDurationMs,
+    int? malaSize,
   }) {
     return ActiveSession(
       sessionId: sessionId ?? this.sessionId,
@@ -93,6 +106,7 @@ class ActiveSession {
       isPaused: isPaused ?? this.isPaused,
       carriedCount: carriedCount ?? this.carriedCount,
       carriedDurationMs: carriedDurationMs ?? this.carriedDurationMs,
+      malaSize: malaSize ?? this.malaSize,
     );
   }
 
@@ -108,6 +122,7 @@ class ActiveSession {
     'isPaused': isPaused,
     'carriedCount': carriedCount,
     'carriedDurationMs': carriedDurationMs,
+    'malaSize': malaSize,
   };
 
   factory ActiveSession.fromMap(Map<String, dynamic> map) {
@@ -124,6 +139,8 @@ class ActiveSession {
       isPaused: map['isPaused'] as bool? ?? false,
       carriedCount: (map['carriedCount'] as num?)?.toInt() ?? 0,
       carriedDurationMs: (map['carriedDurationMs'] as num?)?.toInt() ?? 0,
+      malaSize:
+          (map['malaSize'] as num?)?.toInt() ?? AppConstants.defaultMalaSize,
     );
   }
 

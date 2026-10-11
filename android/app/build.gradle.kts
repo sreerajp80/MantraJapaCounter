@@ -85,7 +85,10 @@ tasks.matching { task ->
 
 android {
     namespace = "com.sreerajp.mantrajapacounter"
-    compileSdk = flutter.compileSdkVersion
+    // flutter_local_notifications and androidx.core 1.19 need compileSdk 37.
+    // targetSdk stays 36 on purpose (see docs/release_process.md). Switch back
+    // to flutter.compileSdkVersion once Flutter defaults to 37 or higher.
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

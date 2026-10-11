@@ -36,4 +36,39 @@ void main() {
       expect(back.rowDuration, 3000);
     });
   });
+
+  group('malaSize', () {
+    ActiveSession make(int taps, int malaSize) => ActiveSession(
+      sessionId: 'a',
+      counterId: 'c1',
+      counterName: 'N',
+      startTime: 1000,
+      tapCount: taps,
+      incrementStep: 1,
+      lastResumeTimeMs: 1000,
+      malaSize: malaSize,
+    );
+
+    test('malas and chants use the custom mala count', () {
+      final s = make(60, 27);
+      expect(s.malas, 2);
+      expect(s.chants, 6);
+      expect(s.isMidMala, isTrue);
+      expect(make(54, 27).isMidMala, isFalse);
+    });
+
+    test('no mala count: no malas, all counts are chants, never mid-mala', () {
+      final s = make(60, 0);
+      expect(s.hasMala, isFalse);
+      expect(s.malas, 0);
+      expect(s.chants, 60);
+      expect(s.isMidMala, isFalse);
+    });
+
+    test('round-trips malaSize; old saved JSON means 108', () {
+      expect(ActiveSession.fromJson(make(3, 5).toJson()).malaSize, 5);
+      final map = make(3, 5).toMap()..remove('malaSize');
+      expect(ActiveSession.fromMap(map).malaSize, 108);
+    });
+  });
 }

@@ -149,7 +149,28 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get stepExceedsDaily =>
-      'വർദ്ധന ഘട്ടം ദൈനംദിന ലക്ഷ്യത്തേക്കാൾ കുറവായിരിക്കണം';
+      'വർദ്ധന ഘട്ടം ദൈനംദിന ലക്ഷ്യത്തേക്കാൾ കൂടാൻ പാടില്ല';
+
+  @override
+  String get malaSizeLabel => 'മാല എണ്ണം';
+
+  @override
+  String get noMalaCountLabel => 'മാല എണ്ണം ഇല്ല';
+
+  @override
+  String get malaSizeTooSmall => 'മാല എണ്ണം കുറഞ്ഞത് 1 ആയിരിക്കണം';
+
+  @override
+  String get malaSizeBelowStep =>
+      'മാല എണ്ണം വർദ്ധന ഘട്ടത്തേക്കാൾ കുറയാൻ പാടില്ല';
+
+  @override
+  String get malaSizeExceedsDaily =>
+      'മാല എണ്ണം ദൈനംദിന ലക്ഷ്യത്തേക്കാൾ കൂടാൻ പാടില്ല';
+
+  @override
+  String get malaSizeExceedsLifetime =>
+      'മാല എണ്ണം ആജീവനാന്ത ലക്ഷ്യത്തേക്കാൾ കൂടാൻ പാടില്ല';
 
   @override
   String get importExportBody =>
@@ -177,9 +198,12 @@ class AppLocalizationsMl extends AppLocalizations {
   String get resetSession => 'സെഷൻ പുനഃസജ്ജമാക്കുക';
 
   @override
-  String unfinishedMalaBanner(int chants) {
-    return 'മുൻ ദിവസത്തെ പൂർത്തിയാകാത്ത മാല: $chants/108';
+  String unfinishedMalaBanner(int chants, int malaSize) {
+    return 'മുൻ ദിവസത്തെ പൂർത്തിയാകാത്ത മാല: $chants/$malaSize';
   }
+
+  @override
+  String get earlierDaySessionBanner => 'ഈ സെഷൻ മുൻ ദിവസം തുടങ്ങിയതാണ്';
 
   @override
   String get startNewSession => 'പുതിയത് തുടങ്ങുക';
@@ -192,6 +216,11 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get ofOneHundredEight => 'നൂറ്റിയെട്ടിൽ';
+
+  @override
+  String ofMalaCount(int count) {
+    return '$count-ൽ';
+  }
 
   @override
   String get lifetimeGoalCaps => 'ആജീവനാന്ത ലക്ഷ്യം';
@@ -793,7 +822,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get appearanceHeaderSub =>
-      'ഇഷ്ടാനുസൃത നിശ്ചല തെളിച്ചം, പവിത്രമായ ദക്ഷിണേന്ത്യൻ ക്ഷേത്ര വർണ്ണങ്ങൾ, ക്ലാസിക്കൽ ടൈപ്പോഗ്രാഫി.';
+      'ശ്രദ്ധ തെറ്റാതെ ജപിക്കാൻ ശാന്തമായ സ്ക്രീൻ തെളിച്ചം ക്രമീകരിക്കുക.';
 
   @override
   String get appearanceBrightnessSection => 'സ്ക്രീൻ തെളിച്ചവും നിശ്ചലതയും';

@@ -60,6 +60,10 @@ void main() {
     expect(find.text('Sreeraj P'), findsOneWidget);
     expect(find.text('License'), findsOneWidget);
     expect(find.text('Open Source'), findsOneWidget);
+    expect(find.text('Sacred Temple Palette'), findsOneWidget);
+    expect(find.text('Vermillion (Sindoor)'), findsOneWidget);
+    expect(find.text('Typography & Scripts'), findsOneWidget);
+    expect(find.text('EB Garamond (Devotional Serif)'), findsOneWidget);
   });
 
   testWidgets('AboutScreen renders localized details in Sanskrit', (

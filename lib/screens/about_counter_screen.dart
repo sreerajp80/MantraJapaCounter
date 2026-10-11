@@ -72,8 +72,8 @@ class _CounterDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     final total = stats?.totalCount ?? 0;
     final today = stats?.todayCount ?? 0;
-    final totalMalas = malaForCount(total);
-    final goalMalas = malaForCount(counter.goal);
+    final totalMalas = malaForCount(total, counter.malaSize);
+    final goalMalas = malaForCount(counter.goal, counter.malaSize);
 
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -137,15 +137,16 @@ class _CounterDetail extends StatelessWidget {
               bottomLabel: l.labelTodayCap,
               color: Colors.orange,
             ),
-            CircularProgressWidget(
-              progress: (totalMalas / (goalMalas > 0 ? goalMalas : 1)).clamp(
-                0.0,
-                1.0,
+            if (counter.hasMala)
+              CircularProgressWidget(
+                progress: (totalMalas / (goalMalas > 0 ? goalMalas : 1)).clamp(
+                  0.0,
+                  1.0,
+                ),
+                centerText: '$totalMalas',
+                bottomLabel: l.labelMalas,
+                color: Colors.purple,
               ),
-              centerText: '$totalMalas',
-              bottomLabel: l.labelMalas,
-              color: Colors.purple,
-            ),
           ],
         ),
 
@@ -163,6 +164,10 @@ class _CounterDetail extends StatelessWidget {
         _infoRow(
           l.infoDailyGoal,
           counter.dailyGoal > 0 ? '${counter.dailyGoal}' : l.notSet,
+        ),
+        _infoRow(
+          l.malaSizeLabel,
+          counter.hasMala ? '${counter.malaSize}' : l.noMalaCountLabel,
         ),
         _infoRow(l.infoStarted, _formatDate(counter.startDate)),
         _infoRow(l.infoCreated, _formatDate(counter.createdAt)),

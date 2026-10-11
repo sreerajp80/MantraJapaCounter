@@ -6,7 +6,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
 
-/// Database migration tests (v1 → v2 → v3 → v4).
+/// Database migration tests (v1 → v2 → v3 → v4 → v5).
 ///
 /// These guard the "zero data loss" rule: a user upgrading from any older
 /// schema must end up with the same tables and columns as a fresh install,
@@ -80,10 +80,18 @@ void main() {
     await db.execute('ALTER TABLE counters ADD COLUMN disabledReason TEXT');
   }
 
+  Future<void> createV4Schema(Database db) async {
+    await createV3Schema(db);
+    await db.execute(
+      'ALTER TABLE counters ADD COLUMN isLocked INTEGER NOT NULL DEFAULT 0',
+    );
+  }
+
   final historicalSchemas = <int, Future<void> Function(Database)>{
     1: createV1Schema,
     2: createV2Schema,
     3: createV3Schema,
+    4: createV4Schema,
   };
 
   // ───────────────────────────── helpers ────────────────────────────────────
@@ -168,10 +176,10 @@ void main() {
 
       expect(
         await columnsOf(db, 'counters'),
-        contains('isLocked'),
-        reason: 'isLocked arrives in _createV4',
+        contains('malaSize'),
+        reason: 'malaSize arrives in _createV5',
       );
-      expect(AppConstants.dbVersion, greaterThanOrEqualTo(4));
+      expect(AppConstants.dbVersion, greaterThanOrEqualTo(5));
     });
   });
 
@@ -182,7 +190,7 @@ void main() {
       expect(await tablesOf(db), containsAll(['counters', 'japa_sessions']));
     });
 
-    test('counters has every column through v4', () async {
+    test('counters has every column through v5', () async {
       final db = await openFresh();
       addTearDown(db.close);
       expect(
@@ -200,6 +208,7 @@ void main() {
           'disabledAt', // v3
           'disabledReason', // v3
           'isLocked', // v4
+          'malaSize', // v5
         ]),
       );
     });
@@ -235,7 +244,7 @@ void main() {
       expect(await tablesOf(db), containsAll(['counters', 'japa_sessions']));
       expect(
         await columnsOf(db, 'counters'),
-        containsAll(['disabledAt', 'disabledReason', 'isLocked']),
+        containsAll(['disabledAt', 'disabledReason', 'isLocked', 'malaSize']),
       );
       expect(
         await columnsOf(db, 'japa_sessions'),
@@ -248,6 +257,7 @@ void main() {
       expect(rows.single['id'], 'c1');
       expect(rows.single['name'], 'Om Namah Shivaya');
       expect(rows.single['isLocked'], 0);
+      expect(rows.single['malaSize'], 108);
     });
 
     test('v2 → current keeps sessions and adds v3/v4 columns', () async {
@@ -287,6 +297,23 @@ void main() {
         0,
         reason: 'existing counters must not come back locked',
       );
+    });
+
+    test('v4 → current adds malaSize defaulting to 108', () async {
+      final db = await upgradeFrom(4, (old) async {
+        expect(await columnsOf(old, 'counters'), isNot(contains('malaSize')));
+        await old.insert('counters', {...counterRow, 'isLocked': 1});
+      });
+      addTearDown(db.close);
+
+      final rows = await db.query('counters');
+      expect(rows, hasLength(1));
+      expect(
+        rows.single['malaSize'],
+        AppConstants.defaultMalaSize,
+        reason: 'existing counters keep the old fixed mala of 108',
+      );
+      expect(rows.single['isLocked'], 1);
     });
 
     test('an upgraded v1 database matches a fresh install', () async {

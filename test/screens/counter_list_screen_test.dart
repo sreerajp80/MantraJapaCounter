@@ -149,12 +149,64 @@ void main() {
     await tester.tap(find.text('Create'));
     await tester.pumpAndSettle();
 
+    // The default mala count (108) is larger than the daily goal (50).
+    expect(find.text('Mala count cannot exceed daily goal'), findsOneWidget);
+    expect(repo.counters, isEmpty);
+
+    await tester.enterText(find.widgetWithText(TextField, 'Mala count'), '25');
+    await tester.tap(find.text('Create'));
+    await tester.pumpAndSettle();
+
     expect(find.text('New Counter'), findsNothing);
     expect(repo.counters, hasLength(1));
     expect(repo.counters.single.name, 'Hare Krishna');
     expect(repo.counters.single.goal, 100);
     expect(repo.counters.single.dailyGoal, 50);
+    expect(repo.counters.single.malaSize, 25);
     expect(find.widgetWithText(CounterCard, 'Hare Krishna'), findsOneWidget);
+  });
+
+  testWidgets('increment step may equal but not exceed the daily goal', (
+    tester,
+  ) async {
+    await pumpList(tester);
+
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Counter name *'),
+      'Hare Krishna',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Increment step (default 1)'),
+      '2',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Daily goal (0 = none)'),
+      '1',
+    );
+    await tester.enterText(find.widgetWithText(TextField, 'Mala count'), '1');
+    await tester.tap(find.text('Create'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('Increment step cannot exceed daily goal'),
+      findsOneWidget,
+    );
+    expect(repo.counters, isEmpty);
+
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Increment step (default 1)'),
+      '1',
+    );
+    await tester.tap(find.text('Create'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('New Counter'), findsNothing);
+    expect(repo.counters, hasLength(1));
+    expect(repo.counters.single.incrementStep, 1);
+    expect(repo.counters.single.dailyGoal, 1);
   });
 
   testWidgets('header menu opens the import / export dialog', (tester) async {

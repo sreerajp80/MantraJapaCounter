@@ -46,7 +46,7 @@ guidelines.
 |------|---------|
 | Flutter SDK | 3.47.6 or higher (stable channel) |
 | Dart SDK | `^3.13.0` (ships with the Flutter version above) |
-| Android SDK | compile/target SDK 36, min SDK 29 |
+| Android SDK | compile SDK 37, target SDK 36, min SDK 29 |
 | JDK | 17 |
 | Android NDK | The version Flutter reports for your SDK |
 

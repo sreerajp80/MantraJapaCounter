@@ -364,11 +364,47 @@ abstract class AppLocalizations {
   /// **'Daily goal cannot exceed lifetime goal'**
   String get dailyExceedsLifetime;
 
-  /// Validation error when step is greater than or equal to daily goal
+  /// Validation error when step is greater than daily goal
   ///
   /// In en, this message translates to:
-  /// **'Increment step must be less than daily goal'**
+  /// **'Increment step cannot exceed daily goal'**
   String get stepExceedsDaily;
+
+  /// Add/edit counter field label: number of counts in one mala (default 108)
+  ///
+  /// In en, this message translates to:
+  /// **'Mala count'**
+  String get malaSizeLabel;
+
+  /// Add/edit counter switch, and About counter value, for a counter that is not counted in malas
+  ///
+  /// In en, this message translates to:
+  /// **'No mala count'**
+  String get noMalaCountLabel;
+
+  /// Validation error when the mala count is empty or below 1
+  ///
+  /// In en, this message translates to:
+  /// **'Mala count must be at least 1'**
+  String get malaSizeTooSmall;
+
+  /// Validation error when the mala count is smaller than the increment step
+  ///
+  /// In en, this message translates to:
+  /// **'Mala count must be at least the increment step'**
+  String get malaSizeBelowStep;
+
+  /// Validation error when the mala count is larger than the daily goal
+  ///
+  /// In en, this message translates to:
+  /// **'Mala count cannot exceed daily goal'**
+  String get malaSizeExceedsDaily;
+
+  /// Validation error when the mala count is larger than the lifetime goal
+  ///
+  /// In en, this message translates to:
+  /// **'Mala count cannot exceed lifetime goal'**
+  String get malaSizeExceedsLifetime;
 
   /// Exploratory description on the import/export screen
   ///
@@ -409,8 +445,14 @@ abstract class AppLocalizations {
   /// Banner on the counting screen when an unfinished mala from an earlier day is resumed
   ///
   /// In en, this message translates to:
-  /// **'Unfinished mala from an earlier day: {chants}/108'**
-  String unfinishedMalaBanner(int chants);
+  /// **'Unfinished mala from an earlier day: {chants}/{malaSize}'**
+  String unfinishedMalaBanner(int chants, int malaSize);
+
+  /// Banner on the counting screen after the earlier-day mala is finished but the user keeps counting in the same session
+  ///
+  /// In en, this message translates to:
+  /// **'This session started on an earlier day'**
+  String get earlierDaySessionBanner;
 
   /// Banner button that keeps the unfinished counts and starts a fresh session at 0
   ///
@@ -435,6 +477,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'of one hundred eight'**
   String get ofOneHundredEight;
+
+  /// Subtitle on the counting bead circle showing the counter's mala count when it is not 108
+  ///
+  /// In en, this message translates to:
+  /// **'of {count}'**
+  String ofMalaCount(int count);
 
   /// Header title for lifetime goal progress bar
   ///
@@ -1471,7 +1519,7 @@ abstract class AppLocalizations {
   /// Header subtitle on Appearance screen
   ///
   /// In en, this message translates to:
-  /// **'Custom stillness brightness, sacred South Indian temple palette, and classical typography for distraction-free chanting.'**
+  /// **'Set a calm screen brightness for distraction-free chanting.'**
   String get appearanceHeaderSub;
 
   /// Brightness section header on Appearance screen

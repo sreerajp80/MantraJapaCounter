@@ -114,4 +114,35 @@ void main() {
       expect(restored.isLocked, true);
     });
   });
+
+  group('malaSize', () {
+    test('defaults to 108 and has a mala', () {
+      expect(base.malaSize, 108);
+      expect(base.hasMala, isTrue);
+      expect(base.copyWith(malaSize: 0).hasMala, isFalse);
+    });
+
+    test('toMap and fromMap preserve malaSize; missing means 108', () {
+      final c = base.copyWith(malaSize: 27);
+      expect(Counter.fromMap(c.toMap()).malaSize, 27);
+      final map = base.toMap()..remove('malaSize');
+      expect(Counter.fromMap(map).malaSize, 108);
+    });
+
+    test('toJson omits malaSize when 108 (Android format)', () {
+      expect(base.toJson().containsKey('malaSize'), isFalse);
+    });
+
+    test('toJson and fromJson preserve a custom or no mala count', () {
+      final c = base.copyWith(malaSize: 0);
+      final json = c.toJson();
+      expect(json['malaSize'], 0);
+      expect(Counter.fromJson(json).malaSize, 0);
+    });
+
+    test('old JSON without malaSize imports as 108', () {
+      final json = base.toJson();
+      expect(Counter.fromJson(json).malaSize, 108);
+    });
+  });
 }

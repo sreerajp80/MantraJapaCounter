@@ -3,6 +3,7 @@ import 'package:mantra_japa_counter/core/config/app_config.dart';
 import 'package:mantra_japa_counter/core/config/config_service.dart';
 import 'package:mantra_japa_counter/core/flavor/flavor_config.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/core/utils/build_date.g.dart';
 import 'package:mantra_japa_counter/widgets/made_with_love.dart';
 
@@ -129,6 +130,60 @@ class AboutScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               _infoRow(Icons.backup, l.aboutBackupTitle, l.aboutBackupBody),
+              const SizedBox(height: 16),
+              _infoSection(
+                Icons.color_lens_outlined,
+                l.appearancePaletteSection,
+                [
+                  _colorLine(
+                    TempleColors.vermillion,
+                    l.paletteVermillionName,
+                    l.paletteVermillionRole,
+                  ),
+                  _colorLine(
+                    TempleColors.tulsi,
+                    l.paletteTulsiName,
+                    l.paletteTulsiRole,
+                  ),
+                  _colorLine(
+                    TempleColors.sandal,
+                    l.paletteSandalName,
+                    l.paletteSandalRole,
+                  ),
+                  _colorLine(
+                    TempleColors.rose,
+                    l.paletteRoseName,
+                    l.paletteRoseRole,
+                  ),
+                  _colorLine(
+                    TempleColors.bg,
+                    l.paletteCreamName,
+                    l.paletteCreamRole,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              _infoSection(
+                Icons.font_download_outlined,
+                l.appearanceTypographySection,
+                [
+                  _nameAndUse(
+                    l.typographySerifTitle,
+                    l.typographySerifSub,
+                    AppTheme.serif(fontSize: 14),
+                  ),
+                  _nameAndUse(
+                    l.typographySansTitle,
+                    l.typographySansSub,
+                    AppTheme.sans(fontSize: 14),
+                  ),
+                  _nameAndUse(
+                    l.typographyMalTitle,
+                    l.typographyMalSub,
+                    AppTheme.mal(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
               const SizedBox(height: 24),
               const Divider(),
               const SizedBox(height: 8),
@@ -193,6 +248,69 @@ class AboutScreen extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ],
+    );
+  }
+
+  /// Read-only info block: a titled row like [_infoRow] with plain lines
+  /// under it. No cards or borders, so nothing looks tappable.
+  Widget _infoSection(IconData icon, String title, List<Widget> lines) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: 24, color: Colors.grey),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
+              for (final line in lines)
+                Padding(padding: const EdgeInsets.only(top: 8), child: line),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _colorLine(Color color, String name, String role) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 3),
+          child: Container(
+            width: 14,
+            height: 14,
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+              border: Border.all(color: TempleColors.line),
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(child: _nameAndUse(name, role, const TextStyle())),
+      ],
+    );
+  }
+
+  Widget _nameAndUse(String name, String use, TextStyle nameStyle) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(name, style: nameStyle),
+        Text(
+          use,
+          style: const TextStyle(color: Colors.grey, fontSize: 13, height: 1.3),
         ),
       ],
     );

@@ -22,7 +22,7 @@ Read [AGENTS.md](../AGENTS.md) and [CLAUDE.md](../CLAUDE.md) before making any c
 ### Goals
 
 - Allow users to create and manage multiple named mantra counters independently.
-- Count mantra repetitions (japa) with a simple tap interface, including configurable increment steps and automatic mala (108-bead round) tracking.
+- Count mantra repetitions (japa) with a simple tap interface, including configurable increment steps and automatic mala tracking (108 counts per mala by default, set per counter, or no mala at all).
 - Persist all session history with duration and count data, grouped by date for easy review.
 - Support daily and lifetime goal setting with visual progress indicators per counter.
 - Provide JSON-based import/export for data backup and restore, with full compatibility with the Android app's export format.
@@ -112,7 +112,7 @@ lib/
 |------|-------------|-------|
 | 1 | `WidgetsFlutterBinding.ensureInitialized()` | Always first |
 | 2 | `SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])` | Lock portrait before any frames render |
-| 3 | `openDatabase(path, version: AppConstants.dbVersion, onCreate: ..., onUpgrade: ...)` | Apply the current schema version (4); runs migrations 1→2→3→4 if upgrading |
+| 3 | `openDatabase(path, version: AppConstants.dbVersion, onCreate: ..., onUpgrade: ...)` | Apply the current schema version (5); runs migrations 1→2→3→4→5 if upgrading |
 | 4 | `SharedPreferences.getInstance()` | Used for crash-recovery active session and user settings |
 | 5 | `AppFlavorConfig.init(flavor)` | Read flavor via `String.fromEnvironment('FLUTTER_APP_FLAVOR')` — auto-populated by `--flavor` |
 | 6 | `FlutterLocalNotificationsPlugin.initialize(...)` | Create Android notification channels for goal and mala alerts |
@@ -234,7 +234,7 @@ Intentional layer omissions:
 
 ### Current Schema Version
 
-SQLite schema version: `3` (matches the Android Room database version 3 schema for import compatibility)
+SQLite schema version: `5` (versions 1–3 match the Android Room database schema for import compatibility)
 
 Migration history:
 
@@ -243,16 +243,18 @@ Migration history:
 | 1 | Initial schema: `counters` table (id TEXT PK, name, initialCount, incrementStep, goal, dailyGoal, startDate, createdAt, status TEXT) |
 | 2 | Added `japa_sessions` table (id TEXT PK, counterId TEXT FK CASCADE, counterName, count INTEGER, timestamp INTEGER, duration INTEGER); added indices on counterId and timestamp |
 | 3 | Added `malas` INTEGER, `chants` INTEGER columns to `japa_sessions`; added `disabledAt` INTEGER, `disabledReason` TEXT columns to `counters` |
+| 4 | Added `isLocked` INTEGER (default 0) to `counters` |
+| 5 | Added `malaSize` INTEGER (default 108) to `counters` — counts per mala; 0 = no mala count |
 
 ### Core Models Or Entities
 
 | Type | Purpose | Mutable? | Notes |
 |------|---------|----------|-------|
-| `Counter` | Named mantra practice configuration with count, goals, and lifecycle status | No | Immutable; state changes produce new instances via `copyWith` |
+| `Counter` | Named mantra practice configuration with count, goals, mala count, and lifecycle status | No | Immutable; state changes produce new instances via `copyWith`. `malaSize` defaults to 108; 0 means no mala count. JSON writes `malaSize` only when it is not 108, so default counters export in the original Android format |
 | `JapaSession` | Single completed counting session (count, malas, chants, timestamp, duration) | No | Append-only; never edited after creation |
 | `CounterStatus` | Enum: ACTIVE, DISABLED_SUCCESS, DISABLED_FAILURE | No | Controls counter visibility in the active list |
 | `DailySummary` | Sessions grouped by date with aggregated totals | No | Computed at read time; not stored in DB |
-| `ActiveSession` | In-progress session state during counting | Yes | Held in `CountingNotifier`; serialized to SharedPreferences for crash recovery. `carriedCount` / `carriedDurationMs` hold the part of an unfinished mala already stored in earlier-day rows (see below) |
+| `ActiveSession` | In-progress session state during counting | Yes | Held in `CountingNotifier`; serialized to SharedPreferences for crash recovery. `carriedCount` / `carriedDurationMs` hold the part of an unfinished mala already stored in earlier-day rows (see below). `malaSize` is copied from the counter when the session starts and kept for the whole session |
 
 ### Unfinished Mala Across Days
 
@@ -260,13 +262,40 @@ Migration history:
 - Taps are stored on the day they are made. On the first tap of a new day (or when counting goes
   past midnight), `CountingNotifier` closes the current `japa_sessions` row with its own day's taps
   and starts a new row dated today. `ActiveSession.tapCount` stays the whole-session total (it drives
-  the mala ring and the 108 checks); the row stores `tapCount - carriedCount`.
+  the mala ring and the mala checks); the row stores `tapCount - carriedCount`.
 - Undo cannot go below `carriedCount` — taps stored on an earlier day are not undone.
 - The counting screen shows a non-blocking "Unfinished mala from an earlier day" banner with a
   **Start new** button, and the menu has **Finish & start new**. Both call
   `CountingNotifier.finishAndStartNew()`, which keeps the counts made so far and starts a fresh
   session at 0 (unlike **Reset session**, which deletes the current session's counts).
+- The banner shows when a visit opens on a mala that still holds earlier-day taps (also after
+  leaving and coming back the same day). Once shown, it stays for the rest of the visit, even after
+  the mala is complete — then its text changes to "This session started on an earlier day". It goes
+  away when a new session is started; on the next visit it shows only if the mala in progress still
+  holds earlier-day taps.
 - No schema change and no export format change: each day's part is a normal session row.
+
+### Per-Counter Mala Count
+
+- Each counter has a mala count (`Counter.malaSize`, default 108). It is set in the Add / Edit
+  counter dialog. It must be at least 1, at least the increment step, and not more than the daily
+  or lifetime goal when those are set. The **No mala count** switch saves 0.
+- Mala math lives in `core/utils/mala.dart` (`malaForCount`, `malasOf`, `chantsOf`). With no mala
+  count, malas are 0 and all counts are chants.
+- The counting-screen ring always has 108 beads (`AppConstants.ringBeads`). `malaRingFill` picks
+  the mode:
+  - **Dots** when the mala count divides 108 (each count fills `108 / malaSize` beads) or is a
+    multiple of 108 (every `malaSize / 108` counts fill one bead).
+  - **Percentage arc** for any other mala count (for example 5, 100, 360).
+  - With no mala count, `noMalaRingFill` shows today's count against the daily goal, else the
+    lifetime count against the lifetime goal, else an empty ring.
+- With no mala count there is no mala sound / vibration, no Meru pause, no mala text, and no
+  unfinished mala: leaving the counting screen always finishes the session.
+- If the mala count is edited while a session is paused, the session uses the new mala count when
+  it is resumed (prefs and its DB row's malas / chants split are updated). Finished history rows
+  keep their old split.
+- The history screen uses the counter's mala count when filtered to one counter; the unfiltered
+  view (many counters) uses the default of 108 for its per-day mala figure.
 | `ExportData` | Top-level wrapper for JSON import/export (list of counters + sessions) | No | Must be compatible with Android Gson export format |
 
 ### Serialization Strategy
@@ -322,7 +351,7 @@ Migration history:
 
 ### Local Storage
 
-- Database: `sqflite` — main data store for all counters and sessions; schema version 4
+- Database: `sqflite` — main data store for all counters and sessions; schema version 5
 - WAL mode: enabled (`PRAGMA journal_mode=WAL`) for concurrent read performance during active counting
 - Key-value storage: `shared_preferences` — active session crash recovery, notification preferences, screen brightness setting
 - Secure storage: not applicable — app data contains only spiritual practice counts; no sensitive data requiring encryption
@@ -413,10 +442,10 @@ test/
 
 ### Critical Test Areas
 
-- Mala calculation: `count ÷ 108` integer division produces correct completed rounds
+- Mala calculation: `count ÷ malaSize` integer division produces correct completed rounds (default 108; 0 = no mala); ring mode selection
 - Session crash recovery: SharedPreferences written every 5 taps or 5 seconds; DB written every 30 seconds or 20 taps; both write paths must be exercised
 - Daily goal progress: sessions within the same calendar date aggregated correctly across midnight boundaries
-- Database migration from v1 → v2 → v3 → v4
+- Database migration from v1 → v2 → v3 → v4 → v5
 - Import parsing: malformed JSON rejected without corrupting existing database state
 - Import compatibility: Android Gson-exported JSON parses correctly in Flutter
 - Error boundary: sqflite open failure handled gracefully at startup

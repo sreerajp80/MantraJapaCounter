@@ -8,6 +8,11 @@ import 'package:mantra_japa_counter/theme/theme.dart';
 /// the most recently filled bead gets a [TempleColors.vermillion] highlight
 /// and a guru bead sits at the top of the ring.
 ///
+/// When [arcFraction] is set, the beads are drawn only as a faint track and
+/// a smooth arc fills that fraction (0..1) of the ring instead. This is used
+/// when the counter's mala count does not fit the 108 beads evenly, or when
+/// the counter has no mala count.
+///
 /// The number displayed in the centre is supplied by the parent via [child]
 /// so the parent can format it however it wishes.
 class TempleMalaCircle extends StatelessWidget {
@@ -16,6 +21,7 @@ class TempleMalaCircle extends StatelessWidget {
   final int beadSegments;
   final double diameter;
   final bool goalReached;
+  final double? arcFraction;
   final Widget child;
 
   const TempleMalaCircle({
@@ -26,11 +32,13 @@ class TempleMalaCircle extends StatelessWidget {
     this.beadSegments = 108,
     this.diameter = 280,
     this.goalReached = false,
+    this.arcFraction,
   });
 
   @override
   Widget build(BuildContext context) {
-    final filled = goal <= 0
+    final arc = arcFraction?.clamp(0.0, 1.0);
+    final filled = arc != null || goal <= 0
         ? 0
         : ((count / goal).clamp(0.0, 1.0) * beadSegments).round();
 
@@ -42,6 +50,7 @@ class TempleMalaCircle extends StatelessWidget {
           beadSegments: beadSegments,
           filled: filled,
           goalReached: goalReached,
+          arcFraction: arc,
         ),
         child: Center(child: child),
       ),
@@ -53,11 +62,13 @@ class _MalaPainter extends CustomPainter {
   final int beadSegments;
   final int filled;
   final bool goalReached;
+  final double? arcFraction;
 
   _MalaPainter({
     required this.beadSegments,
     required this.filled,
     required this.goalReached,
+    this.arcFraction,
   });
 
   @override
@@ -113,6 +124,37 @@ class _MalaPainter extends CustomPainter {
       }
     }
 
+    // Percentage mode: a smooth arc over the bead track, with a highlighted
+    // bead at its leading end.
+    final arc = arcFraction;
+    if (arc != null && arc > 0) {
+      final rect = Rect.fromCircle(center: Offset(cx, cy), radius: radius);
+      canvas.drawArc(
+        rect,
+        -math.pi / 2,
+        arc * 2 * math.pi,
+        false,
+        Paint()
+          ..color = filledBeadColor
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 5
+          ..strokeCap = StrokeCap.round,
+      );
+      final endAngle = -math.pi / 2 + arc * 2 * math.pi;
+      final end = Offset(
+        cx + math.cos(endAngle) * radius,
+        cy + math.sin(endAngle) * radius,
+      );
+      canvas.drawCircle(
+        end,
+        7,
+        Paint()
+          ..color = activeBeadColor.withValues(alpha: 0.45)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),
+      );
+      canvas.drawCircle(end, 4, Paint()..color = activeBeadColor);
+    }
+
     // Guru bead — a circle on the same ring as the dots, just larger so it
     // reads as the marker bead. Its centre shares the bead-ring radius.
     final guruCenter = Offset(cx, cy - radius);
@@ -134,6 +176,7 @@ class _MalaPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant _MalaPainter oldDelegate) =>
       oldDelegate.filled != filled ||
+      oldDelegate.arcFraction != arcFraction ||
       oldDelegate.beadSegments != beadSegments ||
       oldDelegate.goalReached != goalReached;
 }

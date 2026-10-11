@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/models/daily_summary.dart';
@@ -44,6 +45,9 @@ class HistoryScreen extends ConsumerWidget {
                   counterName: counterAsync?.value?.name,
                   counterGoal: counterAsync?.value?.goal ?? 0,
                   counterDailyGoal: counterAsync?.value?.dailyGoal ?? 0,
+                  counterMalaSize:
+                      counterAsync?.value?.malaSize ??
+                      AppConstants.defaultMalaSize,
                   counterInitialCount: counterAsync?.value?.initialCount ?? 0,
                   showCounterNames: filterCounterId == null,
                 ),
@@ -89,6 +93,7 @@ class HistoryScreen extends ConsumerWidget {
     String? counterName,
     int counterGoal = 0,
     int counterDailyGoal = 0,
+    int counterMalaSize = AppConstants.defaultMalaSize,
     int counterInitialCount = 0,
     bool showCounterNames = false,
   }) {
@@ -181,6 +186,7 @@ class HistoryScreen extends ConsumerWidget {
                 dayCumulativeTotal: cumulativeByIndex[i - 1],
                 counterGoal: counterGoal,
                 counterDailyGoal: counterDailyGoal,
+                counterMalaSize: counterMalaSize,
                 showCounterNames: showCounterNames,
                 filterCounterId: filterCounterId,
               );

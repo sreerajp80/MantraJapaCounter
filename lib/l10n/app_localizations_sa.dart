@@ -149,7 +149,27 @@ class AppLocalizationsSa extends AppLocalizations {
       'दैनिकलक्ष्यम् आजीवनलक्ष्यात् अधिकं भवितुं नार्हति';
 
   @override
-  String get stepExceedsDaily => 'वृद्धिपदं दैनिकलक्ष्यात् न्यूनं भवेत्';
+  String get stepExceedsDaily => 'वृद्धिपदं दैनिकलक्ष्यात् अधिकं न भवेत्';
+
+  @override
+  String get malaSizeLabel => 'मालासङ्ख्या';
+
+  @override
+  String get noMalaCountLabel => 'मालासङ्ख्या नास्ति';
+
+  @override
+  String get malaSizeTooSmall => 'मालासङ्ख्या न्यूनातिन्यूनम् १ भवेत्';
+
+  @override
+  String get malaSizeBelowStep => 'मालासङ्ख्या वृद्धिपदात् न्यूना न भवेत्';
+
+  @override
+  String get malaSizeExceedsDaily =>
+      'मालासङ्ख्या दैनिकलक्ष्यात् अधिका भवितुं नार्हति';
+
+  @override
+  String get malaSizeExceedsLifetime =>
+      'मालासङ्ख्या आजीवनलक्ष्यात् अधिका भवितुं नार्हति';
 
   @override
   String get importExportBody =>
@@ -177,9 +197,12 @@ class AppLocalizationsSa extends AppLocalizations {
   String get resetSession => 'सत्रं पुनःस्थाप्यताम्';
 
   @override
-  String unfinishedMalaBanner(int chants) {
-    return 'पूर्वदिनस्य अपूर्णा माला: $chants/१०८';
+  String unfinishedMalaBanner(int chants, int malaSize) {
+    return 'पूर्वदिनस्य अपूर्णा माला: $chants/$malaSize';
   }
+
+  @override
+  String get earlierDaySessionBanner => 'इदं सत्रं पूर्वदिने आरब्धम्';
 
   @override
   String get startNewSession => 'नूतनम् आरभ्यताम्';
@@ -192,6 +215,11 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get ofOneHundredEight => '१०८ मध्ये';
+
+  @override
+  String ofMalaCount(int count) {
+    return '$count मध्ये';
+  }
 
   @override
   String get lifetimeGoalCaps => 'आजीवनलक्ष्यम्';
@@ -773,8 +801,7 @@ class AppLocalizationsSa extends AppLocalizations {
   String get appearanceHeaderTitle => 'मन्दिरस्वरूपम्';
 
   @override
-  String get appearanceHeaderSub =>
-      'परम्परया मन्दिरसौन्दर्येण च प्रेरितं सौम्यं वातावरणम्';
+  String get appearanceHeaderSub => 'निर्विघ्नजपाय शान्तं पटलप्रकाशं योजयतु।';
 
   @override
   String get appearanceBrightnessSection => 'प्रकाशसंयोजनम्';

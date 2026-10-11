@@ -2,10 +2,14 @@
 class AppConstants {
   // Database
   static const String dbName = 'japa_counter.db';
-  static const int dbVersion = 4;
+  static const int dbVersion = 5;
 
-  // Mala
-  static const int malaSize = 108;
+  // Mala. Each counter sets its own mala count; this is the default for new
+  // and older counters. A mala count of 0 means the counter has no mala.
+  static const int defaultMalaSize = 108;
+
+  // Beads drawn on the counting-screen mala ring.
+  static const int ringBeads = 108;
 
   // Meru pause after each mala (seconds). Choices shown in Settings.
   static const List<int> meruPauseChoicesSeconds = [3, 5, 10];

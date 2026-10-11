@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:mantra_japa_counter/core/constants/app_constants.dart';
+import 'package:mantra_japa_counter/core/utils/mala.dart';
 import 'package:mantra_japa_counter/models/active_session.dart';
 import 'package:mantra_japa_counter/models/japa_session.dart';
 import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
@@ -33,11 +33,14 @@ class CountingService {
 
   // ──────────────────────────── Mala calculation ──────────────────────────────
 
-  /// Integer division: count ÷ 108.
-  static int calculateMalas(int count) => count ~/ AppConstants.malaSize;
+  /// Integer division: count ÷ mala count (0 when there is no mala count).
+  static int calculateMalas(int count, int malaSize) =>
+      malasOf(count, malaSize);
 
-  /// Remainder: count % 108.
-  static int calculateChants(int count) => count % AppConstants.malaSize;
+  /// Remainder: count % mala count (all of count when there is no mala
+  /// count).
+  static int calculateChants(int count, int malaSize) =>
+      chantsOf(count, malaSize);
 
   // ──────────────────────────── Tap ───────────────────────────────────────────
 
@@ -76,8 +79,8 @@ class CountingService {
       counterId: session.counterId,
       counterName: session.counterName,
       count: session.tapCount,
-      malas: calculateMalas(session.tapCount),
-      chants: calculateChants(session.tapCount),
+      malas: calculateMalas(session.tapCount, session.malaSize),
+      chants: calculateChants(session.tapCount, session.malaSize),
       timestamp: now,
       duration: session.duration,
     );

@@ -64,7 +64,7 @@ class CounterOptionsSheet extends StatelessWidget {
                 context: context,
                 builder: (_) => CounterDialog(
                   existing: counter,
-                  onSave: (name, startDate, init, step, goal, daily) {
+                  onSave: (name, startDate, init, step, goal, daily, malaSize) {
                     ref
                         .read(countersNotifierProvider.notifier)
                         .updateCounter(
@@ -75,6 +75,7 @@ class CounterOptionsSheet extends StatelessWidget {
                             incrementStep: step,
                             goal: goal,
                             dailyGoal: daily,
+                            malaSize: malaSize,
                           ),
                         );
                   },

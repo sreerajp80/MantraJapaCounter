@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/core/utils/mala.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/counters_provider.dart';
@@ -38,11 +39,12 @@ final counterStatsProvider = FutureProvider.autoDispose
       final today = await repo.getTodayCountForCounter(counterId);
       final initial = counter?.initialCount ?? 0;
       final total = initial + dbTotal;
+      final malaSize = counter?.malaSize ?? AppConstants.defaultMalaSize;
       return CounterStats(
         totalCount: total,
         todayCount: today,
-        totalMalas: malaForCount(total),
-        todayMalas: malaForCount(today),
+        totalMalas: malaForCount(total, malaSize),
+        todayMalas: malaForCount(today, malaSize),
         averageDaily: 0, // computed separately for the about screen
       );
     });
@@ -78,15 +80,18 @@ final todayAggregateProvider = FutureProvider.autoDispose<TodayAggregate>((
   final counters = await ref.watch(countersNotifierProvider.future);
   final active = counters.where((c) => c.isActive).toList();
   var totalChants = 0;
+  var totalMalas = 0;
   var usedToday = 0;
   for (final c in active) {
     final today = await repo.getTodayCountForCounter(c.id);
     if (today > 0) usedToday++;
     totalChants += today;
+    // Counters can have different mala counts, so add each one's own malas.
+    totalMalas += malaForCount(today, c.malaSize);
   }
   return TodayAggregate(
     chants: totalChants,
-    malas: malaForCount(totalChants),
+    malas: totalMalas,
     counters: usedToday,
   );
 });

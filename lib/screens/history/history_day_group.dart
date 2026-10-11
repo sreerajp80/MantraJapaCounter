@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/models/daily_summary.dart';
@@ -20,6 +21,10 @@ class HistoryDayGroup extends ConsumerStatefulWidget {
   final int dayCumulativeTotal;
   final int counterGoal;
   final int counterDailyGoal;
+
+  /// Mala count of the filtered counter (0 = no mala count). With no filter
+  /// the default mala of 108 is used.
+  final int counterMalaSize;
   final bool showCounterNames;
   final String? filterCounterId;
 
@@ -33,6 +38,7 @@ class HistoryDayGroup extends ConsumerStatefulWidget {
     required this.dayCumulativeTotal,
     required this.counterGoal,
     required this.counterDailyGoal,
+    this.counterMalaSize = AppConstants.defaultMalaSize,
     required this.showCounterNames,
     required this.filterCounterId,
   });
@@ -47,7 +53,7 @@ class _HistoryDayGroupState extends ConsumerState<HistoryDayGroup> {
   @override
   Widget build(BuildContext context) {
     final summary = widget.summary;
-    final dayMalas = malaForCount(summary.totalCount);
+    final dayMalas = malaForCount(summary.totalCount, widget.counterMalaSize);
     final goalProgress = widget.counterGoal > 0
         ? (widget.dayCumulativeTotal / widget.counterGoal * 100).clamp(
             0.0,
@@ -167,11 +173,13 @@ class _HistoryDayGroupState extends ConsumerState<HistoryDayGroup> {
                               label: widget.l.labelChants,
                               value: summary.totalCount.toString(),
                             ),
-                            const SizedBox(width: 14),
-                            _Pair(
-                              label: widget.l.labelMala,
-                              value: dayMalas.toString(),
-                            ),
+                            if (widget.counterMalaSize > 0) ...[
+                              const SizedBox(width: 14),
+                              _Pair(
+                                label: widget.l.labelMala,
+                                value: dayMalas.toString(),
+                              ),
+                            ],
                             const SizedBox(width: 14),
                             if (goalProgress != null)
                               Flexible(

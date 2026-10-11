@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/legacy.dart';
 import 'package:uuid/uuid.dart';
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/core/utils/day.dart';
+import 'package:mantra_japa_counter/core/utils/mala.dart';
 import 'package:mantra_japa_counter/models/active_session.dart';
 import 'package:mantra_japa_counter/models/japa_session.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
@@ -47,10 +48,14 @@ class CountingState {
   /// hint — counting is never blocked.
   final bool isRushing;
 
-  /// True when the screen opened on an unfinished mala whose taps were made
-  /// on an earlier day, and no tap has been made yet. Drives the
-  /// "Start new" banner.
+  /// True while the "Start new" banner is shown: the mala in progress holds
+  /// taps made on an earlier day. Once on, it stays for the rest of the
+  /// visit (even after the mala is done) until the user starts a new session.
   final bool resumedFromEarlierDay;
+
+  /// True when the banner is shown but the earlier-day mala is already
+  /// finished, so the user is now counting a new mala in that same session.
+  final bool earlierDayMalaFinished;
 
   const CountingState({
     this.session,
@@ -62,6 +67,7 @@ class CountingState {
     this.meruPauseSeconds = AppConstants.meruPauseDefaultSeconds,
     this.isRushing = false,
     this.resumedFromEarlierDay = false,
+    this.earlierDayMalaFinished = false,
   });
 
   /// Unflushed taps in the current session — the delta still in memory.
@@ -87,6 +93,7 @@ class CountingState {
     int? meruPauseSeconds,
     bool? isRushing,
     bool? resumedFromEarlierDay,
+    bool? earlierDayMalaFinished,
   }) {
     return CountingState(
       session: session ?? this.session,
@@ -99,6 +106,8 @@ class CountingState {
       isRushing: isRushing ?? this.isRushing,
       resumedFromEarlierDay:
           resumedFromEarlierDay ?? this.resumedFromEarlierDay,
+      earlierDayMalaFinished:
+          earlierDayMalaFinished ?? this.earlierDayMalaFinished,
     );
   }
 }
@@ -156,12 +165,19 @@ class CountingNotifier extends StateNotifier<CountingState> {
     _dailyGoal = counter.dailyGoal;
     _lifetimeGoal = counter.goal;
 
-    final saved = settings.getActiveSession(_counterId);
+    final stored = settings.getActiveSession(_counterId);
 
     ActiveSession session;
     var resumedFromEarlierDay = false;
-    if (saved != null && saved.counterId == _counterId) {
-      // Resume the abandoned/paused session for this counter.
+    if (stored != null && stored.counterId == _counterId) {
+      // Resume the abandoned/paused session for this counter. If the
+      // counter's mala count was edited while the session was paused, the
+      // session switches to the new mala count.
+      final malaSizeChanged = stored.malaSize != counter.malaSize;
+      final saved = malaSizeChanged
+          ? stored.copyWith(malaSize: counter.malaSize)
+          : stored;
+      if (malaSizeChanged) await _writePrefsImmediately(saved);
       session = saved;
       _sessionDbId = saved.sessionId;
       // The DB row holds only this row's part of the session; taps carried
@@ -181,8 +197,8 @@ class CountingNotifier extends StateNotifier<CountingState> {
             counterId: counter.id,
             counterName: counter.name,
             count: rowCount,
-            malas: rowCount ~/ 108,
-            chants: rowCount % 108,
+            malas: malasOf(rowCount, saved.malaSize),
+            chants: chantsOf(rowCount, saved.malaSize),
             timestamp: saved.startTime,
             duration: saved.rowDuration,
           ),
@@ -196,24 +212,33 @@ class CountingNotifier extends StateNotifier<CountingState> {
           await repo.updateSession(
             existing.copyWith(
               count: rowCount,
-              malas: rowCount ~/ 108,
-              chants: rowCount % 108,
+              malas: malasOf(rowCount, saved.malaSize),
+              chants: chantsOf(rowCount, saved.malaSize),
               duration: saved.rowDuration,
             ),
           );
           _lastDbWrittenCount = saved.tapCount;
         } else {
+          if (malaSizeChanged) {
+            // Re-split the row's count with the new mala count.
+            await repo.updateSession(
+              existing.copyWith(
+                malas: malasOf(existing.count, saved.malaSize),
+                chants: chantsOf(existing.count, saved.malaSize),
+              ),
+            );
+          }
           _lastDbWrittenCount = existing.count + saved.carriedCount;
         }
       }
-      resumedFromEarlierDay =
-          saved.tapCount > 0 && _isOnEarlierDay(saved.startTime);
+      resumedFromEarlierDay = _holdsEarlierDayTaps(saved);
     } else {
       // Fresh session — no DB row yet (Kotlin inserts on first tap).
       session = _startFreshSession(
         counterId: counter.id,
         counterName: counter.name,
         incrementStep: counter.incrementStep,
+        malaSize: counter.malaSize,
       );
     }
 
@@ -317,7 +342,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
     final updated = resumed.copyWith(
       tapCount: resumed.tapCount + resumed.incrementStep,
     );
-    state = state.copyWith(session: updated, resumedFromEarlierDay: false);
+    state = _withBannerFor(updated);
 
     if (isFirstRowTap) {
       // First tap of this row — insert into DB immediately for data safety.
@@ -342,10 +367,12 @@ class CountingNotifier extends StateNotifier<CountingState> {
   /// on.
   void _startMeruPauseIfMalaDone(ActiveSession session) {
     final settings = _ref.read(settingsRepositoryProvider);
-    if (!settings.meruPauseEnabled) return;
-    final prevMalas =
-        (session.tapCount - session.incrementStep) ~/ AppConstants.malaSize;
-    final newMalas = session.tapCount ~/ AppConstants.malaSize;
+    if (!settings.meruPauseEnabled || !session.hasMala) return;
+    final prevMalas = malasOf(
+      session.tapCount - session.incrementStep,
+      session.malaSize,
+    );
+    final newMalas = session.malas;
     if (newMalas <= prevMalas) return;
 
     final seconds = settings.meruPauseSeconds;
@@ -412,7 +439,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
     final resumed = _resumeIfPaused(session);
     final newCount = resumed.tapCount - resumed.incrementStep;
     final updated = resumed.copyWith(tapCount: newCount);
-    state = state.copyWith(session: updated);
+    state = _withBannerFor(updated);
 
     if (newCount > 0 && updated.rowCount <= 0) {
       // Undid all of today's taps of a carried-over mala. Drop today's row
@@ -434,8 +461,13 @@ class CountingNotifier extends StateNotifier<CountingState> {
         counterId: updated.counterId,
         counterName: updated.counterName,
         incrementStep: updated.incrementStep,
+        malaSize: updated.malaSize,
       );
-      state = state.copyWith(session: fresh);
+      state = state.copyWith(
+        session: fresh,
+        resumedFromEarlierDay: false,
+        earlierDayMalaFinished: false,
+      );
     } else {
       _tapsSinceLastDbFlush++;
       _tapsSinceLastPrefsFlush++;
@@ -459,6 +491,30 @@ class CountingNotifier extends StateNotifier<CountingState> {
 
   bool _isOnEarlierDay(int ms) =>
       isEarlierLocalDay(ms, _ref.read(countingClockProvider)());
+
+  /// True when the mala in progress is unfinished and holds taps made on an
+  /// earlier day — either nothing is tapped today yet, or the taps carried
+  /// from earlier-day rows belong to this same mala.
+  bool _holdsEarlierDayTaps(ActiveSession session) {
+    if (!session.isMidMala) return false;
+    final mala = session.malaSize;
+    if (_isOnEarlierDay(session.startTime)) return true;
+    final carried = session.carriedCount;
+    return carried % mala != 0 && session.tapCount ~/ mala == carried ~/ mala;
+  }
+
+  /// State with [session] and the banner flags updated. The banner, once
+  /// shown, stays for the rest of this visit; after the earlier-day mala is
+  /// done it switches to its "session started on an earlier day" text.
+  CountingState _withBannerFor(ActiveSession session) {
+    final holds = _holdsEarlierDayTaps(session);
+    final show = state.resumedFromEarlierDay || holds;
+    return state.copyWith(
+      session: session,
+      resumedFromEarlierDay: show,
+      earlierDayMalaFinished: show && !holds,
+    );
+  }
 
   /// Moves the session onto a new row dated today. The current row keeps
   /// the taps made on its own day (unsaved ones are written first); the
@@ -485,7 +541,6 @@ class CountingNotifier extends StateNotifier<CountingState> {
     state = state.copyWith(
       session: next,
       lastDbWrittenCount: _lastDbWrittenCount,
-      resumedFromEarlierDay: false,
     );
 
     final repo = _ref.read(japaCounterRepositoryProvider);
@@ -497,8 +552,8 @@ class CountingNotifier extends StateNotifier<CountingState> {
         counterId: session.counterId,
         counterName: session.counterName,
         count: oldCount,
-        malas: oldCount ~/ 108,
-        chants: oldCount % 108,
+        malas: malasOf(oldCount, session.malaSize),
+        chants: chantsOf(oldCount, session.malaSize),
         timestamp: existing?.timestamp ?? session.startTime,
         duration: session.rowDuration,
       );
@@ -528,8 +583,8 @@ class CountingNotifier extends StateNotifier<CountingState> {
       counterId: session.counterId,
       counterName: session.counterName,
       count: rowCount,
-      malas: rowCount ~/ 108,
-      chants: rowCount % 108,
+      malas: malasOf(rowCount, session.malaSize),
+      chants: chantsOf(rowCount, session.malaSize),
       timestamp: session.startTime,
       duration: session.rowDuration,
     );
@@ -559,8 +614,8 @@ class CountingNotifier extends StateNotifier<CountingState> {
         counterId: existing.counterId,
         counterName: existing.counterName,
         count: session.rowCount,
-        malas: session.rowCount ~/ 108,
-        chants: session.rowCount % 108,
+        malas: malasOf(session.rowCount, session.malaSize),
+        chants: chantsOf(session.rowCount, session.malaSize),
         timestamp: existing.timestamp,
         duration: session.rowDuration,
       ),
@@ -638,12 +693,14 @@ class CountingNotifier extends StateNotifier<CountingState> {
 
   /// Exit the counting screen.
   ///
-  /// If the session has counts but is mid-mala (`tapCount % 108 != 0`),
+  /// If the session has counts but is mid-mala (`tapCount % malaSize != 0`),
   /// pause it so the next visit to this counter resumes the same session.
   /// Otherwise finalize and clear crash-recovery prefs.
   ///
   /// This holds even when today's daily goal is already met: the leftover
   /// count is kept. To close an unfinished mala, use [finishAndStartNew].
+  /// A counter with no mala count has no unfinished mala, so its session is
+  /// always finalized.
   Future<JapaSession?> completeSession() async {
     final session = state.session;
     if (session == null || state.isCompleting) return null;
@@ -651,7 +708,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
     state = state.copyWith(isCompleting: true);
     _stopTimers();
 
-    final shouldPause = session.tapCount > 0 && session.tapCount % 108 != 0;
+    final shouldPause = session.tapCount > 0 && session.isMidMala;
 
     if (shouldPause) {
       // Freeze the active segment into accumulatedMs and persist as paused.
@@ -717,6 +774,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
       counterId: counter.id,
       counterName: counter.name,
       incrementStep: counter.incrementStep,
+      malaSize: counter.malaSize,
     );
     state = CountingState(session: newSession);
     await _refreshTotals(counter.initialCount);
@@ -740,6 +798,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
       counterId: counter.id,
       counterName: counter.name,
       incrementStep: counter.incrementStep,
+      malaSize: counter.malaSize,
     );
     state = CountingState(session: newSession);
     await _refreshTotals(counter.initialCount);
@@ -763,6 +822,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
       counterId: counter.id,
       counterName: counter.name,
       incrementStep: counter.incrementStep,
+      malaSize: counter.malaSize,
     );
     state = CountingState(session: newSession);
     await _refreshTotals(counter.initialCount);
@@ -802,6 +862,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
     required String counterId,
     required String counterName,
     required int incrementStep,
+    required int malaSize,
   }) {
     final now = DateTime.now().millisecondsSinceEpoch;
     final session = ActiveSession(
@@ -812,6 +873,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
       tapCount: 0,
       incrementStep: incrementStep,
       lastResumeTimeMs: now,
+      malaSize: malaSize,
     );
     _sessionDbId = session.sessionId;
     _isSessionInDb = false;
@@ -887,9 +949,12 @@ class CountingNotifier extends StateNotifier<CountingState> {
       }
     }
 
-    if (settings.malaNotificationsEnabled) {
-      final prevMalas = (session.tapCount - session.incrementStep) ~/ 108;
-      final newMalas = session.tapCount ~/ 108;
+    if (settings.malaNotificationsEnabled && session.hasMala) {
+      final prevMalas = malasOf(
+        session.tapCount - session.incrementStep,
+        session.malaSize,
+      );
+      final newMalas = session.malas;
       if (newMalas > prevMalas) {
         sound.playMalaSound(settings.malaSound);
         if (settings.vibrationEnabled) haptic.vibrateMala();

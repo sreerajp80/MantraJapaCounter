@@ -1,4 +1,6 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:flutter/services.dart';
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/models/counter.dart';
 
@@ -13,6 +15,7 @@ class CounterDialog extends StatefulWidget {
     int step,
     int goal,
     int daily,
+    int malaSize, // 0 = no mala count
   )
   onSave;
 
@@ -23,14 +26,22 @@ class CounterDialog extends StatefulWidget {
 }
 
 class _CounterDialogState extends State<CounterDialog> {
+  /// Number fields take digits only. Suggestions and autocorrect are off on
+  /// them so keyboards like SwiftKey do not hold text in a "composing" state,
+  /// which made backspace need two presses.
+  static final _digitsOnly = [FilteringTextInputFormatter.digitsOnly];
+
   late final TextEditingController _name;
   late final TextEditingController _init;
   late final TextEditingController _step;
   late final TextEditingController _goal;
   late final TextEditingController _daily;
+  late final TextEditingController _mala;
   late int _startDate;
+  late bool _noMala;
   String? _dailyError;
   String? _stepError;
+  String? _malaError;
 
   @override
   void initState() {
@@ -41,6 +52,11 @@ class _CounterDialogState extends State<CounterDialog> {
     _step = TextEditingController(text: (c?.incrementStep ?? 1).toString());
     _goal = TextEditingController(text: (c?.goal ?? 0).toString());
     _daily = TextEditingController(text: (c?.dailyGoal ?? 0).toString());
+    final malaSize = c?.malaSize ?? AppConstants.defaultMalaSize;
+    _noMala = malaSize <= 0;
+    _mala = TextEditingController(
+      text: (_noMala ? AppConstants.defaultMalaSize : malaSize).toString(),
+    );
     _startDate = c?.startDate ?? DateTime.now().millisecondsSinceEpoch;
   }
 
@@ -51,6 +67,7 @@ class _CounterDialogState extends State<CounterDialog> {
     _step.dispose();
     _goal.dispose();
     _daily.dispose();
+    _mala.dispose();
     super.dispose();
   }
 
@@ -74,14 +91,21 @@ class _CounterDialogState extends State<CounterDialog> {
               controller: _init,
               decoration: InputDecoration(labelText: l.initialCountLabel),
               keyboardType: TextInputType.number,
+              autocorrect: false,
+              enableSuggestions: false,
+              inputFormatters: _digitsOnly,
             ),
             TextField(
               controller: _step,
               decoration: InputDecoration(
                 labelText: l.incrementStepLabel,
                 errorText: _stepError,
+                errorMaxLines: 3,
               ),
               keyboardType: TextInputType.number,
+              autocorrect: false,
+              enableSuggestions: false,
+              inputFormatters: _digitsOnly,
               onChanged: (_) {
                 if (_stepError != null) {
                   setState(() => _stepError = null);
@@ -92,22 +116,59 @@ class _CounterDialogState extends State<CounterDialog> {
               controller: _goal,
               decoration: InputDecoration(labelText: l.lifetimeGoalFieldLabel),
               keyboardType: TextInputType.number,
+              autocorrect: false,
+              enableSuggestions: false,
+              inputFormatters: _digitsOnly,
             ),
             TextField(
               controller: _daily,
               decoration: InputDecoration(
                 labelText: l.dailyGoalFieldLabel,
                 errorText: _dailyError,
+                errorMaxLines: 3,
               ),
               keyboardType: TextInputType.number,
+              autocorrect: false,
+              enableSuggestions: false,
+              inputFormatters: _digitsOnly,
               onChanged: (_) {
-                if (_dailyError != null || _stepError != null) {
+                if (_dailyError != null ||
+                    _stepError != null ||
+                    _malaError != null) {
                   setState(() {
                     _dailyError = null;
                     _stepError = null;
+                    _malaError = null;
                   });
                 }
               },
+            ),
+            TextField(
+              controller: _mala,
+              enabled: !_noMala,
+              decoration: InputDecoration(
+                labelText: l.malaSizeLabel,
+                errorText: _noMala ? null : _malaError,
+                errorMaxLines: 3,
+              ),
+              keyboardType: TextInputType.number,
+              autocorrect: false,
+              enableSuggestions: false,
+              inputFormatters: _digitsOnly,
+              onChanged: (_) {
+                if (_malaError != null) {
+                  setState(() => _malaError = null);
+                }
+              },
+            ),
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(l.noMalaCountLabel),
+              value: _noMala,
+              onChanged: (v) => setState(() {
+                _noMala = v;
+                _malaError = null;
+              }),
             ),
             const SizedBox(height: 12),
             Row(
@@ -158,12 +219,26 @@ class _CounterDialogState extends State<CounterDialog> {
               });
               return;
             }
-            if (daily > 0 && step >= daily) {
+            if (daily > 0 && step > daily) {
               setState(() {
                 _stepError = l.stepExceedsDaily;
               });
               return;
             }
+            final malaError = _noMala
+                ? null
+                : _validateMala(
+                    l,
+                    int.tryParse(_mala.text.trim()),
+                    step,
+                    daily,
+                    goal,
+                  );
+            if (malaError != null) {
+              setState(() => _malaError = malaError);
+              return;
+            }
+            final malaSize = _noMala ? 0 : int.parse(_mala.text.trim());
             Navigator.pop(context);
             widget.onSave(
               name,
@@ -172,12 +247,28 @@ class _CounterDialogState extends State<CounterDialog> {
               step,
               goal,
               daily,
+              malaSize,
             );
           },
           child: Text(isEdit ? l.save : l.create),
         ),
       ],
     );
+  }
+
+  /// Error text for the mala count, or null when it is valid.
+  String? _validateMala(
+    AppLocalizations l,
+    int? mala,
+    int step,
+    int daily,
+    int goal,
+  ) {
+    if (mala == null || mala < 1) return l.malaSizeTooSmall;
+    if (mala < step) return l.malaSizeBelowStep;
+    if (daily > 0 && mala > daily) return l.malaSizeExceedsDaily;
+    if (goal > 0 && mala > goal) return l.malaSizeExceedsLifetime;
+    return null;
   }
 
   String _formatDate(DateTime dt) {

@@ -73,7 +73,7 @@ class CounterListScreen extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (_) => CounterDialog(
-        onSave: (name, startDate, init, step, goal, daily) {
+        onSave: (name, startDate, init, step, goal, daily, malaSize) {
           ref
               .read(countersNotifierProvider.notifier)
               .addCounter(
@@ -83,6 +83,7 @@ class CounterListScreen extends ConsumerWidget {
                 incrementStep: step,
                 goal: goal,
                 dailyGoal: daily,
+                malaSize: malaSize,
               );
         },
       ),

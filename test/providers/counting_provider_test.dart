@@ -361,9 +361,11 @@ void main() {
         final state = container.read(countingNotifierProvider('c1'));
         // The Daily card counts today's taps and never drops back.
         expect(state.liveTodayTotal, i);
+        // The banner stays all visit; its text changes once the mala is done.
+        expect(state.resumedFromEarlierDay, isTrue);
+        expect(state.earlierDayMalaFinished, i == 63);
       }
       final state = container.read(countingNotifierProvider('c1'));
-      expect(state.resumedFromEarlierDay, isFalse);
       expect(state.session!.tapCount, 108, reason: 'the mala is finished');
       expect(state.liveLifetimeTotal, 108);
 
@@ -407,7 +409,11 @@ void main() {
       final state = again.read(countingNotifierProvider('c1'));
       expect(state.session!.tapCount, 55);
       expect(state.session!.carriedCount, 45);
-      expect(state.resumedFromEarlierDay, isFalse);
+      expect(
+        state.resumedFromEarlierDay,
+        isTrue,
+        reason: 'the mala still holds yesterday\'s taps',
+      );
       expect(state.liveTodayTotal, 10);
       expect(state.liveLifetimeTotal, 55);
 
@@ -416,6 +422,32 @@ void main() {
       again.dispose();
       expect(await dbTotal(), 56);
       expect(await rows(), hasLength(2));
+    });
+
+    test('banner is gone after the mala is finished and reopened', () async {
+      await seedYesterday();
+      final container = newContainer();
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+      for (var i = 0; i < 70; i++) {
+        await notifier
+            .tap(); // 115 — the mala is done, a new one is in progress
+      }
+      final during = container.read(countingNotifierProvider('c1'));
+      expect(during.resumedFromEarlierDay, isTrue, reason: 'stays this visit');
+      expect(during.earlierDayMalaFinished, isTrue);
+      await notifier.completeSession(); // mid-mala, so paused
+      container.dispose();
+
+      final again = newContainer();
+      final resumed = again.read(countingNotifierProvider('c1').notifier);
+      await resumed.init();
+      final state = again.read(countingNotifierProvider('c1'));
+      expect(state.session!.tapCount, 115);
+      expect(state.resumedFromEarlierDay, isFalse);
+      expect(state.earlierDayMalaFinished, isFalse);
+      await resumed.onPause();
+      again.dispose();
     });
 
     test('counting past midnight without stopping splits the rows', () async {
@@ -482,6 +514,7 @@ void main() {
       expect(state.session!.tapCount, 0);
       expect(state.session!.carriedCount, 0);
       expect(state.resumedFromEarlierDay, isFalse);
+      expect(state.earlierDayMalaFinished, isFalse);
       expect(state.liveLifetimeTotal, 45);
       expect(SettingsRepository(prefs).getActiveSession('c1'), isNull);
 
@@ -551,6 +584,127 @@ void main() {
       expect(state.liveTodayTotal, 5);
       container.dispose();
       expect(await dbTotal(), 50);
+    });
+  });
+
+  group('Per-counter mala count', () {
+    Future<void> setMalaSize(int size) =>
+        db.update('counters', {'malaSize': size}, where: "id = 'c1'");
+
+    test('Meru pause starts after a custom mala of 27', () async {
+      await setMalaSize(27);
+      await prefs.setBool(AppConstants.prefsMeruPauseKey, true);
+      final container = newContainer();
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+
+      for (var i = 0; i < 26; i++) {
+        await notifier.tap();
+      }
+      expect(
+        container.read(countingNotifierProvider('c1')).isMeruPause,
+        isFalse,
+      );
+      await notifier.tap(); // 27: mala complete
+      final state = container.read(countingNotifierProvider('c1'));
+      expect(state.isMeruPause, isTrue);
+      expect(state.session!.malaSize, 27);
+      expect(state.session!.malas, 1);
+      notifier.endMeruPause();
+      await notifier.onPause(); // wait for pending DB writes
+      container.dispose();
+    });
+
+    test(
+      'no mala count: no Meru pause and exit finishes the session',
+      () async {
+        await setMalaSize(0);
+        await prefs.setBool(AppConstants.prefsMeruPauseKey, true);
+        final container = newContainer();
+        final notifier = container.read(
+          countingNotifierProvider('c1').notifier,
+        );
+        await notifier.init();
+
+        for (var i = 0; i < 110; i++) {
+          await notifier.tap();
+        }
+        final state = container.read(countingNotifierProvider('c1'));
+        expect(state.isMeruPause, isFalse);
+        expect(state.session!.malas, 0);
+        expect(state.session!.chants, 110);
+
+        final saved = await notifier.completeSession();
+        expect(saved, isNotNull, reason: 'no unfinished mala, so not paused');
+        expect(saved!.count, 110);
+        expect(saved.malas, 0);
+        expect(saved.chants, 110);
+        expect(SettingsRepository(prefs).getActiveSession('c1'), isNull);
+        container.dispose();
+      },
+    );
+
+    test('custom mala: exit on a full mala finishes the session', () async {
+      await setMalaSize(5);
+      final container = newContainer();
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+
+      for (var i = 0; i < 10; i++) {
+        await notifier.tap();
+      }
+      final saved = await notifier.completeSession();
+      expect(saved, isNotNull, reason: '10 is two full malas of 5');
+      expect(saved!.malas, 2);
+      expect(saved.chants, 0);
+      container.dispose();
+    });
+
+    Future<void> pauseOneTapAt108() async {
+      final container = newContainer();
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+      await notifier.tap();
+      expect(await notifier.completeSession(), isNull, reason: 'paused');
+      container.dispose();
+    }
+
+    test('paused session switches to the edited mala count', () async {
+      await pauseOneTapAt108();
+      await setMalaSize(1);
+
+      final container = newContainer();
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+      final state = container.read(countingNotifierProvider('c1'));
+      expect(state.session!.malaSize, 1);
+      expect(state.session!.tapCount, 1);
+      expect(state.session!.chants, 0);
+      expect(state.session!.malas, 1);
+      expect(state.resumedFromEarlierDay, isFalse);
+      expect(SettingsRepository(prefs).getActiveSession('c1')!.malaSize, 1);
+      final rows = await db.query('japa_sessions');
+      expect(rows.single['malas'], 1);
+      expect(rows.single['chants'], 0);
+
+      final saved = await notifier.completeSession();
+      expect(saved, isNotNull, reason: 'a full mala of 1 finishes');
+      container.dispose();
+    });
+
+    test('paused session switches to no mala count', () async {
+      await pauseOneTapAt108();
+      await setMalaSize(0);
+
+      final container = newContainer();
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+      final state = container.read(countingNotifierProvider('c1'));
+      expect(state.session!.malaSize, 0);
+      expect(state.session!.malas, 0);
+      expect(state.session!.chants, 1);
+      expect(await notifier.completeSession(), isNotNull);
+      container.dispose();
     });
   });
 }

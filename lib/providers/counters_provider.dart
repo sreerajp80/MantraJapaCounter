@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/models/counter.dart';
 import 'package:mantra_japa_counter/models/counter_status.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
@@ -32,6 +33,7 @@ class CountersNotifier extends AsyncNotifier<List<Counter>> {
     int incrementStep = 1,
     int goal = 0,
     int dailyGoal = 0,
+    int malaSize = AppConstants.defaultMalaSize,
   }) async {
     final repo = ref.read(japaCounterRepositoryProvider);
     final now = DateTime.now().millisecondsSinceEpoch;
@@ -44,6 +46,7 @@ class CountersNotifier extends AsyncNotifier<List<Counter>> {
       dailyGoal: dailyGoal,
       startDate: startDate,
       createdAt: now,
+      malaSize: malaSize,
     );
     await repo.insertCounter(counter);
     ref.invalidateSelf();

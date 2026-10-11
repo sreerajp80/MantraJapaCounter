@@ -1,3 +1,4 @@
+import 'package:mantra_japa_counter/core/utils/mala.dart';
 import 'package:mantra_japa_counter/models/active_session.dart';
 import 'package:mantra_japa_counter/models/japa_session.dart';
 import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
@@ -64,8 +65,8 @@ class SessionRecoveryService {
           counterId: saved.counterId,
           counterName: saved.counterName,
           count: rowCount,
-          malas: rowCount ~/ 108,
-          chants: rowCount % 108,
+          malas: malasOf(rowCount, saved.malaSize),
+          chants: chantsOf(rowCount, saved.malaSize),
           timestamp: saved.startTime,
           duration: saved.rowDuration,
         ),
@@ -75,8 +76,8 @@ class SessionRecoveryService {
       await _repo.updateSession(
         existing.copyWith(
           count: rowCount,
-          malas: rowCount ~/ 108,
-          chants: rowCount % 108,
+          malas: malasOf(rowCount, saved.malaSize),
+          chants: chantsOf(rowCount, saved.malaSize),
           duration: saved.rowDuration,
         ),
       );

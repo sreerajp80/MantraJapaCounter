@@ -14,38 +14,35 @@ void main() {
     SharedPreferences.setMockInitialValues({});
   });
 
-  testWidgets(
-    'AppearanceScreen renders brightness controls and palette details',
-    (tester) async {
-      tester.view.physicalSize = const Size(1080, 2400);
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
+  testWidgets('AppearanceScreen renders brightness controls only', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1080, 2400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
 
-      final prefs = await SharedPreferences.getInstance();
-      final settingsRepo = SettingsRepository(prefs);
+    final prefs = await SharedPreferences.getInstance();
+    final settingsRepo = SettingsRepository(prefs);
 
-      await tester.pumpWidget(
-        ProviderScope(
-          overrides: [
-            settingsRepositoryProvider.overrideWithValue(settingsRepo),
-          ],
-          child: const MaterialApp(
-            localizationsDelegates: LocaleConfig.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            home: AppearanceScreen(),
-          ),
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [settingsRepositoryProvider.overrideWithValue(settingsRepo)],
+        child: const MaterialApp(
+          localizationsDelegates: LocaleConfig.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: AppearanceScreen(),
         ),
-      );
+      ),
+    );
 
-      await tester.pumpAndSettle();
+    await tester.pumpAndSettle();
 
-      expect(find.text('Appearance'), findsWidgets);
-      expect(find.text('Temple Devotional Theme'), findsOneWidget);
-      expect(find.text('Screen Brightness & Stillness'), findsOneWidget);
-      expect(find.text('Sacred Temple Palette'), findsOneWidget);
-      expect(find.text('Typography & Scripts'), findsOneWidget);
-      expect(find.byType(Slider), findsOneWidget);
-    },
-  );
+    expect(find.text('Appearance'), findsWidgets);
+    expect(find.text('Temple Devotional Theme'), findsOneWidget);
+    expect(find.text('Screen Brightness & Stillness'), findsOneWidget);
+    expect(find.text('Sacred Temple Palette'), findsNothing);
+    expect(find.text('Typography & Scripts'), findsNothing);
+    expect(find.byType(Slider), findsOneWidget);
+  });
 }

@@ -10,6 +10,7 @@ import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/providers/counting_provider.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/settings_provider.dart';
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/core/utils/mala.dart';
 import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
 import 'package:mantra_japa_counter/widgets/temple_mala_circle.dart';
@@ -99,9 +100,21 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
     final isDailyGoalReached =
         counter?.isDailyGoalAchieved(todayWithSession) ?? false;
 
-    final sessionMalas = session.tapCount ~/ 108;
-    final sessionInMala = session.tapCount - sessionMalas * 108;
-    final beadsRemaining = 108 - sessionInMala;
+    // The session keeps the mala count it started with. With no mala count
+    // the centre shows the whole session and the ring shows goal progress.
+    final malaSize = session.malaSize;
+    final hasMala = session.hasMala;
+    final sessionMalas = session.malas;
+    final sessionInMala = session.chants;
+    final beadsRemaining = hasMala ? malaSize - sessionInMala : 0;
+    final ringFill = hasMala
+        ? malaRingFill(sessionInMala, malaSize)
+        : noMalaRingFill(
+            todayCount: todayWithSession,
+            dailyGoal: counter?.dailyGoal ?? 0,
+            lifetimeCount: lifetimeWithSession,
+            lifetimeGoal: counter?.goal ?? 0,
+          );
 
     return PopScope(
       // System back (gesture or hardware) must flush pending taps before
@@ -122,6 +135,8 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
               if (countingState.resumedFromEarlierDay)
                 _UnfinishedMalaBanner(
                   chants: sessionInMala,
+                  malaSize: malaSize,
+                  malaFinished: countingState.earlierDayMalaFinished,
                   isDimmed: isDimmed,
                   onStartNew: () => ref
                       .read(countingNotifierProvider(widget.counterId).notifier)
@@ -210,13 +225,18 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
                                           : (isDimmed ? 0.20 : 0.28),
                                     ),
                                     TempleMalaCircle(
-                                      count: sessionInMala,
-                                      goal: 108,
+                                      count: ringFill.beads,
+                                      goal: AppConstants.ringBeads,
+                                      arcFraction:
+                                          ringFill.mode == MalaRingMode.percent
+                                          ? ringFill.fraction
+                                          : null,
                                       diameter: medallion,
                                       goalReached: isDailyGoalReached,
                                       child: _centerNumber(
                                         sessionInMala: sessionInMala,
                                         sessionMalas: sessionMalas,
+                                        malaSize: malaSize,
                                         beadsRemaining: beadsRemaining,
                                         isLifetimeGoalReached:
                                             isLifetimeGoalReached,
@@ -254,6 +274,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
                 lifetimeTotal: lifetimeWithSession,
                 todayTotal: todayWithSession,
                 sessionTotal: session.tapCount,
+                malaSize: malaSize,
                 counterGoal: counter?.goal ?? 0,
                 dailyGoal: counter?.dailyGoal ?? 0,
                 isDailyGoalReached: isDailyGoalReached,
@@ -406,6 +427,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
   Widget _centerNumber({
     required int sessionInMala,
     required int sessionMalas,
+    required int malaSize,
     required int beadsRemaining,
     required bool isLifetimeGoalReached,
     required bool isDailyGoalReached,
@@ -414,6 +436,13 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
     final l = AppLocalizations.of(context);
     final countColor = isDimmed ? const Color(0xFFF5E6CC) : TempleColors.ink;
     final subColor = isDimmed ? TempleColors.sandal : TempleColors.ink;
+    final hasMala = malaSize > 0;
+    final goalReached = isLifetimeGoalReached || isDailyGoalReached;
+    final subtitle = !hasMala
+        ? null
+        : malaSize == AppConstants.defaultMalaSize
+        ? l.ofOneHundredEight
+        : l.ofMalaCount(malaSize);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -426,43 +455,46 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
             color: countColor,
           ),
         ),
-        const SizedBox(height: 6),
-        Text(
-          l.ofOneHundredEight,
-          style: AppTheme.serif(fontSize: 14, color: subColor),
-        ),
-        const SizedBox(height: 8),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 6,
-              height: 6,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: (isLifetimeGoalReached || isDailyGoalReached)
-                    ? TempleColors.vermillion
-                    : TempleColors.tulsi,
+        if (subtitle != null) ...[
+          const SizedBox(height: 6),
+          Text(subtitle, style: AppTheme.serif(fontSize: 14, color: subColor)),
+        ],
+        // With no mala count there are no beads to count down; the row only
+        // shows when a goal is reached.
+        if (hasMala || goalReached) ...[
+          const SizedBox(height: 8),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 6,
+                height: 6,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: (isLifetimeGoalReached || isDailyGoalReached)
+                      ? TempleColors.vermillion
+                      : TempleColors.tulsi,
+                ),
               ),
-            ),
-            const SizedBox(width: 6),
-            Text(
-              isLifetimeGoalReached
-                  ? l.lifetimeGoalCaps
-                  : isDailyGoalReached
-                  ? l.dailyGoalCaps
-                  : l.beadsRemainCaps(beadsRemaining),
-              style: AppTheme.sans(
-                fontSize: 10,
-                fontWeight: FontWeight.w700,
-                color: (isLifetimeGoalReached || isDailyGoalReached)
-                    ? TempleColors.vermillionDeep
-                    : subColor,
-                letterSpacing: 1,
+              const SizedBox(width: 6),
+              Text(
+                isLifetimeGoalReached
+                    ? l.lifetimeGoalCaps
+                    : isDailyGoalReached
+                    ? l.dailyGoalCaps
+                    : l.beadsRemainCaps(beadsRemaining),
+                style: AppTheme.sans(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                  color: (isLifetimeGoalReached || isDailyGoalReached)
+                      ? TempleColors.vermillionDeep
+                      : subColor,
+                  letterSpacing: 1,
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
         if (sessionMalas > 0) ...[
           const SizedBox(height: 6),
           Text(
@@ -510,12 +542,15 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
     required int lifetimeTotal,
     required int todayTotal,
     required int sessionTotal,
+    required int malaSize,
     required int counterGoal,
     required int dailyGoal,
     required bool isDailyGoalReached,
     required bool isDimmed,
   }) {
     final l = AppLocalizations.of(context);
+    final hasMala = malaSize > 0;
+    String malas(int count) => '${malaForCount(count, malaSize)}';
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 0, 18, 16),
       child: Column(
@@ -525,18 +560,22 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
             chants: counterGoal > 0
                 ? '$lifetimeTotal/$counterGoal'
                 : '$lifetimeTotal',
-            malas: counterGoal > 0
-                ? '${malaForCount(lifetimeTotal)}/${malaForCount(counterGoal)}'
-                : '${malaForCount(lifetimeTotal)}',
+            malas: !hasMala
+                ? null
+                : counterGoal > 0
+                ? '${malas(lifetimeTotal)}/${malas(counterGoal)}'
+                : malas(lifetimeTotal),
             isDimmed: isDimmed,
           ),
           const SizedBox(height: 6),
           _FooterStat(
             label: l.footerDaily,
             chants: dailyGoal > 0 ? '$todayTotal/$dailyGoal' : '$todayTotal',
-            malas: dailyGoal > 0
-                ? '${malaForCount(todayTotal)}/${malaForCount(dailyGoal)}'
-                : '${malaForCount(todayTotal)}',
+            malas: !hasMala
+                ? null
+                : dailyGoal > 0
+                ? '${malas(todayTotal)}/${malas(dailyGoal)}'
+                : malas(todayTotal),
             highlighted: isDailyGoalReached,
             isDimmed: isDimmed,
           ),
@@ -544,7 +583,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
           _FooterStat(
             label: l.footerSession,
             chants: '$sessionTotal',
-            malas: '${malaForCount(sessionTotal)}',
+            malas: hasMala ? malas(sessionTotal) : null,
             isDimmed: isDimmed,
           ),
         ],
@@ -767,14 +806,16 @@ class _SessionDurationPillState extends ConsumerState<_SessionDurationPill>
 class _FooterStat extends StatelessWidget {
   final String label;
   final String chants;
-  final String malas;
+
+  /// Null when the counter has no mala count; the malas column is hidden.
+  final String? malas;
   final bool highlighted;
   final bool isDimmed;
 
   const _FooterStat({
     required this.label,
     required this.chants,
-    required this.malas,
+    this.malas,
     this.highlighted = false,
     this.isDimmed = false,
   });
@@ -846,18 +887,19 @@ class _FooterStat extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: _row(
-                    malas,
-                    'm',
-                    fontSize: 14,
-                    valueColor: textColor,
-                    suffixColor: textColor,
+              if (malas != null)
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: _row(
+                      malas!,
+                      'm',
+                      fontSize: 14,
+                      valueColor: textColor,
+                      suffixColor: textColor,
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
         ],
@@ -1037,11 +1079,18 @@ class _PacingHintPill extends StatelessWidget {
 /// "Start new" to keep those counts in history and begin again at 0.
 class _UnfinishedMalaBanner extends StatelessWidget {
   final int chants;
+  final int malaSize;
+
+  /// The earlier-day mala is done; the user is counting a new mala in the
+  /// same session, so the "N/mala" text no longer fits.
+  final bool malaFinished;
   final bool isDimmed;
   final VoidCallback onStartNew;
 
   const _UnfinishedMalaBanner({
     required this.chants,
+    required this.malaSize,
+    required this.malaFinished,
     required this.isDimmed,
     required this.onStartNew,
   });
@@ -1065,7 +1114,9 @@ class _UnfinishedMalaBanner extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                l.unfinishedMalaBanner(chants),
+                malaFinished
+                    ? l.earlierDaySessionBanner
+                    : l.unfinishedMalaBanner(chants, malaSize),
                 style: AppTheme.serif(fontSize: 13, color: textColor),
               ),
             ),

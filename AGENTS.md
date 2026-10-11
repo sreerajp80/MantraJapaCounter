@@ -12,12 +12,12 @@ This file is read by AI agents and LLM coding assistants (Gemini, Antigravity, C
 | App name (dev) | `SreerajP MantraJapa Counter Dev` |
 | Package / org id (prod) | `com.sreerajp.mantrajapacounter` |
 | Package / org id (dev) | `com.sreerajp.mantrajapacounter.dev` |
-| Platform(s) | Android (minSdk 29, targetSdk 36) |
+| Platform(s) | Android (minSdk 29, targetSdk 36, compileSdk 37) |
 | Flutter SDK | 3.47.6 or higher (pinned — check with `flutter --version`) |
 | Dart SDK | `^3.13.0` (Dart 3.13.5 ships with Flutter 3.47.6) |
 | State management | `flutter_riverpod` |
 | Navigation | `go_router` |
-| Database | `sqflite` (schema v4) |
+| Database | `sqflite` (schema v5) |
 | Key-value storage | `shared_preferences` |
 | Orientation | Portrait only |
 | Connectivity | Fully offline — no INTERNET permission |
@@ -134,7 +134,7 @@ flutter build appbundle --flavor prod --release --obfuscate "--split-debug-info=
 ## Testing rules
 
 - Mirror `lib/` structure in `test/` (e.g., `test/models/`, `test/services/`, `test/core/utils/`).
-- Required test coverage areas: Mala calculations (1 mala = 108 counts), session recovery, database migrations (v1 → v2 → v3 → v4), JSON export/import compatibility.
+- Required test coverage areas: Mala calculations (default 1 mala = 108 counts, set per counter; 0 = no mala), session recovery, database migrations (v1 → v2 → v3 → v4 → v5), JSON export/import compatibility.
 
 ---
 

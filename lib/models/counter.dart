@@ -1,8 +1,9 @@
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/models/counter_status.dart';
 
 /// Immutable domain model for a named mantra counter.
 ///
-/// Matches the `counters` table schema (version 3).
+/// Matches the `counters` table schema (version 5).
 /// Pure Dart — no Flutter or sqflite imports.
 class Counter {
   final String id;
@@ -17,6 +18,7 @@ class Counter {
   final int? disabledAt; // epoch ms; null if active
   final String? disabledReason;
   final bool isLocked;
+  final int malaSize; // counts per mala; 0 = no mala count
 
   const Counter({
     required this.id,
@@ -31,11 +33,13 @@ class Counter {
     this.disabledAt,
     this.disabledReason,
     this.isLocked = false,
+    this.malaSize = AppConstants.defaultMalaSize,
   });
 
   bool get hasLifetimeGoal => goal > 0;
   bool get hasDailyGoal => dailyGoal > 0;
   bool get isActive => status == CounterStatus.active;
+  bool get hasMala => malaSize > 0;
 
   double lifetimeProgress(int totalCount) {
     if (!hasLifetimeGoal) return 0.0;
@@ -65,6 +69,7 @@ class Counter {
     int? disabledAt,
     String? disabledReason,
     bool? isLocked,
+    int? malaSize,
   }) {
     return Counter(
       id: id ?? this.id,
@@ -79,6 +84,7 @@ class Counter {
       disabledAt: disabledAt ?? this.disabledAt,
       disabledReason: disabledReason ?? this.disabledReason,
       isLocked: isLocked ?? this.isLocked,
+      malaSize: malaSize ?? this.malaSize,
     );
   }
 
@@ -95,6 +101,7 @@ class Counter {
     'disabledAt': disabledAt,
     'disabledReason': disabledReason,
     'isLocked': isLocked ? 1 : 0,
+    'malaSize': malaSize,
   };
 
   factory Counter.fromMap(Map<String, dynamic> map) => Counter(
@@ -110,6 +117,7 @@ class Counter {
     disabledAt: map['disabledAt'] as int?,
     disabledReason: map['disabledReason'] as String?,
     isLocked: (map['isLocked'] as int? ?? 0) == 1,
+    malaSize: map['malaSize'] as int? ?? AppConstants.defaultMalaSize,
   );
 
   /// JSON serialisation — must be compatible with Android Gson export format.
@@ -126,6 +134,9 @@ class Counter {
     if (disabledAt != null) 'disabledAt': disabledAt,
     if (disabledReason != null) 'disabledReason': disabledReason,
     if (isLocked) 'isLocked': isLocked,
+    // Written only when not the default, so default counters stay
+    // byte-compatible with the original Android export format.
+    if (malaSize != AppConstants.defaultMalaSize) 'malaSize': malaSize,
   };
 
   factory Counter.fromJson(Map<String, dynamic> json) => Counter(
@@ -141,5 +152,7 @@ class Counter {
     disabledAt: (json['disabledAt'] as num?)?.toInt(),
     disabledReason: json['disabledReason'] as String?,
     isLocked: json['isLocked'] as bool? ?? false,
+    malaSize:
+        (json['malaSize'] as num?)?.toInt() ?? AppConstants.defaultMalaSize,
   );
 }

@@ -186,9 +186,33 @@
   "@dailyExceedsLifetime": {
     "description": "Validation error when daily goal exceeds lifetime goal"
   },
-  "stepExceedsDaily": "Increment step must be less than daily goal",
+  "stepExceedsDaily": "Increment step cannot exceed daily goal",
   "@stepExceedsDaily": {
-    "description": "Validation error when step is greater than or equal to daily goal"
+    "description": "Validation error when step is greater than daily goal"
+  },
+  "malaSizeLabel": "Mala count",
+  "@malaSizeLabel": {
+    "description": "Add/edit counter field label: number of counts in one mala (default 108)"
+  },
+  "noMalaCountLabel": "No mala count",
+  "@noMalaCountLabel": {
+    "description": "Add/edit counter switch, and About counter value, for a counter that is not counted in malas"
+  },
+  "malaSizeTooSmall": "Mala count must be at least 1",
+  "@malaSizeTooSmall": {
+    "description": "Validation error when the mala count is empty or below 1"
+  },
+  "malaSizeBelowStep": "Mala count must be at least the increment step",
+  "@malaSizeBelowStep": {
+    "description": "Validation error when the mala count is smaller than the increment step"
+  },
+  "malaSizeExceedsDaily": "Mala count cannot exceed daily goal",
+  "@malaSizeExceedsDaily": {
+    "description": "Validation error when the mala count is larger than the daily goal"
+  },
+  "malaSizeExceedsLifetime": "Mala count cannot exceed lifetime goal",
+  "@malaSizeExceedsLifetime": {
+    "description": "Validation error when the mala count is larger than the lifetime goal"
   },
   "importExportBody": "Export backs up all counters and sessions to a JSON file.\n\nImport replaces ALL current data with the selected file.",
   "@importExportBody": {
@@ -229,14 +253,21 @@
   "@resetSession": {
     "description": "Menu option to reset current sitting session"
   },
-  "unfinishedMalaBanner": "Unfinished mala from an earlier day: {chants}/108",
+  "unfinishedMalaBanner": "Unfinished mala from an earlier day: {chants}/{malaSize}",
   "@unfinishedMalaBanner": {
     "description": "Banner on the counting screen when an unfinished mala from an earlier day is resumed",
     "placeholders": {
       "chants": {
         "type": "int"
+      },
+      "malaSize": {
+        "type": "int"
       }
     }
+  },
+  "earlierDaySessionBanner": "This session started on an earlier day",
+  "@earlierDaySessionBanner": {
+    "description": "Banner on the counting screen after the earlier-day mala is finished but the user keeps counting in the same session"
   },
   "startNewSession": "Start new",
   "@startNewSession": {
@@ -253,6 +284,15 @@
   "ofOneHundredEight": "of one hundred eight",
   "@ofOneHundredEight": {
     "description": "Subtitle on the counting bead circle indicating 108 beads per mala"
+  },
+  "ofMalaCount": "of {count}",
+  "@ofMalaCount": {
+    "description": "Subtitle on the counting bead circle showing the counter's mala count when it is not 108",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "lifetimeGoalCaps": "LIFETIME GOAL",
   "@lifetimeGoalCaps": {
@@ -1040,7 +1080,7 @@
   "@appearanceHeaderTitle": {
     "description": "Header title on Appearance screen"
   },
-  "appearanceHeaderSub": "Custom stillness brightness, sacred South Indian temple palette, and classical typography for distraction-free chanting.",
+  "appearanceHeaderSub": "Set a calm screen brightness for distraction-free chanting.",
   "@appearanceHeaderSub": {
     "description": "Header subtitle on Appearance screen"
   },
