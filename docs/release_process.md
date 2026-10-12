@@ -162,6 +162,8 @@ Complete these items before every release.
 - [ ] Golden tests pass (`flutter test --tags golden`). Run them on Windows — see section 16.
 - [ ] Code generation is current: `dart run build_runner build --delete-conflicting-outputs`.
 - [ ] No critical or release-blocking bugs remain open.
+- [ ] GitHub CI is green for the release commit.
+- [ ] Release artifacts built locally, not in CI (engineering standard §19.3).
 
 ### Performance
 
@@ -300,7 +302,7 @@ Not applicable — Windows is not a supported platform for this release.
 
 Record links or references to release evidence after each release.
 
-- CI run: n/a (no CI pipeline in initial release; all checks run locally)
+- CI run: link to the green GitHub CI run for the release commit (checks only — section 17)
 - Test report: `flutter test` output; save as `releases/v<version>/test-report.txt`
 - Size analysis output: `releases/v<version>/size-analysis.txt`
 - Debug symbols archive: `releases/v<version>/symbols/android-prod-<version>/`
@@ -350,3 +352,38 @@ Golden tests compare a widget's picture to a saved reference image in a `goldens
 folder next to the test. Text is drawn slightly differently on Windows, macOS and Linux,
 so the reference images are made on **Windows** and must only be updated on Windows.
 `flutter test --tags golden` runs only the golden tests; `flutter test` runs everything.
+
+## 17. GitHub CI
+
+GitHub Actions runs **checks only**. It does not build, sign or release the app, and it
+uses no secrets (no keystore, no passwords).
+
+### What runs
+
+`.github/workflows/ci.yml` runs on every push to `main`, on every pull request
+(including Dependabot ones), and by hand from the **Actions** tab. On Linux, with the
+same Flutter version as the project, it runs:
+
+1. `dart format --output=none --set-exit-if-changed lib test tool`
+2. `flutter gen-l10n`, then `git diff --exit-code lib/l10n` — fails if an `.arb` file
+   was changed but the generated localization files were not re-generated and committed.
+3. `flutter analyze` — must report 0 issues.
+4. `flutter test --exclude-tags golden`
+
+Golden tests are left out because the reference images only match on Windows
+(section 16). Run `flutter test --tags golden` locally before a release.
+
+When you upgrade Flutter, also change `flutter-version` in `ci.yml`.
+
+### Dependabot
+
+`.github/dependabot.yml` checks every Monday and opens a pull request for each update:
+Dart packages, Gradle / Android, GitHub Actions, and the `docs/guidelines` submodule.
+Nothing is merged automatically. Before merging an update, it still needs its own plan
+and change log, and UI package updates follow the section 16 checklist. Pull requests
+that update the `docs/guidelines` submodule are reviewed and merged by the user only —
+AI agents never change the submodule version.
+
+Watching the submodule is an extra beyond engineering standard §19.2, and golden tests
+being skipped is a known deviation from §19.1. Both are recorded in
+`docs/architecture.md` section 19.

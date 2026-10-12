@@ -461,7 +461,10 @@ test/
   - APK size budget: target < 30 MB for arm64 APK; hard limit 50 MB
   - Power budget: counting screen MUST NOT prevent deep sleep; display timer updates every 2 seconds; state writes every 5 seconds; DB writes every 30 seconds or 20 taps (not continuous 1-second polling)
 - Regulatory or store constraints: Google Play Developer Policy (category: lifestyle / spirituality)
-- Team constraints: single developer; no CI pipeline in initial release; all checks run locally before every release
+- Team constraints: single developer; GitHub CI runs checks only (format, l10n staleness, analyze, test) plus Dependabot — see `docs/release_process.md` section 17; release builds, signing and golden tests run locally before every release
+- CI deviations from the engineering standard §19 (kept on purpose):
+  - Golden tests are skipped in CI (`--exclude-tags golden`). The reference images are made on Windows and only match there; CI runs on Linux. They run locally before each release.
+  - Dependabot also watches the `docs/guidelines` submodule (`gitsubmodule`). Only the user reviews and merges these pull requests; AI agents never change the submodule version.
 - Offline constraints: no INTERNET permission in release manifest; all transitive dependencies audited for network activity
 
 ---
@@ -494,8 +497,8 @@ test/
 - Risk: JSON import from Android app's Gson-serialized export format must parse correctly in Flutter's `dart:convert`.
   Mitigation: include real Android export files as test fixtures in `test/fixtures/`; run import round-trip test before release.
 
-- Risk: No CI pipeline in initial release means pre-release checks depend entirely on the local checklist in `docs/release_process.md`.
-  Mitigation: document every check in the release checklist; add CI as a follow-up task after the first stable release.
+- Risk: CI runs checks only and skips golden tests, so release builds, signing and golden tests depend on the local checklist in `docs/release_process.md`.
+  Mitigation: every local-only step is listed in the release checklist (section 8).
 
 ---
 

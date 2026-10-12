@@ -1,0 +1,51 @@
+# Checks only: format, translations, analyze, tests.
+# No app build, no signing, no secrets. See docs/release_process.md section 17.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Analyze and test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      # The docs/guidelines submodule is not needed for the checks.
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.47.6
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check formatting
+        run: dart format --output=none --set-exit-if-changed lib test tool
+
+      - name: Check generated translations are up to date
+        run: |
+          flutter gen-l10n
+          git diff --exit-code lib/l10n
+
+      - name: Analyze
+        run: flutter analyze
+
+      # Golden tests are made on Windows and only match there, so they stay a
+      # local step (docs/release_process.md section 16).
+      - name: Test
+        run: flutter test --exclude-tags golden

@@ -149,6 +149,7 @@ flutter build appbundle --flavor prod --release --obfuscate "--split-debug-info=
 ```
 AGENTS.md            # this file — AI agent rules
 CLAUDE.md            # Claude Code native project rules
+.github/             # CI checks and Dependabot settings
 docs/                # design docs & architectural baseline
 plans/               # change implementation plans
 change_log/          # implementation log records
@@ -166,6 +167,8 @@ Every change follows plan-before-changing and log-after-changing:
 1. **Plan before changing.** Write a full plan to `plans/` named `yyyymmdd_hhMMss_<short-slug>.md` with a `**Status:**` line, the files to change, the issue, and the fix. Then **STOP and get explicit approval** before editing/creating/deleting any project file (other than the plan). A question or ambiguous reply is not approval.
 2. **Log after changing.** After implementing, write a change log to `change_log/` named `yyyymmdd_hhMMss_<short-slug>.md` describing what changed and referencing its plan.
 3. **Relative paths & privacy only.** All `plans/` and `change_log/` files MUST use relative repository paths only (never absolute system paths like `C:\...`, `l:\...`, or `file:///...`). They MUST NOT contain any sensitive or private information that cannot be shared publicly on the internet (secrets, API keys, tokens, passwords, keystore passphrases, local absolute paths, internal IPs, credentials, or PII).
+4. **Guidelines submodule is read-only.** Never edit, check out or commit `docs/guidelines/` or its version. If a guideline needs a change, write a note for the user instead (`docs/guidelines/DOCS_FOLDER_GUIDELINE.md` §1.1). If the folder is empty or missing, stop and ask the user.
+5. **CI is checks + Dependabot only.** GitHub CI runs only `flutter pub get`, the format check, the l10n staleness check, `flutter analyze`, and `flutter test`, plus Dependabot (`.github/dependabot.yml`). CI never builds release artifacts, signs, holds signing secrets, uploads, or publishes. Release builds are done locally (`docs/guidelines/flutter_project_engineering_standard.md` §19).
 
 ---
 
