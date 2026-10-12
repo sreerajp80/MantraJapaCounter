@@ -188,7 +188,7 @@ flutter {
 }
 
 dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 
     // QR code decoding for Optical Sync receive. ZXing core is pure Java maths
     // (Apache 2.0): no network code, no Play Services, no telemetry.
