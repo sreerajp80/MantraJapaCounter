@@ -192,5 +192,5 @@ dependencies {
 
     // QR code decoding for Optical Sync receive. ZXing core is pure Java maths
     // (Apache 2.0): no network code, no Play Services, no telemetry.
-    implementation("com.google.zxing:core:3.5.3")
+    implementation("com.google.zxing:core:3.5.4")
 }
