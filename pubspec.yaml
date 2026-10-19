@@ -60,7 +60,7 @@ dependencies:
   # Pinned on purpose. Upgrade only via the UI package upgrade checklist in
   # docs/release_process.md.
   material_ui: ^1.6.0
-  cupertino_ui: ^1.1.2
+  cupertino_ui: ^1.1.3
 
 dev_dependencies:
   flutter_test:
