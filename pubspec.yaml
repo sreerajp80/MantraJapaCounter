@@ -69,7 +69,7 @@ dev_dependencies:
 
   # Test-only: runs sqflite on the desktop VM so database migration tests
   # can open an in-memory database. Never shipped in the app.
-  sqflite_common_ffi: ^2.3.4
+  sqflite_common_ffi: ^2.4.4
 
 flutter:
   uses-material-design: true
