@@ -260,4 +260,38 @@ void main() {
       expect(repo.meruPauseSeconds, 3);
     });
   });
+
+  group('daily reminder settings', () {
+    late SharedPreferences prefs;
+    late SettingsRepository repo;
+
+    setUp(() async {
+      SharedPreferences.setMockInitialValues({});
+      prefs = await SharedPreferences.getInstance();
+      repo = SettingsRepository(prefs);
+    });
+
+    test('defaults to off at 06:00', () {
+      expect(repo.dailyReminderEnabled, isFalse);
+      expect(repo.dailyReminderMinutes, 360);
+      expect(
+        repo.dailyReminderMinutes,
+        AppConstants.dailyReminderDefaultMinutes,
+      );
+    });
+
+    test('saves and reads the values', () async {
+      await repo.setDailyReminderEnabled(true);
+      await repo.setDailyReminderMinutes(21 * 60 + 15);
+      expect(repo.dailyReminderEnabled, isTrue);
+      expect(repo.dailyReminderMinutes, 21 * 60 + 15);
+    });
+
+    test('an out-of-range saved time falls back to the default', () async {
+      await prefs.setInt(AppConstants.prefsDailyReminderMinutesKey, 24 * 60);
+      expect(repo.dailyReminderMinutes, 360);
+      await prefs.setInt(AppConstants.prefsDailyReminderMinutesKey, -5);
+      expect(repo.dailyReminderMinutes, 360);
+    });
+  });
 }

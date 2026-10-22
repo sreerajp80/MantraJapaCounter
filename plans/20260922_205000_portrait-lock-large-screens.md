@@ -1,6 +1,8 @@
 # Plan: Keep portrait lock on large screens (Android 16)
 
-**Status:** Implemented (see change_log/20260922_210500_portrait-lock-large-screens.md)
+**Status:** completed
+
+_Earlier status note: Implemented (see change_log/20260922_210500_portrait-lock-large-screens.md)_
 
 ## Issue
 

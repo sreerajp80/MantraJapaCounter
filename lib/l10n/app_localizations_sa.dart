@@ -2974,7 +2974,7 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get helpBackupImportBullet5 =>
-      'अस्य उपकरणस्य पुरातन-एण्ड्रॉयड्-संस्करणस्य प्रतिलिपिसञ्चिकाः अपि आयातुं शक्यन्ते।';
+      'अस्य उपकरणस्य पूर्वसंस्करणानां प्रतिलिपिसञ्चिकाः अपि सर्वदा आयातुं शक्यन्ते।';
 
   @override
   String get helpBackupClearSection => 'सर्वदत्तांशमार्जनम्';
@@ -3108,4 +3108,43 @@ class AppLocalizationsSa extends AppLocalizations {
   @override
   String get helpFaqQ14Answer =>
       'न। भवान् स्वयं निर्यातं प्रकाशसञ्चारेण प्रेषणं वा विना दत्तांशः दूरवाणीं कदापि न त्यजति।';
+
+  @override
+  String get sectionDailyReminder => 'साधनास्मारकम्';
+
+  @override
+  String get sectionDailyReminderSub => 'दैनिकजपाय मृदु आह्वानम्';
+
+  @override
+  String get dailyReminderTitle => 'दैनिकस्मारकम्';
+
+  @override
+  String get dailyReminderSub => 'प्रतिदिनम् एका शान्ता सूचना';
+
+  @override
+  String get dailyReminderTimeTitle => 'स्मारकसमयः';
+
+  @override
+  String get dailyReminderTimeSub => 'अस्मिन् समये प्रायः आगच्छति';
+
+  @override
+  String get dailyReminderPermissionDenied =>
+      'अस्य अनुप्रयोगस्य सूचनाः न अनुमताः, अतः स्मारकं निष्क्रियं तिष्ठति। तत् उपयोक्तुम् Android-विन्यासेषु सूचनाः अनुमन्यताम्।';
+
+  @override
+  String get notifDailyReminderTitle => 'जपस्य समयः';
+
+  @override
+  String get notifDailyReminderBody =>
+      'अद्य स्वमन्त्राय कतिचन शान्तक्षणान् ददातु।';
+
+  @override
+  String get helpAudioReminderSection => 'दैनिकस्मारकम्';
+
+  @override
+  String get helpAudioReminderBold1 => 'दैनिकस्मारकम्:';
+
+  @override
+  String get helpAudioReminderBullet1 =>
+      'विन्यासेषु → ध्वनिः कम्पनं च इत्यत्र एतत् सक्रियं कृत्वा समयं चिनोतु। प्रतिदिनं तस्मिन् समये प्रायः एका शान्ता सूचना आगच्छति — बैटरी-रक्षणाय Android कतिचन निमेषान् विलम्बयितुं शक्नोति। एतत् अन्तर्जालं विना कार्यं करोति, दूरभाषस्य पुनरारम्भात् परम् अपि चलति।';
 }

@@ -1,6 +1,8 @@
 # Plan — Move `lib/config/` and `lib/utils/` under `lib/core/`
 
-**Status:** Done — see `change_log/20260910_185144_move_config_utils_under_core.md`
+**Status:** completed
+
+_Earlier status note: Done — see `change_log/20260910_185144_move_config_utils_under_core.md`_
 
 **Follows up:** `change_log/20260910_102935_guidelines_conformance_audit.md` §8 ("Deliberately not done").
 

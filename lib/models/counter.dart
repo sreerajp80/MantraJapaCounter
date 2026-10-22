@@ -120,7 +120,8 @@ class Counter {
     malaSize: map['malaSize'] as int? ?? AppConstants.defaultMalaSize,
   );
 
-  /// JSON serialisation — must be compatible with Android Gson export format.
+  /// JSON serialisation for backups — field names are part of the backup
+  /// format; never rename or remove one.
   Map<String, dynamic> toJson() => {
     'id': id,
     'name': name,
@@ -134,8 +135,8 @@ class Counter {
     if (disabledAt != null) 'disabledAt': disabledAt,
     if (disabledReason != null) 'disabledReason': disabledReason,
     if (isLocked) 'isLocked': isLocked,
-    // Written only when not the default, so default counters stay
-    // byte-compatible with the original Android export format.
+    // Written only when not the default, so default counters export the
+    // same as before this field existed.
     if (malaSize != AppConstants.defaultMalaSize) 'malaSize': malaSize,
   };
 

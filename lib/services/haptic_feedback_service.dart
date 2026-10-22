@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 /// Native bridge for completion sound and vibration that play regardless of
 /// the device's silent / DND / ringer mode.
 ///
-/// Mirrors the original Kotlin app: ToneGenerator for the built-in mala beep,
+/// Uses ToneGenerator for the built-in mala beep,
 /// and VibrationEffect with USAGE_ALARM attributes for vibration. Errors are
 /// always swallowed — feedback is best-effort and must never break a count.
 class HapticFeedbackService {

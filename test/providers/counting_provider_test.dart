@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui' show Locale;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -27,6 +28,16 @@ class _FakeNotifications implements NotificationService {
 
   @override
   Future<bool> requestPermissionIfNeeded() async => true;
+
+  @override
+  Future<void> scheduleDailyReminder({
+    required int minutesAfterMidnight,
+    required String timeZoneId,
+    Locale? locale,
+  }) async {}
+
+  @override
+  Future<void> cancelDailyReminder() async {}
 
   @override
   Future<void> cancelAll() async {}

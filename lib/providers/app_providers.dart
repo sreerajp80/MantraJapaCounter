@@ -14,6 +14,7 @@ import 'package:mantra_japa_counter/services/qr_decoder_service.dart';
 import 'package:mantra_japa_counter/services/screen_service.dart';
 import 'package:mantra_japa_counter/services/session_recovery_service.dart';
 import 'package:mantra_japa_counter/services/sound_service.dart';
+import 'package:mantra_japa_counter/services/time_zone_service.dart';
 
 // ──────────────────────────── Infrastructure providers ──────────────────────
 // These are overridden at the root ProviderScope in main.dart with the
@@ -100,4 +101,8 @@ final qrDecoderServiceProvider = Provider<QrDecoderService>((ref) {
 
 final screenServiceProvider = Provider<ScreenService>((ref) {
   return const ScreenService();
+});
+
+final timeZoneServiceProvider = Provider<TimeZoneService>((ref) {
+  return const TimeZoneService();
 });

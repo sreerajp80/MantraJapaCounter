@@ -232,7 +232,7 @@ To add version N:
 5. Add a test to `test/repositories/japa_counter_repository_migration_test.dart` that opens a
    database at the old version, upgrades it, and asserts the new shape.
 6. Never drop or rename a column that the JSON export format depends on. The export must stay
-   byte-compatible with the original Android Room/Gson format.
+   readable by every later version of this app.
 
 ---
 

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart' show SharePlus, ShareParams, XFile;
+import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/core/locale/locale_config.dart';
 import 'package:mantra_japa_counter/models/export_data.dart';
 import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
@@ -32,7 +33,7 @@ class EncryptedExportException implements Exception {
 
 /// JSON import / export for data backup and restore.
 ///
-/// Export format is byte-compatible with the Android app's Gson export.
+/// Backups from any earlier app version must always import.
 class ExportService {
   final JapaCounterRepository _repo;
   final EncryptionService _encryption;
@@ -188,10 +189,60 @@ class ExportService {
       );
     }
 
+    final ExportData data;
     try {
-      return ExportData.fromJson(decoded);
+      data = ExportData.fromJson(decoded);
     } catch (e) {
       throw ValidationException('Schema validation failed: $e');
+    }
+
+    _validateValues(data);
+    return data;
+  }
+
+  /// Rejects values that parse fine but make no sense, so a bad file is
+  /// refused as a whole before anything is written.
+  void _validateValues(ExportData data) {
+    if (data.exportVersion > AppConstants.exportFormatVersion) {
+      throw ValidationException(
+        'Export version ${data.exportVersion} is newer than this app supports '
+        '(${AppConstants.exportFormatVersion})',
+      );
+    }
+
+    final counterIds = <String>{};
+    for (final c in data.counters) {
+      if (c.id.isEmpty) {
+        throw const ValidationException('A counter has an empty id');
+      }
+      if (!counterIds.add(c.id)) {
+        throw ValidationException('Duplicate counter id: ${c.id}');
+      }
+      if (c.name.trim().isEmpty) {
+        throw ValidationException('Counter ${c.id} has an empty name');
+      }
+      if (c.incrementStep < 1) {
+        throw ValidationException(
+          'Counter ${c.id} has an increment step below 1',
+        );
+      }
+      if (c.initialCount < 0 ||
+          c.goal < 0 ||
+          c.dailyGoal < 0 ||
+          c.malaSize < 0) {
+        throw ValidationException('Counter ${c.id} has a negative value');
+      }
+    }
+
+    for (final s in data.sessions) {
+      if (!counterIds.contains(s.counterId)) {
+        throw ValidationException(
+          'Session ${s.id} belongs to a counter not in the file',
+        );
+      }
+      if (s.count < 0 || s.duration < 0) {
+        throw ValidationException('Session ${s.id} has a negative value');
+      }
     }
   }
 }

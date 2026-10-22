@@ -1,0 +1,128 @@
+{
+  "exportVersion": 1,
+  "exportDate": 1790000000000,
+  "counters": [
+    {
+      "id": "11111111-1111-4111-8111-111111111111",
+      "name": "Test Counter Default",
+      "initialCount": 0,
+      "incrementStep": 1,
+      "goal": 0,
+      "dailyGoal": 0,
+      "startDate": 1780000000000,
+      "createdAt": 1780000000500,
+      "status": "ACTIVE"
+    },
+    {
+      "id": "22222222-2222-4222-8222-222222222222",
+      "name": "ടെസ്റ്റ് മന്ത്രം",
+      "initialCount": 0,
+      "incrementStep": 1,
+      "goal": 100000,
+      "dailyGoal": 108,
+      "startDate": 1781000000000,
+      "createdAt": 1781000000500,
+      "status": "ACTIVE",
+      "isLocked": true
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333333",
+      "name": "Test Counter No Mala",
+      "initialCount": 0,
+      "incrementStep": 1,
+      "goal": 5000,
+      "dailyGoal": 500,
+      "startDate": 1782000000000,
+      "createdAt": 1782000000500,
+      "status": "ACTIVE",
+      "malaSize": 0
+    },
+    {
+      "id": "44444444-4444-4444-8444-444444444444",
+      "name": "Test Counter Finished",
+      "initialCount": 0,
+      "incrementStep": 1,
+      "goal": 1080,
+      "dailyGoal": 0,
+      "startDate": 1783000000000,
+      "createdAt": 1783000000500,
+      "status": "DISABLED_SUCCESS",
+      "disabledAt": 1789000000000,
+      "disabledReason": "Goal reached"
+    },
+    {
+      "id": "55555555-5555-4555-8555-555555555555",
+      "name": "Test Counter Custom",
+      "initialCount": 500,
+      "incrementStep": 2,
+      "goal": 2000,
+      "dailyGoal": 54,
+      "startDate": 1784000000000,
+      "createdAt": 1784000000500,
+      "status": "ACTIVE",
+      "malaSize": 27
+    }
+  ],
+  "sessions": [
+    {
+      "id": "aaaaaaa1-0000-4000-8000-000000000001",
+      "counterId": "11111111-1111-4111-8111-111111111111",
+      "counterName": "Test Counter Default",
+      "count": 108,
+      "malas": 1,
+      "chants": 0,
+      "timestamp": 1785000000000,
+      "duration": 600000
+    },
+    {
+      "id": "aaaaaaa1-0000-4000-8000-000000000002",
+      "counterId": "11111111-1111-4111-8111-111111111111",
+      "counterName": "Test Counter Default",
+      "count": 150,
+      "malas": 1,
+      "chants": 42,
+      "timestamp": 1785090000000,
+      "duration": 840000
+    },
+    {
+      "id": "aaaaaaa1-0000-4000-8000-000000000003",
+      "counterId": "22222222-2222-4222-8222-222222222222",
+      "counterName": "ടെസ്റ്റ് മന്ത്രം",
+      "count": 216,
+      "malas": 2,
+      "chants": 0,
+      "timestamp": 1786000000000,
+      "duration": 1200000
+    },
+    {
+      "id": "aaaaaaa1-0000-4000-8000-000000000004",
+      "counterId": "33333333-3333-4333-8333-333333333333",
+      "counterName": "Test Counter No Mala",
+      "count": 75,
+      "malas": 0,
+      "chants": 75,
+      "timestamp": 1787000000000,
+      "duration": 300000
+    },
+    {
+      "id": "aaaaaaa1-0000-4000-8000-000000000005",
+      "counterId": "44444444-4444-4444-8444-444444444444",
+      "counterName": "Test Counter Finished",
+      "count": 1080,
+      "malas": 10,
+      "chants": 0,
+      "timestamp": 1788000000000,
+      "duration": 5400000
+    },
+    {
+      "id": "aaaaaaa1-0000-4000-8000-000000000006",
+      "counterId": "55555555-5555-4555-8555-555555555555",
+      "counterName": "Test Counter Custom",
+      "count": 60,
+      "malas": 2,
+      "chants": 6,
+      "timestamp": 1788500000000,
+      "duration": 0
+    }
+  ]
+}

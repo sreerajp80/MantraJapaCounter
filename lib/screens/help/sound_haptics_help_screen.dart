@@ -77,6 +77,17 @@ class SoundHapticsHelpScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   HelpSection(
+                    icon: Icons.alarm_outlined,
+                    title: l.helpAudioReminderSection,
+                    children: [
+                      HelpBullet(
+                        l.helpAudioReminderBullet1,
+                        boldPrefix: l.helpAudioReminderBold1,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  HelpSection(
                     icon: Icons.vibration_outlined,
                     title: l.helpAudioVibrationSection,
                     children: [

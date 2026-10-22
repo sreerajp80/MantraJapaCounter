@@ -150,6 +150,10 @@ class MainActivity : FlutterActivity() {
                 "getCurrentBrightness" -> {
                     result.success(getCurrentBrightness().toDouble())
                 }
+                // Time-zone name for the daily reminder (e.g. Asia/Kolkata).
+                "getTimeZoneId" -> {
+                    result.success(java.util.TimeZone.getDefault().id)
+                }
                 else -> result.notImplemented()
             }
         }

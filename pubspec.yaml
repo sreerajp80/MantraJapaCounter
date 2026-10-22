@@ -1,7 +1,7 @@
 name: mantra_japa_counter
 description: SreerajP MantraJapa Counter — track your mantra recitation practice.
 publish_to: 'none'
-version: 6.13.12+43
+version: 6.13.13+44
 
 environment:
   sdk: ^3.13.5
@@ -30,6 +30,10 @@ dependencies:
 
   # Notifications
   flutter_local_notifications: ^23.0.0-dev.3
+
+  # Time-zone math for the scheduled daily reminder. Pure Dart, with the
+  # time-zone data built in (no network).
+  timezone: ^0.11.1
 
   # File picker (audio tone selection)
   file_picker: ^13.1.0

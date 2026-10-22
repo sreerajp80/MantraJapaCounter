@@ -12,14 +12,17 @@ import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/screens/settings/sound_settings_screen.dart';
 
 import '../helpers/fake_japa_counter_repository.dart';
+import '../helpers/fake_notification_service.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   late FakeJapaCounterRepository repo;
+  late FakeNotificationService notifications;
 
   setUp(() {
     SharedPreferences.setMockInitialValues({});
     repo = FakeJapaCounterRepository();
+    notifications = FakeNotificationService();
 
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(
@@ -59,6 +62,10 @@ void main() {
             SettingsRepository(prefs),
           ),
           japaCounterRepositoryProvider.overrideWithValue(repo),
+          notificationServiceProvider.overrideWithValue(notifications),
+          timeZoneServiceProvider.overrideWithValue(
+            const FakeTimeZoneService(),
+          ),
         ],
         child: const MaterialApp(
           localizationsDelegates: LocaleConfig.localizationsDelegates,
@@ -105,4 +112,70 @@ void main() {
       expect(settings.lifetimeSoundUri, equals('sacred:shankha'));
     },
   );
+
+  group('daily reminder', () {
+    Future<void> scrollToReminder(WidgetTester tester) async {
+      await tester.scrollUntilVisible(
+        find.text('Reminder time'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('shows the switch and the time row, off at 6:00 AM', (
+      tester,
+    ) async {
+      await pumpSoundSettings(tester);
+      await scrollToReminder(tester);
+
+      expect(find.text('Practice reminder'), findsOneWidget);
+      expect(find.text('Daily reminder'), findsOneWidget);
+      expect(find.text('Reminder time'), findsOneWidget);
+      expect(find.text('6:00 AM'), findsOneWidget);
+    });
+
+    testWidgets('the time row does nothing while the switch is off', (
+      tester,
+    ) async {
+      await pumpSoundSettings(tester);
+      await scrollToReminder(tester);
+
+      await tester.tap(find.text('Reminder time'));
+      await tester.pumpAndSettle();
+      expect(find.byType(Dialog), findsNothing);
+    });
+
+    testWidgets('turning it on schedules and enables the time row', (
+      tester,
+    ) async {
+      await pumpSoundSettings(tester);
+      await scrollToReminder(tester);
+
+      await tester.tap(find.text('Daily reminder'));
+      await tester.pumpAndSettle();
+      expect(notifications.scheduled.single.minutes, 360);
+
+      await tester.tap(find.text('Reminder time'));
+      await tester.pumpAndSettle();
+      expect(find.byType(Dialog), findsOneWidget);
+    });
+
+    testWidgets('a refused permission keeps it off and explains why', (
+      tester,
+    ) async {
+      notifications.permissionGranted = false;
+      await pumpSoundSettings(tester);
+      await scrollToReminder(tester);
+
+      await tester.tap(find.text('Daily reminder'));
+      await tester.pumpAndSettle();
+
+      expect(notifications.scheduled, isEmpty);
+      expect(
+        find.textContaining('Notifications are not allowed'),
+        findsOneWidget,
+      );
+    });
+  });
 }

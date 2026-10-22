@@ -66,7 +66,8 @@ class JapaSession {
     duration: map['duration'] as int? ?? 0,
   );
 
-  /// JSON serialisation — must be compatible with Android Gson export format.
+  /// JSON serialisation for backups — field names are part of the backup
+  /// format; never rename or remove one.
   Map<String, dynamic> toJson() => {
     'id': id,
     'counterId': counterId,

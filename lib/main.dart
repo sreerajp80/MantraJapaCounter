@@ -89,6 +89,7 @@ class _MantraJapaCounterAppState extends ConsumerState<MantraJapaCounterApp>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _scheduleMidnightRefresh();
+    _syncDailyReminder();
   }
 
   @override
@@ -104,7 +105,15 @@ class _MantraJapaCounterAppState extends ConsumerState<MantraJapaCounterApp>
       // The date may have changed while the app was in the background.
       ref.read(currentDayProvider.notifier).refresh();
       _scheduleMidnightRefresh();
+      // The time zone may have changed (travel) while in the background.
+      _syncDailyReminder();
     }
+  }
+
+  /// Schedules the daily reminder again (when it is on), so it follows the
+  /// current time zone and app language.
+  void _syncDailyReminder() {
+    unawaited(ref.read(settingsNotifierProvider.notifier).syncDailyReminder());
   }
 
   /// Refreshes the current day just after the next local midnight, so

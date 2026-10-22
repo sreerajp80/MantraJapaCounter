@@ -201,6 +201,7 @@ Not in scope for this release.
 | `VIBRATE` | Vibration feedback on mala completion and daily goal achievement | Declared in manifest; no runtime request | Notifications sent without vibration |
 | `POST_NOTIFICATIONS` | Show local notifications on Android 13+ (API 33+) | First time user enables notifications in Settings screen | Notifications silently disabled; user informed in Settings |
 | `CAMERA` | Optical Sync receive: read QR codes from live camera frames. Frames are decoded on the device by ZXing and thrown away; nothing is saved or sent | When the user starts a camera receive in Optical Sync | Camera receive shows a "permission denied" message; the rest of the app works normally |
+| `RECEIVE_BOOT_COMPLETED` | Lets the notification plugin set the optional daily practice reminder again after the phone restarts or the app updates. Nothing else runs at boot, and nothing is sent | Declared in manifest; normal install-time permission, no runtime prompt | Not applicable (no prompt). If the reminder is off, the boot receiver has nothing to schedule |
 | `ACCESS_NOTIFICATION_POLICY` | Optional Do Not Disturb while chanting | When the user turns on "Silence notifications (Do Not Disturb)" in Settings; Android opens its own settings page | Chanting works as normal, without silencing alerts |
 
 The custom tone picker uses the system file picker, which needs no storage permission.
@@ -279,7 +280,7 @@ and deleted after the share action completes, or cleaned up on the next `resumed
 
 - Backup supported: yes — Android Auto Backup (platform-managed, covers sqflite DB and SharedPreferences per backup_rules.xml)
 - Backup format: platform-managed; unencrypted; acceptable for low-sensitivity data
-- Import supported: yes — JSON file created by this app's export, or by the Android app's export (for migration from Android to Flutter version)
+- Import supported: yes — JSON file created by this app's export (any earlier version)
 - Recovery flow: user taps Import in Settings → selects a JSON file → app validates structure → inserts missing counters and sessions
 - Plaintext export policy: allowed — JSON export is human-readable; export UX includes a note that the file is unencrypted before the user saves or shares it
 
@@ -287,7 +288,7 @@ and deleted after the share action completes, or cleaned up on the next `resumed
 
 - Import parsing MUST reject malformed JSON and JSON with unexpected structure without corrupting existing data.
 - Import MUST handle duplicate record IDs gracefully (skip or upsert based on ID; do not create duplicate records).
-- Import compatibility with Android app's Gson-exported format MUST be tested with real export files as fixtures in `test/fixtures/`.
+- Import of backups from earlier app versions MUST be tested with the made-up fixture `test/fixtures/backup_format_v1.json` (no real user data in fixtures).
 - Export UX MUST inform the user that the file is unencrypted before they confirm save or share.
 
 ---
@@ -297,7 +298,7 @@ and deleted after the share action completes, or cleaned up on the next `resumed
 | Area | Test Type | Notes |
 |------|-----------|-------|
 | Import parsing | Unit + integration | Malformed JSON rejected; partial data does not corrupt DB |
-| Import compatibility | Integration | Round-trip: Android-exported JSON → Flutter import → all counters and sessions intact |
+| Import compatibility | Integration | Round-trip: fixture backup → import → export → same counters and sessions, same field names and values |
 | Data purge | Integration | After purge: DB empty, SharedPreferences cleared, no residual data |
 | Permission audit | Release build verification | Merged manifest contains only declared, needed permissions; INTERNET absent |
 | Obfuscation | Release build verification | `--obfuscate` flag confirmed in all prod release build commands |
@@ -306,7 +307,7 @@ and deleted after the share action completes, or cleaned up on the next `resumed
 
 ### Required Test Areas
 
-- Import round-trip: Android Gson export file → Flutter import → all counters and sessions intact
+- Import round-trip: fixture backup file → import → export → all counters and sessions intact
 - Migration round-trip: v1 schema → v2 → v3 with data present at each stage
 - Malformed import: JSON with missing required fields, wrong field types, and truncated content — all rejected gracefully
 
@@ -352,6 +353,6 @@ Complete before every production release.
 - [ ] `android:debuggable=false` verified in merged release manifest.
 - [ ] ProGuard rules verified — release build launches and counting flow works end-to-end.
 - [ ] OWASP Mobile Top 10 checklist (section 12) reviewed and signed off.
-- [ ] Import parsing tested with malformed JSON and real Android-exported JSON files.
+- [ ] Import parsing tested with malformed JSON and the backup format fixture.
 - [ ] Data purge path tested — purge leaves no residual counters, sessions, or preferences.
 - [ ] Export UX includes plaintext disclosure to user before save or share.

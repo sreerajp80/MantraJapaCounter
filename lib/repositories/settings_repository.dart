@@ -236,4 +236,24 @@ class SettingsRepository {
   Future<void> setPacingHintEnabled(bool value) async {
     await _prefs.setBool(AppConstants.prefsPacingHintKey, value);
   }
+
+  bool get dailyReminderEnabled =>
+      _prefs.getBool(AppConstants.prefsDailyReminderKey) ?? false;
+
+  Future<void> setDailyReminderEnabled(bool value) async {
+    await _prefs.setBool(AppConstants.prefsDailyReminderKey, value);
+  }
+
+  /// Daily reminder time in minutes after midnight. Values outside one day
+  /// fall back to the default.
+  int get dailyReminderMinutes {
+    final saved = _prefs.getInt(AppConstants.prefsDailyReminderMinutesKey);
+    return (saved != null && saved >= 0 && saved < 24 * 60)
+        ? saved
+        : AppConstants.dailyReminderDefaultMinutes;
+  }
+
+  Future<void> setDailyReminderMinutes(int value) async {
+    await _prefs.setInt(AppConstants.prefsDailyReminderMinutesKey, value);
+  }
 }

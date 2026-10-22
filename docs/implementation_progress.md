@@ -2,7 +2,7 @@
 
 This document tracks the live implementation status of the Mantra Japa Counter application across all build phases.
 
-**Date:** 2026-08-12  
+**Date:** 2026-08-12 (last updated 2026-10-22)  
 Read [implementation_plan.md](implementation_plan.md) for roadmap details.
 
 ---
@@ -20,14 +20,15 @@ Read [implementation_plan.md](implementation_plan.md) for roadmap details.
 
 ### Phase 1: Core Domain & Data Layer
 - [x] Create immutable pure Dart domain models (`Counter`, `JapaSession`, `ExportData`)
-- [x] Setup sqflite SQLite storage helper with Schema v3
+- [x] Setup sqflite SQLite storage helper (Schema v3 at first; now Schema v5, with migrations v1 → v5)
 - [x] Implement SharedPreferences write-ahead recovery logger
-- [x] Implement mala calculation logic (1 mala = 108 counts)
+- [x] Implement mala calculation logic (mala size set per counter: default 108 counts, 0 = no mala)
 - [x] Add unit tests for models, mala calculation, and JSON serialization
 
 ### Phase 2: Services & State Management
-- [x] Integrate `flutter_local_notifications` for offline daily reminders
-- [x] Build `ExportService` supporting JSON export and byte-compatible Android import
+- [x] Integrate `flutter_local_notifications` for daily-goal and lifetime-goal alerts
+- [x] Offline daily practice reminder: one quiet notification a day at a chosen time (Settings → Sound & Haptics), inexact scheduling, survives restarts
+- [x] Build `ExportService` supporting JSON export and import of the app's own backups
 - [x] Setup Riverpod state providers for counter management and active counting state
 - [x] Add unit tests for export parsing and session recovery
 

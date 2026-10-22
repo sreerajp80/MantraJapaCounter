@@ -33,7 +33,6 @@ Read [AGENTS.md](../AGENTS.md) and [CLAUDE.md](../CLAUDE.md) before building or 
 
 - Version format: `MAJOR.MINOR.PATCH+BUILD`
 - Source of truth: `pubspec.yaml`
-- Version history context: Android app reached v4.34 (build code 12); Flutter rewrite begins at v5.0.0+1 to signal the platform change
 - Build-number increment rule: increment by 1 for every build submitted to Google Play; never reuse or skip a build number
 - Git tag format: `vX.Y.Z` (e.g., `v5.0.0`)
 

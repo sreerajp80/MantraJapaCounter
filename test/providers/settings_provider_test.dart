@@ -5,6 +5,8 @@ import 'package:mantra_japa_counter/providers/settings_provider.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/services/screen_service.dart';
 
+import '../helpers/fake_notification_service.dart';
+
 /// Records brightness values instead of calling the native side.
 class _FakeScreenService extends ScreenService {
   final List<double> applied = [];
@@ -48,6 +50,96 @@ void main() {
       await notifier.setScreenBrightness(-1.0);
       expect(repo.screenBrightness, -1.0);
       expect(screen.applied.last, -1.0);
+    });
+  });
+
+  group('SettingsNotifier - daily reminder', () {
+    late FakeNotificationService notifications;
+    late SettingsRepository repo;
+
+    setUp(() async {
+      SharedPreferences.setMockInitialValues({});
+      repo = SettingsRepository(await SharedPreferences.getInstance());
+      notifications = FakeNotificationService();
+    });
+
+    SettingsNotifier build() => SettingsNotifier(
+      repo,
+      () => notifications,
+      null,
+      const FakeTimeZoneService(),
+    );
+
+    test('turning it on asks permission, saves and schedules', () async {
+      final notifier = build();
+
+      expect(await notifier.setDailyReminderEnabled(true), isTrue);
+      expect(notifications.permissionRequests, 1);
+      expect(repo.dailyReminderEnabled, isTrue);
+      expect(notifier.state.dailyReminderEnabled, isTrue);
+      expect(notifications.scheduled.single.minutes, 360);
+      expect(notifications.scheduled.single.timeZoneId, 'Asia/Kolkata');
+    });
+
+    test('turning it off saves and cancels', () async {
+      final notifier = build();
+      await notifier.setDailyReminderEnabled(true);
+
+      expect(await notifier.setDailyReminderEnabled(false), isTrue);
+      expect(repo.dailyReminderEnabled, isFalse);
+      expect(notifier.state.dailyReminderEnabled, isFalse);
+      expect(notifications.cancelReminderCalls, 1);
+    });
+
+    test('a refused permission leaves it off and schedules nothing', () async {
+      notifications.permissionGranted = false;
+      final notifier = build();
+
+      expect(await notifier.setDailyReminderEnabled(true), isFalse);
+      expect(repo.dailyReminderEnabled, isFalse);
+      expect(notifier.state.dailyReminderEnabled, isFalse);
+      expect(notifications.scheduled, isEmpty);
+    });
+
+    test('changing the time schedules again when it is on', () async {
+      final notifier = build();
+      await notifier.setDailyReminderEnabled(true);
+
+      await notifier.setDailyReminderTime(20 * 60 + 45);
+      expect(repo.dailyReminderMinutes, 20 * 60 + 45);
+      expect(notifier.state.dailyReminderMinutes, 20 * 60 + 45);
+      expect(notifications.scheduled.last.minutes, 20 * 60 + 45);
+    });
+
+    test('changing the time while off only saves it', () async {
+      final notifier = build();
+
+      await notifier.setDailyReminderTime(7 * 60);
+      expect(repo.dailyReminderMinutes, 7 * 60);
+      expect(notifications.scheduled, isEmpty);
+    });
+
+    test('changing the language schedules again in that language', () async {
+      final notifier = build();
+      await notifier.setDailyReminderEnabled(true);
+
+      await notifier.setLanguageCode('ml');
+      expect(notifications.scheduled.last.languageCode, 'ml');
+    });
+
+    test('sync schedules only when it is on', () async {
+      await build().syncDailyReminder();
+      expect(notifications.scheduled, isEmpty);
+
+      await repo.setDailyReminderEnabled(true);
+      await build().syncDailyReminder();
+      expect(notifications.scheduled, hasLength(1));
+    });
+
+    test('uses UTC when no time-zone service is given', () async {
+      await repo.setDailyReminderEnabled(true);
+      await SettingsNotifier(repo, () => notifications).syncDailyReminder();
+      expect(notifications.scheduled.single.timeZoneId, 'UTC');
     });
   });
 }

@@ -7,7 +7,7 @@ import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 /// Reconciles any in-progress session persisted in SharedPreferences with the
 /// `japa_sessions` table on app start.
 ///
-/// Since the Kotlin-style flow inserts the session row on the first tap and
+/// Since the counting flow inserts the session row on the first tap and
 /// updates it as taps occur, prefs and DB usually agree. We only need to
 /// handle the edge case where a crash happened between a prefs write and the
 /// next DB flush.

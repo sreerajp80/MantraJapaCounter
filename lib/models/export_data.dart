@@ -5,7 +5,8 @@ import 'package:mantra_japa_counter/models/japa_session.dart';
 
 /// Top-level wrapper for JSON import/export.
 ///
-/// Must be byte-compatible with the Android app's Gson export format.
+/// Every later app version must still read this format — never rename or
+/// remove a field.
 class ExportData {
   final int exportVersion;
   final int exportDate; // epoch ms

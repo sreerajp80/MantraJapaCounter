@@ -230,7 +230,7 @@ In Sanatana Dharma and contemplative spiritual traditions, *Japa* (sacred repeti
 | Phase | Category | Enhancements / Features | Complexity | Architectural Impact |
 |---|---|---|---|---|
 | **Phase 1** | **Ergonomics & Immersion** | • Dhyana Mode (Numberless immersion)<br>• Full-Screen Edge-to-Edge Pocket Tap Mode<br>• Physical Volume Button Counting<br>• Authentic Bronze Temple Bell & Bowl audio ✅ | Medium | UI layer (`CountingScreen`), new audio assets in `assets/audio/`, native key handler in `MainActivity.kt`. |
-| **Phase 2** | **Bhavana & Contemplation** | • Mantra Meaning, Translation & Dhyana Shloka<br>• Pre-session reflection card<br>• Meru Bead Mindful Pause ✅<br>• Anti-Rushing Pacing Indicator ✅ | Low–Medium | Database migration (schema v5) to add optional `meaning`, `dhyanaShloka`, and `scriptText` fields to `counters` table. |
+| **Phase 2** | **Bhavana & Contemplation** | • Mantra Meaning, Translation & Dhyana Shloka<br>• Pre-session reflection card<br>• Meru Bead Mindful Pause ✅<br>• Anti-Rushing Pacing Indicator ✅ | Low–Medium | A future database migration (schema v6 or later) to add optional `meaning`, `dhyanaShloka`, and `scriptText` fields to `counters` table. (The real schema v5 migration added `malaSize`.) |
 | **Phase 3** | **Sacred Sound & Reflection** | • Offline Tanpura / Acoustic Drone player<br>• Post-session Stillness Timer<br>• Private Sadhana Diary<br>• Tactile Bead-Rolling Drag gesture | Medium | Audio looping engine (`audioplayers`), new `sadhana_notes` table in SQLite, custom drag gesture recognizer. |
 | **Phase 4** | **Holistic Sadhana** | • Sacred Sankalpa Setup Ceremony<br>• 100% Offline Astronomical Panchanga calculation<br>• Custom Bead Textures (Rudraksha, Tulsi, Sphatika)<br>• Selective Counter QR Sync | Medium–High | Offline solar/lunar math library in Dart, custom canvas shaders for bead materials, air-gap sync protocol extensions. |
 
@@ -239,6 +239,6 @@ In Sanatana Dharma and contemplative spiritual traditions, *Japa* (sacred repeti
 ## 5. Architectural & Security Safeguards
 
 1. **Zero Network Calls:** All audio files, calculations, texts, and storage remain strictly offline within the app package and local SQLite database.
-2. **Backward Compatibility:** All new counter attributes (meaning, bead material, notes) will be optional fields with default fallbacks, ensuring existing v4 databases and JSON export/import backups continue to function seamlessly without data loss.
+2. **Backward Compatibility:** All new counter attributes (meaning, bead material, notes) will be optional fields with default fallbacks, ensuring existing v5 databases and JSON export/import backups continue to function seamlessly without data loss.
 3. **Battery & Screen Preservation:** Dhyana Mode and Stillness Brightness modes minimize AMOLED battery consumption and screen burn-in during long multi-hour sittings.
 4. **Adherence to Core Rules:** All features honor single-handed portrait ergonomics, Riverpod state boundaries, and pure Dart model logic without UI leakage.

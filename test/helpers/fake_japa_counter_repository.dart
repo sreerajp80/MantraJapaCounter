@@ -1,5 +1,6 @@
 import 'package:mantra_japa_counter/models/counter.dart';
 import 'package:mantra_japa_counter/models/daily_summary.dart';
+import 'package:mantra_japa_counter/models/export_data.dart';
 import 'package:mantra_japa_counter/models/japa_session.dart';
 import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
 
@@ -36,6 +37,35 @@ class FakeJapaCounterRepository implements JapaCounterRepository {
   @override
   Future<void> deleteCounter(String id) async =>
       counters.removeWhere((c) => c.id == id);
+
+  @override
+  Future<void> deleteAllCounters() async => counters.clear();
+
+  @override
+  Future<ExportData> exportSelectedData(List<String> counterIds) async {
+    final ids = counterIds.isEmpty
+        ? counters.map((c) => c.id).toSet()
+        : counterIds.toSet();
+    return ExportData(
+      exportDate: DateTime.now().millisecondsSinceEpoch,
+      counters: counters.where((c) => ids.contains(c.id)).toList(),
+      sessions: sessions.where((s) => ids.contains(s.counterId)).toList(),
+    );
+  }
+
+  @override
+  Future<JapaSession?> getSessionById(String id) async =>
+      sessions.where((s) => s.id == id).firstOrNull;
+
+  @override
+  Future<void> insertSession(JapaSession session) async =>
+      sessions.add(session);
+
+  @override
+  Future<void> updateSession(JapaSession session) async {
+    final i = sessions.indexWhere((s) => s.id == session.id);
+    if (i >= 0) sessions[i] = session;
+  }
 
   @override
   Future<void> deleteSession(String id) async =>

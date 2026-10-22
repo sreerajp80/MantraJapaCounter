@@ -23,7 +23,7 @@ class CounterStats {
 
 /// Per-counter statistics used by CounterListScreen cards and AboutCounterScreen.
 ///
-/// Matches the Kotlin app's formula:
+/// Formula:
 ///   totalCount = counter.initialCount + SUM(session.count) for the counter
 ///   todayCount = SUM(session.count) for sessions since today's midnight
 final counterStatsProvider = FutureProvider.autoDispose

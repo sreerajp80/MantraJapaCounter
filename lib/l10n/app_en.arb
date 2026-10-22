@@ -1942,9 +1942,9 @@
   "@featJsonExportH2": {
     "description": "Features screen highlight 2 for: Offline JSON Export & Restore"
   },
-  "featJsonExportH3": "Room/Gson compatibility",
+  "featJsonExportH3": "Works with older backups",
   "@featJsonExportH3": {
-    "description": "Features screen highlight 3 for: Offline JSON Export & Restore"
+    "description": "Features screen highlight 3 for: Offline JSON Export & Restore (backups from earlier app versions still import)"
   },
   "featDailyLogTitle": "Daily Practice Log & Breakdown",
   "@featDailyLogTitle": {
@@ -3699,7 +3699,7 @@
   "@helpBackupImportBold5": {
     "description": "Help backup and restore guide: Import bullet 5 bold label"
   },
-  "helpBackupImportBullet5": "Backup files from the older Android version of this app can also be imported.",
+  "helpBackupImportBullet5": "Backup files from earlier versions of this app can always be imported.",
   "@helpBackupImportBullet5": {
     "description": "Help backup and restore guide: Import bullet 5 text"
   },
@@ -3854,5 +3854,53 @@
   "helpFaqQ14Answer": "No. Your data never leaves your phone unless you export it or send it with Optical Sync yourself.",
   "@helpFaqQ14Answer": {
     "description": "Help FAQ: answer 14"
+  },
+  "sectionDailyReminder": "Practice reminder",
+  "@sectionDailyReminder": {
+    "description": "Settings section title for the daily practice reminder"
+  },
+  "sectionDailyReminderSub": "A gentle call to your daily japa",
+  "@sectionDailyReminderSub": {
+    "description": "Settings section subtitle for the daily practice reminder"
+  },
+  "dailyReminderTitle": "Daily reminder",
+  "@dailyReminderTitle": {
+    "description": "Toggle title that turns the daily practice reminder on or off"
+  },
+  "dailyReminderSub": "One quiet notification each day",
+  "@dailyReminderSub": {
+    "description": "Toggle subtitle for the daily practice reminder"
+  },
+  "dailyReminderTimeTitle": "Reminder time",
+  "@dailyReminderTimeTitle": {
+    "description": "Row title that opens the time picker for the daily reminder"
+  },
+  "dailyReminderTimeSub": "Arrives around this time",
+  "@dailyReminderTimeSub": {
+    "description": "Row subtitle for the daily reminder time; Android may deliver it a few minutes late"
+  },
+  "dailyReminderPermissionDenied": "Notifications are not allowed for this app, so the reminder stays off. Allow notifications in Android settings to use it.",
+  "@dailyReminderPermissionDenied": {
+    "description": "Message shown when the notification permission is refused while turning on the daily reminder"
+  },
+  "notifDailyReminderTitle": "Time for your japa",
+  "@notifDailyReminderTitle": {
+    "description": "Status bar title of the daily practice reminder notification"
+  },
+  "notifDailyReminderBody": "Take a few quiet minutes for your mantra today.",
+  "@notifDailyReminderBody": {
+    "description": "Status bar body of the daily practice reminder notification"
+  },
+  "helpAudioReminderSection": "Daily reminder",
+  "@helpAudioReminderSection": {
+    "description": "Help screen section title about the daily practice reminder"
+  },
+  "helpAudioReminderBold1": "Daily reminder:",
+  "@helpAudioReminderBold1": {
+    "description": "Bold prefix of the help bullet about the daily reminder"
+  },
+  "helpAudioReminderBullet1": "Turn it on in Settings → Sound & Haptics and pick a time. One quiet notification arrives around that time each day — Android may hold it for a few minutes to save battery. It works offline and keeps working after the phone restarts.",
+  "@helpAudioReminderBullet1": {
+    "description": "Help bullet explaining the daily reminder"
   }
 }

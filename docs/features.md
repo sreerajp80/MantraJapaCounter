@@ -150,6 +150,12 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
   - **Custom Audio File Picker**: Select custom MP3/WAV/AAC audio files from local storage using `file_picker`.
   - **Native Volume Boost**: Native MethodChannel boosts `STREAM_ALARM` volume during playback so completion tones remain audible in low-volume modes, with a 6-second auto-restore timeout and automatic restoration in `onPause`/`onDestroy`.
   - **Preview Tone**: In-settings button to preview the selected notification tone immediately.
+- **Daily Practice Reminder**:
+  - Off by default. Turn on in Settings → Sound & Haptics → Practice reminder and pick a time (default 06:00).
+  - One quiet status-bar notification a day ("Time for your japa"), in the app language. Tapping it opens the app.
+  - Scheduled on the phone with `flutter_local_notifications` (`zonedSchedule`, daily repeat). Inexact mode, so no exact-alarm permission; Android may deliver it a few minutes late.
+  - Uses the phone's time zone and is scheduled again on app start and resume (after travel) and when the app language changes.
+  - Still fires after a phone restart (`RECEIVE_BOOT_COMPLETED` + the plugin's boot receiver). Fully offline.
 
 ---
 
@@ -164,7 +170,7 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 - **JSON Import / Export Backup System**:
   - **Export Data**: Backup all counters and session history into a single JSON file (`mantra_japa_counter_backup.json`) and open the native system share sheet (`share_plus`).
   - **Import Data**: Restore data from a JSON backup file. Replaces database contents atomically inside a single SQLite transaction to guarantee zero data corruption on invalid/corrupted files.
-  - **Gson & Android Schema Compatibility**: JSON export/import format is 100% byte-compatible with the legacy Android/Kotlin app (Schema Version 3).
+  - **Backward-Compatible Backups**: Backup files made by any earlier version of this app always import. JSON fields are never renamed or removed; new fields are optional.
 - **Dual-Tier Zero Data Loss Protection**:
   - **Tier 1 (SharedPreferences)**: Fast state persistence every 5 taps or 5 seconds for instant crash recovery.
   - **Tier 2 (sqflite DB)**: Batched database transaction write every 20 taps or 30 seconds (or immediately on the very first tap of a session).

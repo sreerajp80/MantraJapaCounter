@@ -58,7 +58,7 @@ void main() {
     });
   });
 
-  group('JSON round-trip (Android Gson compatibility)', () {
+  group('JSON round-trip', () {
     test('toJson / fromJson round-trip', () {
       final json = base.toJson();
       final restored = Counter.fromJson(json);

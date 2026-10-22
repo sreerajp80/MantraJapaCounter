@@ -42,7 +42,7 @@ This file is read by Claude Code at the start of every session in this repositor
 
 1. **Offline-first & zero telemetry**: The app is strictly offline. No network requests, no analytics SDKs, no cloud sync, no tracking.
 2. **Zero data loss**: SharedPreferences crash-recovery write every 5 taps or 5 seconds; sqflite batch write every 30 seconds or 20 taps.
-3. **Import compatibility**: JSON export format must remain byte-compatible with the original Android Room/Gson export format.
+3. **Import compatibility**: Every app version must import backups made by any earlier version of this app (export format `exportVersion` 1). Never rename or remove a JSON field; new fields must be optional, with a default when missing (locked by `test/repositories/backup_format_test.dart`).
 4. **Never crash on malformed input**: Parser failures during import must fail gracefully with descriptive error messages without corrupting state.
 5. **Portrait orientation lock**: Enforced programmatically in `main.dart` before `runApp`.
 

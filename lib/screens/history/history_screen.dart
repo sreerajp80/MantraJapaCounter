@@ -120,7 +120,7 @@ class HistoryScreen extends ConsumerWidget {
       );
     }
 
-    // Match the Kotlin formula: initialCount + SUM(session.count).
+    // Lifetime total: initialCount + SUM(session.count).
     final lifetimeTotal =
         counterInitialCount +
         summaries.fold<int>(0, (sum, d) => sum + d.totalCount);

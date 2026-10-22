@@ -1,12 +1,16 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
+
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
+import 'package:mantra_japa_counter/core/locale/locale_config.dart';
 import 'package:mantra_japa_counter/models/mala_sound.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/services/notification_service.dart';
 import 'package:mantra_japa_counter/services/screen_service.dart';
+import 'package:mantra_japa_counter/services/time_zone_service.dart';
 
 /// Snapshot of all user settings read from SharedPreferences.
 class AppSettings {
@@ -26,6 +30,10 @@ class AppSettings {
   final bool meruPauseEnabled;
   final int meruPauseSeconds;
   final bool pacingHintEnabled;
+  final bool dailyReminderEnabled;
+
+  /// Daily reminder time in minutes after midnight.
+  final int dailyReminderMinutes;
 
   const AppSettings({
     required this.screenBrightness,
@@ -44,6 +52,8 @@ class AppSettings {
     this.meruPauseEnabled = false,
     this.meruPauseSeconds = AppConstants.meruPauseDefaultSeconds,
     this.pacingHintEnabled = true,
+    this.dailyReminderEnabled = false,
+    this.dailyReminderMinutes = AppConstants.dailyReminderDefaultMinutes,
   });
 
   AppSettings copyWith({
@@ -66,6 +76,8 @@ class AppSettings {
     bool? meruPauseEnabled,
     int? meruPauseSeconds,
     bool? pacingHintEnabled,
+    bool? dailyReminderEnabled,
+    int? dailyReminderMinutes,
   }) {
     return AppSettings(
       screenBrightness: screenBrightness ?? this.screenBrightness,
@@ -98,6 +110,8 @@ class AppSettings {
       meruPauseEnabled: meruPauseEnabled ?? this.meruPauseEnabled,
       meruPauseSeconds: meruPauseSeconds ?? this.meruPauseSeconds,
       pacingHintEnabled: pacingHintEnabled ?? this.pacingHintEnabled,
+      dailyReminderEnabled: dailyReminderEnabled ?? this.dailyReminderEnabled,
+      dailyReminderMinutes: dailyReminderMinutes ?? this.dailyReminderMinutes,
     );
   }
 }
@@ -113,28 +127,38 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
   /// do not need it.
   final ScreenService? _screen;
 
-  SettingsNotifier(this._repo, [this._notifications, this._screen])
-    : super(
-        AppSettings(
-          screenBrightness: _repo.screenBrightness,
-          dailyGoalNotificationsEnabled: _repo.dailyGoalNotificationsEnabled,
-          lifetimeGoalNotificationsEnabled:
-              _repo.lifetimeGoalNotificationsEnabled,
-          malaNotificationsEnabled: _repo.malaNotificationsEnabled,
-          malaSound: _repo.malaSound,
-          notificationSoundUri: _repo.notificationSoundUri,
-          notificationSoundName: _repo.notificationSoundName,
-          lifetimeSoundUri: _repo.lifetimeSoundUri,
-          lifetimeSoundName: _repo.lifetimeSoundName,
-          vibrationEnabled: _repo.vibrationEnabled,
-          languageCode: _repo.languageCode,
-          dndEnabled: _repo.dndEnabled,
-          dimmedChantingMode: _repo.dimmedChantingMode,
-          meruPauseEnabled: _repo.meruPauseEnabled,
-          meruPauseSeconds: _repo.meruPauseSeconds,
-          pacingHintEnabled: _repo.pacingHintEnabled,
-        ),
-      ) {
+  /// Reads the phone's time zone for the daily reminder. When null, UTC is
+  /// used.
+  final TimeZoneService? _timeZone;
+
+  SettingsNotifier(
+    this._repo, [
+    this._notifications,
+    this._screen,
+    this._timeZone,
+  ]) : super(
+         AppSettings(
+           screenBrightness: _repo.screenBrightness,
+           dailyGoalNotificationsEnabled: _repo.dailyGoalNotificationsEnabled,
+           lifetimeGoalNotificationsEnabled:
+               _repo.lifetimeGoalNotificationsEnabled,
+           malaNotificationsEnabled: _repo.malaNotificationsEnabled,
+           malaSound: _repo.malaSound,
+           notificationSoundUri: _repo.notificationSoundUri,
+           notificationSoundName: _repo.notificationSoundName,
+           lifetimeSoundUri: _repo.lifetimeSoundUri,
+           lifetimeSoundName: _repo.lifetimeSoundName,
+           vibrationEnabled: _repo.vibrationEnabled,
+           languageCode: _repo.languageCode,
+           dndEnabled: _repo.dndEnabled,
+           dimmedChantingMode: _repo.dimmedChantingMode,
+           meruPauseEnabled: _repo.meruPauseEnabled,
+           meruPauseSeconds: _repo.meruPauseSeconds,
+           pacingHintEnabled: _repo.pacingHintEnabled,
+           dailyReminderEnabled: _repo.dailyReminderEnabled,
+           dailyReminderMinutes: _repo.dailyReminderMinutes,
+         ),
+       ) {
     // Apply the saved brightness from app start.
     unawaited(_screen?.setAppBrightness(state.screenBrightness));
   }
@@ -204,6 +228,9 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
     state = (code == null || code == 'system')
         ? state.copyWith(clearLanguageCode: true)
         : state.copyWith(languageCode: code);
+    // The reminder text is fixed when it is scheduled, so schedule it again
+    // in the new language.
+    await syncDailyReminder();
   }
 
   Future<void> setDndEnabled(bool value) async {
@@ -230,6 +257,68 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
     await _repo.setPacingHintEnabled(value);
     state = state.copyWith(pacingHintEnabled: value);
   }
+
+  /// Turns the daily practice reminder on or off. Turning it on asks for the
+  /// notification permission first (Android 13+). Returns false when the
+  /// permission is refused; the reminder then stays off.
+  Future<bool> setDailyReminderEnabled(bool value) async {
+    final notifications = _notifications;
+    if (value && notifications != null) {
+      await _repo.setNotificationPermissionAsked();
+      if (!await notifications().requestPermissionIfNeeded()) return false;
+    }
+    await _repo.setDailyReminderEnabled(value);
+    state = state.copyWith(dailyReminderEnabled: value);
+    if (value) {
+      await syncDailyReminder();
+    } else {
+      await _cancelDailyReminder();
+    }
+    return true;
+  }
+
+  /// Saves the reminder time ([minutes] after midnight) and schedules the
+  /// reminder again when it is on.
+  Future<void> setDailyReminderTime(int minutes) async {
+    await _repo.setDailyReminderMinutes(minutes);
+    state = state.copyWith(dailyReminderMinutes: minutes);
+    await syncDailyReminder();
+  }
+
+  /// Schedules the daily reminder again when it is on, with the current time
+  /// zone and app language. Called on app start and resume, so travel and
+  /// language changes are picked up. Failures are ignored.
+  Future<void> syncDailyReminder() async {
+    final notifications = _notifications;
+    if (!state.dailyReminderEnabled || notifications == null) return;
+    try {
+      final timeZoneId =
+          await _timeZone?.getTimeZoneId() ??
+          TimeZoneService.fallbackTimeZoneId;
+      await notifications().scheduleDailyReminder(
+        minutesAfterMidnight: state.dailyReminderMinutes,
+        timeZoneId: timeZoneId,
+        locale: LocaleConfig.resolveAppLocale(
+          languageCode: state.languageCode,
+          deviceLocale: PlatformDispatcher.instance.locale,
+        ),
+      );
+    } catch (e) {
+      debugPrint(
+        'SettingsNotifier: schedule reminder failed (${e.runtimeType})',
+      );
+    }
+  }
+
+  Future<void> _cancelDailyReminder() async {
+    final notifications = _notifications;
+    if (notifications == null) return;
+    try {
+      await notifications().cancelDailyReminder();
+    } catch (e) {
+      debugPrint('SettingsNotifier: cancel reminder failed (${e.runtimeType})');
+    }
+  }
 }
 
 final settingsNotifierProvider =
@@ -238,5 +327,6 @@ final settingsNotifierProvider =
         ref.watch(settingsRepositoryProvider),
         () => ref.read(notificationServiceProvider),
         ref.read(screenServiceProvider),
+        ref.read(timeZoneServiceProvider),
       );
     });

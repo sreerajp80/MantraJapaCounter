@@ -1,6 +1,8 @@
 # Plan — Fix Delete and Disable confirm dialogs on the counter options sheet
 
-**Status:** completed — see `change_log/20260910_191931_fix_options_sheet_dialog_context.md`
+**Status:** completed
+
+_Earlier status note: completed — see `change_log/20260910_191931_fix_options_sheet_dialog_context.md`_
 
 **Found by:** the new safety-net test in `test/screens/counter_list_screen_test.dart`
 ("Delete asks first and then removes the counter"), written for

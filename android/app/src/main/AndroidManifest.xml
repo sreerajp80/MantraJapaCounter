@@ -8,6 +8,9 @@
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <!-- Do Not Disturb access to silence notifications during chanting sessions -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <!-- Lets the notification plugin set the daily practice reminder again
+         after the phone restarts. Normal install-time permission; no prompt. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- The app is strictly offline. Remove these from the final manifest in
          case any plugin or library tries to add them, so the OS blocks all
          network use. Check the merged release manifest before each release. -->
@@ -66,6 +69,21 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!-- Shows the scheduled daily reminder, and schedules it again after
+             a restart or app update (flutter_local_notifications). -->
+        <receiver
+            android:exported="false"
+            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+        <receiver
+            android:exported="false"
+            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
+            </intent-filter>
+        </receiver>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

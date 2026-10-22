@@ -2,14 +2,14 @@
 
 This document records the overall implementation roadmap and build phases for the Mantra Japa Counter application.
 
-**Date:** 2026-08-12  
+**Date:** 2026-08-12 (last updated 2026-10-22)  
 Read [architecture.md](architecture.md) and [project_structure.md](project_structure.md) for technical design details.
 
 ---
 
 ## 1. Overview & Objectives
 
-The goal of the Mantra Japa Counter Flutter migration is to build a high-performance, offline-first application for tracking mantra recitations with zero data loss guarantees, precise mala calculation (1 mala = 108 chants), session history management, and byte-level export/import compatibility with the legacy Android (Compose + Room) application.
+The goal of the Mantra Japa Counter app is to build a high-performance, offline-first application for tracking mantra recitations with zero data loss guarantees, precise mala calculation (mala size set per counter: default 108 chants, 0 = no mala), session history management, and JSON export/import that always reads backups from earlier versions of the app.
 
 ---
 
@@ -17,11 +17,11 @@ The goal of the Mantra Japa Counter Flutter migration is to build a high-perform
 
 ### Phase 1: Core Domain & Data Layer
 - Implement immutable models (`Counter`, `JapaSession`, `ExportData`).
-- Implement sqflite Database Helper (Schema v3) and SharedPreferences recovery layer.
+- Implement sqflite Database Helper (Schema v3 at first; now Schema v5) and SharedPreferences recovery layer.
 - Build mala calculation utilities and unit test suite.
 
 ### Phase 2: Services & State Management
-- Implement `NotificationService` for local daily practice reminders.
+- Implement `NotificationService` for daily-goal and lifetime-goal alerts. (Daily practice reminders are planned, not built yet.)
 - Implement `ExportService` for JSON export and import parsing with fallback safety.
 - Implement Riverpod state providers for counter lists, active session state, and user preferences.
 

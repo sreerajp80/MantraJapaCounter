@@ -2752,10 +2752,10 @@ abstract class AppLocalizations {
   /// **'One-tap export/import'**
   String get featJsonExportH2;
 
-  /// Features screen highlight 3 for: Offline JSON Export & Restore
+  /// Features screen highlight 3 for: Offline JSON Export & Restore (backups from earlier app versions still import)
   ///
   /// In en, this message translates to:
-  /// **'Room/Gson compatibility'**
+  /// **'Works with older backups'**
   String get featJsonExportH3;
 
   /// Features screen feature title: Daily Practice Log & Breakdown
@@ -5353,7 +5353,7 @@ abstract class AppLocalizations {
   /// Help backup and restore guide: Import bullet 5 text
   ///
   /// In en, this message translates to:
-  /// **'Backup files from the older Android version of this app can also be imported.'**
+  /// **'Backup files from earlier versions of this app can always be imported.'**
   String get helpBackupImportBullet5;
 
   /// Help backup and restore guide: Clear section title
@@ -5583,6 +5583,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No. Your data never leaves your phone unless you export it or send it with Optical Sync yourself.'**
   String get helpFaqQ14Answer;
+
+  /// Settings section title for the daily practice reminder
+  ///
+  /// In en, this message translates to:
+  /// **'Practice reminder'**
+  String get sectionDailyReminder;
+
+  /// Settings section subtitle for the daily practice reminder
+  ///
+  /// In en, this message translates to:
+  /// **'A gentle call to your daily japa'**
+  String get sectionDailyReminderSub;
+
+  /// Toggle title that turns the daily practice reminder on or off
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminder'**
+  String get dailyReminderTitle;
+
+  /// Toggle subtitle for the daily practice reminder
+  ///
+  /// In en, this message translates to:
+  /// **'One quiet notification each day'**
+  String get dailyReminderSub;
+
+  /// Row title that opens the time picker for the daily reminder
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder time'**
+  String get dailyReminderTimeTitle;
+
+  /// Row subtitle for the daily reminder time; Android may deliver it a few minutes late
+  ///
+  /// In en, this message translates to:
+  /// **'Arrives around this time'**
+  String get dailyReminderTimeSub;
+
+  /// Message shown when the notification permission is refused while turning on the daily reminder
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are not allowed for this app, so the reminder stays off. Allow notifications in Android settings to use it.'**
+  String get dailyReminderPermissionDenied;
+
+  /// Status bar title of the daily practice reminder notification
+  ///
+  /// In en, this message translates to:
+  /// **'Time for your japa'**
+  String get notifDailyReminderTitle;
+
+  /// Status bar body of the daily practice reminder notification
+  ///
+  /// In en, this message translates to:
+  /// **'Take a few quiet minutes for your mantra today.'**
+  String get notifDailyReminderBody;
+
+  /// Help screen section title about the daily practice reminder
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminder'**
+  String get helpAudioReminderSection;
+
+  /// Bold prefix of the help bullet about the daily reminder
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminder:'**
+  String get helpAudioReminderBold1;
+
+  /// Help bullet explaining the daily reminder
+  ///
+  /// In en, this message translates to:
+  /// **'Turn it on in Settings → Sound & Haptics and pick a time. One quiet notification arrives around that time each day — Android may hold it for a few minutes to save battery. It works offline and keeps working after the phone restarts.'**
+  String get helpAudioReminderBullet1;
 }
 
 class _AppLocalizationsDelegate

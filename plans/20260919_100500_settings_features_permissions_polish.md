@@ -1,6 +1,8 @@
 # Implementation Plan: Settings Redesign, Status Borders, Custom Achievement Tones, Help Tutorial, Features & Permissions
 
-**Status:** Complete
+**Status:** completed
+
+_Earlier status note: Complete_
 
 ## 1. Overview
 This plan implements the complete polish required before publishing SreerajP MantraJapa Counter to Google Play Store and GitHub:

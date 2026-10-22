@@ -1,6 +1,6 @@
 # Privacy Policy — SreerajP MantraJapa Counter
 
-**Last updated:** 3 October 2026
+**Last updated:** 22 October 2026
 
 This policy covers the Android app **SreerajP MantraJapa Counter**
 (package `com.sreerajp.mantrajapacounter`).
@@ -21,7 +21,7 @@ The app stores the data you enter so it can work:
 
 - counter names, counts, malas, goals and vows,
 - practice sessions and notes,
-- app settings (language, sounds, vibration and so on).
+- app settings (language, sounds, vibration, daily reminder time and so on).
 
 This data is kept only in the app's private storage on your phone. Android backup is turned off
 for this app, so your data is not copied to Google Drive or any other cloud backup.
@@ -31,11 +31,13 @@ for this app, so your data is not copied to Google Drive or any other cloud back
 | Permission | Why |
 |------------|-----|
 | Camera | Only for **Optical Sync**, to receive your data from another phone by scanning QR codes on its screen. Camera frames are read on your phone and thrown away at once. No photos or videos are saved or sent. The app asks for this only when you start a camera receive. |
-| Notifications | To show local alerts, such as mala completion and daily goal reached. These are made on the phone; nothing is sent from a server. |
+| Notifications | To show local alerts, such as daily goal reached, lifetime goal reached and the optional daily practice reminder. These are made on the phone; nothing is sent from a server. |
 | Vibrate | To vibrate when a mala or daily goal is completed. |
 | Do Not Disturb access | Optional. Only if you turn on "Silence notifications" in Settings, to silence alerts and calls while you chant. |
+| Run at startup (`RECEIVE_BOOT_COMPLETED`) | Only for the optional **daily reminder**. After the phone restarts or the app is updated, Android lets the app set the reminder again. Nothing else runs, and nothing is sent. Android grants this at install; there is no prompt. |
 
-You can refuse any of these permissions. The main counting features still work.
+You can refuse any of these permissions. The main counting features still work. Run at startup
+is granted at install and cannot be refused, but it does nothing unless the daily reminder is on.
 
 ## Export, import and sharing
 

@@ -5,7 +5,7 @@ enum CounterStatus {
   disabledFailure;
 
   /// Round-trip with the string stored in the SQLite `status` column.
-  /// Matches the Android Room enum names for import compatibility.
+  /// These strings are part of the backup format — never change them.
   static CounterStatus fromDb(String value) {
     switch (value) {
       case 'ACTIVE':

@@ -71,3 +71,7 @@ android/local.properties
 
 # Golden test difference images from failed runs
 test/**/failures/
+
+# Personal backup files dropped into the project root (never commit real data)
+/mantra_japa_counter_backup*.json
+/*.json.enc

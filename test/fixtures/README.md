@@ -1,16 +1,18 @@
 # Test Fixtures
 
-Place real Android-exported JSON files here for import compatibility tests.
+Made-up backup files used to lock the backup (JSON export) format.
 
-## How to get a fixture file
+## Files
 
-1. Open the Android app on a device or emulator.
-2. Go to the counter list → menu → Import / Export → Export.
-3. Save the exported `mantra_japa_counter_backup.json` to this folder.
-4. Rename it descriptively, e.g. `android_v4_export.json`.
+| File | Used by | What it is |
+|------|---------|------------|
+| `backup_format_v1.json` | `test/repositories/backup_format_test.dart` | A small made-up backup in format `exportVersion` 1: a default counter, a locked counter with a Malayalam name, a counter with no mala count (`malaSize` 0), a finished (disabled) counter, a counter with custom step / initial count / mala size, and their sessions. |
 
-## Required before first release
+## Rules
 
-At least one real Android export must be present and tested via
-`test/repositories/import_compatibility_test.dart` before the first
-Flutter release is submitted to Google Play.
+- **No real data.** Fixtures are committed to the repository. Never put a real backup
+  (your own counters or practice history) here.
+- **Never edit a fixture to make a test pass.** Every app version must import backups
+  made by any earlier version. If the test fails, the code broke the format — fix the
+  code. If the format grows (a new optional field), add a new fixture file and test
+  instead of changing this one.

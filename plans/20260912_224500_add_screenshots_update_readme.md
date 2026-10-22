@@ -1,6 +1,8 @@
 # Plan: Run App on Emulator, Capture Screenshots, and Update README.md
 
-**Status:** Completed
+**Status:** completed
+
+_Earlier status note: Completed_
 
 ## Issue
 The repository `README.md` does not have visual screenshots of the mobile application. In addition, `README.md` needs to be updated to match the current state of the application:

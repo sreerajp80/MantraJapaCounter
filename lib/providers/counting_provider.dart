@@ -28,8 +28,7 @@ final countingClockProvider = Provider<int Function()>(
 /// at the moment of the last database write — they already include this
 /// session's taps up to [lastDbWrittenCount]. To get the live, real-time
 /// total, callers should add `session.tapCount - lastDbWrittenCount` (the
-/// "unflushed" taps that haven't reached SQLite yet). This matches the
-/// Kotlin app's `getTotalCountForCounter` formula.
+/// "unflushed" taps that haven't reached SQLite yet).
 class CountingState {
   final ActiveSession? session;
   final int lifetimeTotal;
@@ -112,7 +111,7 @@ class CountingState {
   }
 }
 
-/// Manages the active counting session — mirrors the Kotlin app's behaviour:
+/// Manages the active counting session:
 ///
 ///   • First tap inserts a session row into the DB immediately for safety.
 ///   • Subsequent taps update the same row, batched (every 30s or 20 taps).
@@ -121,13 +120,12 @@ class CountingState {
 ///   • Reset cancels the active session and starts a fresh one.
 ///   • Save-and-exit force-flushes pending writes.
 ///
-/// History therefore reflects the active session in real time, exactly as
-/// in the Kotlin app.
+/// History therefore reflects the active session in real time.
 class CountingNotifier extends StateNotifier<CountingState> {
   final Ref _ref;
   final String _counterId;
 
-  // Per-session DB tracking — matches Kotlin's lastDbWrittenCount semantics.
+  // Per-session DB tracking.
   String? _sessionDbId; // id of the row in japa_sessions for this session
   bool _isSessionInDb = false; // has the row been inserted yet?
   int _lastDbWrittenCount = 0; // count value last persisted to DB
@@ -233,7 +231,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
       }
       resumedFromEarlierDay = _holdsEarlierDayTaps(saved);
     } else {
-      // Fresh session — no DB row yet (Kotlin inserts on first tap).
+      // Fresh session — no DB row yet (the row is inserted on the first tap).
       session = _startFreshSession(
         counterId: counter.id,
         counterName: counter.name,
@@ -279,7 +277,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
 
   /// Refreshes [CountingState.lifetimeTotal] and [CountingState.todayTotal]
   /// from the database. Includes `counter.initialCount` in the lifetime
-  /// total to match the Kotlin formula: `initialCount + DB SUM`.
+  /// total: `initialCount + DB SUM`.
   Future<void> _refreshTotals(int initialCount) async {
     final repo = _ref.read(japaCounterRepositoryProvider);
     final dbTotal = await repo.getTotalCountForCounter(_counterId);
@@ -782,7 +780,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
     _invalidateStatsAndHistory();
   }
 
-  /// Reset the current session — matches Kotlin's `cancelSession` flow.
+  /// Reset the current session.
   /// Deletes the in-progress DB row and starts a fresh session.
   Future<void> resetSession() async {
     _stopTimers();
@@ -806,7 +804,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
     _invalidateStatsAndHistory();
   }
 
-  /// Reset the entire counter — matches Kotlin's `resetCounter`.
+  /// Reset the entire counter.
   /// Deletes ALL sessions for the counter without saving the current one.
   Future<void> resetCounter() async {
     _stopTimers();

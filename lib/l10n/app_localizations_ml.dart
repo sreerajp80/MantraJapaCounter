@@ -1529,7 +1529,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get featJsonExportH2 => 'ഒറ്റ ടാപ്പ് എക്സ്പോർട്ട്/ഇംപോർട്ട്';
 
   @override
-  String get featJsonExportH3 => 'Room/Gson അനുയോജ്യത';
+  String get featJsonExportH3 => 'പഴയ ബാക്കപ്പുകളും പുനഃസ്ഥാപിക്കാം';
 
   @override
   String get featDailyLogTitle => 'ദൈനംദിന സാധന രേഖയും വിവരണവും';
@@ -3037,7 +3037,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpBackupImportBullet5 =>
-      'ഈ ആപ്പിന്റെ പഴയ ആൻഡ്രോയിഡ് പതിപ്പിലെ ബാക്കപ്പ് ഫയലുകളും ഇംപോർട്ട് ചെയ്യാം.';
+      'ഈ ആപ്പിന്റെ പഴയ പതിപ്പുകളിലെ ബാക്കപ്പ് ഫയലുകളും എപ്പോഴും ഇംപോർട്ട് ചെയ്യാം.';
 
   @override
   String get helpBackupClearSection => 'ഡാറ്റ മുഴുവൻ മായ്ക്കുക';
@@ -3173,4 +3173,43 @@ class AppLocalizationsMl extends AppLocalizations {
   @override
   String get helpFaqQ14Answer =>
       'ഇല്ല. നിങ്ങൾ തന്നെ എക്സ്പോർട്ട് ചെയ്യുകയോ ഒപ്റ്റിക്കൽ സിങ്ക് വഴി അയയ്ക്കുകയോ ചെയ്യാതെ ഡാറ്റ ഫോണിൽ നിന്ന് പുറത്തുപോകില്ല.';
+
+  @override
+  String get sectionDailyReminder => 'സാധന ഓർമ്മപ്പെടുത്തൽ';
+
+  @override
+  String get sectionDailyReminderSub => 'ദിവസേനയുള്ള ജപത്തിനുള്ള മൃദുവായ വിളി';
+
+  @override
+  String get dailyReminderTitle => 'ദൈനംദിന ഓർമ്മപ്പെടുത്തൽ';
+
+  @override
+  String get dailyReminderSub => 'ദിവസവും ഒരു ശാന്തമായ അറിയിപ്പ്';
+
+  @override
+  String get dailyReminderTimeTitle => 'ഓർമ്മപ്പെടുത്തൽ സമയം';
+
+  @override
+  String get dailyReminderTimeSub => 'ഈ സമയത്തിനടുത്ത് എത്തും';
+
+  @override
+  String get dailyReminderPermissionDenied =>
+      'ഈ ആപ്പിന് അറിയിപ്പുകൾ അനുവദിച്ചിട്ടില്ല, അതിനാൽ ഓർമ്മപ്പെടുത്തൽ ഓഫായി തുടരും. ഇത് ഉപയോഗിക്കാൻ Android ക്രമീകരണങ്ങളിൽ അറിയിപ്പുകൾ അനുവദിക്കുക.';
+
+  @override
+  String get notifDailyReminderTitle => 'ജപത്തിനുള്ള സമയമായി';
+
+  @override
+  String get notifDailyReminderBody =>
+      'ഇന്ന് നിങ്ങളുടെ മന്ത്രത്തിനായി കുറച്ച് ശാന്തമായ നിമിഷങ്ങൾ മാറ്റിവയ്ക്കുക.';
+
+  @override
+  String get helpAudioReminderSection => 'ദൈനംദിന ഓർമ്മപ്പെടുത്തൽ';
+
+  @override
+  String get helpAudioReminderBold1 => 'ദൈനംദിന ഓർമ്മപ്പെടുത്തൽ:';
+
+  @override
+  String get helpAudioReminderBullet1 =>
+      'ക്രമീകരണങ്ങൾ → ശബ്ദവും വൈബ്രേഷനും എന്നതിൽ ഇത് ഓൺ ചെയ്ത് ഒരു സമയം തിരഞ്ഞെടുക്കുക. ദിവസവും ആ സമയത്തിനടുത്ത് ഒരു ശാന്തമായ അറിയിപ്പ് എത്തും — ബാറ്ററി ലാഭിക്കാൻ Android ഇത് കുറച്ച് മിനിറ്റ് വൈകിച്ചേക്കാം. ഇത് ഓഫ്‌ലൈനായി പ്രവർത്തിക്കുന്നു, ഫോൺ റീസ്റ്റാർട്ട് ചെയ്ത ശേഷവും തുടരും.';
 }

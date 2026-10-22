@@ -5,8 +5,7 @@ import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 /// Mutable in-progress session state held by CountingNotifier.
 ///
 /// Serialised to SharedPreferences for crash recovery and pause/resume.
-/// Mirrors the Kotlin app's [ActiveSession] data class — the
-/// [sessionId] is the same id used as the row's primary key in the
+/// The [sessionId] is the same id used as the row's primary key in the
 /// `japa_sessions` table, so the active session can be looked up,
 /// updated, or deleted in the database without ambiguity.
 ///

@@ -1525,7 +1525,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featJsonExportH2 => 'One-tap export/import';
 
   @override
-  String get featJsonExportH3 => 'Room/Gson compatibility';
+  String get featJsonExportH3 => 'Works with older backups';
 
   @override
   String get featDailyLogTitle => 'Daily Practice Log & Breakdown';
@@ -3029,7 +3029,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpBackupImportBullet5 =>
-      'Backup files from the older Android version of this app can also be imported.';
+      'Backup files from earlier versions of this app can always be imported.';
 
   @override
   String get helpBackupClearSection => 'Clear all data';
@@ -3163,4 +3163,43 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get helpFaqQ14Answer =>
       'No. Your data never leaves your phone unless you export it or send it with Optical Sync yourself.';
+
+  @override
+  String get sectionDailyReminder => 'Practice reminder';
+
+  @override
+  String get sectionDailyReminderSub => 'A gentle call to your daily japa';
+
+  @override
+  String get dailyReminderTitle => 'Daily reminder';
+
+  @override
+  String get dailyReminderSub => 'One quiet notification each day';
+
+  @override
+  String get dailyReminderTimeTitle => 'Reminder time';
+
+  @override
+  String get dailyReminderTimeSub => 'Arrives around this time';
+
+  @override
+  String get dailyReminderPermissionDenied =>
+      'Notifications are not allowed for this app, so the reminder stays off. Allow notifications in Android settings to use it.';
+
+  @override
+  String get notifDailyReminderTitle => 'Time for your japa';
+
+  @override
+  String get notifDailyReminderBody =>
+      'Take a few quiet minutes for your mantra today.';
+
+  @override
+  String get helpAudioReminderSection => 'Daily reminder';
+
+  @override
+  String get helpAudioReminderBold1 => 'Daily reminder:';
+
+  @override
+  String get helpAudioReminderBullet1 =>
+      'Turn it on in Settings → Sound & Haptics and pick a time. One quiet notification arrives around that time each day — Android may hold it for a few minutes to save battery. It works offline and keeps working after the phone restarts.';
 }

@@ -173,6 +173,59 @@ class SoundSettingsScreen extends ConsumerWidget {
                     ],
                   ),
 
+                  // Daily Reminder Section
+                  SettingsSection(
+                    title: l.sectionDailyReminder,
+                    sub: l.sectionDailyReminderSub,
+                    iconBuilder: (s, c) =>
+                        Icon(Icons.alarm_outlined, size: s, color: c),
+                    children: [
+                      SettingsRow(
+                        leading: const Icon(
+                          Icons.notifications_active_outlined,
+                          size: 16,
+                          color: TempleColors.ink2,
+                        ),
+                        title: l.dailyReminderTitle,
+                        sub: l.dailyReminderSub,
+                        toggle: settings.dailyReminderEnabled,
+                        onToggle: (val) async {
+                          final ok = await notifier.setDailyReminderEnabled(
+                            val,
+                          );
+                          if (!ok && context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(l.dailyReminderPermissionDenied),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                      Opacity(
+                        opacity: settings.dailyReminderEnabled ? 1 : 0.5,
+                        child: SettingsRow(
+                          leading: const Icon(
+                            Icons.schedule_outlined,
+                            size: 16,
+                            color: TempleColors.ink2,
+                          ),
+                          title: l.dailyReminderTimeTitle,
+                          sub: l.dailyReminderTimeSub,
+                          right: MaterialLocalizations.of(context)
+                              .formatTimeOfDay(_reminderTime(settings)),
+                          onTap: settings.dailyReminderEnabled
+                              ? () => _pickReminderTime(
+                                  context,
+                                  settings,
+                                  notifier,
+                                )
+                              : null,
+                        ),
+                      ),
+                    ],
+                  ),
+
                   // Haptics Section
                   SettingsSection(
                     title: l.vibration,
@@ -236,6 +289,24 @@ class SoundSettingsScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  TimeOfDay _reminderTime(AppSettings settings) => TimeOfDay(
+    hour: settings.dailyReminderMinutes ~/ 60,
+    minute: settings.dailyReminderMinutes % 60,
+  );
+
+  Future<void> _pickReminderTime(
+    BuildContext context,
+    AppSettings settings,
+    SettingsNotifier notifier,
+  ) async {
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: _reminderTime(settings),
+    );
+    if (picked == null) return;
+    await notifier.setDailyReminderTime(picked.hour * 60 + picked.minute);
   }
 
   void _showDndPermissionDialog(BuildContext context, WidgetRef ref) {

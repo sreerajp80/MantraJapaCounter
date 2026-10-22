@@ -12,6 +12,7 @@ import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/settings_provider.dart';
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/core/utils/mala.dart';
+import 'package:mantra_japa_counter/services/dnd_service.dart';
 import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
 import 'package:mantra_japa_counter/widgets/temple_mala_circle.dart';
 
@@ -38,9 +39,14 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
   bool _swipeDecrementFired = false;
   static const double _swipeThresholdPx = 40;
 
+  /// Kept here so DND can be restored in [dispose], when `ref` can no longer
+  /// be used.
+  late final DndService _dndService;
+
   @override
   void initState() {
     super.initState();
+    _dndService = ref.read(dndServiceProvider);
     WidgetsBinding.instance.addObserver(this);
     Future.microtask(() {
       ref.read(countingNotifierProvider(widget.counterId).notifier).init();
@@ -53,7 +59,7 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
 
   @override
   void dispose() {
-    ref.read(dndServiceProvider).restoreDnd();
+    _dndService.restoreDnd();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

@@ -1,6 +1,8 @@
 # Plan: Update README.md and Capture Clean Screenshots from Emulator
 
-**Status:** Completed
+**Status:** completed
+
+_Earlier status note: Completed_
 
 ## Issue
 The repository `README.md` acts as the homepage of the GitHub repository. Currently:

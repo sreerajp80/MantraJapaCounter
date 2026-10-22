@@ -1,6 +1,8 @@
 # Plan — Split the three largest screens into feature folders (tests first)
 
-**Status:** completed — see `change_log/20260910_192333_split_large_screens.md`
+**Status:** completed
+
+_Earlier status note: completed — see `change_log/20260910_192333_split_large_screens.md`_
 
 **Follows up:** `change_log/20260910_102935_guidelines_conformance_audit.md` §8 ("Deliberately not done").
 

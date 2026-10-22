@@ -45,6 +45,16 @@ class AppConstants {
   static const String lifetimeGoalChannelName = 'Lifetime Goal';
   static const String malaChannelId = 'mala_channel';
   static const String malaChannelName = 'Mala Completion';
+  static const String dailyReminderChannelId = 'daily_reminder';
+  static const String dailyReminderChannelName = 'Daily Reminder';
+
+  // Notification ids. A fixed id lets a new schedule replace the old one.
+  static const int dailyGoalNotificationId = 1;
+  static const int lifetimeGoalNotificationId = 2;
+  static const int dailyReminderNotificationId = 3;
+
+  // Daily practice reminder time, in minutes after midnight (06:00).
+  static const int dailyReminderDefaultMinutes = 6 * 60;
 
   // SharedPreferences keys (only the repository should use these)
   // Per-counter active sessions are stored under "$prefsActiveSessionPrefix$counterId".
@@ -69,6 +79,8 @@ class AppConstants {
   static const String prefsMeruPauseKey = 'meru_pause_enabled';
   static const String prefsMeruPauseSecondsKey = 'meru_pause_seconds';
   static const String prefsPacingHintKey = 'pacing_hint_enabled';
+  static const String prefsDailyReminderKey = 'daily_reminder_enabled';
+  static const String prefsDailyReminderMinutesKey = 'daily_reminder_minutes';
 
   // Export
   static const int exportFormatVersion = 1;

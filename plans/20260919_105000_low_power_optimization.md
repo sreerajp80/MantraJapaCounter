@@ -1,6 +1,8 @@
 # Low Power, Dimmed Chanting & DND Plan
 
-**Status:** Approved by user — in progress
+**Status:** completed
+
+_Earlier status note: Approved by user — in progress_
 
 ## Overview
 Optimize the app to use minimal battery and CPU power on Android devices, introduce a battery-saving Dimmed Chanting Mode where the mala circle remains visible, and integrate Android Do Not Disturb (DND) to prevent incoming alerts from interrupting chanting sessions.

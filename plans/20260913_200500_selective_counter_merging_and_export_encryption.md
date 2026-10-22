@@ -1,6 +1,8 @@
 # Plan: Selective Counter Merging and Optional Local Export Encryption
 
-**Status:** Completed
+**Status:** completed
+
+_Earlier status note: Completed_
 **Date:** 2026-09-13
 **Author:** AI Agent
 

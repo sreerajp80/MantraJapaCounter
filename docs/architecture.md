@@ -25,7 +25,7 @@ Read [AGENTS.md](../AGENTS.md) and [CLAUDE.md](../CLAUDE.md) before making any c
 - Count mantra repetitions (japa) with a simple tap interface, including configurable increment steps and automatic mala tracking (108 counts per mala by default, set per counter, or no mala at all).
 - Persist all session history with duration and count data, grouped by date for easy review.
 - Support daily and lifetime goal setting with visual progress indicators per counter.
-- Provide JSON-based import/export for data backup and restore, with full compatibility with the Android app's export format.
+- Provide JSON-based import/export for data backup and restore. Backups from any earlier version of the app always import.
 - Deliver a fully offline, battery-efficient experience with zero data loss even after unexpected app termination.
 
 ### Non-Goals
@@ -43,8 +43,7 @@ Read [AGENTS.md](../AGENTS.md) and [CLAUDE.md](../CLAUDE.md) before making any c
 > The app uses a Tier 1 layer-first Flutter structure with Riverpod for state management.
 > Screens delegate all business logic to use-case services; local persistence is isolated behind
 > repository abstractions over a sqflite database. Session crash-recovery state is additionally
-> written to SharedPreferences on every tap batch, replicating the zero-data-loss guarantee from
-> the original Android version. App-wide configuration is injected at startup through a Riverpod
+> written to SharedPreferences on every tap batch, keeping the zero-data-loss guarantee. App-wide configuration is injected at startup through a Riverpod
 > ProviderScope at the root widget tree. The app is fully offline; no network access is used
 > or permitted.
 
@@ -120,8 +119,8 @@ lib/
 | 8 | `runApp(ProviderScope(child: MantraJapaCounterApp()))` | Riverpod scope wraps the full app |
 
 Session recovery (step 7) restores any active session that was abandoned due to process kill or
-crash, writing it to the database before the UI mounts. This preserves the zero-data-loss
-guarantee of the original Android version.
+crash, writing it to the database before the UI mounts. This keeps the zero-data-loss
+guarantee.
 
 ---
 
@@ -178,7 +177,7 @@ fully black.
 - Primary pattern: Riverpod (StateNotifier + AsyncNotifier + StreamProvider)
 - Why Riverpod:
   - Compile-safe provider references without requiring BuildContext in service or logic layers.
-  - `StreamProvider` wraps sqflite reactive queries, mirroring the Kotlin Flow behavior of the original Android version.
+  - `StreamProvider` wraps sqflite reactive queries so screens see the latest database state.
   - Clean test overrides via `ProviderContainer(overrides: [...])` without widget tree overhead.
 - State boundaries:
   - Widgets own: animation controllers, focus nodes, scroll position, local form state
@@ -234,7 +233,7 @@ Intentional layer omissions:
 
 ### Current Schema Version
 
-SQLite schema version: `5` (versions 1–3 match the Android Room database schema for import compatibility)
+SQLite schema version: `5` (migrations v1 → v5 are tested)
 
 Migration history:
 
@@ -250,7 +249,7 @@ Migration history:
 
 | Type | Purpose | Mutable? | Notes |
 |------|---------|----------|-------|
-| `Counter` | Named mantra practice configuration with count, goals, mala count, and lifecycle status | No | Immutable; state changes produce new instances via `copyWith`. `malaSize` defaults to 108; 0 means no mala count. JSON writes `malaSize` only when it is not 108, so default counters export in the original Android format |
+| `Counter` | Named mantra practice configuration with count, goals, mala count, and lifecycle status | No | Immutable; state changes produce new instances via `copyWith`. `malaSize` defaults to 108; 0 means no mala count. JSON writes `malaSize` only when it is not 108, so default counters export the same as before this field existed |
 | `JapaSession` | Single completed counting session (count, malas, chants, timestamp, duration) | No | Append-only; never edited after creation |
 | `CounterStatus` | Enum: ACTIVE, DISABLED_SUCCESS, DISABLED_FAILURE | No | Controls counter visibility in the active list |
 | `DailySummary` | Sessions grouped by date with aggregated totals | No | Computed at read time; not stored in DB |
@@ -296,7 +295,7 @@ Migration history:
   keep their old split.
 - The history screen uses the counter's mala count when filtered to one counter; the unfiltered
   view (many counters) uses the default of 108 for its per-day mala figure.
-| `ExportData` | Top-level wrapper for JSON import/export (list of counters + sessions) | No | Must be compatible with Android Gson export format |
+| `ExportData` | Top-level wrapper for JSON import/export (list of counters + sessions) | No | Must stay readable by every later app version; fields are never renamed or removed |
 
 ### Serialization Strategy
 
@@ -437,7 +436,7 @@ test/
 |-- repositories/    # Integration tests with in-memory sqflite; migration tests
 |-- screens/         # Widget tests for all 6 screens
 |-- helpers/         # Fake repositories, mock notification plugin, test database factory
-`-- fixtures/        # Sample JSON export files from Android app for import compatibility testing
+`-- fixtures/        # Made-up backup files that lock the backup format (no real data)
 ```
 
 ### Critical Test Areas
@@ -447,7 +446,7 @@ test/
 - Daily goal progress: sessions within the same calendar date aggregated correctly across midnight boundaries
 - Database migration from v1 → v2 → v3 → v4 → v5
 - Import parsing: malformed JSON rejected without corrupting existing database state
-- Import compatibility: Android Gson-exported JSON parses correctly in Flutter
+- Import compatibility: backups in the current format (`test/fixtures/backup_format_v1.json`) import and re-export unchanged
 - Error boundary: sqflite open failure handled gracefully at startup
 
 ---
@@ -473,11 +472,11 @@ test/
 
 | Decision | Chosen Option | Why | Tradeoff |
 |----------|---------------|-----|----------|
-| State management | Riverpod | Compile-safe; mirrors Kotlin Flow; easy test overrides | Learning curve; more boilerplate than setState for simple cases |
-| Database | sqflite | Full SQL control; WAL mode; Android Room schema compatible for import | Manual row mapping required; needs sqflite_ffi for desktop tests |
+| State management | Riverpod | Compile-safe; reactive; easy test overrides | Learning curve; more boilerplate than setState for simple cases |
+| Database | sqflite | Full SQL control; WAL mode | Manual row mapping required; needs sqflite_ffi for desktop tests |
 | Navigation | go_router | Type-safe routes; standard Flutter recommendation; supports future deep links | Over-engineered for 6 screens today; Navigator.push would suffice |
 | Structure | Tier 1 layer-first | Single domain, single developer, 6 screens share all models | Would need migration to Tier 2 if major independent feature areas are added |
-| Crash recovery | SharedPreferences + DB batching | Zero data loss guarantee preserved from Android version | Dual-write path adds complexity; justified given spiritual practice context |
+| Crash recovery | SharedPreferences + DB batching | Zero data loss guarantee | Dual-write path adds complexity; justified given spiritual practice context |
 | Screen orientation | Portrait locked (`main.dart` + `android:screenOrientation="portrait"`); Android 16 large-screen opt-out (`PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY`) in the manifest; tablets and Chromebooks excluded in Play Console | Full-screen tap counting is designed for portrait; landscape offers no benefit | Cannot rotate; acceptable for the use case. Android 16 ignores orientation locks on screens >= 600dp unless opted out; the opt-out is ignored from API 37, so landscape on large screens (e.g. unfolded foldables) must be handled before targeting API 37 |
 | Platform | Android only | Existing Android user base; preserves schema compatibility | No iOS or desktop coverage until a future release |
 
@@ -485,17 +484,14 @@ test/
 
 ## 21. Known Risks And Follow-Ups
 
-- Risk: sqflite type mapping may differ from Android Room (BOOLEAN stored as INTEGER 0/1; timestamp format differences between Room's Long and sqflite's INTEGER).
-  Mitigation: write schema integration tests against real exported data from the Android app before first release.
-
 - Risk: `flutter_local_notifications` custom notification tone behavior differs between Android API levels (API ≥26 requires a new notification channel ID per tone change).
-  Mitigation: match the Android app's existing behavior; document the limitation in the SettingsScreen UI.
+  Mitigation: document the limitation in the SettingsScreen UI.
 
 - Risk: Power optimization strategies (2s display timer, 5s state updates, batched DB writes) must be re-validated in Flutter; different rendering pipeline may have different battery impact.
-  Mitigation: profile on a physical mid-range device before release; compare battery drain to Android version.
+  Mitigation: profile on a physical mid-range device before release.
 
-- Risk: JSON import from Android app's Gson-serialized export format must parse correctly in Flutter's `dart:convert`.
-  Mitigation: include real Android export files as test fixtures in `test/fixtures/`; run import round-trip test before release.
+- Risk: a later change could break import of backups made by earlier app versions.
+  Mitigation: `test/repositories/backup_format_test.dart` imports and re-exports a fixed made-up backup (`test/fixtures/backup_format_v1.json`); never edit that fixture to make a test pass.
 
 - Risk: CI runs checks only and skips golden tests, so release builds, signing and golden tests depend on the local checklist in `docs/release_process.md`.
   Mitigation: every local-only step is listed in the release checklist (section 8).
