@@ -377,10 +377,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "530dcbb298dc7c319aea9e3b7c580a61effb2abee2c93825d2dd8d5af0e230f1"
+      sha256: "8b05bc90a4f8f8d579db351e2bd6bac566813e12953494dc2a9d7461e7c6dbe7"
       url: "https://pub.dev"
     source: hosted
-    version: "18.0.2"
+    version: "18.1.0"
   hooks:
     dependency: transitive
     description:
@@ -505,10 +505,10 @@ packages:
     dependency: "direct main"
     description:
       name: material_ui
-      sha256: "98ab9eda579ecae623e4b376c603035c5def78ce706f735f30bd632af5814695"
+      sha256: "27ea1af251a79728ee63068417f2ab469d294931a9bb8366ba8b85b0ef839060"
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.0"
+    version: "1.7.0"
   meta:
     dependency: transitive
     description:
@@ -806,10 +806,10 @@ packages:
     dependency: "direct dev"
     description:
       name: sqflite_common_ffi
-      sha256: "4ec920a01788641fa1c9922e757c108427e7f8634cce3ce8a1073d573060f4a3"
+      sha256: "4cb6179390549743fc1a5a2fb8f134e5ad87ce459f6f4e563531487dadd81710"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.3"
+    version: "2.4.4"
   sqflite_darwin:
     dependency: transitive
     description:

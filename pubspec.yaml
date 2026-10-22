@@ -19,7 +19,7 @@ dependencies:
   flutter_riverpod: ^3.3.1
 
   # Navigation
-  go_router: ^18.0.2
+  go_router: ^18.1.0
 
   # Database
   sqflite: ^2.4.2
@@ -63,7 +63,7 @@ dependencies:
   # Material and Cupertino widgets (moved out of the Flutter SDK in 3.47).
   # Pinned on purpose. Upgrade only via the UI package upgrade checklist in
   # docs/release_process.md.
-  material_ui: ^1.6.0
+  material_ui: ^1.7.0
   cupertino_ui: ^1.1.2
 
 dev_dependencies:
@@ -73,7 +73,7 @@ dev_dependencies:
 
   # Test-only: runs sqflite on the desktop VM so database migration tests
   # can open an in-memory database. Never shipped in the app.
-  sqflite_common_ffi: ^2.3.4
+  sqflite_common_ffi: ^2.4.4
 
 flutter:
   uses-material-design: true
