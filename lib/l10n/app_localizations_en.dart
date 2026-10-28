@@ -10,9 +10,6 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'SreerajP MantraJapa Counter';
-
-  @override
   String get cancel => 'Cancel';
 
   @override
@@ -475,8 +472,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutDetailIdeUsed => 'IDE used';
 
   @override
-  String get aboutDescription =>
-      'Offline-first application for tracking mantra recitation practice with customizable counters and session history.';
+  String get aboutDetailPrivacyPolicy => 'Privacy policy';
+
+  @override
+  String get tooltipPreviewSound => 'Preview';
+
+  @override
+  String get errorBackupTooLarge =>
+      'This file is too large to be a backup of this app.';
 
   @override
   String get aboutAuthor => 'Author';
@@ -552,6 +555,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vibrationSub => 'A gentle hum on completion';
+
+  @override
+  String get tapVibration => 'Vibrate on each tap';
+
+  @override
+  String get tapVibrationSub => 'A short pulse each time you tap to count.';
+
+  @override
+  String get tapVibrationBatteryWarning =>
+      'Uses extra battery in long sessions, because the phone vibrates on every tap.';
 
   @override
   String get notificationSound => 'Notification sound';
@@ -1116,7 +1129,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpAudioVibrationBullet1 =>
-      'One pulse on each full mala, three pulses when a goal is reached, and a short tap when you undo.';
+      'One pulse on each full mala, three pulses when a goal is reached, and a short tap when you undo. You can also turn on a light pulse for every tap (Vibrate on each tap); it uses extra battery.';
 
   @override
   String get helpAudioVibrationBold2 => 'Turn off:';
@@ -1824,7 +1837,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get permVibrationDesc =>
-      'Delivers gentle haptic feedback on each chant tap, mala completion, and goal achievement, remaining tactile even in silent mode.';
+      'Delivers gentle haptic feedback on mala completion, goal achievement, and undo, remaining tactile even in silent mode.';
 
   @override
   String get permAudioTitle => 'Audio Management';

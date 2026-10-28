@@ -71,6 +71,7 @@ class AppConstants {
   static const String prefsLifetimeSoundUriKey = 'lifetime_sound_uri';
   static const String prefsLifetimeSoundNameKey = 'lifetime_sound_name';
   static const String prefsVibrationKey = 'notification_vibration';
+  static const String prefsTapVibrationKey = 'tap_vibration';
   static const String prefsLanguageCodeKey = 'app_language_code';
   static const String prefsDndKey = 'dnd_enabled';
   static const String prefsNotifPermissionAskedKey =
@@ -84,4 +85,7 @@ class AppConstants {
 
   // Export
   static const int exportFormatVersion = 1;
+  // Largest file the import accepts. A real backup is far smaller; the check
+  // stops a wrong or huge file from being loaded into memory.
+  static const int maxBackupImportBytes = 10 * 1024 * 1024;
 }

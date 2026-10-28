@@ -100,12 +100,6 @@ abstract class AppLocalizations {
     Locale('sa'),
   ];
 
-  /// Application title displayed across the app
-  ///
-  /// In en, this message translates to:
-  /// **'SreerajP MantraJapa Counter'**
-  String get appTitle;
-
   /// Generic cancel button label
   ///
   /// In en, this message translates to:
@@ -898,11 +892,23 @@ abstract class AppLocalizations {
   /// **'IDE used'**
   String get aboutDetailIdeUsed;
 
-  /// App description shown under version on About screen
+  /// About screen privacy policy detail row label
   ///
   /// In en, this message translates to:
-  /// **'Offline-first application for tracking mantra recitation practice with customizable counters and session history.'**
-  String get aboutDescription;
+  /// **'Privacy policy'**
+  String get aboutDetailPrivacyPolicy;
+
+  /// Tooltip on the play icon that previews a sound in the sound pickers. Keep it short.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get tooltipPreviewSound;
+
+  /// Error shown when the file picked for import is larger than any real backup
+  ///
+  /// In en, this message translates to:
+  /// **'This file is too large to be a backup of this app.'**
+  String get errorBackupTooLarge;
 
   /// Label for author row on About screen
   ///
@@ -1053,6 +1059,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A gentle hum on completion'**
   String get vibrationSub;
+
+  /// Setting label for a short vibration on every counting tap
+  ///
+  /// In en, this message translates to:
+  /// **'Vibrate on each tap'**
+  String get tapVibration;
+
+  /// Subtitle explaining the vibrate-on-each-tap setting
+  ///
+  /// In en, this message translates to:
+  /// **'A short pulse each time you tap to count.'**
+  String get tapVibrationSub;
+
+  /// Warning shown under the vibrate-on-each-tap setting that it uses more battery
+  ///
+  /// In en, this message translates to:
+  /// **'Uses extra battery in long sessions, because the phone vibrates on every tap.'**
+  String get tapVibrationBatteryWarning;
 
   /// Setting label for daily goal completion sound
   ///
@@ -2041,7 +2065,7 @@ abstract class AppLocalizations {
   /// Help sound and vibration guide: Vibration bullet 1 text
   ///
   /// In en, this message translates to:
-  /// **'One pulse on each full mala, three pulses when a goal is reached, and a short tap when you undo.'**
+  /// **'One pulse on each full mala, three pulses when a goal is reached, and a short tap when you undo. You can also turn on a light pulse for every tap (Vibrate on each tap); it uses extra battery.'**
   String get helpAudioVibrationBullet1;
 
   /// Help sound and vibration guide: Vibration bullet 2 bold label
@@ -3295,7 +3319,7 @@ abstract class AppLocalizations {
   /// Description of vibration permission
   ///
   /// In en, this message translates to:
-  /// **'Delivers gentle haptic feedback on each chant tap, mala completion, and goal achievement, remaining tactile even in silent mode.'**
+  /// **'Delivers gentle haptic feedback on mala completion, goal achievement, and undo, remaining tactile even in silent mode.'**
   String get permVibrationDesc;
 
   /// Title for audio settings permission

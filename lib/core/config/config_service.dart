@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:mantra_japa_counter/core/config/app_config.dart';
+import 'package:mantra_japa_counter/core/logging/app_logger.dart';
 
 class ConfigService {
   static const String assetPath = 'assets/config/app_config.json';
@@ -30,8 +30,8 @@ class ConfigService {
       final info = packageInfo ?? await PackageInfo.fromPlatform();
       final mismatch =
           info.version != config.version || info.buildNumber != config.build;
-      if (mismatch && kDebugMode) {
-        debugPrint(
+      if (mismatch) {
+        AppLogger.debug(
           'ConfigService: version/build in app_config.json '
           '(${config.version}+${config.build}) does not match the build '
           '(${info.version}+${info.buildNumber}).',

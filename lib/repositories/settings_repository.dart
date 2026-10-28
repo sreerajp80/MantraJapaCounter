@@ -186,6 +186,14 @@ class SettingsRepository {
     await _prefs.setBool(AppConstants.prefsVibrationKey, value);
   }
 
+  /// Off by default: a pulse on every tap uses extra battery.
+  bool get tapVibrationEnabled =>
+      _prefs.getBool(AppConstants.prefsTapVibrationKey) ?? false;
+
+  Future<void> setTapVibrationEnabled(bool value) async {
+    await _prefs.setBool(AppConstants.prefsTapVibrationKey, value);
+  }
+
   String? get languageCode =>
       _prefs.getString(AppConstants.prefsLanguageCodeKey);
 

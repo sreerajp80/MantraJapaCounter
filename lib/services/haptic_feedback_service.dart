@@ -28,6 +28,15 @@ class HapticFeedbackService {
     } catch (_) {}
   }
 
+  /// Light "key click" pulse for one counted tap. Uses the phone's own
+  /// touch feedback, so Android skips it when the user turned off touch
+  /// vibration in the phone's settings.
+  Future<void> tapPulse() async {
+    try {
+      await HapticFeedback.lightImpact();
+    } catch (_) {}
+  }
+
   /// Three-pulse vibration (220ms / 90ms / 220ms / 90ms / 220ms) at max
   /// amplitude with USAGE_ALARM — plays in silent / DND mode. Used when
   /// the daily goal is reached.

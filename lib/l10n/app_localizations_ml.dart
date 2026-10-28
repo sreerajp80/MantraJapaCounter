@@ -10,9 +10,6 @@ class AppLocalizationsMl extends AppLocalizations {
   AppLocalizationsMl([String locale = 'ml']) : super(locale);
 
   @override
-  String get appTitle => 'മന്ത്ര ജപ കൗണ്ടർ';
-
-  @override
   String get cancel => 'റദ്ദാക്കുക';
 
   @override
@@ -477,8 +474,14 @@ class AppLocalizationsMl extends AppLocalizations {
   String get aboutDetailIdeUsed => 'ഉപയോഗിച്ച IDE';
 
   @override
-  String get aboutDescription =>
-      'മാല (108-മണി വട്ടം) എണ്ണൽ, ക്രമീകരിക്കാവുന്ന കൗണ്ടറുകൾ, സെഷൻ ചരിത്രം എന്നിവയോടെ മന്ത്രജപാഭ്യാസം ട്രാക്ക് ചെയ്യാനുള്ള ഓഫ്‌ലൈൻ ആപ്പ്.';
+  String get aboutDetailPrivacyPolicy => 'സ്വകാര്യതാ നയം';
+
+  @override
+  String get tooltipPreviewSound => 'കേൾക്കുക';
+
+  @override
+  String get errorBackupTooLarge =>
+      'ഈ ഫയൽ വളരെ വലുതാണ്; ഇത് ഈ ആപ്പിന്റെ ബാക്കപ്പ് അല്ല.';
 
   @override
   String get aboutAuthor => 'രചയിതാവ്';
@@ -555,6 +558,17 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get vibrationSub => 'പൂർത്തിയാകുമ്പോൾ ഒരു മൃദുവായ മൂളൽ';
+
+  @override
+  String get tapVibration => 'ഓരോ ടാപ്പിലും വൈബ്രേറ്റ് ചെയ്യുക';
+
+  @override
+  String get tapVibrationSub =>
+      'എണ്ണാൻ ടാപ്പ് ചെയ്യുമ്പോഴെല്ലാം ഒരു ചെറിയ സ്പന്ദനം.';
+
+  @override
+  String get tapVibrationBatteryWarning =>
+      'ഓരോ ടാപ്പിലും ഫോൺ വൈബ്രേറ്റ് ചെയ്യുന്നതിനാൽ, നീണ്ട ജപത്തിൽ കൂടുതൽ ബാറ്ററി ഉപയോഗിക്കും.';
 
   @override
   String get notificationSound => 'അറിയിപ്പ് ശബ്ദം';
@@ -1116,7 +1130,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpAudioVibrationBullet1 =>
-      'ഓരോ മാലയിലും ഒരു സ്പന്ദനം, ലക്ഷ്യം എത്തുമ്പോൾ മൂന്ന് സ്പന്ദനം, തിരുത്തുമ്പോൾ ചെറിയ ഒന്ന്.';
+      'ഓരോ മാലയിലും ഒരു സ്പന്ദനം, ലക്ഷ്യം എത്തുമ്പോൾ മൂന്ന് സ്പന്ദനം, തിരുത്തുമ്പോൾ ചെറിയ ഒന്ന്. ഓരോ ടാപ്പിനും ഒരു ചെറിയ സ്പന്ദനവും ഓണാക്കാം (ഓരോ ടാപ്പിലും വൈബ്രേറ്റ് ചെയ്യുക); ഇത് കൂടുതൽ ബാറ്ററി ഉപയോഗിക്കും.';
 
   @override
   String get helpAudioVibrationBold2 => 'ഓഫ് ചെയ്യാൻ:';
@@ -1829,7 +1843,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get permVibrationDesc =>
-      'ഓരോ ജപത്തിലും മാല പൂർത്തിയാകുമ്പോഴും നിശ്ശബ്ദ മോഡിലും അറിയാൻ മൃദുവായ സ്പന്ദനം നൽകുന്നു.';
+      'മാല പൂർത്തിയാകുമ്പോഴും ലക്ഷ്യം എത്തുമ്പോഴും തിരുത്തുമ്പോഴും, നിശ്ശബ്ദ മോഡിലും, മൃദുവായ സ്പന്ദനം നൽകുന്നു.';
 
   @override
   String get permAudioTitle => 'ശബ്ദ ക്രമീകരണം';

@@ -13,6 +13,7 @@ import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/counting_provider.dart';
 import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
+import 'package:mantra_japa_counter/services/haptic_feedback_service.dart';
 import 'package:mantra_japa_counter/services/notification_service.dart';
 import 'package:mantra_japa_counter/services/session_recovery_service.dart';
 import 'package:mantra_japa_counter/services/sound_service.dart';
@@ -44,6 +45,17 @@ class _FakeNotifications implements NotificationService {
 }
 
 class _FakeSound implements SoundService {
+  @override
+  dynamic noSuchMethod(Invocation invocation) => Future<void>.value();
+}
+
+/// Counts the per-tap pulses; every other feedback call is silent.
+class _FakeHaptic implements HapticFeedbackService {
+  int tapPulses = 0;
+
+  @override
+  Future<void> tapPulse() async => tapPulses++;
+
   @override
   dynamic noSuchMethod(Invocation invocation) => Future<void>.value();
 }
@@ -91,7 +103,10 @@ void main() {
     }
   });
 
-  ProviderContainer newContainer({int Function()? clock}) {
+  ProviderContainer newContainer({
+    int Function()? clock,
+    HapticFeedbackService? haptic,
+  }) {
     final container = ProviderContainer(
       overrides: [
         databaseProvider.overrideWithValue(db),
@@ -99,6 +114,8 @@ void main() {
         notificationServiceProvider.overrideWithValue(_FakeNotifications()),
         soundServiceProvider.overrideWithValue(_FakeSound()),
         if (clock != null) countingClockProvider.overrideWithValue(clock),
+        if (haptic != null)
+          hapticFeedbackServiceProvider.overrideWithValue(haptic),
       ],
     );
     // Keep the autoDispose provider alive for the whole test.
@@ -715,6 +732,60 @@ void main() {
       expect(state.session!.malas, 0);
       expect(state.session!.chants, 1);
       expect(await notifier.completeSession(), isNotNull);
+      container.dispose();
+    });
+  });
+  group('Tap vibration', () {
+    test('is off by default: no pulse on a tap', () async {
+      final haptic = _FakeHaptic();
+      final container = newContainer(haptic: haptic);
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+
+      await notifier.tap();
+      await notifier.tap();
+
+      expect(haptic.tapPulses, 0);
+      await notifier.onPause(); // wait for pending DB writes
+      container.dispose();
+    });
+
+    test('pulses once per counted tap when on', () async {
+      await prefs.setBool(AppConstants.prefsTapVibrationKey, true);
+      final haptic = _FakeHaptic();
+      final container = newContainer(haptic: haptic);
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+
+      await notifier.tap();
+      await notifier.tap();
+      await notifier.tap();
+
+      expect(haptic.tapPulses, 3);
+      await notifier.onPause(); // wait for pending DB writes
+      container.dispose();
+    });
+
+    test('no pulse for a tap ignored during the Meru pause', () async {
+      await prefs.setBool(AppConstants.prefsTapVibrationKey, true);
+      await prefs.setBool(AppConstants.prefsMeruPauseKey, true);
+      final haptic = _FakeHaptic();
+      final container = newContainer(haptic: haptic);
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+
+      for (var i = 0; i < 108; i++) {
+        await notifier.tap();
+      }
+      expect(
+        container.read(countingNotifierProvider('c1')).isMeruPause,
+        isTrue,
+      );
+      await notifier.tap(); // ignored during the pause
+
+      expect(haptic.tapPulses, 108);
+      notifier.endMeruPause();
+      await notifier.onPause(); // wait for pending DB writes
       container.dispose();
     });
   });

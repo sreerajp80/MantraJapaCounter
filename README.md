@@ -172,7 +172,7 @@ flutter build apk --flavor prod --release \
   --obfuscate --split-debug-info=build/symbols/android-prod-<version>/ --split-per-abi
 ```
 
-Output: `build/app/outputs/apk/prod/release/app-arm64-v8a-prod-release.apk` and friends.
+Output: `build/app/outputs/flutter-apk/app-arm64-v8a-prod-release.apk` and friends (the build log prints the exact names).
 
 ### App Bundle (Google Play)
 

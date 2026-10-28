@@ -85,7 +85,11 @@ void main() {
     final configService = ConfigService(
       loadAsset: (path) async => '''
       {
-        "appName": "SreerajP MantraJapa Counter",
+        "appName": {
+          "en": "SreerajP MantraJapa Counter",
+          "ml": "ശ്രീരാജ് പി മന്ത്രജപ കൗണ്ടർ",
+          "sa": "श्रीराज् पि मन्त्रजपगणकः"
+        },
         "description": {
           "en": "Offline-first application for tracking mantra recitation practice with customizable counters and session history.",
           "ml": "അനുയോജ്യമായ കൗണ്ടറുകളും സെഷൻ നാൾവഴിയും ഉപയോഗിച്ച് മന്ത്രജപ സാധന ട്രാക്ക് ചെയ്യാനുള്ള ഓഫ്‌ലൈൻ ആപ്പ്.",
@@ -131,7 +135,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('विषयपरिचयः'), findsOneWidget);
-    expect(find.text('मन्त्रजपगणकः'), findsOneWidget);
+    expect(find.text('श्रीराज् पि मन्त्रजपगणकः'), findsOneWidget);
     expect(
       find.text(
         'अनुकूलनीयगणकैः सत्रेतिहासैश्च सह मन्त्रजपसाधनायाः अनुसरणे अन्तर्जालरहितः अनुप्रयोगः।',
@@ -175,7 +179,11 @@ void main() {
     final configService = ConfigService(
       loadAsset: (path) async => '''
       {
-        "appName": "SreerajP MantraJapa Counter",
+        "appName": {
+          "en": "SreerajP MantraJapa Counter",
+          "ml": "ശ്രീരാജ് പി മന്ത്രജപ കൗണ്ടർ",
+          "sa": "श्रीराज् पि मन्त्रजपगणकः"
+        },
         "description": {
           "en": "Offline-first application for tracking mantra recitation practice with customizable counters and session history.",
           "ml": "അനുയോജ്യമായ കൗണ്ടറുകളും സെഷൻ നാൾവഴിയും ഉപയോഗിച്ച് മന്ത്രജപ സാധന ട്രാക്ക് ചെയ്യാനുള്ള ഓഫ്‌ലൈൻ ആപ്പ്.",
@@ -221,7 +229,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ആപ്പിനെക്കുറിച്ച്'), findsOneWidget);
-    expect(find.text('മന്ത്ര ജപ കൗണ്ടർ'), findsOneWidget);
+    expect(find.text('ശ്രീരാജ് പി മന്ത്രജപ കൗണ്ടർ'), findsOneWidget);
     expect(find.text('രചയിതാവ്'), findsOneWidget);
     expect(find.text('ശ്രീരാജ് പി'), findsOneWidget);
     expect(find.text('ഇമെയിൽ'), findsOneWidget);
@@ -254,7 +262,11 @@ void main() {
     final configService = ConfigService(
       loadAsset: (path) async => '''
       {
-        "appName": "SreerajP MantraJapa Counter",
+        "appName": {
+          "en": "SreerajP MantraJapa Counter",
+          "ml": "ശ്രീരാജ് പി മന്ത്രജപ കൗണ്ടർ",
+          "sa": "श्रीराज् पि मन्त्रजपगणकः"
+        },
         "description": "Dev flavor test",
         "version": "6.11.0",
         "build": "23",
@@ -273,7 +285,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('मन्त्रजपगणकः'), findsOneWidget);
+    expect(find.text('श्रीराज् पि मन्त्रजपगणकः'), findsOneWidget);
     expect(find.text('DEV'), findsOneWidget);
   });
 
@@ -292,7 +304,11 @@ void main() {
     final configService = ConfigService(
       loadAsset: (path) async => '''
       {
-        "appName": "SreerajP MantraJapa Counter",
+        "appName": {
+          "en": "SreerajP MantraJapa Counter",
+          "ml": "ശ്രീരാജ് പി മന്ത്രജപ കൗണ്ടർ",
+          "sa": "श्रीराज् पि मन्त्रजपगणकः"
+        },
         "description": "Prod flavor test",
         "version": "6.11.0",
         "build": "23",
@@ -311,7 +327,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('मन्त्रजपगणकः'), findsOneWidget);
+    expect(find.text('श्रीराज् पि मन्त्रजपगणकः'), findsOneWidget);
     expect(find.text('DEV'), findsNothing);
   });
 }

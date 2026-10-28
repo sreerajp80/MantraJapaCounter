@@ -27,9 +27,9 @@ class AppFlavorConfig {
 
   static bool get enableVerboseLogging => _flavor == AppFlavor.dev;
 
-  static String get appName => _flavor == AppFlavor.dev
-      ? 'SreerajP MantraJapa Counter Dev'
-      : 'SreerajP MantraJapa Counter';
+  /// Added to the localized app name (`appName` in app_config.json,
+  /// guideline.md §1.8). Never hard-code the app name itself here.
+  static String get nameSuffix => _flavor == AppFlavor.dev ? ' Dev' : '';
 
   static String get packageId => _flavor == AppFlavor.dev
       ? 'com.sreerajp.mantrajapacounter.dev'

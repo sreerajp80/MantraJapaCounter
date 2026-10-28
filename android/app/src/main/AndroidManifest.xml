@@ -38,6 +38,7 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="false"
+        android:usesCleartextTraffic="false"
         android:fullBackupContent="false"
         android:dataExtractionRules="@xml/data_extraction_rules">
         <!-- Android 16 (API 36) ignores orientation locks on screens >= 600dp.

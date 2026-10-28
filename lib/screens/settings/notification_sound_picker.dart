@@ -298,7 +298,7 @@ class _RingtoneTile extends StatelessWidget {
                   size: 22,
                   color: TempleColors.vermillion,
                 ),
-                tooltip: 'Preview',
+                tooltip: AppLocalizations.of(context).tooltipPreviewSound,
                 onPressed: onPreview,
               ),
           ],

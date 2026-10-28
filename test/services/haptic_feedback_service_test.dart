@@ -41,4 +41,31 @@ void main() {
     await expectLater(service.vibrateMala(), completes);
     await expectLater(service.vibrateDailyGoal(), completes);
   });
+  test('tap pulse asks the platform for a light haptic', () async {
+    final calls = <MethodCall>[];
+    messenger.setMockMethodCallHandler(SystemChannels.platform, (call) async {
+      calls.add(call);
+      return null;
+    });
+    addTearDown(
+      () => messenger.setMockMethodCallHandler(SystemChannels.platform, null),
+    );
+
+    await service.tapPulse();
+
+    expect(calls, hasLength(1));
+    expect(calls.single.method, 'HapticFeedback.vibrate');
+    expect(calls.single.arguments, 'HapticFeedbackType.lightImpact');
+  });
+
+  test('tap pulse never throws on a platform error', () async {
+    messenger.setMockMethodCallHandler(SystemChannels.platform, (call) async {
+      throw PlatformException(code: 'FAIL');
+    });
+    addTearDown(
+      () => messenger.setMockMethodCallHandler(SystemChannels.platform, null),
+    );
+
+    await expectLater(service.tapPulse(), completes);
+  });
 }

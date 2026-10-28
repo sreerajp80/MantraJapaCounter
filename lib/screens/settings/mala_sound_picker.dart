@@ -168,7 +168,7 @@ class _MalaSoundTile extends StatelessWidget {
                 size: 24,
                 color: TempleColors.vermillion,
               ),
-              tooltip: 'Preview',
+              tooltip: AppLocalizations.of(context).tooltipPreviewSound,
               onPressed: onPreview,
             ),
           ],

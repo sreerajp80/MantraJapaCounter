@@ -10,9 +10,6 @@ class AppLocalizationsSa extends AppLocalizations {
   AppLocalizationsSa([String locale = 'sa']) : super(locale);
 
   @override
-  String get appTitle => 'मन्त्रजपगणकः';
-
-  @override
   String get cancel => 'निरस्यताम्';
 
   @override
@@ -465,8 +462,14 @@ class AppLocalizationsSa extends AppLocalizations {
   String get aboutDetailIdeUsed => 'प्रयुक्तं विकाससाधनम्';
 
   @override
-  String get aboutDescription =>
-      'अनुकूलनीयगणकैः सत्रेतिहासैश्च सह मन्त्रजपसाधनायाः अनुसरणे अन्तर्जालरहितः अनुप्रयोगः।';
+  String get aboutDetailPrivacyPolicy => 'गोपनीयतानीतिः';
+
+  @override
+  String get tooltipPreviewSound => 'श्रूयताम्';
+
+  @override
+  String get errorBackupTooLarge =>
+      'इयं सञ्चिका अतिबृहती, अस्य अनुप्रयोगस्य प्रतिलिपिः न भवति।';
 
   @override
   String get aboutAuthor => 'रचयिता';
@@ -543,6 +546,16 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get vibrationSub => 'लक्ष्यपूर्तौ मृदुकम्पनम्';
+
+  @override
+  String get tapVibration => 'प्रतिस्पर्शं कम्पनम्';
+
+  @override
+  String get tapVibrationSub => 'गणनाय यदा यदा स्पृशति तदा लघुस्पन्दनम्।';
+
+  @override
+  String get tapVibrationBatteryWarning =>
+      'प्रतिस्पर्शं कम्पनात् दीर्घजपे अधिकं विद्युत्कोशबलं (battery) व्ययीभवति।';
 
   @override
   String get notificationSound => 'सूचनाध्वनिः';
@@ -1088,7 +1101,7 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get helpAudioVibrationBullet1 =>
-      'प्रत्येकमालायाम् एकं स्पन्दनं, लक्ष्यसिद्धौ त्रीणि, निवर्तने लघु एकम्।';
+      'प्रत्येकमालायाम् एकं स्पन्दनं, लक्ष्यसिद्धौ त्रीणि, निवर्तने लघु एकम्। प्रतिस्पर्शं लघुस्पन्दनम् अपि चालयितुं शक्यते (प्रतिस्पर्शं कम्पनम्); तेन अधिकं battery व्ययीभवति।';
 
   @override
   String get helpAudioVibrationBold2 => 'निष्क्रियीकरणम्:';
@@ -1773,7 +1786,7 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get permVibrationDesc =>
-      'प्रत्येकजपे मालापूर्तौ मौनावस्थायामपि ज्ञानार्थं मृदुस्पन्दनम्।';
+      'मालापूर्तौ लक्ष्यसिद्धौ निवर्तने च मौनावस्थायामपि ज्ञानार्थं मृदुस्पन्दनम्।';
 
   @override
   String get permAudioTitle => 'ध्वनिनियमनम्';

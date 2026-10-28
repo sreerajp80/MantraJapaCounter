@@ -1,9 +1,5 @@
 {
   "@@locale": "en",
-  "appTitle": "SreerajP MantraJapa Counter",
-  "@appTitle": {
-    "description": "Application title displayed across the app"
-  },
   "cancel": "Cancel",
   "@cancel": {
     "description": "Generic cancel button label"
@@ -625,9 +621,17 @@
   "@aboutDetailIdeUsed": {
     "description": "About screen IDE used detail row label"
   },
-  "aboutDescription": "Offline-first application for tracking mantra recitation practice with customizable counters and session history.",
-  "@aboutDescription": {
-    "description": "App description shown under version on About screen"
+  "aboutDetailPrivacyPolicy": "Privacy policy",
+  "@aboutDetailPrivacyPolicy": {
+    "description": "About screen privacy policy detail row label"
+  },
+  "tooltipPreviewSound": "Preview",
+  "@tooltipPreviewSound": {
+    "description": "Tooltip on the play icon that previews a sound in the sound pickers. Keep it short."
+  },
+  "errorBackupTooLarge": "This file is too large to be a backup of this app.",
+  "@errorBackupTooLarge": {
+    "description": "Error shown when the file picked for import is larger than any real backup"
   },
   "aboutAuthor": "Author",
   "@aboutAuthor": {
@@ -728,6 +732,18 @@
   "vibrationSub": "A gentle hum on completion",
   "@vibrationSub": {
     "description": "Subtitle describing vibration behavior on goal completion"
+  },
+  "tapVibration": "Vibrate on each tap",
+  "@tapVibration": {
+    "description": "Setting label for a short vibration on every counting tap"
+  },
+  "tapVibrationSub": "A short pulse each time you tap to count.",
+  "@tapVibrationSub": {
+    "description": "Subtitle explaining the vibrate-on-each-tap setting"
+  },
+  "tapVibrationBatteryWarning": "Uses extra battery in long sessions, because the phone vibrates on every tap.",
+  "@tapVibrationBatteryWarning": {
+    "description": "Warning shown under the vibrate-on-each-tap setting that it uses more battery"
   },
   "notificationSound": "Notification sound",
   "@notificationSound": {
@@ -1428,7 +1444,7 @@
   "@helpAudioVibrationBold1": {
     "description": "Help sound and vibration guide: Vibration bullet 1 bold label"
   },
-  "helpAudioVibrationBullet1": "One pulse on each full mala, three pulses when a goal is reached, and a short tap when you undo.",
+  "helpAudioVibrationBullet1": "One pulse on each full mala, three pulses when a goal is reached, and a short tap when you undo. You can also turn on a light pulse for every tap (Vibrate on each tap); it uses extra battery.",
   "@helpAudioVibrationBullet1": {
     "description": "Help sound and vibration guide: Vibration bullet 1 text"
   },
@@ -2307,7 +2323,7 @@
   "@permVibrationTitle": {
     "description": "Title for vibration permission"
   },
-  "permVibrationDesc": "Delivers gentle haptic feedback on each chant tap, mala completion, and goal achievement, remaining tactile even in silent mode.",
+  "permVibrationDesc": "Delivers gentle haptic feedback on mala completion, goal achievement, and undo, remaining tactile even in silent mode.",
   "@permVibrationDesc": {
     "description": "Description of vibration permission"
   },

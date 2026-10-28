@@ -9,8 +9,8 @@
     "ml": "അനുയോജ്യമായ കൗണ്ടറുകളും സെഷൻ നാൾവഴിയും ഉപയോഗിച്ച് മന്ത്രജപ സാധന ട്രാക്ക് ചെയ്യാനുള്ള ഓഫ്‌ലൈൻ ആപ്പ്.",
     "sa": "अनुकूलनीयगणकैः सत्रेतिहासैश्च सह मन्त्रजपसाधनायाः अनुसरणे अन्तर्जालरहितः अनुप्रयोगः।"
   },
-  "version": "6.13.13",
-  "build": "44",
+  "version": "6.13.14",
+  "build": "45",
   "details": {
     "author": {
       "en": "Sreeraj P",
@@ -18,6 +18,7 @@
       "sa": "श्रीराज् पि"
     },
     "email": "sreerajp@zohomail.in",
+    "privacyPolicy": "https://github.com/sreerajp80/MantraJapaCounter/blob/main/PRIVACY_POLICY.md",
     "license": {
       "en": "All libraries used are open source.",
       "ml": "ഉപയോഗിച്ച എല്ലാ ലൈബ്രറികളും ഓപ്പൺ സോഴ്സ് ആണ്.",

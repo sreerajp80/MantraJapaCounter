@@ -113,6 +113,33 @@ void main() {
     },
   );
 
+  testWidgets('tap vibration switch is off, warns about battery, and saves', (
+    tester,
+  ) async {
+    await pumpSoundSettings(tester);
+    await tester.scrollUntilVisible(
+      find.text('Vibrate on each tap'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      find.textContaining('Uses extra battery in long sessions'),
+      findsOneWidget,
+    );
+    expect(find.byIcon(Icons.battery_alert_outlined), findsOneWidget);
+
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(SoundSettingsScreen)),
+    );
+    expect(container.read(settingsNotifierProvider).tapVibrationEnabled, false);
+
+    await tester.tap(find.text('Vibrate on each tap'));
+    await tester.pumpAndSettle();
+    expect(container.read(settingsNotifierProvider).tapVibrationEnabled, true);
+  });
+
   group('daily reminder', () {
     Future<void> scrollToReminder(WidgetTester tester) async {
       await tester.scrollUntilVisible(

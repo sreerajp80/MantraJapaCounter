@@ -341,6 +341,7 @@ class CountingNotifier extends StateNotifier<CountingState> {
       tapCount: resumed.tapCount + resumed.incrementStep,
     );
     state = _withBannerFor(updated);
+    _pulseOnTap();
 
     if (isFirstRowTap) {
       // First tap of this row — insert into DB immediately for data safety.
@@ -357,6 +358,12 @@ class CountingNotifier extends StateNotifier<CountingState> {
     _trackPacing();
     _startMeruPauseIfMalaDone(updated);
     _invalidateStatsAndHistory();
+  }
+
+  /// A short vibration for a counted tap, when the user turned it on.
+  void _pulseOnTap() {
+    if (!_ref.read(settingsRepositoryProvider).tapVibrationEnabled) return;
+    unawaited(_ref.read(hapticFeedbackServiceProvider).tapPulse());
   }
 
   // ───────────────────────────── Meru pause / pacing ──────────────────────

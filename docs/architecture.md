@@ -67,7 +67,8 @@ lib/
 |   |-- config/       # AppConfig + ConfigService (About screen). Fixed path.
 |   |-- constants/    # AppConstants: timing, limits, prefs keys, mala size
 |   |-- flavor/       # AppFlavorConfig (dev / prod)
-|   |-- locale/       # LocaleConfig: device locale -> en / ml
+|   |-- locale/       # LocaleConfig: device locale -> en / ml / sa
+|   |-- logging/      # AppLogger (engineering standard §14)
 |   |-- routing/      # go_router route definitions
 |   `-- utils/        # Mala maths + generated build metadata (*.g.dart)
 |-- l10n/             # ARB files + generated AppLocalizations
@@ -93,6 +94,7 @@ lib/
 | `lib/core/constants/` | App-wide technical constants (values only) |
 | `lib/core/flavor/` | Build flavor detection |
 | `lib/core/locale/` | Locale policy (which device languages map to which app language) |
+| `lib/core/logging/` | `AppLogger` — the only logger; no `print` / `debugPrint` |
 | `lib/core/routing/` | go_router route definitions |
 | `lib/core/utils/` | Small pure helpers (mala maths) and generated build metadata |
 | `lib/theme/` | Theme tokens, text styles, `ThemeData` |
@@ -130,6 +132,7 @@ guarantee.
 |----------------|--------------|
 | `resumed` | Resume the counting timer if a session is active; re-register notification listeners if needed |
 | `inactive` | Flush pending SharedPreferences batch for active session immediately (handles incoming calls, notification shade) |
+| `hidden` | No extra work; on Android it comes just before `paused`, which does the writes |
 | `paused` | Write current active session state to SharedPreferences; flush pending batched DB write |
 | `detached` | Perform final session DB write; close any open export file handles |
 | Memory pressure | Clear cached gradient objects; do not clear session state or provider state |
@@ -146,11 +149,13 @@ The merged Android release manifest MUST NOT contain `<uses-permission android:n
 Verify before every release:
 
 ```bash
-aapt2 dump badging build/app/outputs/apk/prod/release/app-arm64-v8a-prod-release.apk | grep -i internet
+aapt2 dump permissions build/app/outputs/flutter-apk/app-arm64-v8a-prod-release.apk | grep -i internet
 ```
 
-Expected output: no lines. All dependencies must be audited for transitive network activity before
-each release.
+Expected output: no lines. Or open the merged manifest under `build/app/intermediates/` (a
+`merged_manifest*` folder for the `prodRelease` variant; the exact folder name differs between AGP
+versions) and search for `INTERNET`. All dependencies must be audited for transitive network
+activity before each release.
 
 `AndroidManifest.xml` removes `INTERNET` and `ACCESS_NETWORK_STATE` with `tools:node="remove"` as a
 safety net. Optical Sync receive reads QR codes with the `camera` plugin (live YUV frames) and
@@ -290,6 +295,11 @@ Migration history:
     lifetime count against the lifetime goal, else an empty ring.
 - With no mala count there is no mala sound / vibration, no Meru pause, no mala text, and no
   unfinished mala: leaving the counting screen always finishes the session.
+- **Tap vibration** (Settings → Sound & Haptics → *Vibrate on each tap*, saved as
+  `tapVibrationEnabled`, off by default): `CountingNotifier.tap()` calls
+  `HapticFeedbackService.tapPulse()` (a light system haptic) only for a counted tap, not during
+  the Meru pause. It is separate from the main Vibration switch (mala / goal / undo). The setting
+  shows a battery warning, because a pulse on every tap adds up in long sessions.
 - If the mala count is edited while a session is paused, the session uses the new mala count when
   it is resumed (prefs and its DB row's malas / chants split are updated). Finished history rows
   keep their old split.
@@ -377,6 +387,7 @@ Migration history:
   - Release APK split-per-ABI (prod flavor) — direct sideload distribution
   - App Bundle / AAB (prod flavor) — Google Play submission
 - Obfuscation: enabled for all prod release builds — symbols stored at `build/symbols/android-prod-<version>/`
+- App name: `appName` in `assets/config/app_config.json` (per language) is the source. The Android launcher name in `android/app/src/<flavor>/res/values*/strings.xml` must match it (dev adds a suffix); `test/core/config/app_name_consistency_test.dart` checks this. In Dart the flavor adds `AppFlavorConfig.nameSuffix` (`guideline.md` §1.8).
 
 ---
 
@@ -408,7 +419,7 @@ Migration history:
 
 ## 17. Logging
 
-- Logger implementation: Flutter `debugPrint` only (no logging package)
+- Logger implementation: `AppLogger` (`lib/core/logging/app_logger.dart`), built on `dart:developer` `log` — no logging package. `print` and `debugPrint` are not used. Only the error type is logged, never the error message.
 - Log file location: console only; no persistent log files in production
 - Log rotation policy: n/a (console-only logging)
 - Verbose logging gate: `AppFlavorConfig.enableVerboseLogging` — `true` for dev, `false` for prod
@@ -453,17 +464,16 @@ test/
 
 ## 19. Operational Constraints
 
-- Minimum supported OS: Android 10 (API 29)
+- Minimum supported OS: see `docs/PROJECT_PROFILE.md` §3 (Android 10, API 29)
 - Performance constraints:
   - Cold startup target: under 2 seconds to first meaningful frame (release build, mid-range device)
   - Frame budget: 16 ms at 60 Hz; counting tap area is performance-critical; sustained jank above 5% is release-blocking
   - APK size budget: target < 30 MB for arm64 APK; hard limit 50 MB
   - Power budget: counting screen MUST NOT prevent deep sleep; display timer updates every 2 seconds; state writes every 5 seconds; DB writes every 30 seconds or 20 taps (not continuous 1-second polling)
 - Regulatory or store constraints: Google Play Developer Policy (category: lifestyle / spirituality)
-- Team constraints: single developer; GitHub CI runs checks only (format, l10n staleness, analyze, test) plus Dependabot — see `docs/release_process.md` section 17; release builds, signing and golden tests run locally before every release
+- Team constraints: single developer; GitHub CI runs checks only (format, l10n staleness, analyze, test) — see `docs/release_process.md` section 17; dependencies are updated by hand (no Dependabot, engineering standard §19.2); release builds, signing and golden tests run locally before every release
 - CI deviations from the engineering standard §19 (kept on purpose):
   - Golden tests are skipped in CI (`--exclude-tags golden`). The reference images are made on Windows and only match there; CI runs on Linux. They run locally before each release.
-  - Dependabot also watches the `docs/guidelines` submodule (`gitsubmodule`). Only the user reviews and merges these pull requests; AI agents never change the submodule version.
 - Offline constraints: no INTERNET permission in release manifest; all transitive dependencies audited for network activity
 
 ---

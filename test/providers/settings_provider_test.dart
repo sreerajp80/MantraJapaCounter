@@ -53,6 +53,22 @@ void main() {
     });
   });
 
+  group('SettingsNotifier - tap vibration', () {
+    test('starts off and setTapVibrationEnabled saves the value', () async {
+      SharedPreferences.setMockInitialValues({});
+      final repo = SettingsRepository(await SharedPreferences.getInstance());
+      final notifier = SettingsNotifier(repo);
+      expect(notifier.state.tapVibrationEnabled, isFalse);
+
+      await notifier.setTapVibrationEnabled(true);
+      expect(notifier.state.tapVibrationEnabled, isTrue);
+      expect(repo.tapVibrationEnabled, isTrue);
+
+      // The existing Vibration switch is separate.
+      expect(notifier.state.vibrationEnabled, isTrue);
+    });
+  });
+
   group('SettingsNotifier - daily reminder', () {
     late FakeNotificationService notifications;
     late SettingsRepository repo;

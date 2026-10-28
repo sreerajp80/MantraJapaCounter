@@ -34,7 +34,7 @@ Read [AGENTS.md](../AGENTS.md) and [CLAUDE.md](../CLAUDE.md) before building or 
 - Version format: `MAJOR.MINOR.PATCH+BUILD`
 - Source of truth: `pubspec.yaml`
 - Build-number increment rule: increment by 1 for every build submitted to Google Play; never reuse or skip a build number
-- Git tag format: `vX.Y.Z` (e.g., `v5.0.0`)
+- Git tag format: `vX.Y.Z` — the `pubspec.yaml` version without `+build` (e.g., `v6.13.13`). One tag per release, even when both the AAB and the APKs ship.
 
 ---
 
@@ -44,7 +44,7 @@ Read [AGENTS.md](../AGENTS.md) and [CLAUDE.md](../CLAUDE.md) before building or 
 - Hotfix strategy: fix on `main`; cherry-pick to a temporary `hotfix/vX.Y.Z` branch only if a patch must be applied against a specific shipped version while `main` has moved ahead
 - Required checks before merge:
   - `dart format --output=none --set-exit-if-changed .` passes
-  - `flutter analyze` passes with zero warnings
+  - `flutter analyze` adds no new warnings (zero is the goal; engineering standard §16.1)
   - `flutter test` passes
 
 ---
@@ -61,8 +61,8 @@ Read [AGENTS.md](../AGENTS.md) and [CLAUDE.md](../CLAUDE.md) before building or 
 
 ## 6. Release Build Hardening
 
-All production release builds MUST include the following flags. Omitting any of them is a
-release-blocking issue.
+All production release builds for a native platform (here: Android) MUST include the following
+flags. Omitting any of them is a release-blocking issue.
 
 ### 6.1 Obfuscation And Debug Symbols
 
@@ -99,7 +99,9 @@ Reference: `android/app/proguard-rules.pro` and `docs/guidelines/flutter_build_f
 
 ### 6.3 App Size Analysis
 
-Run before every release to catch dependency bloat early:
+Optional, but recommended before every release to catch dependency bloat early. Run it
+**before** the hardened build: it writes into the same output folders, and its output must never be
+shipped or archived as the release artifact.
 
 ```bash
 flutter build apk --flavor prod --release \
@@ -123,22 +125,48 @@ release. A debuggable production build is a security vulnerability and a Google 
 violation.
 
 ```bash
-aapt2 dump badging build/app/outputs/apk/prod/release/app-arm64-v8a-prod-release.apk \
+aapt2 dump badging build/app/outputs/flutter-apk/app-arm64-v8a-prod-release.apk \
   | grep -i debuggable
 ```
 
 Expected output: no lines (attribute absent = false by default). If it appears, investigate
 `isDebuggable` in `android/app/build.gradle.kts` under the release build type.
 
+Flutter copies the finished APKs to `build/app/outputs/flutter-apk/`; the build log prints the
+exact file names.
+
+### 6.5 Cleartext Traffic (Android)
+
+The manifest sets `android:usesCleartextTraffic="false"`. Cleartext is off by default for apps that
+target API 28 or higher; it is set explicitly anyway. There is no network security config. The app
+has no network at all (`docs/security.md` §1.1).
+
+### 6.6 Bundled Asset Audit
+
+Before releasing, list the assets in the APK and confirm there are no secrets, keys or test data:
+
+```bash
+unzip -l build/app/outputs/flutter-apk/app-arm64-v8a-prod-release.apk "assets/*"
+```
+
+```powershell
+tar -tf build\app\outputs\flutter-apk\app-arm64-v8a-prod-release.apk | Select-String "assets/"
+```
+
+### 6.7 Exported Components (Android)
+
+Only `MainActivity` (the launcher) is exported. Check the merged release manifest: every other
+activity, service and receiver must have `android:exported="false"` (`docs/security.md` §10).
+
 ---
 
 ## 7. Signing And Secret Handling
 
 - Signing strategy: Strategy A — local file-based signing (single developer; see `docs/guidelines/flutter_build_flavors_guide.md`)
-- Config location: `android/key.properties` — gitignored; never committed
-- Keystore files: kept in `android/` and git-ignored; backed up in two separate locations outside the repository
+- Config location: `android/key.properties` on the release machine — gitignored; never committed; never in CI (`docs/guidelines/guideline.md` §2)
+- Keystore files and their passwords: kept in `android/` and git-ignored; backed up as `docs/guidelines/guideline.md` §2.3 says — at least two separate secure backups, at least one of them offline (not cloud storage). Passwords live in a password manager.
 - Keystore ownership: sreerajp
-- Release keystore: `android/keystore.jks`; alias `sreerajp_mantrajapacounter`. Keep at least one offline backup in a separate location.
+- Release keystore: `android/keystore.jks`; alias `sreerajp_mantrajapacounter`.
 - Secret rotation process: generate a new keystore only if the existing key is compromised; note that changing the Play Store upload key requires contacting Google Play support and cannot be done unilaterally
 - Rules:
   - Signing material MUST NOT be committed to source control.
@@ -156,10 +184,10 @@ Complete these items before every release.
 
 - [ ] All changes committed; `git status` is clean.
 - [ ] `dart format --output=none --set-exit-if-changed .` passes.
-- [ ] `flutter analyze` passes with zero warnings.
+- [ ] `flutter analyze` adds no new warnings (zero is the goal, engineering standard §16.1).
 - [ ] `flutter test` passes — all unit, widget, and integration tests.
 - [ ] Golden tests pass (`flutter test --tags golden`). Run them on Windows — see section 16.
-- [ ] Code generation is current: `dart run build_runner build --delete-conflicting-outputs`.
+- [ ] Code generation: not used by this project (no `build_runner`). If it is ever added, run `dart run build_runner build --delete-conflicting-outputs` and check generated files are current.
 - [ ] No critical or release-blocking bugs remain open.
 - [ ] GitHub CI is green for the release commit.
 - [ ] Release artifacts built locally, not in CI (engineering standard §19.3).
@@ -169,11 +197,19 @@ Complete these items before every release.
 - [ ] Counting screen profiled for jank on a physical mid-range Android device (release build, Profile mode).
 - [ ] Cold startup time confirmed under 2 seconds on a mid-range device (release build).
 - [ ] Counting timer confirmed as 2-second display updates and 5-second state updates (not 1-second polling).
-- [ ] App size analyzed and within budget (see section 6.3); output recorded in release evidence.
+- [ ] App size analyzed and within budget (optional size build, run before the hardened build — section 6.3); output recorded in release evidence.
 
 ### Security
 
+- [ ] Security Baseline re-verified — every line of `docs/security.md` §1.1 is `verified` or `n/a`
+      with a reason (engineering standard §15.1).
+- [ ] No secrets in the shipped app — code, assets, `--dart-define` values, or native config files.
+- [ ] No code path disables certificate checks (no trust-all `badCertificateCallback` or
+      `HttpOverrides`); cleartext is off (section 6.5).
+- [ ] No debug menus, test accounts, or backdoors in the production build.
+- [ ] Only `MainActivity` is exported in the merged release manifest (section 6.7).
 - [ ] `--obfuscate` and `--split-debug-info` flags present in all prod release build commands.
+- [ ] No `--analyze-size` build was shipped or archived as the release artifact (section 6.3).
 - [ ] Debug symbols archived at `releases/v<version>/symbols/android-prod-<version>/`.
 - [ ] ProGuard rules verified — release build launches; counting flow and import/export work end-to-end.
 - [ ] `android:debuggable=false` confirmed in merged release manifest.
@@ -183,6 +219,8 @@ Complete these items before every release.
 - [ ] Permissions in manifest reviewed — only VIBRATE, CAMERA, POST_NOTIFICATIONS (Android 13+) and
       ACCESS_NOTIFICATION_POLICY. No storage permissions (READ_EXTERNAL_STORAGE,
       WRITE_EXTERNAL_STORAGE, READ_MEDIA_AUDIO) and no RECORD_AUDIO.
+- [ ] OWASP Mobile Top 10 checklist signed off in `docs/security.md` section 12 (MUST under the
+      Production App Extension; items that do not apply are `n/a`).
 - [ ] Security checklist in `docs/security.md` section 18 completed.
 
 ### Product And Documentation
@@ -200,7 +238,7 @@ Complete these items before every release.
 - [ ] Release APK builds successfully with all hardening flags.
 - [ ] APK installs on a clean Android 10 (API 29) device or emulator.
 - [ ] APK installs on a recent Android (API 34+) device.
-- [ ] App displays the prod app name "Mantra Japa Counter" (not "Mantra Japa Counter Dev").
+- [ ] Launcher and About screen show the prod app name from `app_config.json` in each language (English: "SreerajP MantraJapa Counter", not "... Dev").
 - [ ] Version name and build number are correct in the About screen.
 - [ ] End-to-end counting flow: create counter → count → session recorded → history shows session.
 - [ ] Import/export round-trip works on the release build.
@@ -213,33 +251,40 @@ Complete these items before every release.
 1. Pull the release commit and verify `git status` is clean.
 2. Verify version in `pubspec.yaml`.
 3. `flutter pub get`.
-4. `dart run build_runner build --delete-conflicting-outputs`.
+4. Code generation: not used by this project (skip; run `dart run build_runner build --delete-conflicting-outputs` only if it is ever added).
 5. `dart format --output=none --set-exit-if-changed .`
 6. `flutter analyze`
 7. `flutter test`
-8. Build release artifacts (commands below).
-9. Run size analysis; record output in `releases/v<version>/size-analysis.txt`.
-10. Verify `android:debuggable=false` in merged manifest.
+8. Optional: run the size-analysis build (section 6.3) **now, before** the hardened build; record output in `releases/v<version>/size-analysis.txt`.
+9. Build release artifacts with all hardening flags (commands below).
+10. Verify `android:debuggable=false`, cleartext off and exported components in the merged manifest (sections 6.4–6.7).
 11. Install APK on a clean Android 10 device; run the end-to-end counting flow.
 12. Archive debug symbols from `build/symbols/` to `releases/v<version>/symbols/`.
-13. Upload AAB to Google Play (internal testing track first; promote to production after validation).
-14. Tag the release: `git tag v<version> && git push origin v<version>`.
+13. Complete the Google Play gate (`docs/guidelines/platform_store_readiness.md` §2), then upload the AAB to Google Play (internal testing track first; promote to production after validation).
+14. Direct APK: before each direct-APK release, check Google's Android developer verification status and complete any developer or package / signing-key registration it asks for (`docs/guidelines/platform_store_readiness.md` §2.5A). Then publish the split APKs.
+15. Tag the release once: `git tag v<X.Y.Z> && git push origin v<X.Y.Z>` — `<X.Y.Z>` is the `pubspec.yaml` version without `+build` (section 3).
 
 ### Android Build Commands
 
 ```bash
 flutter pub get
-dart run build_runner build --delete-conflicting-outputs
 dart format --output=none --set-exit-if-changed .
 flutter analyze
 flutter test
 
+# Optional size analysis — run it BEFORE the hardened builds below (section 6.3)
+flutter build apk --flavor prod --release \
+  --analyze-size
+
+VERSION=$(grep '^version:' pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1 | tr -d '\r')
+
 # Split APKs for direct sideload distribution (arm64-v8a covers most modern devices)
+# Output: build/app/outputs/flutter-apk/app-<abi>-prod-release.apk
 flutter build apk \
   --flavor prod \
   --release \
   --obfuscate \
-  --split-debug-info=build/symbols/android-prod-$(grep '^version:' pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1)/ \
+  --split-debug-info=build/symbols/android-prod-$VERSION/ \
   --split-per-abi
 
 # App Bundle for Google Play
@@ -247,11 +292,7 @@ flutter build appbundle \
   --flavor prod \
   --release \
   --obfuscate \
-  --split-debug-info=build/symbols/android-prod-$(grep '^version:' pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1)/
-
-# Size analysis
-flutter build apk --flavor prod --release \
-  --analyze-size
+  --split-debug-info=build/symbols/android-prod-$VERSION/
 ```
 
 **App Bundle for Google Play on Windows (PowerShell) — this is the command used for Play
@@ -282,7 +323,7 @@ Not applicable — Windows is not a supported platform for this release.
 |---------|----------|----------|-------|
 | Google Play Store (production) | AAB | All public users | Promoted from internal testing track after validation |
 | Google Play Internal Testing | AAB | sreerajp (developer self-testing) | First submission target before promoting to production |
-| Direct APK | arm64-v8a split APK | Beta testers / sideload users | Distributed manually; arm64-v8a covers most modern Android devices |
+| Direct APK | arm64-v8a split APK | Beta testers / sideload users | Signed with the release keystore; Android developer verification checked before each release (store gate §2.5A); arm64-v8a covers most modern Android devices |
 
 ---
 
@@ -309,6 +350,7 @@ Record links or references to release evidence after each release.
 - Release notes: `CHANGELOG.md` entry for `v<version>`
 - Store submission: Google Play Console → release track → build record
 - Security checklist sign-off: completed locally by sreerajp before each submission
+- OWASP checklist sign-off (required under the Production App Extension): `docs/security.md` §12, signed by sreerajp / `<date>`
 
 ---
 
@@ -319,7 +361,7 @@ Record links or references to release evidence after each release.
 - [ ] End-to-end counting flow verified on the Play Store build.
 - [ ] Crash and ANR reports reviewed in Google Play Console (Android Vitals) within 48 hours of release.
 - [ ] User-reported issues in Play Store reviews triaged.
-- [ ] Release tag confirmed: `git tag -l v<version>`.
+- [ ] Release tag created and pushed: `git tag -l v<X.Y.Z>` (version without `+build`, section 3).
 - [ ] Debug symbols confirmed at `releases/v<version>/symbols/`.
 - [ ] Follow-up tasks recorded (bugs found during validation, deferred features).
 
@@ -329,14 +371,15 @@ Record links or references to release evidence after each release.
 
 Since Flutter 3.47, Material and Cupertino widgets come from the `material_ui` and
 `cupertino_ui` packages, not from the Flutter SDK. They can get new releases every week.
-To keep visual changes under control, both are **pinned to exact versions** in
-`pubspec.yaml` (no `^`). Upgrade them only with this checklist.
+Both use a caret (`^`) constraint in `pubspec.yaml`, as engineering standard §6.1 requires;
+`pubspec.lock` holds the exact versions. To keep visual changes under control, upgrade them
+(`flutter pub upgrade material_ui cupertino_ui`) only with this checklist.
 
 - [ ] Upgrade the UI packages in **their own change**. Never in the same change as a
       Flutter SDK upgrade or other package upgrades, so any breakage has one clear cause.
 - [ ] Read the package changelogs on pub.dev. Note any visual or breaking changes in the plan.
-- [ ] Change the pinned versions in `pubspec.yaml`, then run `flutter pub get`.
-- [ ] `flutter analyze` passes with zero warnings.
+- [ ] Upgrade the packages (raise the `^` constraint in `pubspec.yaml` if needed), then run `flutter pub get`.
+- [ ] `flutter analyze` adds no new warnings.
 - [ ] `flutter test` passes.
 - [ ] If golden tests fail, look at the difference images in `test/**/failures/`.
       - If the change is expected, run `flutter test --update-goldens --tags golden`
@@ -359,8 +402,8 @@ uses no secrets (no keystore, no passwords).
 
 ### What runs
 
-`.github/workflows/ci.yml` runs on every push to `main`, on every pull request
-(including Dependabot ones), and by hand from the **Actions** tab. On Linux, with the
+`.github/workflows/ci.yml` runs on every push to `main`, on every pull request, and by hand
+from the **Actions** tab. On Linux, with the
 same Flutter version as the project, it runs:
 
 1. `dart format --output=none --set-exit-if-changed lib test tool`
@@ -374,15 +417,12 @@ Golden tests are left out because the reference images only match on Windows
 
 When you upgrade Flutter, also change `flutter-version` in `ci.yml`.
 
-### Dependabot
+### Dependency updates
 
-`.github/dependabot.yml` checks every Monday and opens a pull request for each update:
-Dart packages, Gradle / Android, GitHub Actions, and the `docs/guidelines` submodule.
-Nothing is merged automatically. Before merging an update, it still needs its own plan
-and change log, and UI package updates follow the section 16 checklist. Pull requests
-that update the `docs/guidelines` submodule are reviewed and merged by the user only —
-AI agents never change the submodule version.
+Dependencies are updated by hand (engineering standard §19.2). There is no Dependabot or other
+update bot, and `.github/dependabot.yml` must not be added. Each update needs its own plan and
+change log, and UI package updates follow the section 16 checklist. Only the user updates the
+`docs/guidelines` submodule version — AI agents never change it.
 
-Watching the submodule is an extra beyond engineering standard §19.2, and golden tests
-being skipped is a known deviation from §19.1. Both are recorded in
+Golden tests being skipped in CI is a known deviation from §19.1, recorded in
 `docs/architecture.md` section 19.

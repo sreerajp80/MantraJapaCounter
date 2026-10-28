@@ -50,6 +50,27 @@ void main() {
     });
   });
 
+  group('SettingsRepository - tapVibrationEnabled', () {
+    test('is off by default', () async {
+      SharedPreferences.setMockInitialValues({});
+      final repo = SettingsRepository(await SharedPreferences.getInstance());
+      expect(repo.tapVibrationEnabled, isFalse);
+    });
+
+    test('saves and reads the value', () async {
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final repo = SettingsRepository(prefs);
+
+      await repo.setTapVibrationEnabled(true);
+      expect(repo.tapVibrationEnabled, isTrue);
+      expect(prefs.getBool(AppConstants.prefsTapVibrationKey), isTrue);
+
+      await repo.setTapVibrationEnabled(false);
+      expect(repo.tapVibrationEnabled, isFalse);
+    });
+  });
+
   group('SettingsNotifier - languageCode', () {
     late SharedPreferences prefs;
     late SettingsRepository repo;

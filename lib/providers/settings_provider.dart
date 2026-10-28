@@ -11,6 +11,7 @@ import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/services/notification_service.dart';
 import 'package:mantra_japa_counter/services/screen_service.dart';
 import 'package:mantra_japa_counter/services/time_zone_service.dart';
+import 'package:mantra_japa_counter/core/logging/app_logger.dart';
 
 /// Snapshot of all user settings read from SharedPreferences.
 class AppSettings {
@@ -24,6 +25,9 @@ class AppSettings {
   final String? lifetimeSoundUri;
   final String? lifetimeSoundName;
   final bool vibrationEnabled;
+
+  /// A short vibration on each counted tap. Off by default (battery).
+  final bool tapVibrationEnabled;
   final String? languageCode;
   final bool dndEnabled;
   final bool dimmedChantingMode;
@@ -46,6 +50,7 @@ class AppSettings {
     this.lifetimeSoundUri,
     this.lifetimeSoundName,
     required this.vibrationEnabled,
+    this.tapVibrationEnabled = false,
     this.languageCode,
     this.dndEnabled = false,
     this.dimmedChantingMode = false,
@@ -69,6 +74,7 @@ class AppSettings {
     String? lifetimeSoundName,
     bool clearLifetimeSound = false,
     bool? vibrationEnabled,
+    bool? tapVibrationEnabled,
     String? languageCode,
     bool clearLanguageCode = false,
     bool? dndEnabled,
@@ -102,6 +108,7 @@ class AppSettings {
           ? null
           : (lifetimeSoundName ?? this.lifetimeSoundName),
       vibrationEnabled: vibrationEnabled ?? this.vibrationEnabled,
+      tapVibrationEnabled: tapVibrationEnabled ?? this.tapVibrationEnabled,
       languageCode: clearLanguageCode
           ? null
           : (languageCode ?? this.languageCode),
@@ -149,6 +156,7 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
            lifetimeSoundUri: _repo.lifetimeSoundUri,
            lifetimeSoundName: _repo.lifetimeSoundName,
            vibrationEnabled: _repo.vibrationEnabled,
+           tapVibrationEnabled: _repo.tapVibrationEnabled,
            languageCode: _repo.languageCode,
            dndEnabled: _repo.dndEnabled,
            dimmedChantingMode: _repo.dimmedChantingMode,
@@ -221,6 +229,11 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
   Future<void> setVibrationEnabled(bool value) async {
     await _repo.setVibrationEnabled(value);
     state = state.copyWith(vibrationEnabled: value);
+  }
+
+  Future<void> setTapVibrationEnabled(bool value) async {
+    await _repo.setTapVibrationEnabled(value);
+    state = state.copyWith(tapVibrationEnabled: value);
   }
 
   Future<void> setLanguageCode(String? code) async {
@@ -304,9 +317,7 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
         ),
       );
     } catch (e) {
-      debugPrint(
-        'SettingsNotifier: schedule reminder failed (${e.runtimeType})',
-      );
+      AppLogger.warning('SettingsNotifier: schedule reminder failed', error: e);
     }
   }
 
@@ -316,7 +327,7 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
     try {
       await notifications().cancelDailyReminder();
     } catch (e) {
-      debugPrint('SettingsNotifier: cancel reminder failed (${e.runtimeType})');
+      AppLogger.warning('SettingsNotifier: cancel reminder failed', error: e);
     }
   }
 }

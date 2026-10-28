@@ -10,8 +10,9 @@ Read [AGENTS.md](../AGENTS.md) and [CLAUDE.md](../CLAUDE.md) before making any c
 
 Before making any non-trivial code modification, bug fix, or feature implementation:
 - Create a dedicated plan file in the `plans/` directory named `yyyymmdd_hhMMss_<short-slug>.md`.
-- Include a `**Status:**` header line (e.g., `Draft`, `Approved`, `In Progress`).
+- Include a `**Status:**` line right under the title and keep it current: `draft` → `approval_pending` → `in_progress` → `completed` (or `dropped` / `partial_completion`).
 - Detail the problem, objective, affected files, proposed changes, and verification steps.
+- A plan that touches network, storage, sign-in, permissions, deep links, WebViews, platform folders or dependencies has a short **"Security impact"** line (engineering standard §22.2). Never weaken a security control to make something work; ask the user in the plan first.
 
 ---
 

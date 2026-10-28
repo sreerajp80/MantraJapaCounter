@@ -244,6 +244,47 @@ class SoundSettingsScreen extends ConsumerWidget {
                         toggle: settings.vibrationEnabled,
                         onToggle: notifier.setVibrationEnabled,
                       ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SettingsRow(
+                            leading: const Icon(
+                              Icons.vibration,
+                              size: 16,
+                              color: TempleColors.ink2,
+                            ),
+                            title: l.tapVibration,
+                            sub: l.tapVibrationSub,
+                            toggle: settings.tapVibrationEnabled,
+                            onToggle: notifier.setTapVibrationEnabled,
+                          ),
+                          // Battery warning stays visible, on or off.
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(56, 0, 14, 13),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Icon(
+                                  Icons.battery_alert_outlined,
+                                  size: 16,
+                                  color: TempleColors.vermillionDeep,
+                                ),
+                                const SizedBox(width: 6),
+                                Expanded(
+                                  child: Text(
+                                    l.tapVibrationBatteryWarning,
+                                    style: AppTheme.sans(
+                                      fontSize: 12.5,
+                                      color: TempleColors.vermillionDeep,
+                                      height: 1.35,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
 

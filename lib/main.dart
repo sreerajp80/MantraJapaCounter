@@ -7,6 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:mantra_japa_counter/core/config/app_config.dart';
+import 'package:mantra_japa_counter/core/config/config_service.dart';
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/core/flavor/flavor_config.dart';
 import 'package:mantra_japa_counter/core/locale/locale_config.dart';
@@ -59,7 +61,10 @@ void main() async {
   final japaRepo = JapaCounterRepository(db);
   await SessionRecoveryService(japaRepo, settingsRepo).recoverIfNeeded();
 
-  // Step 8 — run app inside ProviderScope with infrastructure overrides
+  // Step 8 — the app name comes from app_config.json (guideline.md §1.8)
+  final config = await ConfigService().load();
+
+  // Step 9 — run app inside ProviderScope with infrastructure overrides
   runApp(
     ProviderScope(
       overrides: [
@@ -67,13 +72,16 @@ void main() async {
         sharedPreferencesProvider.overrideWithValue(prefs),
         notificationsPluginProvider.overrideWithValue(notifPlugin),
       ],
-      child: const MantraJapaCounterApp(),
+      child: MantraJapaCounterApp(appName: config.appName),
     ),
   );
 }
 
 class MantraJapaCounterApp extends ConsumerStatefulWidget {
-  const MantraJapaCounterApp({super.key});
+  const MantraJapaCounterApp({super.key, this.appName});
+
+  /// Localized app name from `app_config.json`; used for the task title.
+  final LocalizedText? appName;
 
   @override
   ConsumerState<MantraJapaCounterApp> createState() =>
@@ -150,8 +158,9 @@ class _MantraJapaCounterAppState extends ConsumerState<MantraJapaCounterApp>
 
     return MaterialApp.router(
       onGenerateTitle: (context) {
-        final title = AppLocalizations.of(context).appTitle;
-        return AppFlavorConfig.isDev ? '$title Dev' : title;
+        final name = widget.appName ?? AppConfig.fallback.appName;
+        final lang = Localizations.localeOf(context).languageCode;
+        return name.resolve(lang) + AppFlavorConfig.nameSuffix;
       },
       theme: AppTheme.light(),
       themeMode: ThemeMode.light,

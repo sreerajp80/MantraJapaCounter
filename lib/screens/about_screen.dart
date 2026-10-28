@@ -25,12 +25,10 @@ class AboutScreen extends StatelessWidget {
         future: _configService.loadAndVerify(),
         builder: (context, snapshot) {
           final config = snapshot.data ?? AppConfig.fallback;
-          final displayedAppName = _resolveAppName(l, config.appName, lang);
-          final displayedDescription = _resolveDescription(
-            l,
-            config.description,
-            lang,
-          );
+          // Name and description come only from app_config.json
+          // (guideline.md §1, §1.8), resolved for the active language.
+          final displayedAppName = config.appName.resolve(lang).trim();
+          final displayedDescription = config.description.resolve(lang).trim();
 
           return ListView(
             padding: const EdgeInsets.all(24),
@@ -316,34 +314,6 @@ class AboutScreen extends StatelessWidget {
     );
   }
 
-  String _resolveAppName(
-    AppLocalizations l,
-    LocalizedText configAppName,
-    String lang,
-  ) {
-    final text = configAppName.resolve(lang).trim();
-    if (text.isEmpty ||
-        text == 'SreerajP MantraJapa Counter' ||
-        text == 'SreerajP MantraJapa Counter Dev') {
-      return l.appTitle;
-    }
-    return text;
-  }
-
-  String _resolveDescription(
-    AppLocalizations l,
-    LocalizedText configDescription,
-    String lang,
-  ) {
-    final text = configDescription.resolve(lang).trim();
-    const defaultDesc =
-        'Offline-first application for tracking mantra recitation practice with customizable counters and session history.';
-    if (text.isEmpty || text == defaultDesc) {
-      return l.aboutDescription;
-    }
-    return text;
-  }
-
   static String aboutDetailLabel(AppLocalizations l10n, String key) {
     switch (key.trim()) {
       case 'author':
@@ -361,6 +331,8 @@ class AboutScreen extends StatelessWidget {
       case 'ideUsed':
       case 'IDE used':
         return l10n.aboutDetailIdeUsed;
+      case 'privacyPolicy':
+        return l10n.aboutDetailPrivacyPolicy;
       default:
         return key;
     }

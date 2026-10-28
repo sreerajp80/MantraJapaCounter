@@ -10,6 +10,7 @@ import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/services/qr_decoder_service.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
+import 'package:mantra_japa_counter/core/logging/app_logger.dart';
 
 /// Why the camera scanner cannot run.
 enum _ScanProblem { none, permissionDenied, cameraFailed, unavailable }
@@ -187,7 +188,7 @@ class _QrCameraViewState extends ConsumerState<QrCameraView>
             : _ScanProblem.cameraFailed;
       });
     } catch (e) {
-      debugPrint('QrCameraView: camera start failed ($e)');
+      AppLogger.warning('QrCameraView: camera start failed', error: e);
       if (mounted) setState(() => _problem = _ScanProblem.cameraFailed);
     } finally {
       _starting = false;
@@ -200,12 +201,16 @@ class _QrCameraViewState extends ConsumerState<QrCameraView>
     try {
       await controller.setFocusMode(FocusMode.auto);
     } catch (e) {
-      debugPrint('QrCameraView: focus mode not supported ($e)');
+      AppLogger.debug(
+        'QrCameraView: focus mode not supported (${e.runtimeType})',
+      );
     }
     try {
       await controller.setExposureMode(ExposureMode.auto);
     } catch (e) {
-      debugPrint('QrCameraView: exposure mode not supported ($e)');
+      AppLogger.debug(
+        'QrCameraView: exposure mode not supported (${e.runtimeType})',
+      );
     }
     try {
       final minZoom = await controller.getMinZoomLevel();
@@ -216,7 +221,7 @@ class _QrCameraViewState extends ConsumerState<QrCameraView>
       // Always set it, so the camera opens at the start zoom every time.
       await controller.setZoomLevel(_zoom);
     } catch (e) {
-      debugPrint('QrCameraView: zoom not supported ($e)');
+      AppLogger.debug('QrCameraView: zoom not supported (${e.runtimeType})');
       _minZoom = _maxZoom = _zoom = 1.0;
     }
     _focusPoint = const Offset(0.5, 0.5);
@@ -235,7 +240,7 @@ class _QrCameraViewState extends ConsumerState<QrCameraView>
         await controller.setExposurePoint(point);
       }
     } catch (e) {
-      debugPrint('QrCameraView: focus point failed ($e)');
+      AppLogger.debug('QrCameraView: focus point failed (${e.runtimeType})');
     }
   }
 
@@ -291,7 +296,7 @@ class _QrCameraViewState extends ConsumerState<QrCameraView>
     try {
       await controller.setZoomLevel(value);
     } catch (e) {
-      debugPrint('QrCameraView: zoom failed ($e)');
+      AppLogger.debug('QrCameraView: zoom failed (${e.runtimeType})');
     }
   }
 
@@ -303,7 +308,7 @@ class _QrCameraViewState extends ConsumerState<QrCameraView>
       await controller.setFlashMode(turnOn ? FlashMode.torch : FlashMode.off);
       if (mounted) setState(() => _torchOn = turnOn);
     } catch (e) {
-      debugPrint('QrCameraView: light not supported ($e)');
+      AppLogger.debug('QrCameraView: light not supported (${e.runtimeType})');
       if (mounted) {
         setState(() {
           _torchOn = false;
@@ -394,7 +399,9 @@ class _QrCameraViewState extends ConsumerState<QrCameraView>
             }
             if (mounted) setState(() => _problem = _ScanProblem.unavailable);
           } else {
-            debugPrint('QrCameraView: frame decode failed ($e)');
+            AppLogger.debug(
+              'QrCameraView: frame decode failed (${e.runtimeType})',
+            );
           }
         })
         .whenComplete(() => _decoding = false);

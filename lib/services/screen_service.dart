@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:mantra_japa_counter/core/logging/app_logger.dart';
 
 /// Controls this app's window brightness.
 ///
@@ -28,7 +28,7 @@ class ScreenService {
     } on MissingPluginException catch (_) {
       // No native side (tests, other platforms): nothing to do.
     } on PlatformException catch (e) {
-      debugPrint('ScreenService: send mode failed (${e.code})');
+      AppLogger.warning('ScreenService: send mode failed (${e.code})');
     }
   }
 
@@ -42,7 +42,7 @@ class ScreenService {
     } on MissingPluginException catch (_) {
       // No native side (tests, other platforms): nothing to do.
     } on PlatformException catch (e) {
-      debugPrint('ScreenService: brightness failed (${e.code})');
+      AppLogger.warning('ScreenService: brightness failed (${e.code})');
     }
   }
 
@@ -57,7 +57,7 @@ class ScreenService {
     } on MissingPluginException catch (_) {
       // No native side (tests, other platforms): nothing to do.
     } on PlatformException catch (e) {
-      debugPrint('ScreenService: send brightness failed (${e.code})');
+      AppLogger.warning('ScreenService: send brightness failed (${e.code})');
     }
   }
 
@@ -70,7 +70,7 @@ class ScreenService {
     } on MissingPluginException catch (_) {
       return fallback;
     } on PlatformException catch (e) {
-      debugPrint('ScreenService: read brightness failed (${e.code})');
+      AppLogger.warning('ScreenService: read brightness failed (${e.code})');
       return fallback;
     }
   }

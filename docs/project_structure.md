@@ -46,7 +46,8 @@ MantraJapaCounter/
 │   │   ├── config/                    ← AppConfig model & ConfigService loader
 │   │   ├── constants/                 ← App constants (values only)
 │   │   ├── flavor/                    ← Build flavor config (dev / prod)
-│   │   ├── locale/                    ← Locale policy (en / ml)
+│   │   ├── locale/                    ← Locale policy (en / ml / sa)
+│   │   ├── logging/                   ← AppLogger (the only logger)
 │   │   ├── routing/                   ← go_router route definitions
 │   │   └── utils/                     ← Mala maths & generated build metadata
 │   ├── l10n/                          ← Localization arb files & generated code
@@ -72,6 +73,7 @@ MantraJapaCounter/
 ## 2. Layer Responsibilities
 
 - **`lib/core/config/`**: Holds `AppConfig` and `ConfigService` for loading and validating `assets/config/app_config.json`.
+- **`lib/core/logging/`**: Holds `AppLogger`. All logging goes through it; `print` and `debugPrint` are not used.
 - **`lib/models/`**: Holds immutable pure Dart data classes (`Counter`, `JapaSession`, `ExportData`). No Flutter or sqflite dependencies.
 - **`lib/repositories/`**: Handles sqflite SQLite operations and `shared_preferences` storage for crash recovery.
 - **`lib/services/`**: Encapsulates platform capabilities (local notifications, export/import file parsing, audio player).

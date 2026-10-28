@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -197,8 +195,8 @@ class BackupSettingsScreen extends ConsumerWidget {
       final pickedPath = picked?.path;
       if (pickedPath == null) return;
 
-      final content = await File(pickedPath).readAsString();
       final exportSvc = ref.read(exportServiceProvider);
+      final content = await exportSvc.readBackupFile(pickedPath);
 
       try {
         await exportSvc.importFromJson(content);
@@ -228,6 +226,15 @@ class BackupSettingsScreen extends ConsumerWidget {
           SnackBar(
             content: Text(l.dataRestoredSuccess),
             backgroundColor: TempleColors.tulsi,
+          ),
+        );
+      }
+    } on BackupTooLargeException {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(l.errorBackupTooLarge),
+            backgroundColor: TempleColors.vermillionDeep,
           ),
         );
       }

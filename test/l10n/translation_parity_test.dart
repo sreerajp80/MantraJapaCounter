@@ -9,7 +9,6 @@ void main() {
   /// Strings allowed to match English: brand names and symbols. Keep this list short.
   const sameAsEnglishAllowed = <String>{
     'appName',
-    'appTitle',
     'devFlavorSuffix',
     'englishLanguage',
     'email',
@@ -54,23 +53,40 @@ void main() {
       expect(problems, isEmpty, reason: problems.join('\n'));
     });
 
-    test(
-      'aboutMadeWithLove keeps the {heart} marker in all three languages',
-      () {
-        for (final locale in ['en', ...locales]) {
-          final strings = _strings('lib/l10n/app_$locale.arb');
-          final text = strings['madeWithLove'] ?? strings['aboutMadeWithLove'];
-          if (text != null) {
-            expect(
-              text.contains('{heart}'),
-              isTrue,
-              reason:
-                  'app_$locale.arb madeWithLove is missing the {heart} marker',
+    test('the optional About badge is complete in every language', () {
+      // The badge is on when the template ARB has `madeWithLove`
+      // (guideline.md §1.7, engineering standard §8.7).
+      if (!_strings('lib/l10n/app_en.arb').containsKey('madeWithLove')) return;
+      final heartEmoji = RegExp('❤|♥|\u{1F496}|\u{1F497}|\u{1F49C}');
+      final problems = <String>[];
+      for (final locale in ['en', ...locales]) {
+        final strings = _strings('lib/l10n/app_$locale.arb');
+        final text = strings['madeWithLove'];
+        final a11y = strings['madeWithLoveA11y'];
+        if (text == null) {
+          problems.add('app_$locale.arb: madeWithLove is missing');
+        }
+        if (a11y == null) {
+          problems.add('app_$locale.arb: madeWithLoveA11y is missing');
+        }
+        if (text != null && '{heart}'.allMatches(text).length != 1) {
+          problems.add(
+            'app_$locale.arb: madeWithLove must contain exactly one {heart}',
+          );
+        }
+        for (final entry in {
+          'madeWithLove': text,
+          'madeWithLoveA11y': a11y,
+        }.entries) {
+          if (entry.value != null && heartEmoji.hasMatch(entry.value!)) {
+            problems.add(
+              'app_$locale.arb: ${entry.key} has a heart emoji; use {heart}',
             );
           }
         }
-      },
-    );
+      }
+      expect(problems, isEmpty, reason: problems.join('\n'));
+    });
   });
 
   group('About JSON config parity tests', () {
@@ -96,10 +112,20 @@ void main() {
       checkLanguages('appName', json['appName']);
       checkLanguages('description', json['description']);
 
+      // Rows that hold technical values (never translated) may be plain
+      // strings. Every other row is display text and needs a locale map
+      // (guideline.md §1.2).
+      const technicalKeys = {'email', 'website', 'privacyPolicy'};
+
       final details = json['details'];
       if (details is Map<String, dynamic>) {
         for (final entry in details.entries) {
           final id = entry.key;
+          if (locales.isNotEmpty &&
+              entry.value is String &&
+              !technicalKeys.contains(id)) {
+            problems.add('details.$id is a plain string; use a locale map');
+          }
           checkLanguages('details.$id', entry.value);
 
           // Details key is lowerCamelCase; label in ARB is aboutDetail<Key>

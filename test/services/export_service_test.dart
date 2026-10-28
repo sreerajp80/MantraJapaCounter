@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -326,6 +327,37 @@ void main() {
       );
       final counters = await repo.getAllCounters();
       expect(counters.map((c) => c.id), ['keep']);
+    });
+  });
+
+  group('readBackupFile', () {
+    late Directory tempDir;
+
+    setUp(() async {
+      tempDir = await Directory.systemTemp.createTemp('backup_read_test');
+    });
+
+    tearDown(() async {
+      await tempDir.delete(recursive: true);
+    });
+
+    test('reads a file within the size limit', () async {
+      final file = File('${tempDir.path}/backup.json');
+      await file.writeAsString('{"exportVersion": 1}');
+
+      final content = await exportService.readBackupFile(file.path);
+
+      expect(content, '{"exportVersion": 1}');
+    });
+
+    test('rejects a file larger than the limit without reading it', () async {
+      final file = File('${tempDir.path}/big.json');
+      await file.writeAsString('x' * 101);
+
+      expect(
+        () => exportService.readBackupFile(file.path, maxBytes: 100),
+        throwsA(isA<BackupTooLargeException>()),
+      );
     });
   });
 }

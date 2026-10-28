@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:mantra_japa_counter/core/logging/app_logger.dart';
 
 /// Reads the phone's time-zone name (for example `Asia/Kolkata`) from the
 /// native side, so the daily reminder fires at the right local time.
@@ -24,7 +24,7 @@ class TimeZoneService {
     } on MissingPluginException catch (_) {
       return fallbackTimeZoneId;
     } on PlatformException catch (e) {
-      debugPrint('TimeZoneService: read time zone failed (${e.code})');
+      AppLogger.warning('TimeZoneService: read time zone failed (${e.code})');
       return fallbackTimeZoneId;
     }
   }

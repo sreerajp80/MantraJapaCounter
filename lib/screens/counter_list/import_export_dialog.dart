@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -107,8 +105,8 @@ class _ImportExportDialogState extends State<ImportExportDialog> {
     });
 
     try {
-      final content = await File(pickedPath).readAsString();
       final exportSvc = widget.ref.read(exportServiceProvider);
+      final content = await exportSvc.readBackupFile(pickedPath);
 
       try {
         await exportSvc.importFromJson(content);
@@ -138,6 +136,11 @@ class _ImportExportDialogState extends State<ImportExportDialog> {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(l.importSuccessful)));
       }
+    } on BackupTooLargeException {
+      setState(() {
+        _busy = false;
+        _error = l.errorBackupTooLarge;
+      });
     } catch (e) {
       setState(() {
         _busy = false;

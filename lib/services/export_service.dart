@@ -31,6 +31,15 @@ class EncryptedExportException implements Exception {
   String toString() => 'EncryptedExportException: File is encrypted';
 }
 
+/// Thrown when a picked import file is larger than any real backup
+/// ([AppConstants.maxBackupImportBytes]). The file is not read.
+class BackupTooLargeException implements Exception {
+  final int sizeBytes;
+  const BackupTooLargeException(this.sizeBytes);
+  @override
+  String toString() => 'BackupTooLargeException: $sizeBytes bytes';
+}
+
 /// JSON import / export for data backup and restore.
 ///
 /// Backups from any earlier app version must always import.
@@ -109,6 +118,20 @@ class ExportService {
   }
 
   // ──────────────────────────── Full Import ──────────────────────────────────
+
+  /// Reads a picked backup file as text. Checks the size first, so a huge
+  /// file is never loaded into memory (engineering standard §15.1).
+  ///
+  /// Throws [BackupTooLargeException] if the file is too large.
+  Future<String> readBackupFile(
+    String path, {
+    int maxBytes = AppConstants.maxBackupImportBytes,
+  }) async {
+    final file = File(path);
+    final size = await file.length();
+    if (size > maxBytes) throw BackupTooLargeException(size);
+    return file.readAsString();
+  }
 
   /// Parses and validates JSON, then imports into the database.
   ///
