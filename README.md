@@ -1,4 +1,4 @@
-# SreerajP MantraJapa Counter
+# Japam
 
 An offline Android app for counting mantra japa. It tracks your chant count, works out
 completed malas (1 mala = 108 chants), keeps a practice history, and can move your data to
@@ -105,8 +105,8 @@ flutter run --flavor prod     # production build with debug tooling
 
 | Flavor | Application ID | Display name |
 |--------|----------------|--------------|
-| `dev` | `com.sreerajp.mantrajapacounter.dev` | SreerajP MantraJapa Counter Dev |
-| `prod` | `com.sreerajp.mantrajapacounter` | SreerajP MantraJapa Counter |
+| `dev` | `com.sreerajp.mantrajapacounter.dev` | Japam Dev |
+| `prod` | `com.sreerajp.mantrajapacounter` | Japam |
 
 Both flavors install side by side, so you can keep a dev build and a real build on one phone.
 

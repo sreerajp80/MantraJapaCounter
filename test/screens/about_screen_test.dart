@@ -75,7 +75,7 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     PackageInfo.setMockInitialValues(
-      appName: 'SreerajP MantraJapa Counter',
+      appName: 'Japam',
       packageName: 'com.sreerajp.mantrajapacounter',
       version: '6.11.0',
       buildNumber: '23',
@@ -86,9 +86,9 @@ void main() {
       loadAsset: (path) async => '''
       {
         "appName": {
-          "en": "SreerajP MantraJapa Counter",
-          "ml": "ശ്രീരാജ് പി മന്ത്രജപ കൗണ്ടർ",
-          "sa": "श्रीराज् पि मन्त्रजपगणकः"
+          "en": "Japam",
+          "ml": "ജപം",
+          "sa": "जपम्"
         },
         "description": {
           "en": "Offline-first application for tracking mantra recitation practice with customizable counters and session history.",
@@ -135,7 +135,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('विषयपरिचयः'), findsOneWidget);
-    expect(find.text('श्रीराज् पि मन्त्रजपगणकः'), findsOneWidget);
+    expect(find.text('जपम्'), findsOneWidget);
     expect(
       find.text(
         'अनुकूलनीयगणकैः सत्रेतिहासैश्च सह मन्त्रजपसाधनायाः अनुसरणे अन्तर्जालरहितः अनुप्रयोगः।',
@@ -169,7 +169,7 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     PackageInfo.setMockInitialValues(
-      appName: 'SreerajP MantraJapa Counter',
+      appName: 'Japam',
       packageName: 'com.sreerajp.mantrajapacounter',
       version: '6.11.0',
       buildNumber: '23',
@@ -180,9 +180,9 @@ void main() {
       loadAsset: (path) async => '''
       {
         "appName": {
-          "en": "SreerajP MantraJapa Counter",
-          "ml": "ശ്രീരാജ് പി മന്ത്രജപ കൗണ്ടർ",
-          "sa": "श्रीराज् पि मन्त्रजपगणकः"
+          "en": "Japam",
+          "ml": "ജപം",
+          "sa": "जपम्"
         },
         "description": {
           "en": "Offline-first application for tracking mantra recitation practice with customizable counters and session history.",
@@ -229,7 +229,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('ആപ്പിനെക്കുറിച്ച്'), findsOneWidget);
-    expect(find.text('ശ്രീരാജ് പി മന്ത്രജപ കൗണ്ടർ'), findsOneWidget);
+    expect(find.text('ജപം'), findsOneWidget);
     expect(find.text('രചയിതാവ്'), findsOneWidget);
     expect(find.text('ശ്രീരാജ് പി'), findsOneWidget);
     expect(find.text('ഇമെയിൽ'), findsOneWidget);
@@ -250,7 +250,7 @@ void main() {
     tester,
   ) async {
     PackageInfo.setMockInitialValues(
-      appName: 'SreerajP MantraJapa Counter',
+      appName: 'Japam',
       packageName: 'com.sreerajp.mantrajapacounter',
       version: '6.11.0',
       buildNumber: '23',
@@ -263,9 +263,9 @@ void main() {
       loadAsset: (path) async => '''
       {
         "appName": {
-          "en": "SreerajP MantraJapa Counter",
-          "ml": "ശ്രീരാജ് പി മന്ത്രജപ കൗണ്ടർ",
-          "sa": "श्रीराज् पि मन्त्रजपगणकः"
+          "en": "Japam",
+          "ml": "ജപം",
+          "sa": "जपम्"
         },
         "description": "Dev flavor test",
         "version": "6.11.0",
@@ -285,7 +285,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('श्रीराज् पि मन्त्रजपगणकः'), findsOneWidget);
+    expect(find.text('जपम्'), findsOneWidget);
     expect(find.text('DEV'), findsOneWidget);
   });
 
@@ -293,7 +293,7 @@ void main() {
     tester,
   ) async {
     PackageInfo.setMockInitialValues(
-      appName: 'SreerajP MantraJapa Counter',
+      appName: 'Japam',
       packageName: 'com.sreerajp.mantrajapacounter',
       version: '6.11.0',
       buildNumber: '23',
@@ -305,9 +305,9 @@ void main() {
       loadAsset: (path) async => '''
       {
         "appName": {
-          "en": "SreerajP MantraJapa Counter",
-          "ml": "ശ്രീരാജ് പി മന്ത്രജപ കൗണ്ടർ",
-          "sa": "श्रीराज् पि मन्त्रजपगणकः"
+          "en": "Japam",
+          "ml": "ജപം",
+          "sa": "जपम्"
         },
         "description": "Prod flavor test",
         "version": "6.11.0",
@@ -327,7 +327,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('श्रीराज् पि मन्त्रजपगणकः'), findsOneWidget);
+    expect(find.text('जपम्'), findsOneWidget);
     expect(find.text('DEV'), findsNothing);
   });
 }

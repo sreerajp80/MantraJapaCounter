@@ -1056,7 +1056,7 @@
   "@notifDailyGoalBody": {
     "description": "Notification body fired when daily goal is reached"
   },
-  "backupShareSubject": "SreerajP MantraJapa Counter Backup",
+  "backupShareSubject": "Japam Backup",
   "@backupShareSubject": {
     "description": "Email/share subject line when sharing exported backup file"
   },
@@ -1072,7 +1072,7 @@
   "@settingsFeaturesTitle": {
     "description": "Title for the Features card in settings"
   },
-  "settingsFeaturesSub": "Explore all features of SreerajP MantraJapa Counter",
+  "settingsFeaturesSub": "Explore all features of Japam",
   "@settingsFeaturesSub": {
     "description": "Subtitle for the Features card in settings"
   },
@@ -1180,7 +1180,7 @@
   "@featuresTitle": {
     "description": "Title for Features screen"
   },
-  "featuresHeaderTitle": "SreerajP MantraJapa Counter Features",
+  "featuresHeaderTitle": "Japam Features",
   "@featuresHeaderTitle": {
     "description": "Header title on Features screen"
   },
@@ -1516,7 +1516,7 @@
   "@helpBackupImportBullet3": {
     "description": "Help backup and restore guide: Import bullet 3 text"
   },
-  "helpPrivacyIntro": "SreerajP MantraJapa Counter is private by design. Your practice stays on your phone.",
+  "helpPrivacyIntro": "Japam is private by design. Your practice stays on your phone.",
   "@helpPrivacyIntro": {
     "description": "Help privacy guide: intro text"
   },

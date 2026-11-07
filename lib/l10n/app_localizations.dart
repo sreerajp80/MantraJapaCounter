@@ -1483,7 +1483,7 @@ abstract class AppLocalizations {
   /// Email/share subject line when sharing exported backup file
   ///
   /// In en, this message translates to:
-  /// **'SreerajP MantraJapa Counter Backup'**
+  /// **'Japam Backup'**
   String get backupShareSubject;
 
   /// Title for the Appearance card in settings
@@ -1507,7 +1507,7 @@ abstract class AppLocalizations {
   /// Subtitle for the Features card in settings
   ///
   /// In en, this message translates to:
-  /// **'Explore all features of SreerajP MantraJapa Counter'**
+  /// **'Explore all features of Japam'**
   String get settingsFeaturesSub;
 
   /// Title for the Help card in settings
@@ -1669,7 +1669,7 @@ abstract class AppLocalizations {
   /// Header title on Features screen
   ///
   /// In en, this message translates to:
-  /// **'SreerajP MantraJapa Counter Features'**
+  /// **'Japam Features'**
   String get featuresHeaderTitle;
 
   /// Header subtitle on Features screen
@@ -2173,7 +2173,7 @@ abstract class AppLocalizations {
   /// Help privacy guide: intro text
   ///
   /// In en, this message translates to:
-  /// **'SreerajP MantraJapa Counter is private by design. Your practice stays on your phone.'**
+  /// **'Japam is private by design. Your practice stays on your phone.'**
   String get helpPrivacyIntro;
 
   /// Help privacy guide: Offline section title

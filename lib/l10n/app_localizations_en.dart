@@ -795,7 +795,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'You have reached your daily mantra count goal!';
 
   @override
-  String get backupShareSubject => 'SreerajP MantraJapa Counter Backup';
+  String get backupShareSubject => 'Japam Backup';
 
   @override
   String get settingsAppearanceTitle => 'Appearance';
@@ -808,8 +808,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsFeaturesTitle => 'Features';
 
   @override
-  String get settingsFeaturesSub =>
-      'Explore all features of SreerajP MantraJapa Counter';
+  String get settingsFeaturesSub => 'Explore all features of Japam';
 
   @override
   String get settingsHelpTitle => 'Help & User Guides';
@@ -901,7 +900,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featuresTitle => 'Features';
 
   @override
-  String get featuresHeaderTitle => 'SreerajP MantraJapa Counter Features';
+  String get featuresHeaderTitle => 'Japam Features';
 
   @override
   String get featuresHeaderSub =>
@@ -1192,7 +1191,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpPrivacyIntro =>
-      'SreerajP MantraJapa Counter is private by design. Your practice stays on your phone.';
+      'Japam is private by design. Your practice stays on your phone.';
 
   @override
   String get helpPrivacyOfflineSection => 'Fully offline';

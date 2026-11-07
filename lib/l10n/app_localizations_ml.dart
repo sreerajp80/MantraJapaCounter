@@ -1193,7 +1193,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpPrivacyIntro =>
-      'SreerajP MantraJapa Counter സ്വകാര്യതയ്ക്കായി രൂപകൽപ്പന ചെയ്തതാണ്. നിങ്ങളുടെ സാധന നിങ്ങളുടെ ഫോണിൽ തന്നെ.';
+      'ജപം സ്വകാര്യതയ്ക്കായി രൂപകൽപ്പന ചെയ്തതാണ്. നിങ്ങളുടെ സാധന നിങ്ങളുടെ ഫോണിൽ തന്നെ.';
 
   @override
   String get helpPrivacyOfflineSection => 'പൂർണ്ണമായി ഓഫ്‌ലൈൻ';

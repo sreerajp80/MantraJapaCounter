@@ -25,7 +25,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Features'), findsWidgets);
-    expect(find.text('SreerajP MantraJapa Counter Features'), findsOneWidget);
+    expect(find.text('Japam Features'), findsOneWidget);
     expect(find.text('Sacred Japa & Mala Counting'), findsOneWidget);
     expect(find.text('Optical Air-Gap Sync & Data Safety'), findsOneWidget);
     expect(find.text('Practice Insights & History'), findsOneWidget);

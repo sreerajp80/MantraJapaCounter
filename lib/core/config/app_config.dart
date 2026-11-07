@@ -56,7 +56,7 @@ class AppConfig {
   /// Safe built-in value used when the config file is missing or malformed,
   /// so the app never crashes on a bad config.
   static const AppConfig fallback = AppConfig(
-    appName: LocalizedText.plain('SreerajP MantraJapa Counter'),
+    appName: LocalizedText.plain('Japam'),
     description: LocalizedText.plain(
       'Offline-first application for tracking mantra recitation practice.',
     ),

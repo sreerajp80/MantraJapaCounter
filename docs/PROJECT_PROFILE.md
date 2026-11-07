@@ -1,4 +1,4 @@
-# Project Profile — SreerajP MantraJapa Counter
+# Project Profile — Japam
 
 This file records the project's declared choices — platforms, stores, languages, identity and
 About options. Every rule that depends on a platform, store or language applies only when this
@@ -46,7 +46,7 @@ Every app follows the Security Baseline (engineering standard §15.1) whatever t
 
 | Item | Value |
 |---|---|
-| App display name | `SreerajP MantraJapa Counter` (per language in `assets/config/app_config.json`; dev builds add " Dev") |
+| App display name | `Japam` (per language in `assets/config/app_config.json`; dev builds add " Dev") |
 | Short description (one line) | Offline-first application for tracking mantra recitation practice with customizable counters and session history. |
 | Organization / publisher | Sreeraj P |
 | Reverse-DNS app id | `com.sreerajp.mantrajapacounter` (dev: `com.sreerajp.mantrajapacounter.dev`) |

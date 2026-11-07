@@ -8,8 +8,8 @@ This file is read by AI agents and LLM coding assistants (Codex, Cursor, Windsur
 
 | Field | Value |
 |-------|-------|
-| App name (prod) | `SreerajP MantraJapa Counter` |
-| App name (dev) | `SreerajP MantraJapa Counter Dev` |
+| App name (prod) | `Japam` |
+| App name (dev) | `Japam Dev` |
 | Package / org id (prod) | `com.sreerajp.mantrajapacounter` |
 | Package / org id (dev) | `com.sreerajp.mantrajapacounter.dev` |
 | Platform(s) | Android (minSdk 29, targetSdk 36, compileSdk 37) |
@@ -92,8 +92,8 @@ flutter build appbundle --flavor prod --release --obfuscate "--split-debug-info=
 
 | Flavor | App ID | Display name | Signing |
 |--------|--------|--------------|---------|
-| `dev` | `com.sreerajp.mantrajapacounter.dev` | SreerajP MantraJapa Counter Dev | Debug keystore (automatic) |
-| `prod` | `com.sreerajp.mantrajapacounter` | SreerajP MantraJapa Counter | Release keystore (`android/key.properties`) |
+| `dev` | `com.sreerajp.mantrajapacounter.dev` | Japam Dev | Debug keystore (automatic) |
+| `prod` | `com.sreerajp.mantrajapacounter` | Japam | Release keystore (`android/key.properties`) |
 
 > Flutter sets `FLUTTER_APP_FLAVOR` automatically via `--flavor`. Access in Dart via `String.fromEnvironment('FLUTTER_APP_FLAVOR')`.
 

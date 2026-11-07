@@ -34,7 +34,7 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 | **Localization** | `flutter_localizations` (`intl`) supporting English (`en`) & Malayalam (`ml`) |
 | **Typography** | `EBGaramond` (variable font), `Inter` (variable font), `NotoSansMalayalam` (variable font) |
 | **Native Integration** | `MainActivity.kt` Kotlin plugin implementing native `ToneGenerator` DTMF beeps, `USAGE_ALARM` audio/vibration attributes, ringtone query via `RingtoneManager`, and `STREAM_ALARM` volume boost/auto-restore (`6000ms` window) |
-| **App Build Flavors** | `prod` (`SreerajP MantraJapa Counter`) and `dev` (`SreerajP MantraJapa Counter Dev`) with release signing enforcement in Gradle |
+| **App Build Flavors** | `prod` (`Japam`) and `dev` (`Japam Dev`) with release signing enforcement in Gradle |
 | **Ergonomics & Layout** | Locked in portrait mode (`SystemChrome.setPreferredOrientations`) for single-handed counting |
 | **Privacy & Network** | **100% Offline** — Zero internet permissions, zero network calls, zero third-party analytics |
 

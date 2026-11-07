@@ -238,7 +238,7 @@ Complete these items before every release.
 - [ ] Release APK builds successfully with all hardening flags.
 - [ ] APK installs on a clean Android 10 (API 29) device or emulator.
 - [ ] APK installs on a recent Android (API 34+) device.
-- [ ] Launcher and About screen show the prod app name from `app_config.json` in each language (English: "SreerajP MantraJapa Counter", not "... Dev").
+- [ ] Launcher and About screen show the prod app name from `app_config.json` in each language (English: "Japam", not "... Dev").
 - [ ] Version name and build number are correct in the About screen.
 - [ ] End-to-end counting flow: create counter → count → session recorded → history shows session.
 - [ ] Import/export round-trip works on the release build.

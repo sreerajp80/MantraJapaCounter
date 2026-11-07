@@ -1,8 +1,8 @@
-# Privacy Policy — SreerajP MantraJapa Counter
+# Privacy Policy — Japam – Mantra Japa Counter
 
 **Last updated:** 22 October 2026
 
-This policy covers the Android app **SreerajP MantraJapa Counter**
+This policy covers the Android app **Japam – Mantra Japa Counter**
 (package `com.sreerajp.mantrajapacounter`).
 
 ## Summary

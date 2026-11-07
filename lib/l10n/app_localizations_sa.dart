@@ -1164,7 +1164,7 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get helpPrivacyIntro =>
-      'SreerajP MantraJapa Counter गोपनीयतायै एव निर्मितम्। भवतां साधना भवतां दूरवाण्याम् एव तिष्ठति।';
+      'जपम् गोपनीयतायै एव निर्मितम्। भवतां साधना भवतां दूरवाण्याम् एव तिष्ठति।';
 
   @override
   String get helpPrivacyOfflineSection => 'पूर्णतया अन्तर्जालरहितम्';
