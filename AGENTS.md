@@ -169,6 +169,8 @@ AGENTS.md            # this file — AI agent rules
 CLAUDE.md            # Claude Code native project rules
 .github/             # CI checks only (no Dependabot)
 docs/                # design docs & architectural baseline
+  graphics/          # store artwork (feature graphic + SVG source, icon), also used by README
+  screenshots/       # app screenshots for README and the store listing
 plans/               # change implementation plans
 change_log/          # implementation log records
 assets/              # configuration assets and custom fonts

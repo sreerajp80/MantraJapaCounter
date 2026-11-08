@@ -227,7 +227,8 @@ Complete these items before every release.
 
 - [ ] Version in `pubspec.yaml` updated (`version: X.Y.Z+N`).
 - [ ] `CHANGELOG.md` updated with user-visible changes.
-- [ ] Play Store listing metadata reviewed (description, screenshots, feature graphic if changed).
+- [ ] Play Store listing metadata reviewed (description, screenshots in `docs/screenshots/`,
+      feature graphic and icon in `docs/graphics/` if changed).
 - [ ] Privacy policy URL in Play Console opens without login, and
       [PRIVACY_POLICY.md](../PRIVACY_POLICY.md) matches the current permissions and features.
 - [ ] Tablets and Chromebooks are excluded in Play Console → Device catalog (the app is portrait-only, phone-only).

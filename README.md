@@ -1,5 +1,7 @@
 # Japam
 
+<img src="docs/graphics/play_feature_1024x500.png" alt="Japam — a calm digital japa mala" />
+
 An offline Android app for counting mantra japa. It tracks your chant count, works out
 completed malas (1 mala = 108 chants), keeps a practice history, and can move your data to
 another phone using an on-screen QR stream — all without ever touching the network.

@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="500" viewBox="0 0 1024 500">
+  <!-- Japam - Google Play feature graphic. Edit this file, then export a 1024x500 PNG.
+       Fonts: EB Garamond and Inter (SIL OFL 1.1), subset and embedded. -->
+  <defs>
+    <style>
+      @font-face { font-family: "JapamSerif"; src: url(data:font/ttf;base64,AAEAAAAQAQAABAAAR0RFRgARAAUAAAlIAAAAFkdQT1MGDO2wAAAJYAAAAJ5HU1VCI34kjAAACgAAAAAwT1MvMldjXagAAAGIAAAAYFNUQVTleMwcAAAKMAAAAERjbWFwAU8BVwAAAhAAAABcZ2FzcAAAABAAAAlAAAAACGdseWbEKKzoAAACjAAABhBoZWFkHv/AdQAAAQwAAAA2aGhlYQavBeIAAAFEAAAAJGhtdHgUhQFHAAAB6AAAAChsb2NhCVoH4AAAAnQAAAAWbWF4cAASANkAAAFoAAAAIG5hbWUK/hsMAAAInAAAAIJwb3N0/58AMgAACSAAAAAgcHJlcGgGjIUAAAJsAAAABwABAAAAAQCD4BqIC18PPPUAAwPoAAAAANYWcrsAAAAA5xUK1P+y/vIDCwKOAAAABgACAAAAAAAAAAEAAAPv/tYAAAMd/7L//QMLA+gAAAAAAAAAAAAAAAAAAAAKAAEAAAAKAIsAAwBMAAMAAQAAAAAAAAAAAAAAAAABAAEABAIpAlgABQAAAooCWAAAAEsCigJYAAABXgAyAPgAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAUGZFZADAADAAcAPv/tYAAAQXAYYAAAABAAAAAAGdAooAAAAgABQB/QAkAWj/sgGpACADHQAWAhwAEQIBACACAQBhAgEAPgIuADICDAA5AAAAAgAAAAMAAAAUAAMAAQAAABQABABIAAAADgAIAAIABgAxADgASgBhAG0AcP//AAAAMAA4AEoAYQBtAHD////V/8//t/+h/5b/lAABAAAAAAAAAAAAAAAAAAC4Af+FsASNAAAAABUAWgDOAYUCCQIRAloCYgKaAwgAAAACACQAAQHZAgQAAwAHAAB3ESERJSERISQBtf6bARX+6wECA/39VgFXAAAB/7L/OAFWAo4ALwAAVyI1NDYzMhYXFhYzMjY1ETQmJyY1NDYzMhYWMzI2NjMyFhUUBgcGBhURFAYGBwYGMX8hDgwWChEUDCAgHCYaDgkZLSwVFCgsGAoMDQ0nFhclFBtAyDcTIwsNFBdQUgIjIRwIBRAGBwICAgIHBwgJAwobIf4jIEVBGiMuAAACACD/8gGsAaoAPgBRAABXIiYmNTQ2Nzc2NjU3NiYjIgYHBgYVFBYVFAYGIyImNTQ2Nz4CMzIWBwcGFjMyNzYzMhYVFAcGBiMiJyMGBjcyNjc2Njc3NiYjIgYHBgYVFBZ9GCsaKChdFAkCARkZDRwIBAMBHiYNBwgVFxk8ORUwOgEFARMOFQ0EAwUHEBIpFDUhAyE3GA4UBwQFAQIBBgQCCAUlIBoOGioWIisRKAgOEzscIgoIBA0GBQ8GBhIOCgcQIRMVIRQ/M9YWHgwEBwULEBITNx0aPAkIBQ4NQAoHAQMPIhsbFwAAAQAW//0DCwG6AIoAAFciJjU0Njc2NjU1NCYnJiY1NDc+Ajc2NjMyFRQGFRQXMzY2MzIWFzM2NjMyFhYVFRQWFxYWFRQGIyImJiMiBgYjIiY1NDY3NjY1NTQmJiMiBgcGFRUUFhcWFhUUBiMiJiYjIgYGIyImNTQ2NzY2NTU0JiYjIgYHBhUVFBYXFhYVFAYjIiYmIyIGBioHDQ4JDhoMFgQGCRovKxIDBgMIBQICHEkyIDMOBB5OLyAwHBgPCQ0KCRQfHBIRGxwUCAoMCQ4SEB0SESMQExUPCA0LBxQdGhIRGx0UBwsNCA4TEB0SESISEREPCA0KCBQcGhIRHR8DBgcICAMFDRTgFyMDAQcJDAMGEBQKAgQKCCcOCgIbKCcjIiglQCnaFAwFAwgIBgcDAgIDBwYICAMEDRHOGSYXCw0QJNUUDQQDCAgGBwMCAgMHBggIAwQNEc4ZJhcLDQ0l1xIOBQMICAYHAwICAwAAAgAR/vICAgGyAEgAXwAAUyImNTQ2NzY2NRE0JiYnJiY1NDY3NjY3NjYzMhYVFAYVFBc+AjMyFhYVFA4CIyImJiciBgYVFRQWFhcWFhUUBiMiJiMiBgYTMj4CNTQuAiMiBgYVFBQGBhUUFhYlBg4OCRMVChMPBQUFBCRIGwMGAwUDBQIKM0MfNUsoI0BTMAwhIQwBAgEQGA8KDAwGHjkaER4g5gwkIxcYJCUOFCocAQEaLP7yBgcICAMGDxEB6QobFwICBwgHBwEIGQwBBQcFCCUNCgEKIRo5WTAuV0YqBwsHCw4ErQ0RCgQDCAgGBwUCAwEnESZCMDdDIgsRFwgOLTMqCR07JwD//wAg//IB6QJ3BAYACO4AAAEAYf/9AcMCfAAxAABXIiY1NDc+AjURNCYmJyYmNTQ2NzY2NzY2MzIWFQYGFREUFhYXFhYVFCMiJiYjIgYGcgcKESArFhkmFgkREQw2VisBBQMGCwEEFywhCAoPGDo4Fxg4OQMIBg0FCA8aGAFxFxcKAwEJCwoLAQYaHQEBBQUNIhn+OBYYDwkCCAcNAgICAwD//wA+//MB3gJ1BAYACQUAAAIAMv/yAfsCdwATACUAAEUiLgI1ND4CMzIeAhUUDgInMjY2NTQuAiMiBgYVFB4CARE5VDcbGzhaPTlUNxsaOVgvIyoTDh8sHSIpEw8dKw44XXA3OXRhOzhdbzY5dGI8J019SDVpVDNNfEg1aVYyAAADADn/8wHZAnUAJwA6AEsAAFciJiY1NDY2NzYmJy4CNTQ2NjMyFhYVFAYHBgYHBhQXHgIVFAYGJzI2NTQmJicmJiMiBwYGFRQWFhM2NjU0JiMiBgYVFBYWFxYW/DRaNS5AHAgECB41ITxdMixRMiUVCxcNDgklOyI+ZConMiIyGQUIBAMKGRYYK0IWECQnFSUYGy4cBQkNJ0cuKDcmEAUGBRgzPSgrQiQiPiomMA0HDgkJCQYYMTklOFIuJjknHDUuEgUFBxY0KiA7JQFcFUAmJzoWJRggKyYWBAIAAAAFAEIAAwABBAkAAgAOAAAAAwABBAkBAAAMAA4AAwABBAkBBQAQABoAAwABBAkBCwAMACoAAwABBAkBDAAKADYAUgBlAGcAdQBsAGEAcgBXAGUAaQBnAGgAdABTAGUAbQBpAEIAbwBsAGQASQB0AGEAbABpAGMAUgBvAG0AYQBuAAAAAwAAAAAAAP+cADIAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAH//wAPAAEAAAAMAAAAAAAAAAIAAQABAAQAAQAAAAEAAAAKADAAPgAEREZMVAAaY3lybAAaZ3JlawAabGF0bgAaAAQAAAAA//8AAQAAAAFrZXJuAAgAAAABAAAAAQAEAAIACAABAAgAAgAwAAQAAAA6AEYABAAEAAAAAP/3/+oAAAAAAAAAAAAAAAAAAAAAAAD/+//1AAAAAgABAAEABAAAAAEAAQADAAMAAQACAAEAAQAEAAMAAgABAAEAAAABAAAACgAsAC4AA0RGTFQAFGN5cmwAHmxhdG4AHgAEAAAAAP//AAAAAAAAAAAAAAABAAEACAACAAAAFAACAAAAJAACd2dodAEAAABpdGFsAQsAAQAEABAAAQAAAAABBQJYAAAAAwABAAIBDAAAAAAAAQAA) format("truetype"); }
+      @font-face { font-family: "JapamSans"; src: url(data:font/ttf;base64,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) format("truetype"); }
+      .serif { font-family: "JapamSerif", "EB Garamond", serif; font-weight: 600; }
+      .sans { font-family: "JapamSans", "Inter", sans-serif; font-weight: 400; }
+    </style>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1e3a8a"/>
+      <stop offset="0.55" stop-color="#146476"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="270" cy="253" r="260" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffe7c2" stop-opacity="0.30"/>
+      <stop offset="0.6" stop-color="#ffe7c2" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#ffe7c2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1024" height="500" fill="url(#bg)"/>
+  <rect width="1024" height="500" fill="url(#glow)"/>
+
+  <!-- Bead ring: 108 beads -->
+  <g>
+    <circle cx="265.29" cy="414.93" r="5.7" fill="#ff9933"/>
+    <circle cx="255.88" cy="414.38" r="5.7" fill="#e67e00"/>
+    <circle cx="246.52" cy="413.29" r="5.7" fill="#ff9933"/>
+    <circle cx="237.24" cy="411.65" r="5.7" fill="#e67e00"/>
+    <circle cx="228.07" cy="409.48" r="5.7" fill="#ff9933"/>
+    <circle cx="219.04" cy="406.78" r="5.7" fill="#e67e00"/>
+    <circle cx="210.19" cy="403.55" r="5.7" fill="#ff9933"/>
+    <circle cx="201.54" cy="399.82" r="5.7" fill="#e67e00"/>
+    <circle cx="193.11" cy="395.59" r="5.7" fill="#ff9933"/>
+    <circle cx="184.95" cy="390.88" r="5.7" fill="#e67e00"/>
+    <circle cx="177.08" cy="385.70" r="5.7" fill="#ff9933"/>
+    <circle cx="169.52" cy="380.08" r="5.7" fill="#e67e00"/>
+    <circle cx="162.30" cy="374.02" r="5.7" fill="#ff9933"/>
+    <circle cx="155.45" cy="367.55" r="5.7" fill="#e67e00"/>
+    <circle cx="148.98" cy="360.70" r="5.7" fill="#ff9933"/>
+    <circle cx="142.92" cy="353.48" r="5.7" fill="#e67e00"/>
+    <circle cx="137.30" cy="345.92" r="5.7" fill="#ff9933"/>
+    <circle cx="132.12" cy="338.05" r="5.7" fill="#e67e00"/>
+    <circle cx="127.41" cy="329.89" r="5.7" fill="#ff9933"/>
+    <circle cx="123.18" cy="321.46" r="5.7" fill="#e67e00"/>
+    <circle cx="119.45" cy="312.81" r="5.7" fill="#ff9933"/>
+    <circle cx="116.22" cy="303.96" r="5.7" fill="#e67e00"/>
+    <circle cx="113.52" cy="294.93" r="5.7" fill="#ff9933"/>
+    <circle cx="111.35" cy="285.76" r="5.7" fill="#e67e00"/>
+    <circle cx="109.71" cy="276.48" r="5.7" fill="#ff9933"/>
+    <circle cx="108.62" cy="267.12" r="5.7" fill="#e67e00"/>
+    <circle cx="108.07" cy="257.71" r="5.7" fill="#ff9933"/>
+    <circle cx="108.07" cy="248.29" r="5.7" fill="#e67e00"/>
+    <circle cx="108.62" cy="238.88" r="5.7" fill="#ff9933"/>
+    <circle cx="109.71" cy="229.52" r="5.7" fill="#e67e00"/>
+    <circle cx="111.35" cy="220.24" r="5.7" fill="#ff9933"/>
+    <circle cx="113.52" cy="211.07" r="5.7" fill="#e67e00"/>
+    <circle cx="116.22" cy="202.04" r="5.7" fill="#ff9933"/>
+    <circle cx="119.45" cy="193.19" r="5.7" fill="#e67e00"/>
+    <circle cx="123.18" cy="184.54" r="5.7" fill="#ff9933"/>
+    <circle cx="127.41" cy="176.11" r="5.7" fill="#e67e00"/>
+    <circle cx="132.12" cy="167.95" r="5.7" fill="#ff9933"/>
+    <circle cx="137.30" cy="160.08" r="5.7" fill="#e67e00"/>
+    <circle cx="142.92" cy="152.52" r="5.7" fill="#ff9933"/>
+    <circle cx="148.98" cy="145.30" r="5.7" fill="#e67e00"/>
+    <circle cx="155.45" cy="138.45" r="5.7" fill="#ff9933"/>
+    <circle cx="162.30" cy="131.98" r="5.7" fill="#e67e00"/>
+    <circle cx="169.52" cy="125.92" r="5.7" fill="#ff9933"/>
+    <circle cx="177.08" cy="120.30" r="5.7" fill="#e67e00"/>
+    <circle cx="184.95" cy="115.12" r="5.7" fill="#ff9933"/>
+    <circle cx="193.11" cy="110.41" r="5.7" fill="#e67e00"/>
+    <circle cx="201.54" cy="106.18" r="5.7" fill="#ff9933"/>
+    <circle cx="210.19" cy="102.45" r="5.7" fill="#e67e00"/>
+    <circle cx="219.04" cy="99.22" r="5.7" fill="#ff9933"/>
+    <circle cx="228.07" cy="96.52" r="5.7" fill="#e67e00"/>
+    <circle cx="237.24" cy="94.35" r="5.7" fill="#ff9933"/>
+    <circle cx="246.52" cy="92.71" r="5.7" fill="#e67e00"/>
+    <circle cx="255.88" cy="91.62" r="5.7" fill="#ff9933"/>
+    <circle cx="265.29" cy="91.07" r="5.7" fill="#e67e00"/>
+    <circle cx="274.71" cy="91.07" r="5.7" fill="#ff9933"/>
+    <circle cx="284.12" cy="91.62" r="5.7" fill="#e67e00"/>
+    <circle cx="293.48" cy="92.71" r="5.7" fill="#ff9933"/>
+    <circle cx="302.76" cy="94.35" r="5.7" fill="#e67e00"/>
+    <circle cx="311.93" cy="96.52" r="5.7" fill="#ff9933"/>
+    <circle cx="320.96" cy="99.22" r="5.7" fill="#e67e00"/>
+    <circle cx="329.81" cy="102.45" r="5.7" fill="#ff9933"/>
+    <circle cx="338.46" cy="106.18" r="5.7" fill="#e67e00"/>
+    <circle cx="346.89" cy="110.41" r="5.7" fill="#ff9933"/>
+    <circle cx="355.05" cy="115.12" r="5.7" fill="#e67e00"/>
+    <circle cx="362.92" cy="120.30" r="5.7" fill="#ff9933"/>
+    <circle cx="370.48" cy="125.92" r="5.7" fill="#e67e00"/>
+    <circle cx="377.70" cy="131.98" r="5.7" fill="#ff9933"/>
+    <circle cx="384.55" cy="138.45" r="5.7" fill="#e67e00"/>
+    <circle cx="391.02" cy="145.30" r="5.7" fill="#ff9933"/>
+    <circle cx="397.08" cy="152.52" r="5.7" fill="#e67e00"/>
+    <circle cx="402.70" cy="160.08" r="5.7" fill="#ff9933"/>
+    <circle cx="407.88" cy="167.95" r="5.7" fill="#e67e00"/>
+    <circle cx="412.59" cy="176.11" r="5.7" fill="#ff9933"/>
+    <circle cx="416.82" cy="184.54" r="5.7" fill="#e67e00"/>
+    <circle cx="420.55" cy="193.19" r="5.7" fill="#ff9933"/>
+    <circle cx="423.78" cy="202.04" r="5.7" fill="#e67e00"/>
+    <circle cx="426.48" cy="211.07" r="5.7" fill="#ff9933"/>
+    <circle cx="428.65" cy="220.24" r="5.7" fill="#e67e00"/>
+    <circle cx="430.29" cy="229.52" r="5.7" fill="#ff9933"/>
+    <circle cx="431.38" cy="238.88" r="5.7" fill="#e67e00"/>
+    <circle cx="431.93" cy="248.29" r="5.7" fill="#ff9933"/>
+    <circle cx="431.93" cy="257.71" r="5.7" fill="#e67e00"/>
+    <circle cx="431.38" cy="267.12" r="5.7" fill="#ff9933"/>
+    <circle cx="430.29" cy="276.48" r="5.7" fill="#e67e00"/>
+    <circle cx="428.65" cy="285.76" r="5.7" fill="#ff9933"/>
+    <circle cx="426.48" cy="294.93" r="5.7" fill="#e67e00"/>
+    <circle cx="423.78" cy="303.96" r="5.7" fill="#ff9933"/>
+    <circle cx="420.55" cy="312.81" r="5.7" fill="#e67e00"/>
+    <circle cx="416.82" cy="321.46" r="5.7" fill="#ff9933"/>
+    <circle cx="412.59" cy="329.89" r="5.7" fill="#e67e00"/>
+    <circle cx="407.88" cy="338.05" r="5.7" fill="#ff9933"/>
+    <circle cx="402.70" cy="345.92" r="5.7" fill="#e67e00"/>
+    <circle cx="397.08" cy="353.48" r="5.7" fill="#ff9933"/>
+    <circle cx="391.02" cy="360.70" r="5.7" fill="#e67e00"/>
+    <circle cx="384.55" cy="367.55" r="5.7" fill="#ff9933"/>
+    <circle cx="377.70" cy="374.02" r="5.7" fill="#e67e00"/>
+    <circle cx="370.48" cy="380.08" r="5.7" fill="#ff9933"/>
+    <circle cx="362.92" cy="385.70" r="5.7" fill="#e67e00"/>
+    <circle cx="355.05" cy="390.88" r="5.7" fill="#ff9933"/>
+    <circle cx="346.89" cy="395.59" r="5.7" fill="#e67e00"/>
+    <circle cx="338.46" cy="399.82" r="5.7" fill="#ff9933"/>
+    <circle cx="329.81" cy="403.55" r="5.7" fill="#e67e00"/>
+    <circle cx="320.96" cy="406.78" r="5.7" fill="#ff9933"/>
+    <circle cx="311.93" cy="409.48" r="5.7" fill="#e67e00"/>
+    <circle cx="302.76" cy="411.65" r="5.7" fill="#ff9933"/>
+    <circle cx="293.48" cy="413.29" r="5.7" fill="#e67e00"/>
+    <circle cx="284.12" cy="414.38" r="5.7" fill="#ff9933"/>
+    <circle cx="274.71" cy="414.93" r="5.7" fill="#e67e00"/>
+  </g>
+
+  <!-- Marker (guru) bead -->
+  <line x1="270" y1="420.7" x2="270" y2="428" stroke="#fffef7" stroke-width="2"/>
+  <circle cx="270" cy="429" r="10" fill="#e67e00" stroke="#fffef7" stroke-width="1.5"/>
+
+  <!-- Centre disc -->
+  <circle cx="270" cy="250" r="78" fill="#fffef7"/>
+  <text x="270" y="263" class="serif" font-size="68" fill="#1e3a8a" text-anchor="middle">108</text>
+  <text x="270" y="292" class="sans" font-size="17" fill="#0f766e" text-anchor="middle" letter-spacing="1">MALA</text>
+
+  <!-- Title -->
+  <text x="486" y="192" class="serif" font-size="132" fill="#ffb866">Japam</text>
+
+  <!-- Tagline -->
+  <text x="490" y="274" class="sans" font-size="26" fill="#ffffff">A calm digital japa mala</text>
+  <text x="490" y="310" class="sans" font-size="26" fill="#ffffff">for your daily mantra practice</text>
+
+  <!-- Pills -->
+  <rect x="490.0" y="338" width="96.1" height="40" rx="20.0" fill="none" stroke="#ffdfa3" stroke-width="2"/><text x="538.0" y="364.8" class="sans" font-size="19" fill="#ffffff" text-anchor="middle">Offline</text><rect x="598.1" y="338" width="99.4" height="40" rx="20.0" fill="none" stroke="#ffdfa3" stroke-width="2"/><text x="647.8" y="364.8" class="sans" font-size="19" fill="#ffffff" text-anchor="middle">No ads</text><rect x="709.5" y="338" width="98.5" height="40" rx="20.0" fill="none" stroke="#ffdfa3" stroke-width="2"/><text x="758.7" y="364.8" class="sans" font-size="19" fill="#ffffff" text-anchor="middle">Private</text>
+</svg>
