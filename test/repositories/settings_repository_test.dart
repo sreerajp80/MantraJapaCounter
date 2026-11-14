@@ -4,6 +4,7 @@ import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/models/active_session.dart';
 import 'package:mantra_japa_counter/models/mala_sound.dart';
+import 'package:mantra_japa_counter/models/meru_pause_mode.dart';
 import 'package:mantra_japa_counter/providers/settings_provider.dart';
 
 void main() {
@@ -279,6 +280,52 @@ void main() {
       expect(notifier.state.meruPauseSeconds, 3);
       expect(notifier.state.pacingHintEnabled, isFalse);
       expect(repo.meruPauseSeconds, 3);
+    });
+
+    test('pause by taps: defaults to time mode and 2 taps', () {
+      expect(repo.meruPauseMode, MeruPauseMode.time);
+      expect(repo.meruPauseTaps, AppConstants.meruPauseDefaultTaps);
+      expect(AppConstants.meruPauseDefaultTaps, 2);
+    });
+
+    test(
+      'pause by taps: saves and reads mode and any tap count 1-19',
+      () async {
+        await repo.setMeruPauseMode(MeruPauseMode.taps);
+        expect(repo.meruPauseMode, MeruPauseMode.taps);
+        for (final taps in [1, 7, 19]) {
+          await repo.setMeruPauseTaps(taps);
+          expect(repo.meruPauseTaps, taps);
+        }
+      },
+    );
+
+    test('pause by taps: out-of-range saved values fall back to 2', () async {
+      for (final bad in [0, -3, 20, 500]) {
+        await prefs.setInt(AppConstants.prefsMeruPauseTapsKey, bad);
+        expect(repo.meruPauseTaps, 2, reason: 'saved $bad');
+      }
+      await prefs.setString(AppConstants.prefsMeruPauseModeKey, 'unknown');
+      expect(repo.meruPauseMode, MeruPauseMode.time);
+    });
+
+    test('pause by taps: setter keeps the value inside 1-19', () async {
+      await repo.setMeruPauseTaps(25);
+      expect(repo.meruPauseTaps, AppConstants.meruPauseMaxTaps);
+      await repo.setMeruPauseTaps(0);
+      expect(repo.meruPauseTaps, AppConstants.meruPauseMinTaps);
+    });
+
+    test('SettingsNotifier exposes and updates the tap settings', () async {
+      final notifier = SettingsNotifier(repo);
+      expect(notifier.state.meruPauseMode, MeruPauseMode.time);
+      expect(notifier.state.meruPauseTaps, 2);
+
+      await notifier.setMeruPauseMode(MeruPauseMode.taps);
+      await notifier.setMeruPauseTaps(12);
+      expect(notifier.state.meruPauseMode, MeruPauseMode.taps);
+      expect(notifier.state.meruPauseTaps, 12);
+      expect(repo.meruPauseTaps, 12);
     });
   });
 

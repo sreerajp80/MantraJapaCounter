@@ -295,6 +295,14 @@ Migration history:
     lifetime count against the lifetime goal, else an empty ring.
 - With no mala count there is no mala sound / vibration, no Meru pause, no mala text, and no
   unfinished mala: leaving the counting screen always finishes the session.
+- **Meru pause mode** (`MeruPauseMode` in `models/`, saved as `meru_pause_mode`, default `time`):
+  - `time`: `CountingNotifier` starts a timer of `meruPauseSeconds` (3 / 5 / 10) that calls
+    `endMeruPause()`.
+  - `taps`: no timer. `CountingState.meruPauseTapsLeft` starts at `meruPauseTaps` (any value
+    1–19, default 2, saved as `meru_pause_taps`; out-of-range values fall back to 2). Each tap
+    in the pause is not counted and lowers it by one; the last pause tap ends the pause, so the
+    next tap counts. The settings screen sets the number with a − / + stepper.
+  - In both modes undo and leaving the screen end the pause at once.
 - **Tap vibration** (Settings → Sound & Haptics → *Vibrate on each tap*, saved as
   `tapVibrationEnabled`, off by default): `CountingNotifier.tap()` calls
   `HapticFeedbackService.tapPulse()` (a light system haptic) only for a counted tap, not during

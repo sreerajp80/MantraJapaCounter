@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/models/meru_pause_mode.dart';
 import 'package:mantra_japa_counter/providers/counting_provider.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/settings_provider.dart';
@@ -256,6 +257,13 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
                                         key: ValueKey(session.tapCount),
                                         diameter: mala * 0.78,
                                         seconds: countingState.meruPauseSeconds,
+                                        byTaps:
+                                            countingState.meruPauseMode ==
+                                            MeruPauseMode.taps,
+                                        tapsTotal:
+                                            countingState.meruPauseTapsTotal,
+                                        tapsLeft:
+                                            countingState.meruPauseTapsLeft,
                                         isDimmed: isDimmed,
                                       ),
                                   ],
@@ -964,18 +972,48 @@ final _counterProvider = FutureProvider.autoDispose.family((
 });
 
 /// Soft overlay shown inside the mala during the Meru pause: a lotus, a
-/// short line, and a ring that runs down over the pause time.
+/// short line, and a ring. In a pause by time the ring runs down over the
+/// pause time; in a pause by taps it steps down with each pause tap, and a
+/// line shows how many pause taps are left.
 class _MeruPauseOverlay extends StatelessWidget {
   final double diameter;
   final int seconds;
+  final bool byTaps;
+  final int tapsTotal;
+  final int tapsLeft;
   final bool isDimmed;
 
   const _MeruPauseOverlay({
     super.key,
     required this.diameter,
     required this.seconds,
+    required this.byTaps,
+    required this.tapsTotal,
+    required this.tapsLeft,
     required this.isDimmed,
   });
+
+  Widget _ring(Color accent) {
+    Widget indicator(double value) => CircularProgressIndicator(
+      value: value,
+      strokeWidth: 2,
+      color: accent.withValues(alpha: 0.6),
+      backgroundColor: Colors.transparent,
+    );
+    if (byTaps) {
+      final fraction = tapsTotal > 0 ? tapsLeft / tapsTotal : 0.0;
+      return TweenAnimationBuilder<double>(
+        tween: Tween(begin: 1, end: fraction),
+        duration: const Duration(milliseconds: 300),
+        builder: (context, value, _) => indicator(value),
+      );
+    }
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 1, end: 0),
+      duration: Duration(seconds: seconds),
+      builder: (context, value, _) => indicator(value),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -997,16 +1035,7 @@ class _MeruPauseOverlay extends StatelessWidget {
             SizedBox(
               width: diameter - 12,
               height: diameter - 12,
-              child: TweenAnimationBuilder<double>(
-                tween: Tween(begin: 1, end: 0),
-                duration: Duration(seconds: seconds),
-                builder: (context, value, _) => CircularProgressIndicator(
-                  value: value,
-                  strokeWidth: 2,
-                  color: accent.withValues(alpha: 0.6),
-                  backgroundColor: Colors.transparent,
-                ),
-              ),
+              child: _ring(accent),
             ),
             Padding(
               padding: EdgeInsets.all(diameter * 0.14),
@@ -1030,6 +1059,14 @@ class _MeruPauseOverlay extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
+                  if (byTaps) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      l.meruPauseTapsLeft(tapsLeft),
+                      textAlign: TextAlign.center,
+                      style: AppTheme.serif(fontSize: 14, color: accent),
+                    ),
+                  ],
                 ],
               ),
             ),

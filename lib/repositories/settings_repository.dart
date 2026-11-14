@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/models/active_session.dart';
 import 'package:mantra_japa_counter/models/mala_sound.dart';
+import 'package:mantra_japa_counter/models/meru_pause_mode.dart';
 
 /// All SharedPreferences access: user settings and active-session crash recovery.
 ///
@@ -236,6 +237,35 @@ class SettingsRepository {
 
   Future<void> setMeruPauseSeconds(int value) async {
     await _prefs.setInt(AppConstants.prefsMeruPauseSecondsKey, value);
+  }
+
+  /// Whether the Meru pause ends by time or by taps. Defaults to time.
+  MeruPauseMode get meruPauseMode => MeruPauseMode.fromId(
+    _prefs.getString(AppConstants.prefsMeruPauseModeKey),
+  );
+
+  Future<void> setMeruPauseMode(MeruPauseMode mode) async {
+    await _prefs.setString(AppConstants.prefsMeruPauseModeKey, mode.id);
+  }
+
+  /// Number of uncounted taps in a Meru pause by taps. Saved values outside
+  /// the allowed range fall back to the default.
+  int get meruPauseTaps {
+    final saved = _prefs.getInt(AppConstants.prefsMeruPauseTapsKey);
+    if (saved == null ||
+        saved < AppConstants.meruPauseMinTaps ||
+        saved > AppConstants.meruPauseMaxTaps) {
+      return AppConstants.meruPauseDefaultTaps;
+    }
+    return saved;
+  }
+
+  /// Saves the tap count, kept inside the allowed range.
+  Future<void> setMeruPauseTaps(int value) async {
+    await _prefs.setInt(
+      AppConstants.prefsMeruPauseTapsKey,
+      value.clamp(AppConstants.meruPauseMinTaps, AppConstants.meruPauseMaxTaps),
+    );
   }
 
   bool get pacingHintEnabled =>

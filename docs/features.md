@@ -85,7 +85,11 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 - **Touch Gesture Controls**:
   - **Tap to Count**: Single-finger tap anywhere inside the bead circle increments the count by the counter's step. Taps outside the circle are ignored to prevent accidental counts.
   - **Two-Finger Undo Swipe**: Place two fingers on the medallion and swipe horizontally (left or right) to decrement the count by 1 step. Triggers medium haptic feedback to confirm undo.
-- **Meru Pause (optional)**: When turned on in Settings → Display, the app pauses for 3, 5 or 10 seconds (default 5) after each mala of 108. A soft lotus overlay with "Pause · Breathe" and a countdown ring appears inside the mala. Taps during the pause are not counted, as the Meru bead is never crossed. The pause ends by itself, or with the undo swipe. Off by default.
+- **Meru Pause (optional)**: When turned on in Settings → Display, the app pauses after each mala. Choose **Time** or **Taps**:
+  - **Time**: the pause lasts 3, 5 or 10 seconds (default 5). A countdown ring runs down, and the pause ends by itself.
+  - **Taps**: the pause lasts for a number of taps you set with a − / + stepper (any number from 1 to 19, default 2). Those taps are not counted; the ring steps down and a line shows "N taps left". After the last pause tap, the next tap counts again.
+
+  A soft lotus overlay with "Pause · Breathe" appears inside the mala. Taps during the pause are not counted, as the Meru bead is never crossed. The undo swipe also ends the pause. Off by default; the mode starts as Time.
 - **Gentle Pacing Hint**: If taps come faster than about 3 per second (over the last 5 taps), the mala glows a warm amber and a short line appears: "Slow down, breathe, feel the mantra." Every tap still counts; there is no sound or vibration. On by default; can be turned off in Settings → Display.
 - **Live Session Timer**:
   - Live duration clock pill (`HH:MM:SS` or `MM:SS`) tracking elapsed active session time.

@@ -4,6 +4,7 @@ import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
+import 'package:mantra_japa_counter/models/meru_pause_mode.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/settings_provider.dart';
 import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
@@ -155,25 +156,52 @@ class DisplaySettingsScreen extends ConsumerWidget {
                       if (settings.meruPauseEnabled)
                         Padding(
                           padding: const EdgeInsets.fromLTRB(56, 0, 14, 12),
-                          child: Wrap(
-                            spacing: 8,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              for (final secs
-                                  in AppConstants.meruPauseChoicesSeconds)
-                                ChoiceChip(
-                                  label: Text(l.secondsShort(secs)),
-                                  selected: settings.meruPauseSeconds == secs,
-                                  selectedColor: TempleColors.vermillion,
-                                  labelStyle: TextStyle(
-                                    color: settings.meruPauseSeconds == secs
-                                        ? Colors.white
-                                        : TempleColors.ink,
+                              Wrap(
+                                spacing: 8,
+                                children: [
+                                  _choiceChip(
+                                    label: l.meruPauseModeTime,
+                                    selected:
+                                        settings.meruPauseMode ==
+                                        MeruPauseMode.time,
+                                    onSelected: () => notifier.setMeruPauseMode(
+                                      MeruPauseMode.time,
+                                    ),
                                   ),
-                                  onSelected: (selected) {
-                                    if (selected) {
-                                      notifier.setMeruPauseSeconds(secs);
-                                    }
-                                  },
+                                  _choiceChip(
+                                    label: l.meruPauseModeTaps,
+                                    selected:
+                                        settings.meruPauseMode ==
+                                        MeruPauseMode.taps,
+                                    onSelected: () => notifier.setMeruPauseMode(
+                                      MeruPauseMode.taps,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              if (settings.meruPauseMode == MeruPauseMode.time)
+                                Wrap(
+                                  spacing: 8,
+                                  children: [
+                                    for (final secs
+                                        in AppConstants.meruPauseChoicesSeconds)
+                                      _choiceChip(
+                                        label: l.secondsShort(secs),
+                                        selected:
+                                            settings.meruPauseSeconds == secs,
+                                        onSelected: () =>
+                                            notifier.setMeruPauseSeconds(secs),
+                                      ),
+                                  ],
+                                )
+                              else
+                                _MeruTapStepper(
+                                  taps: settings.meruPauseTaps,
+                                  onChanged: notifier.setMeruPauseTaps,
                                 ),
                             ],
                           ),
@@ -266,6 +294,64 @@ class DisplaySettingsScreen extends ConsumerWidget {
           const TempleLotusIcon(size: 22),
         ],
       ),
+    );
+  }
+
+  /// A chip in the Meru pause rows, styled like the other temple chips.
+  Widget _choiceChip({
+    required String label,
+    required bool selected,
+    required VoidCallback onSelected,
+  }) {
+    return ChoiceChip(
+      label: Text(label),
+      selected: selected,
+      selectedColor: TempleColors.vermillion,
+      labelStyle: TextStyle(color: selected ? Colors.white : TempleColors.ink),
+      onSelected: (value) {
+        if (value) onSelected();
+      },
+    );
+  }
+}
+
+/// `[ − ]  2 taps  [ + ]` setting for the Meru pause by taps. The buttons
+/// stop at the allowed range, so a wrong value can never be set.
+class _MeruTapStepper extends StatelessWidget {
+  final int taps;
+  final ValueChanged<int> onChanged;
+
+  const _MeruTapStepper({required this.taps, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final canDecrease = taps > AppConstants.meruPauseMinTaps;
+    final canIncrease = taps < AppConstants.meruPauseMaxTaps;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          tooltip: l.meruPauseTapsDecreaseA11y,
+          onPressed: canDecrease ? () => onChanged(taps - 1) : null,
+          icon: const Icon(Icons.remove_circle_outline),
+          color: TempleColors.vermillion,
+        ),
+        SizedBox(
+          width: 80,
+          child: Text(
+            l.tapsShort(taps),
+            textAlign: TextAlign.center,
+            style: AppTheme.serif(fontSize: 16),
+          ),
+        ),
+        IconButton(
+          tooltip: l.meruPauseTapsIncreaseA11y,
+          onPressed: canIncrease ? () => onChanged(taps + 1) : null,
+          icon: const Icon(Icons.add_circle_outline),
+          color: TempleColors.vermillion,
+        ),
+      ],
     );
   }
 }

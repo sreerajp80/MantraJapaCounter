@@ -15,6 +15,12 @@ class AppConstants {
   static const List<int> meruPauseChoicesSeconds = [3, 5, 10];
   static const int meruPauseDefaultSeconds = 5;
 
+  // Meru pause by taps: the number of uncounted taps after each mala.
+  // The user sets any number in this range in Settings.
+  static const int meruPauseMinTaps = 1;
+  static const int meruPauseMaxTaps = 19;
+  static const int meruPauseDefaultTaps = 2;
+
   // Pacing hint: taps faster than this rate (averaged over the last
   // [pacingWindowTaps] taps) count as rushing. The hint clears
   // [pacingHintHoldMs] after the last fast tap.
@@ -79,6 +85,8 @@ class AppConstants {
   static const String prefsDimmedChantingKey = 'dimmed_chanting_mode';
   static const String prefsMeruPauseKey = 'meru_pause_enabled';
   static const String prefsMeruPauseSecondsKey = 'meru_pause_seconds';
+  static const String prefsMeruPauseModeKey = 'meru_pause_mode';
+  static const String prefsMeruPauseTapsKey = 'meru_pause_taps';
   static const String prefsPacingHintKey = 'pacing_hint_enabled';
   static const String prefsDailyReminderKey = 'daily_reminder_enabled';
   static const String prefsDailyReminderMinutesKey = 'daily_reminder_minutes';

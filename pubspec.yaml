@@ -1,7 +1,7 @@
 name: mantra_japa_counter
 description: Japam – Mantra Japa Counter — track your mantra recitation practice.
 publish_to: 'none'
-version: 6.13.15+46
+version: 6.13.17+48
 
 environment:
   sdk: ^3.13.5

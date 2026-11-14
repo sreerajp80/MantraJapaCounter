@@ -1969,6 +1969,40 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get meruPauseModeTime => 'Time';
+
+  @override
+  String get meruPauseModeTaps => 'Taps';
+
+  @override
+  String tapsShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count taps',
+      one: '1 tap',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String meruPauseTapsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count taps left',
+      one: '1 tap left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get meruPauseTapsDecreaseA11y => 'Fewer pause taps';
+
+  @override
+  String get meruPauseTapsIncreaseA11y => 'More pause taps';
+
+  @override
   String get pacingHintSettingTitle => 'Gentle pacing hint';
 
   @override
@@ -2188,7 +2222,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tutorialStep16Desc =>
-      'Turn it on in Settings → Display & Stillness. After each mala the app pauses for 3, 5 or 10 seconds, so you can rest and breathe.';
+      'Turn it on in Settings → Display & Stillness. After each mala the app pauses for 3, 5 or 10 seconds, or for a number of taps you choose, so you can rest and breathe.';
 
   @override
   String get tutorialStep16Tip =>
@@ -2626,7 +2660,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpCountingMindfulBullet1 =>
-      'When turned on in Settings → Display & Stillness, the app pauses for 3, 5 or 10 seconds after each mala. Taps in the pause are not counted. The pause ends by itself, or with the undo swipe.';
+      'When turned on in Settings → Display & Stillness, the app pauses after each mala: for 3, 5 or 10 seconds, or for a number of taps you choose (1 to 19). Taps in the pause are not counted. A time pause ends by itself; a tap pause ends with your last pause tap. The undo swipe also ends it.';
 
   @override
   String get helpCountingMindfulBold2 => 'Pacing hint:';
@@ -2901,7 +2935,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpDisplayMindfulBullet1 =>
-      'A short pause of 3, 5 or 10 seconds after each mala. Taps during the pause are not counted. Off by default.';
+      'A short pause after each mala: 3, 5 or 10 seconds, or 1 to 19 taps. Taps during the pause are not counted. Off by default.';
 
   @override
   String get helpDisplayMindfulBold2 => 'Gentle pacing hint:';

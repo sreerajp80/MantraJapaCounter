@@ -1917,6 +1917,40 @@ class AppLocalizationsSa extends AppLocalizations {
   }
 
   @override
+  String get meruPauseModeTime => 'कालः';
+
+  @override
+  String get meruPauseModeTaps => 'स्पर्शाः';
+
+  @override
+  String tapsShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count स्पर्शाः',
+      one: '1 स्पर्शः',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String meruPauseTapsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count स्पर्शाः अवशिष्टाः',
+      one: '1 स्पर्शः अवशिष्टः',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get meruPauseTapsDecreaseA11y => 'विरामस्पर्शान् न्यूनीकरोतु';
+
+  @override
+  String get meruPauseTapsIncreaseA11y => 'विरामस्पर्शान् वर्धयतु';
+
+  @override
   String get pacingHintSettingTitle => 'मृदुगतिसूचना';
 
   @override
@@ -2136,7 +2170,7 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get tutorialStep16Desc =>
-      'संयोजनानि → प्रदर्शनं स्थिरता च इत्यत्र सक्रियं करोतु। प्रत्येकमालानन्तरं 3, 5, 10 वा निमेषान् उपकरणं विरमति, येन विश्रमितुं श्वसितुं च शक्यते।';
+      'संयोजनानि → प्रदर्शनं स्थिरता च इत्यत्र सक्रियं करोतु। प्रत्येकमालानन्तरं 3, 5, 10 वा निमेषान्, अथवा भवता चितान् स्पर्शान् यावत्, उपकरणं विरमति, येन विश्रमितुं श्वसितुं च शक्यते।';
 
   @override
   String get tutorialStep16Tip =>
@@ -2573,7 +2607,7 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get helpCountingMindfulBullet1 =>
-      'संयोजनानि → प्रदर्शनं स्थिरता च इत्यत्र सक्रियीकृते, प्रत्येकमालानन्तरम् उपकरणं 3, 5, 10 वा निमेषान् विरमति। विरामे स्पर्शाः न गण्यन्ते। विरामः स्वयं समाप्यते, निवर्तनचालनेन वा।';
+      'संयोजनानि → प्रदर्शनं स्थिरता च इत्यत्र सक्रियीकृते, प्रत्येकमालानन्तरम् उपकरणं विरमति — 3, 5, 10 वा निमेषान्, अथवा भवता चितान् स्पर्शान् यावत् (1 तः 19 पर्यन्तम्)। विरामे स्पर्शाः न गण्यन्ते। कालविरामः स्वयं समाप्यते; स्पर्शविरामः अन्तिमेन विरामस्पर्शेन समाप्यते। निवर्तनचालनेन अपि समाप्यते।';
 
   @override
   String get helpCountingMindfulBold2 => 'गतिसूचना:';
@@ -2847,7 +2881,7 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get helpDisplayMindfulBullet1 =>
-      'प्रत्येकमालानन्तरं 3, 5, 10 वा निमेषाणां लघुविरामः। विरामे स्पर्शाः न गण्यन्ते। सामान्यतः निष्क्रियः।';
+      'प्रत्येकमालानन्तरं लघुविरामः — 3, 5, 10 वा निमेषाः, अथवा 1 तः 19 पर्यन्तं स्पर्शाः। विरामे स्पर्शाः न गण्यन्ते। सामान्यतः निष्क्रियः।';
 
   @override
   String get helpDisplayMindfulBold2 => 'मृदुगतिसूचना:';

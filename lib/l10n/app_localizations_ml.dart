@@ -563,8 +563,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get tapVibration => 'ഓരോ ടാപ്പിലും വൈബ്രേറ്റ് ചെയ്യുക';
 
   @override
-  String get tapVibrationSub =>
-      'എണ്ണാൻ ടാപ്പ് ചെയ്യുമ്പോഴെല്ലാം ഒരു ചെറിയ സ്പന്ദനം.';
+  String get tapVibrationSub => 'എണ്ണാൻ തട്ടുമ്പോഴെല്ലാം ഒരു ചെറിയ സ്പന്ദനം.';
 
   @override
   String get tapVibrationBatteryWarning =>
@@ -730,7 +729,7 @@ class AppLocalizationsMl extends AppLocalizations {
       'ഒരു ജപം എണ്ണാൻ മണി വൃത്തത്തിൽ എവിടെയും അമർത്തുക. ഓരോ 108 ജപങ്ങളും ഒരു മാല പൂർത്തിയാക്കുന്നു — മണികൾ കടന്നുപോകുമ്പോൾ വളയം നിറയുന്നു.';
 
   @override
-  String get helpUndoTitle => 'ഒരു ടാപ്പ് പഴയപടിയാക്കൽ';
+  String get helpUndoTitle => 'ഒരു തട്ടൽ പഴയപടിയാക്കൽ';
 
   @override
   String get helpUndoBody =>
@@ -932,7 +931,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpTopicCountingSub =>
-      'വൃത്തത്തിനുള്ളിൽ തൊടൽ, രണ്ട് വിരൽ തിരുത്തൽ, എണ്ണൽ മെനു, സ്വയം സേവ്';
+      'വൃത്തത്തിനുള്ളിൽ തട്ടൽ, രണ്ട് വിരൽ തിരുത്തൽ, എണ്ണൽ മെനു, സ്വയം സേവ്';
 
   @override
   String get helpTopicMalaTitle => '108 മാല കണക്കുകൂട്ടലും ലക്ഷ്യങ്ങളും';
@@ -984,25 +983,25 @@ class AppLocalizationsMl extends AppLocalizations {
   String get helpCountingTapSection => 'എങ്ങനെ എണ്ണാം';
 
   @override
-  String get helpCountingTapBold1 => 'വൃത്തത്തിനുള്ളിൽ തൊടുക:';
+  String get helpCountingTapBold1 => 'വൃത്തത്തിനുള്ളിൽ തട്ടുക:';
 
   @override
   String get helpCountingTapBullet1 =>
-      'മാലാവൃത്തത്തിനുള്ളിലെ തൊടൽ മാത്രമേ എണ്ണൂ. പുറത്തെ തൊടൽ എണ്ണില്ല, അതിനാൽ അബദ്ധ തൊടൽ എണ്ണം കൂട്ടില്ല.';
+      'മാലാവൃത്തത്തിനുള്ളിലെ തട്ടൽ മാത്രമേ എണ്ണൂ. പുറത്തെ തട്ടൽ എണ്ണില്ല, അതിനാൽ അബദ്ധ തട്ടൽ എണ്ണം കൂട്ടില്ല.';
 
   @override
-  String get helpCountingTapBold2 => 'ഓരോ തൊടലിലെ എണ്ണം:';
+  String get helpCountingTapBold2 => 'ഓരോ തട്ടലിലെ എണ്ണം:';
 
   @override
   String get helpCountingTapBullet2 =>
-      'ഓരോ തൊടലിലും കൗണ്ടറിന്റെ എണ്ണം (സാധാരണ 1) കൂടും. കൗണ്ടർ എഡിറ്റ് ചെയ്ത് മാറ്റാം.';
+      'ഓരോ തട്ടലിലും കൗണ്ടറിന്റെ എണ്ണം (സാധാരണ 1) കൂടും. കൗണ്ടർ എഡിറ്റ് ചെയ്ത് മാറ്റാം.';
 
   @override
-  String get helpCountingTapBold3 => 'ശാന്തമായ തൊടൽ:';
+  String get helpCountingTapBold3 => 'ശാന്തമായ തട്ടൽ:';
 
   @override
   String get helpCountingTapBullet3 =>
-      'തൊടലിന് വൈബ്രേഷൻ ഇല്ല. വൈബ്രേഷൻ ഓൺ ആണെങ്കിൽ ഓരോ മാല തീരുമ്പോഴും ലക്ഷ്യത്തിലും തിരുത്തലിലും വൈബ്രേഷൻ ഉണ്ടാകും.';
+      'തട്ടലിന് വൈബ്രേഷൻ ഇല്ല. വൈബ്രേഷൻ ഓൺ ആണെങ്കിൽ ഓരോ മാല തീരുമ്പോഴും ലക്ഷ്യത്തിലും തിരുത്തലിലും വൈബ്രേഷൻ ഉണ്ടാകും.';
 
   @override
   String get helpCountingUndoSection => 'എണ്ണം തിരുത്തൽ';
@@ -1047,7 +1046,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpMalaBeadsBullet3 =>
-      'ഓരോ തൊടലിലെ എണ്ണം 1-ൽ കൂടുതലാണെങ്കിൽ, ഒരു തൊടലിൽ പല മണികൾ നീങ്ങും. മാലകൾ ആകെ എണ്ണത്തിൽ നിന്ന് തന്നെ കണക്കാക്കും.';
+      'ഓരോ തട്ടലിലെ എണ്ണം 1-ൽ കൂടുതലാണെങ്കിൽ, ഒരു തട്ടലിൽ പല മണികൾ നീങ്ങും. മാലകൾ ആകെ എണ്ണത്തിൽ നിന്ന് തന്നെ കണക്കാക്കും.';
 
   @override
   String get helpMalaGoalsSection => 'ദിവസ ലക്ഷ്യവും ആജീവനാന്ത ലക്ഷ്യവും';
@@ -1092,7 +1091,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpOpticalHowBullet3 =>
-      'എല്ലാ ഭാഗങ്ങളും എത്തുമ്പോൾ കൗണ്ടറുകളും സെഷനുകളും കാണിക്കുന്ന പ്രിവ്യൂ വരും. സൂക്ഷിക്കേണ്ട കൗണ്ടറുകൾ തിരഞ്ഞെടുത്ത് പുനഃസ്ഥാപിക്കൽ ബട്ടൺ തൊടുക.';
+      'എല്ലാ ഭാഗങ്ങളും എത്തുമ്പോൾ കൗണ്ടറുകളും സെഷനുകളും കാണിക്കുന്ന പ്രിവ്യൂ വരും. സൂക്ഷിക്കേണ്ട കൗണ്ടറുകൾ തിരഞ്ഞെടുത്ത് പുനഃസ്ഥാപിക്കൽ ബട്ടൺ തട്ടുക.';
 
   @override
   String get helpOpticalTipsSection => 'വേഗത്തിൽ സ്കാൻ ചെയ്യാൻ';
@@ -1240,11 +1239,11 @@ class AppLocalizationsMl extends AppLocalizations {
   String get helpFaqIntro => 'സാധാരണ ചോദ്യങ്ങൾക്ക് ചുരുങ്ങിയ ഉത്തരങ്ങൾ.';
 
   @override
-  String get helpFaqQ1Title => 'എന്റെ തൊടൽ എന്തുകൊണ്ട് എണ്ണിയില്ല?';
+  String get helpFaqQ1Title => 'എന്റെ തട്ടൽ എന്തുകൊണ്ട് എണ്ണിയില്ല?';
 
   @override
   String get helpFaqQ1Answer =>
-      'മാലാവൃത്തത്തിനുള്ളിലെ തൊടൽ മാത്രമേ എണ്ണൂ. മേരു വിരാമം ഓൺ ആണെങ്കിൽ, ഓരോ മാലയ്ക്കും ശേഷമുള്ള ചെറിയ വിരാമ സമയത്തെ തൊടലും എണ്ണില്ല.';
+      'മാലാവൃത്തത്തിനുള്ളിലെ തട്ടൽ മാത്രമേ എണ്ണൂ. മേരു വിരാമം ഓൺ ആണെങ്കിൽ, ഓരോ മാലയ്ക്കും ശേഷമുള്ള ചെറിയ വിരാമ സമയത്തെ തട്ടലും എണ്ണില്ല.';
 
   @override
   String get helpFaqQ2Title => 'തെറ്റായ എണ്ണം എങ്ങനെ തിരുത്താം?';
@@ -1258,14 +1257,14 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpFaqQ3Answer =>
-      'അത് ലോക്ക് ചെയ്തതോ നിർത്തിയതോ ആകാം. അൺലോക്ക് ചെയ്യാൻ കാർഡിലെ പൂട്ട് ഐക്കൺ തൊടുക. നിർത്തിയ കൗണ്ടറുകൾ എണ്ണാനായി തുറക്കില്ല.';
+      'അത് ലോക്ക് ചെയ്തതോ നിർത്തിയതോ ആകാം. അൺലോക്ക് ചെയ്യാൻ കാർഡിലെ പൂട്ട് ഐക്കൺ തട്ടുക. നിർത്തിയ കൗണ്ടറുകൾ എണ്ണാനായി തുറക്കില്ല.';
 
   @override
   String get helpFaqQ4Title => 'മാലയുടെ നടുവിൽ നിർത്തിയാൽ എന്ത് സംഭവിക്കും?';
 
   @override
   String get helpFaqQ4Answer =>
-      'ഒന്നും നഷ്ടപ്പെടില്ല. എണ്ണം സേവ് ആകും, മറ്റൊരു ദിവസമായാലും അടുത്ത തവണ ആ മാല കാത്തിരിക്കും. 0-ൽ നിന്ന് തുടങ്ങണമെങ്കിൽ \'പുതിയത് തുടങ്ങുക\' തൊടുക.';
+      'ഒന്നും നഷ്ടപ്പെടില്ല. എണ്ണം സേവ് ആകും, മറ്റൊരു ദിവസമായാലും അടുത്ത തവണ ആ മാല കാത്തിരിക്കും. 0-ൽ നിന്ന് തുടങ്ങണമെങ്കിൽ \'പുതിയത് തുടങ്ങുക\' തട്ടുക.';
 
   @override
   String get lockCounter => 'കൗണ്ടർ ലോക്ക് ചെയ്യുക';
@@ -1450,14 +1449,14 @@ class AppLocalizationsMl extends AppLocalizations {
   String get featMalaH3 => 'മാല പൂർത്തിയാകുമ്പോൾ മണിനാദം';
 
   @override
-  String get featImmersionTitle => 'പൂർണ്ണ സ്ക്രീൻ ലയനവും ടാപ്പ് ഇടവും';
+  String get featImmersionTitle => 'പൂർണ്ണ സ്ക്രീൻ ലയനവും തട്ടൽ ഇടവും';
 
   @override
   String get featImmersionDesc =>
-      'പ്രത്യേക ബട്ടണുകൾ നോക്കേണ്ട ആവശ്യമില്ലാതെ, വലിയ പവിത്ര വളയത്തിൽ എവിടെയും ടാപ്പ് ചെയ്ത് എണ്ണം എളുപ്പത്തിൽ കൂട്ടാം.';
+      'പ്രത്യേക ബട്ടണുകൾ നോക്കേണ്ട ആവശ്യമില്ലാതെ, വലിയ പവിത്ര വളയത്തിൽ എവിടെയും തട്ടി എണ്ണം എളുപ്പത്തിൽ കൂട്ടാം.';
 
   @override
-  String get featImmersionH1 => 'വിശാലമായ സ്പർശന ഇടം';
+  String get featImmersionH1 => 'വിശാലമായ തട്ടൽ ഇടം';
 
   @override
   String get featImmersionH2 => 'മൃദുവായ സ്പർശന പ്രതികരണം';
@@ -1540,7 +1539,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get featJsonExportH1 => 'സാധാരണ JSON ഘടന';
 
   @override
-  String get featJsonExportH2 => 'ഒറ്റ ടാപ്പ് എക്സ്പോർട്ട്/ഇംപോർട്ട്';
+  String get featJsonExportH2 => 'ഒറ്റ തട്ടലിൽ എക്സ്പോർട്ട്/ഇംപോർട്ട്';
 
   @override
   String get featJsonExportH3 => 'പഴയ ബാക്കപ്പുകളും പുനഃസ്ഥാപിക്കാം';
@@ -1669,7 +1668,7 @@ class AppLocalizationsMl extends AppLocalizations {
   String get featSqliteH1 => 'ACID അനുസരിക്കുന്ന SQLite v3';
 
   @override
-  String get featSqliteH2 => '5 ടാപ്പ് തകരാർ വീണ്ടെടുക്കൽ';
+  String get featSqliteH2 => '5 തട്ടൽ തകരാർ വീണ്ടെടുക്കൽ';
 
   @override
   String get featSqliteH3 => 'സുരക്ഷിത ഡാറ്റ മൈഗ്രേഷൻ';
@@ -1892,7 +1891,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get tutorialStep3Desc =>
-      'ഹോം സ്ക്രീനിന്റെ മുകളിലുള്ള + ബട്ടൺ തൊടുക. മന്ത്രത്തിന്റെ പേര് നൽകുക. പിന്നെ തുടക്ക എണ്ണം, ഓരോ തൊടലിലും കൂടുന്ന എണ്ണം, ആജീവനാന്ത ലക്ഷ്യം, ദിവസ ലക്ഷ്യം, തുടങ്ങിയ തീയതി എന്നിവ നൽകുക.';
+      'ഹോം സ്ക്രീനിന്റെ മുകളിലുള്ള + ബട്ടൺ തട്ടുക. മന്ത്രത്തിന്റെ പേര് നൽകുക. പിന്നെ തുടക്ക എണ്ണം, ഓരോ തട്ടലിലും കൂടുന്ന എണ്ണം, ആജീവനാന്ത ലക്ഷ്യം, ദിവസ ലക്ഷ്യം, തുടങ്ങിയ തീയതി എന്നിവ നൽകുക.';
 
   @override
   String get tutorialStep4Title => 'കൗണ്ടർ കാർഡ് മനസ്സിലാക്കുക';
@@ -1920,7 +1919,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get tutorialStep7Desc =>
-      'കാർഡിലെ പൂട്ട് ഐക്കൺ തൊട്ട് ലോക്ക് ചെയ്യാം. ലോക്ക് ചെയ്ത കൗണ്ടർ എണ്ണാനായി തുറക്കില്ല. വീണ്ടും തൊട്ടാൽ അൺലോക്ക് ആകും.';
+      'കാർഡിലെ പൂട്ട് ഐക്കൺ തട്ടി ലോക്ക് ചെയ്യാം. ലോക്ക് ചെയ്ത കൗണ്ടർ എണ്ണാനായി തുറക്കില്ല. വീണ്ടും തട്ടിയാൽ അൺലോക്ക് ആകും.';
 
   @override
   String get opticalCameraDenied =>
@@ -1944,7 +1943,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get opticalScanTip =>
-      'ഫോക്കസ് ചെയ്യാൻ കോഡിൽ തൊടുക. മങ്ങിയതായി തോന്നിയാൽ സൂം ഉപയോഗിക്കുക.';
+      'ഫോക്കസ് ചെയ്യാൻ കോഡിൽ തട്ടുക. മങ്ങിയതായി തോന്നിയാൽ സൂം ഉപയോഗിക്കുക.';
 
   @override
   String get meruPauseTitle => 'നിർത്തുക · ശ്വസിക്കുക';
@@ -1968,7 +1967,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get meruPauseSettingSub =>
-      '108-ന് ശേഷം ചെറിയ ശാന്തമായ വിരാമം. വിരാമ സമയത്തെ സ്പർശനങ്ങൾ എണ്ണില്ല.';
+      '108-ന് ശേഷം ചെറിയ ശാന്തമായ വിരാമം. വിരാമ സമയത്തെ തട്ടലുകൾ എണ്ണില്ല.';
 
   @override
   String secondsShort(int seconds) {
@@ -1976,11 +1975,45 @@ class AppLocalizationsMl extends AppLocalizations {
   }
 
   @override
+  String get meruPauseModeTime => 'സമയം';
+
+  @override
+  String get meruPauseModeTaps => 'തട്ടൽ';
+
+  @override
+  String tapsShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count തട്ടലുകൾ',
+      one: '1 തട്ടൽ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String meruPauseTapsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count തട്ടലുകൾ ബാക്കി',
+      one: '1 തട്ടൽ ബാക്കി',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get meruPauseTapsDecreaseA11y => 'വിരാമ തട്ടലുകൾ കുറയ്ക്കുക';
+
+  @override
+  String get meruPauseTapsIncreaseA11y => 'വിരാമ തട്ടലുകൾ കൂട്ടുക';
+
+  @override
   String get pacingHintSettingTitle => 'സൗമ്യമായ വേഗ സൂചന';
 
   @override
   String get pacingHintSettingSub =>
-      'വളരെ വേഗത്തിൽ സ്പർശിക്കുമ്പോൾ മൃദുവായ തിളക്കം. എല്ലാ സ്പർശനവും എണ്ണും.';
+      'വളരെ വേഗത്തിൽ തട്ടുമ്പോൾ മൃദുവായ തിളക്കം. എല്ലാ തട്ടലും എണ്ണും.';
 
   @override
   String get helpCountingMindfulSection => 'ശ്രദ്ധാപൂർവ്വമായ എണ്ണൽ';
@@ -2084,7 +2117,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get tutorialStep3Tip =>
-      'ലക്ഷ്യം വേണ്ടെങ്കിൽ 0 നൽകുക. ദിവസ ലക്ഷ്യം ആജീവനാന്ത ലക്ഷ്യത്തേക്കാൾ കൂടരുത്. ഓരോ തൊടലിലെ എണ്ണം ദിവസ ലക്ഷ്യത്തേക്കാൾ കുറവായിരിക്കണം.';
+      'ലക്ഷ്യം വേണ്ടെങ്കിൽ 0 നൽകുക. ദിവസ ലക്ഷ്യം ആജീവനാന്ത ലക്ഷ്യത്തേക്കാൾ കൂടരുത്. ഓരോ തട്ടലിലെ എണ്ണം ദിവസ ലക്ഷ്യത്തേക്കാൾ കുറവായിരിക്കണം.';
 
   @override
   String get tutorialStep4Tip =>
@@ -2107,18 +2140,18 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get tutorialStep8Desc =>
-      'ഒരു കൗണ്ടർ കാർഡ് തൊടുക. വലിയ മാലാവൃത്തമുള്ള എണ്ണൽ സ്ക്രീൻ തുറക്കും.';
+      'ഒരു കൗണ്ടർ കാർഡ് തട്ടുക. വലിയ മാലാവൃത്തമുള്ള എണ്ണൽ സ്ക്രീൻ തുറക്കും.';
 
   @override
   String get tutorialStep8Tip =>
       'ക്രമീകരണങ്ങളിൽ \'ശല്യപ്പെടുത്തരുത്\' ഓൺ ആണെങ്കിൽ, ഈ സ്ക്രീൻ തുറന്നിരിക്കുമ്പോൾ ഫോൺ നിശബ്ദമായിരിക്കും.';
 
   @override
-  String get tutorialStep9Title => 'എണ്ണാൻ തൊടുക';
+  String get tutorialStep9Title => 'എണ്ണാൻ തട്ടുക';
 
   @override
   String get tutorialStep9Desc =>
-      'മാലാവൃത്തത്തിനുള്ളിൽ തൊടുക. ഓരോ തൊടലിലും നിശ്ചയിച്ച എണ്ണം (സാധാരണ 1) കൂടും. വൃത്തത്തിന് പുറത്തുള്ള തൊടൽ എണ്ണില്ല.';
+      'മാലാവൃത്തത്തിനുള്ളിൽ തട്ടുക. ഓരോ തട്ടലിലും നിശ്ചയിച്ച എണ്ണം (സാധാരണ 1) കൂടും. വൃത്തത്തിന് പുറത്തുള്ള തട്ടൽ എണ്ണില്ല.';
 
   @override
   String get tutorialStep9Tip =>
@@ -2155,7 +2188,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get tutorialStep12Tip =>
-      'പഴയ എണ്ണം സൂക്ഷിച്ച് 0-ൽ നിന്ന് പുതിയ മാല തുടങ്ങാൻ ബാനറിലെ \'പുതിയത് തുടങ്ങുക\' തൊടുക.';
+      'പഴയ എണ്ണം സൂക്ഷിച്ച് 0-ൽ നിന്ന് പുതിയ മാല തുടങ്ങാൻ ബാനറിലെ \'പുതിയത് തുടങ്ങുക\' തട്ടുക.';
 
   @override
   String get tutorialStep13Title => 'എണ്ണൽ മെനു';
@@ -2195,22 +2228,22 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get tutorialStep16Desc =>
-      'ക്രമീകരണങ്ങൾ → പ്രദർശനവും നിശ്ശബ്ദതയും എന്നതിൽ ഓൺ ചെയ്യുക. ഓരോ മാലയ്ക്കും ശേഷം 3, 5 അല്ലെങ്കിൽ 10 സെക്കൻഡ് ആപ്പ് നിൽക്കും, വിശ്രമിക്കാനും ശ്വസിക്കാനും.';
+      'ക്രമീകരണങ്ങൾ → പ്രദർശനവും നിശ്ശബ്ദതയും എന്നതിൽ ഓൺ ചെയ്യുക. ഓരോ മാലയ്ക്കും ശേഷം 3, 5 അല്ലെങ്കിൽ 10 സെക്കൻഡ്, അല്ലെങ്കിൽ നിങ്ങൾ തിരഞ്ഞെടുക്കുന്ന എണ്ണം തട്ടലുകൾ, ആപ്പ് നിൽക്കും, വിശ്രമിക്കാനും ശ്വസിക്കാനും.';
 
   @override
   String get tutorialStep16Tip =>
-      'മേരു മണി ഒരിക്കലും കടക്കാത്തതുപോലെ, വിരാമ സമയത്തെ തൊടൽ എണ്ണില്ല.';
+      'മേരു മണി ഒരിക്കലും കടക്കാത്തതുപോലെ, വിരാമ സമയത്തെ തട്ടൽ എണ്ണില്ല.';
 
   @override
   String get tutorialStep17Title => 'മൃദുവായ വേഗ സൂചന';
 
   @override
   String get tutorialStep17Desc =>
-      'സെക്കൻഡിൽ ഏകദേശം 3-ൽ കൂടുതൽ വേഗത്തിൽ തൊട്ടാൽ, വൃത്തം മഞ്ഞ നിറത്തിൽ തിളങ്ങും, ഒരു ചെറിയ ഓർമ്മപ്പെടുത്തൽ വരും.';
+      'സെക്കൻഡിൽ ഏകദേശം 3-ൽ കൂടുതൽ വേഗത്തിൽ തട്ടിയാൽ, വൃത്തം മഞ്ഞ നിറത്തിൽ തിളങ്ങും, ഒരു ചെറിയ ഓർമ്മപ്പെടുത്തൽ വരും.';
 
   @override
   String get tutorialStep17Tip =>
-      'എല്ലാ തൊടലും എണ്ണും. ഈ സൂചന ക്രമീകരണങ്ങൾ → പ്രദർശനവും നിശ്ശബ്ദതയും എന്നതിൽ ഓഫ് ചെയ്യാം.';
+      'എല്ലാ തട്ടലും എണ്ണും. ഈ സൂചന ക്രമീകരണങ്ങൾ → പ്രദർശനവും നിശ്ശബ്ദതയും എന്നതിൽ ഓഫ് ചെയ്യാം.';
 
   @override
   String get tutorialStep18Title => 'ചരിത്രം';
@@ -2221,7 +2254,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get tutorialStep18Tip =>
-      'ഒരു ഇരിപ്പ് നീക്കാൻ അതിലെ ഡിലീറ്റ് ഐക്കൺ തൊടുക. ആകെ എണ്ണം ഉടൻ പുതുക്കും.';
+      'ഒരു ഇരിപ്പ് നീക്കാൻ അതിലെ ഡിലീറ്റ് ഐക്കൺ തട്ടുക. ആകെ എണ്ണം ഉടൻ പുതുക്കും.';
 
   @override
   String get tutorialStep19Title => 'സാധനാ പ്രവാഹം';
@@ -2254,7 +2287,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get tutorialStep21Tip =>
-      'ജപിക്കുന്നതിന് മുമ്പ് ശബ്ദം കേൾക്കാൻ \'ടോൺ പ്രിവ്യൂ\' തൊടുക.';
+      'ജപിക്കുന്നതിന് മുമ്പ് ശബ്ദം കേൾക്കാൻ \'ടോൺ പ്രിവ്യൂ\' തട്ടുക.';
 
   @override
   String get tutorialStep22Title => 'വൈബ്രേഷനും അറിയിപ്പുകളും';
@@ -2367,7 +2400,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpCountersCreateBullet1 =>
-      'പുതിയ കൗണ്ടർ ഉണ്ടാക്കാൻ ഹോം സ്ക്രീനിന്റെ മുകളിലുള്ള + ബട്ടൺ തൊടുക.';
+      'പുതിയ കൗണ്ടർ ഉണ്ടാക്കാൻ ഹോം സ്ക്രീനിന്റെ മുകളിലുള്ള + ബട്ടൺ തട്ടുക.';
 
   @override
   String get helpCountersCreateBold2 => 'പേര്:';
@@ -2384,11 +2417,11 @@ class AppLocalizationsMl extends AppLocalizations {
       'മുമ്പ് ചെയ്ത ജപം ചേർക്കാൻ, ഉദാഹരണത്തിന് കടലാസിൽ എഴുതിയത്. സാധാരണ 0.';
 
   @override
-  String get helpCountersCreateBold4 => 'ഓരോ തൊടലിലെ എണ്ണം:';
+  String get helpCountersCreateBold4 => 'ഓരോ തട്ടലിലെ എണ്ണം:';
 
   @override
   String get helpCountersCreateBullet4 =>
-      'ഒരു തൊടലിൽ എത്ര കൂടണം. സാധാരണ 1. ഇത് ദിവസ ലക്ഷ്യത്തേക്കാൾ കുറവായിരിക്കണം.';
+      'ഒരു തട്ടലിൽ എത്ര കൂടണം. സാധാരണ 1. ഇത് ദിവസ ലക്ഷ്യത്തേക്കാൾ കുറവായിരിക്കണം.';
 
   @override
   String get helpCountersCreateBold5 => 'ലക്ഷ്യങ്ങൾ:';
@@ -2510,14 +2543,14 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpCountersLockBullet1 =>
-      'ലോക്ക് ചെയ്യാനോ അൺലോക്ക് ചെയ്യാനോ കാർഡിലെ പൂട്ട് ഐക്കൺ തൊടുക.';
+      'ലോക്ക് ചെയ്യാനോ അൺലോക്ക് ചെയ്യാനോ കാർഡിലെ പൂട്ട് ഐക്കൺ തട്ടുക.';
 
   @override
   String get helpCountersLockBold2 => 'ലോക്ക് ചെയ്തത്:';
 
   @override
   String get helpCountersLockBullet2 =>
-      'ലോക്ക് ചെയ്ത കൗണ്ടർ എണ്ണാനായി തുറക്കില്ല, അതിനാൽ അബദ്ധത്തിൽ എണ്ണം മാറില്ല. തൊട്ടാൽ ഒരു ചെറിയ സന്ദേശം കാണിക്കും.';
+      'ലോക്ക് ചെയ്ത കൗണ്ടർ എണ്ണാനായി തുറക്കില്ല, അതിനാൽ അബദ്ധത്തിൽ എണ്ണം മാറില്ല. തട്ടിയാൽ ഒരു ചെറിയ സന്ദേശം കാണിക്കും.';
 
   @override
   String get helpCountersLockBold3 => 'നിർത്തിയത്:';
@@ -2572,7 +2605,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpCountingSaveBullet2 =>
-      'ഓരോ 5 തൊടലിലും അല്ലെങ്കിൽ 5 സെക്കൻഡിലും എണ്ണം സേവ് ആകും, ഓരോ 20 തൊടലിലും അല്ലെങ്കിൽ 30 സെക്കൻഡിലും പൂർണ്ണമായി സൂക്ഷിക്കും. ഫോൺ ഓഫായാലും ആപ്പ് തുറക്കുമ്പോൾ എണ്ണം തിരികെ വരും.';
+      'ഓരോ 5 തട്ടലിലും അല്ലെങ്കിൽ 5 സെക്കൻഡിലും എണ്ണം സേവ് ആകും, ഓരോ 20 തട്ടലിലും അല്ലെങ്കിൽ 30 സെക്കൻഡിലും പൂർണ്ണമായി സൂക്ഷിക്കും. ഫോൺ ഓഫായാലും ആപ്പ് തുറക്കുമ്പോൾ എണ്ണം തിരികെ വരും.';
 
   @override
   String get helpCountingSaveBold3 => 'ടൈമർ നിർത്തൽ:';
@@ -2586,7 +2619,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpCountingSaveBullet4 =>
-      '108-ന് മുമ്പ് നിർത്തിയാൽ, മറ്റൊരു ദിവസമായാലും അടുത്ത തവണ ആ മാല കാത്തിരിക്കും, ഒരു ബാനർ അത് കാണിക്കും. തൊടൽ എപ്പോഴും തൊട്ട ദിവസത്തിൽ തന്നെ എണ്ണും. ആ എണ്ണം സൂക്ഷിച്ച് 0-ൽ നിന്ന് പുതിയ മാല തുടങ്ങാൻ \'പുതിയത് തുടങ്ങുക\' തൊടുക.';
+      '108-ന് മുമ്പ് നിർത്തിയാൽ, മറ്റൊരു ദിവസമായാലും അടുത്ത തവണ ആ മാല കാത്തിരിക്കും, ഒരു ബാനർ അത് കാണിക്കും. തട്ടൽ എപ്പോഴും തട്ടിയ ദിവസത്തിൽ തന്നെ എണ്ണും. ആ എണ്ണം സൂക്ഷിച്ച് 0-ൽ നിന്ന് പുതിയ മാല തുടങ്ങാൻ \'പുതിയത് തുടങ്ങുക\' തട്ടുക.';
 
   @override
   String get helpCountingMenuSection => 'എണ്ണൽ മെനു (⋮)';
@@ -2615,7 +2648,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpCountingMenuBullet4 =>
-      'ഇപ്പോഴത്തെ പൂർത്തിയാകാത്ത മാല അവസാനിപ്പിക്കും. അതിന്റെ എണ്ണം ചരിത്രത്തിൽ സൂക്ഷിക്കും, അടുത്ത തൊടൽ 0-ൽ നിന്ന് പുതിയ മാല തുടങ്ങും.';
+      'ഇപ്പോഴത്തെ പൂർത്തിയാകാത്ത മാല അവസാനിപ്പിക്കും. അതിന്റെ എണ്ണം ചരിത്രത്തിൽ സൂക്ഷിക്കും, അടുത്ത തട്ടൽ 0-ൽ നിന്ന് പുതിയ മാല തുടങ്ങും.';
 
   @override
   String get helpCountingMenuBold5 => 'സെഷൻ പുനഃസജ്ജമാക്കുക:';
@@ -2636,21 +2669,21 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpCountingMindfulBullet1 =>
-      'ക്രമീകരണങ്ങൾ → പ്രദർശനവും നിശ്ശബ്ദതയും എന്നതിൽ ഓൺ ചെയ്താൽ, ഓരോ മാലയ്ക്കും ശേഷം ആപ്പ് 3, 5 അല്ലെങ്കിൽ 10 സെക്കൻഡ് നിൽക്കും. ആ സമയത്തെ തൊടൽ എണ്ണില്ല. വിരാമം സ്വയം തീരും, അല്ലെങ്കിൽ തിരുത്തൽ സ്വൈപ്പ് കൊണ്ട് തീർക്കാം.';
+      'ക്രമീകരണങ്ങൾ → പ്രദർശനവും നിശ്ശബ്ദതയും എന്നതിൽ ഓൺ ചെയ്താൽ, ഓരോ മാലയ്ക്കും ശേഷം ആപ്പ് നിൽക്കും: 3, 5 അല്ലെങ്കിൽ 10 സെക്കൻഡ്, അല്ലെങ്കിൽ നിങ്ങൾ തിരഞ്ഞെടുക്കുന്ന എണ്ണം തട്ടലുകൾ (1 മുതൽ 19 വരെ). ആ സമയത്തെ തട്ടൽ എണ്ണില്ല. സമയ വിരാമം സ്വയം തീരും; തട്ടൽ വിരാമം അവസാന വിരാമ തട്ടലോടെ തീരും. തിരുത്തൽ സ്വൈപ്പ് കൊണ്ടും തീർക്കാം.';
 
   @override
   String get helpCountingMindfulBold2 => 'വേഗ സൂചന:';
 
   @override
   String get helpCountingMindfulBullet2 =>
-      'സെക്കൻഡിൽ ഏകദേശം 3-ൽ കൂടുതൽ വേഗത്തിൽ തൊട്ടാൽ, വൃത്തം മൃദുവായി തിളങ്ങും, ചെറിയ ഓർമ്മപ്പെടുത്തൽ വരും. ഇത് ഒരിക്കലും എണ്ണം തടയില്ല.';
+      'സെക്കൻഡിൽ ഏകദേശം 3-ൽ കൂടുതൽ വേഗത്തിൽ തട്ടിയാൽ, വൃത്തം മൃദുവായി തിളങ്ങും, ചെറിയ ഓർമ്മപ്പെടുത്തൽ വരും. ഇത് ഒരിക്കലും എണ്ണം തടയില്ല.';
 
   @override
   String get helpMalaBeadsBold4 => 'മാല ശബ്ദം:';
 
   @override
   String get helpMalaBeadsBullet4 =>
-      'ഓൺ ആണെങ്കിൽ ഓരോ 108-ാം എണ്ണത്തിലും മൃദുവായ ശബ്ദം കേൾക്കും. അതേ തൊടലിൽ ലക്ഷ്യം എത്തിയാൽ ഇത് ഒഴിവാക്കും, ശബ്ദങ്ങൾ കൂടിക്കലരാതിരിക്കാൻ.';
+      'ഓൺ ആണെങ്കിൽ ഓരോ 108-ാം എണ്ണത്തിലും മൃദുവായ ശബ്ദം കേൾക്കും. അതേ തട്ടലിൽ ലക്ഷ്യം എത്തിയാൽ ഇത് ഒഴിവാക്കും, ശബ്ദങ്ങൾ കൂടിക്കലരാതിരിക്കാൻ.';
 
   @override
   String get helpMalaGoalsBold3 => 'ദിവസ ലക്ഷ്യം എത്തുമ്പോൾ:';
@@ -2726,7 +2759,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpHistoryDeleteBullet1 =>
-      'ഇരിപ്പിലെ ഡിലീറ്റ് ഐക്കൺ തൊട്ട് ഉറപ്പാക്കുക. ആകെ എണ്ണം ഉടൻ വീണ്ടും കണക്കാക്കും.';
+      'ഇരിപ്പിലെ ഡിലീറ്റ് ഐക്കൺ തട്ടി ഉറപ്പാക്കുക. ആകെ എണ്ണം ഉടൻ വീണ്ടും കണക്കാക്കും.';
 
   @override
   String get helpHistoryDeleteBold2 => 'ചരിത്രം മായ്ക്കുക:';
@@ -2829,7 +2862,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpAudioGoalBullet3 =>
-      'തിരഞ്ഞെടുത്ത ശബ്ദം കേൾക്കാൻ \'ടോൺ പ്രിവ്യൂ\' തൊടുക.';
+      'തിരഞ്ഞെടുത്ത ശബ്ദം കേൾക്കാൻ \'ടോൺ പ്രിവ്യൂ\' തട്ടുക.';
 
   @override
   String get helpAudioLifetimeSection => 'ആജീവനാന്ത ലക്ഷ്യം';
@@ -2877,7 +2910,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpDisplayBrightBullet2 =>
-      'ഫോണിന്റെ സാധാരണ പ്രകാശത്തിലേക്ക് മടങ്ങാൻ \'use system\' തൊടുക.';
+      'ഫോണിന്റെ സാധാരണ പ്രകാശത്തിലേക്ക് മടങ്ങാൻ \'use system\' തട്ടുക.';
 
   @override
   String get helpDisplayBrightBold3 => 'മങ്ങിയ ജപ രീതി:';
@@ -2901,7 +2934,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpDisplayDndBullet2 =>
-      'ആദ്യ തവണ DND അനുമതി നൽകാൻ ആപ്പ് ആവശ്യപ്പെടും. \'ക്രമീകരണങ്ങൾ തുറക്കുക\' തൊട്ട് ഈ ആപ്പിന് അനുമതി നൽകുക.';
+      'ആദ്യ തവണ DND അനുമതി നൽകാൻ ആപ്പ് ആവശ്യപ്പെടും. \'ക്രമീകരണങ്ങൾ തുറക്കുക\' തട്ടി ഈ ആപ്പിന് അനുമതി നൽകുക.';
 
   @override
   String get helpDisplayMindfulSection => 'ശ്രദ്ധാപൂർവ്വമായ എണ്ണൽ';
@@ -2911,14 +2944,14 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpDisplayMindfulBullet1 =>
-      'ഓരോ മാലയ്ക്കും ശേഷം 3, 5 അല്ലെങ്കിൽ 10 സെക്കൻഡ് ചെറിയ വിരാമം. ആ സമയത്തെ തൊടൽ എണ്ണില്ല. സാധാരണ ഓഫ്.';
+      'ഓരോ മാലയ്ക്കും ശേഷം ചെറിയ വിരാമം: 3, 5 അല്ലെങ്കിൽ 10 സെക്കൻഡ്, അല്ലെങ്കിൽ 1 മുതൽ 19 വരെ തട്ടലുകൾ. ആ സമയത്തെ തട്ടൽ എണ്ണില്ല. സാധാരണ ഓഫ്.';
 
   @override
   String get helpDisplayMindfulBold2 => 'സൗമ്യമായ വേഗ സൂചന:';
 
   @override
   String get helpDisplayMindfulBullet2 =>
-      'വളരെ വേഗത്തിൽ തൊടുമ്പോൾ മൃദുവായ തിളക്കം. എല്ലാ തൊടലും എണ്ണും. സാധാരണ ഓൺ.';
+      'വളരെ വേഗത്തിൽ തട്ടുമ്പോൾ മൃദുവായ തിളക്കം. എല്ലാ തട്ടലും എണ്ണും. സാധാരണ ഓൺ.';
 
   @override
   String get helpDisplayLangSection => 'ഭാഷ';
@@ -2989,11 +3022,11 @@ class AppLocalizationsMl extends AppLocalizations {
   String get helpOpticalReceiveSection => 'സ്വീകരിക്കുന്ന ഫോണിലെ നിയന്ത്രണങ്ങൾ';
 
   @override
-  String get helpOpticalReceiveBold1 => 'ഫോക്കസ് ചെയ്യാൻ തൊടുക:';
+  String get helpOpticalReceiveBold1 => 'ഫോക്കസ് ചെയ്യാൻ തട്ടുക:';
 
   @override
   String get helpOpticalReceiveBullet1 =>
-      'കോഡിൽ ഫോക്കസ് ചെയ്യാൻ ക്യാമറ ദൃശ്യത്തിൽ തൊടുക.';
+      'കോഡിൽ ഫോക്കസ് ചെയ്യാൻ ക്യാമറ ദൃശ്യത്തിൽ തട്ടുക.';
 
   @override
   String get helpOpticalReceiveBold2 => 'സൂം:';
@@ -3120,7 +3153,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpFaqQ5Answer =>
-      'ഫോണിലെ സമയം അനുസരിച്ച് ഓരോ തൊടലും തൊട്ട ദിവസത്തിൽ തന്നെ എണ്ണും. ദിവസ ലക്ഷ്യം അർദ്ധരാത്രിയിൽ വീണ്ടും തുടങ്ങും.';
+      'ഫോണിലെ സമയം അനുസരിച്ച് ഓരോ തട്ടലും തട്ടിയ ദിവസത്തിൽ തന്നെ എണ്ണും. ദിവസ ലക്ഷ്യം അർദ്ധരാത്രിയിൽ വീണ്ടും തുടങ്ങും.';
 
   @override
   String get helpFaqQ6Title =>
@@ -3135,7 +3168,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpFaqQ7Answer =>
-      'മാല ശബ്ദം ഓൺ ആണോ എന്ന് നോക്കുക. അതേ തൊടലിൽ ലക്ഷ്യവും എത്തിയാൽ ലക്ഷ്യ ശബ്ദം മാത്രം കേൾക്കും.';
+      'മാല ശബ്ദം ഓൺ ആണോ എന്ന് നോക്കുക. അതേ തട്ടലിൽ ലക്ഷ്യവും എത്തിയാൽ ലക്ഷ്യ ശബ്ദം മാത്രം കേൾക്കും.';
 
   @override
   String get helpFaqQ8Title =>
@@ -3165,7 +3198,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpFaqQ11Answer =>
-      'ഫോൺ 15–25 സെ.മീ. അകലെ ഇളകാതെ പിടിക്കുക, ഫോക്കസിനായി തൊടുക, പ്രതിഫലനം ഒഴിവാക്കുക, അയയ്ക്കുന്ന ഫോണിന്റെ പ്രകാശം കൂട്ടുക. സെക്കൻഡിൽ 8 ഫ്രെയിം പോലുള്ള കുറഞ്ഞ വേഗം പരീക്ഷിക്കുക.';
+      'ഫോൺ 15–25 സെ.മീ. അകലെ ഇളകാതെ പിടിക്കുക, ഫോക്കസിനായി തട്ടുക, പ്രതിഫലനം ഒഴിവാക്കുക, അയയ്ക്കുന്ന ഫോണിന്റെ പ്രകാശം കൂട്ടുക. സെക്കൻഡിൽ 8 ഫ്രെയിം പോലുള്ള കുറഞ്ഞ വേഗം പരീക്ഷിക്കുക.';
 
   @override
   String get helpFaqQ12Title => 'ഡാറ്റ പുതിയ ഫോണിലേക്ക് മാറ്റാമോ?';

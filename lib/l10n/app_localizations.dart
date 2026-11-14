@@ -3544,6 +3544,42 @@ abstract class AppLocalizations {
   /// **'{seconds} s'**
   String secondsShort(int seconds);
 
+  /// Chip label: the Meru pause ends after a number of seconds
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get meruPauseModeTime;
+
+  /// Chip label: the Meru pause ends after a number of uncounted taps
+  ///
+  /// In en, this message translates to:
+  /// **'Taps'**
+  String get meruPauseModeTaps;
+
+  /// Number of pause taps, shown between the minus and plus buttons of the Meru pause tap setting
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 tap} other{{count} taps}}'**
+  String tapsShort(int count);
+
+  /// Shown inside the mala during a Meru pause by taps: how many uncounted pause taps are left
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 tap left} other{{count} taps left}}'**
+  String meruPauseTapsLeft(int count);
+
+  /// Screen-reader label for the minus button of the Meru pause tap setting
+  ///
+  /// In en, this message translates to:
+  /// **'Fewer pause taps'**
+  String get meruPauseTapsDecreaseA11y;
+
+  /// Screen-reader label for the plus button of the Meru pause tap setting
+  ///
+  /// In en, this message translates to:
+  /// **'More pause taps'**
+  String get meruPauseTapsIncreaseA11y;
+
   /// Settings toggle title for the pacing hint
   ///
   /// In en, this message translates to:
@@ -3901,7 +3937,7 @@ abstract class AppLocalizations {
   /// Tutorial step 16 description
   ///
   /// In en, this message translates to:
-  /// **'Turn it on in Settings → Display & Stillness. After each mala the app pauses for 3, 5 or 10 seconds, so you can rest and breathe.'**
+  /// **'Turn it on in Settings → Display & Stillness. After each mala the app pauses for 3, 5 or 10 seconds, or for a number of taps you choose, so you can rest and breathe.'**
   String get tutorialStep16Desc;
 
   /// Tutorial step 16 tip
@@ -4651,7 +4687,7 @@ abstract class AppLocalizations {
   /// Help counting guide: Mindful bullet 1 text
   ///
   /// In en, this message translates to:
-  /// **'When turned on in Settings → Display & Stillness, the app pauses for 3, 5 or 10 seconds after each mala. Taps in the pause are not counted. The pause ends by itself, or with the undo swipe.'**
+  /// **'When turned on in Settings → Display & Stillness, the app pauses after each mala: for 3, 5 or 10 seconds, or for a number of taps you choose (1 to 19). Taps in the pause are not counted. A time pause ends by itself; a tap pause ends with your last pause tap. The undo swipe also ends it.'**
   String get helpCountingMindfulBullet1;
 
   /// Help counting guide: Mindful bullet 2 bold label
@@ -5131,7 +5167,7 @@ abstract class AppLocalizations {
   /// Help display, stillness and language guide: Mindful bullet 1 text
   ///
   /// In en, this message translates to:
-  /// **'A short pause of 3, 5 or 10 seconds after each mala. Taps during the pause are not counted. Off by default.'**
+  /// **'A short pause after each mala: 3, 5 or 10 seconds, or 1 to 19 taps. Taps during the pause are not counted. Off by default.'**
   String get helpDisplayMindfulBullet1;
 
   /// Help display, stillness and language guide: Mindful bullet 2 bold label

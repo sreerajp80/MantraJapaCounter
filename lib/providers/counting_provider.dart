@@ -8,6 +8,7 @@ import 'package:mantra_japa_counter/core/utils/day.dart';
 import 'package:mantra_japa_counter/core/utils/mala.dart';
 import 'package:mantra_japa_counter/models/active_session.dart';
 import 'package:mantra_japa_counter/models/japa_session.dart';
+import 'package:mantra_japa_counter/models/meru_pause_mode.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/counter_stats_provider.dart';
 import 'package:mantra_japa_counter/providers/counters_provider.dart';
@@ -43,6 +44,14 @@ class CountingState {
   /// Length of the current (or next) Meru pause, for the countdown ring.
   final int meruPauseSeconds;
 
+  /// How the current (or next) Meru pause ends: by time or by taps.
+  final MeruPauseMode meruPauseMode;
+
+  /// For a Meru pause by taps: the number of pause taps in all, and how many
+  /// are still left before counting starts again.
+  final int meruPauseTapsTotal;
+  final int meruPauseTapsLeft;
+
   /// True while the user taps faster than a natural chanting pace. Only a
   /// hint — counting is never blocked.
   final bool isRushing;
@@ -64,6 +73,9 @@ class CountingState {
     this.isCompleting = false,
     this.isMeruPause = false,
     this.meruPauseSeconds = AppConstants.meruPauseDefaultSeconds,
+    this.meruPauseMode = MeruPauseMode.time,
+    this.meruPauseTapsTotal = AppConstants.meruPauseDefaultTaps,
+    this.meruPauseTapsLeft = 0,
     this.isRushing = false,
     this.resumedFromEarlierDay = false,
     this.earlierDayMalaFinished = false,
@@ -90,6 +102,9 @@ class CountingState {
     bool? isCompleting,
     bool? isMeruPause,
     int? meruPauseSeconds,
+    MeruPauseMode? meruPauseMode,
+    int? meruPauseTapsTotal,
+    int? meruPauseTapsLeft,
     bool? isRushing,
     bool? resumedFromEarlierDay,
     bool? earlierDayMalaFinished,
@@ -102,6 +117,9 @@ class CountingState {
       isCompleting: isCompleting ?? this.isCompleting,
       isMeruPause: isMeruPause ?? this.isMeruPause,
       meruPauseSeconds: meruPauseSeconds ?? this.meruPauseSeconds,
+      meruPauseMode: meruPauseMode ?? this.meruPauseMode,
+      meruPauseTapsTotal: meruPauseTapsTotal ?? this.meruPauseTapsTotal,
+      meruPauseTapsLeft: meruPauseTapsLeft ?? this.meruPauseTapsLeft,
       isRushing: isRushing ?? this.isRushing,
       resumedFromEarlierDay:
           resumedFromEarlierDay ?? this.resumedFromEarlierDay,
@@ -326,7 +344,10 @@ class CountingNotifier extends StateNotifier<CountingState> {
     var session = state.session;
     if (session == null) return;
     // The Meru bead is not crossed: taps during the pause are not counted.
-    if (state.isMeruPause) return;
+    if (state.isMeruPause) {
+      _usePauseTap();
+      return;
+    }
 
     if (_isOnEarlierDay(session.startTime)) {
       // A new day: today's taps go into a new row dated today.
@@ -380,21 +401,51 @@ class CountingNotifier extends StateNotifier<CountingState> {
     final newMalas = session.malas;
     if (newMalas <= prevMalas) return;
 
-    final seconds = settings.meruPauseSeconds;
     _meruTimer?.cancel();
-    _meruTimer = Timer(Duration(seconds: seconds), endMeruPause);
+    _meruTimer = null;
     // Rushing does not matter during a pause; start fresh after it.
     _clearPacing();
-    state = state.copyWith(isMeruPause: true, meruPauseSeconds: seconds);
+
+    if (settings.meruPauseMode == MeruPauseMode.taps) {
+      // No timer: the pause ends after the set number of uncounted taps.
+      final taps = settings.meruPauseTaps;
+      state = state.copyWith(
+        isMeruPause: true,
+        meruPauseMode: MeruPauseMode.taps,
+        meruPauseTapsTotal: taps,
+        meruPauseTapsLeft: taps,
+      );
+      return;
+    }
+
+    final seconds = settings.meruPauseSeconds;
+    _meruTimer = Timer(Duration(seconds: seconds), endMeruPause);
+    state = state.copyWith(
+      isMeruPause: true,
+      meruPauseMode: MeruPauseMode.time,
+      meruPauseSeconds: seconds,
+    );
   }
 
-  /// Ends the Meru pause now. Called by its timer, by undo, and when the
-  /// app leaves the screen.
+  /// A tap made during a Meru pause. It is never counted. In a pause by taps
+  /// it uses up one pause tap, and the last one ends the pause.
+  void _usePauseTap() {
+    if (state.meruPauseMode != MeruPauseMode.taps) return;
+    final left = state.meruPauseTapsLeft - 1;
+    if (left <= 0) {
+      endMeruPause();
+    } else {
+      state = state.copyWith(meruPauseTapsLeft: left);
+    }
+  }
+
+  /// Ends the Meru pause now. Called by its timer, by the last pause tap, by
+  /// undo, and when the app leaves the screen.
   void endMeruPause() {
     _meruTimer?.cancel();
     _meruTimer = null;
     if (mounted && state.isMeruPause) {
-      state = state.copyWith(isMeruPause: false);
+      state = state.copyWith(isMeruPause: false, meruPauseTapsLeft: 0);
     }
   }
 

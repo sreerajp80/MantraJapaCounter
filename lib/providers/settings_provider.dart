@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/legacy.dart';
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/core/locale/locale_config.dart';
 import 'package:mantra_japa_counter/models/mala_sound.dart';
+import 'package:mantra_japa_counter/models/meru_pause_mode.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/services/notification_service.dart';
@@ -33,6 +34,8 @@ class AppSettings {
   final bool dimmedChantingMode;
   final bool meruPauseEnabled;
   final int meruPauseSeconds;
+  final MeruPauseMode meruPauseMode;
+  final int meruPauseTaps;
   final bool pacingHintEnabled;
   final bool dailyReminderEnabled;
 
@@ -56,6 +59,8 @@ class AppSettings {
     this.dimmedChantingMode = false,
     this.meruPauseEnabled = false,
     this.meruPauseSeconds = AppConstants.meruPauseDefaultSeconds,
+    this.meruPauseMode = MeruPauseMode.time,
+    this.meruPauseTaps = AppConstants.meruPauseDefaultTaps,
     this.pacingHintEnabled = true,
     this.dailyReminderEnabled = false,
     this.dailyReminderMinutes = AppConstants.dailyReminderDefaultMinutes,
@@ -81,6 +86,8 @@ class AppSettings {
     bool? dimmedChantingMode,
     bool? meruPauseEnabled,
     int? meruPauseSeconds,
+    MeruPauseMode? meruPauseMode,
+    int? meruPauseTaps,
     bool? pacingHintEnabled,
     bool? dailyReminderEnabled,
     int? dailyReminderMinutes,
@@ -116,6 +123,8 @@ class AppSettings {
       dimmedChantingMode: dimmedChantingMode ?? this.dimmedChantingMode,
       meruPauseEnabled: meruPauseEnabled ?? this.meruPauseEnabled,
       meruPauseSeconds: meruPauseSeconds ?? this.meruPauseSeconds,
+      meruPauseMode: meruPauseMode ?? this.meruPauseMode,
+      meruPauseTaps: meruPauseTaps ?? this.meruPauseTaps,
       pacingHintEnabled: pacingHintEnabled ?? this.pacingHintEnabled,
       dailyReminderEnabled: dailyReminderEnabled ?? this.dailyReminderEnabled,
       dailyReminderMinutes: dailyReminderMinutes ?? this.dailyReminderMinutes,
@@ -162,6 +171,8 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
            dimmedChantingMode: _repo.dimmedChantingMode,
            meruPauseEnabled: _repo.meruPauseEnabled,
            meruPauseSeconds: _repo.meruPauseSeconds,
+           meruPauseMode: _repo.meruPauseMode,
+           meruPauseTaps: _repo.meruPauseTaps,
            pacingHintEnabled: _repo.pacingHintEnabled,
            dailyReminderEnabled: _repo.dailyReminderEnabled,
            dailyReminderMinutes: _repo.dailyReminderMinutes,
@@ -264,6 +275,18 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
   Future<void> setMeruPauseSeconds(int value) async {
     await _repo.setMeruPauseSeconds(value);
     state = state.copyWith(meruPauseSeconds: value);
+  }
+
+  Future<void> setMeruPauseMode(MeruPauseMode mode) async {
+    await _repo.setMeruPauseMode(mode);
+    state = state.copyWith(meruPauseMode: mode);
+  }
+
+  /// Saves the Meru pause tap count. Read back from the repository so the
+  /// state holds the same in-range value that was saved.
+  Future<void> setMeruPauseTaps(int value) async {
+    await _repo.setMeruPauseTaps(value);
+    state = state.copyWith(meruPauseTaps: _repo.meruPauseTaps);
   }
 
   Future<void> setPacingHintEnabled(bool value) async {

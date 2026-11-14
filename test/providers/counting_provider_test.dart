@@ -9,6 +9,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/models/active_session.dart';
 import 'package:mantra_japa_counter/models/japa_session.dart';
+import 'package:mantra_japa_counter/models/meru_pause_mode.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/counting_provider.dart';
 import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
@@ -280,6 +281,63 @@ void main() {
         isTrue,
       );
 
+      await notifier.decrement();
+      final state = container.read(countingNotifierProvider('c1'));
+      expect(state.isMeruPause, isFalse);
+      expect(state.session!.tapCount, 107);
+      await notifier.onPause(); // wait for pending DB writes
+      container.dispose();
+    });
+
+    test('by taps: 2 pause taps are not counted, the 3rd counts', () async {
+      await prefs.setBool(AppConstants.prefsMeruPauseKey, true);
+      await prefs.setString(
+        AppConstants.prefsMeruPauseModeKey,
+        MeruPauseMode.taps.id,
+      );
+      await prefs.setInt(AppConstants.prefsMeruPauseTapsKey, 2);
+      final container = newContainer();
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+
+      await tapTimes(notifier, 108); // mala complete
+      var state = container.read(countingNotifierProvider('c1'));
+      expect(state.isMeruPause, isTrue);
+      expect(state.meruPauseMode, MeruPauseMode.taps);
+      expect(state.meruPauseTapsTotal, 2);
+      expect(state.meruPauseTapsLeft, 2);
+
+      await notifier.tap(); // pause tap 1
+      state = container.read(countingNotifierProvider('c1'));
+      expect(state.isMeruPause, isTrue);
+      expect(state.meruPauseTapsLeft, 1);
+      expect(state.session!.tapCount, 108);
+
+      await notifier.tap(); // pause tap 2 — ends the pause
+      state = container.read(countingNotifierProvider('c1'));
+      expect(state.isMeruPause, isFalse);
+      expect(state.session!.tapCount, 108);
+
+      await notifier.tap(); // counted again
+      state = container.read(countingNotifierProvider('c1'));
+      expect(state.session!.tapCount, 109);
+      await notifier.onPause(); // wait for pending DB writes
+      container.dispose();
+    });
+
+    test('by taps: undo ends the pause', () async {
+      await prefs.setBool(AppConstants.prefsMeruPauseKey, true);
+      await prefs.setString(
+        AppConstants.prefsMeruPauseModeKey,
+        MeruPauseMode.taps.id,
+      );
+      await prefs.setInt(AppConstants.prefsMeruPauseTapsKey, 5);
+      final container = newContainer();
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+
+      await tapTimes(notifier, 108);
+      await notifier.tap(); // one pause tap used
       await notifier.decrement();
       final state = container.read(countingNotifierProvider('c1'));
       expect(state.isMeruPause, isFalse);
