@@ -29,6 +29,12 @@ class AppSettings {
 
   /// A short vibration on each counted tap. Off by default (battery).
   final bool tapVibrationEnabled;
+
+  /// In-app sound volume for mala and goal sounds, 10–100 percent.
+  final int feedbackVolumePercent;
+
+  /// In-app vibration strength, 10–100 percent.
+  final int vibrationStrengthPercent;
   final String? languageCode;
   final bool dndEnabled;
   final bool dimmedChantingMode;
@@ -54,6 +60,8 @@ class AppSettings {
     this.lifetimeSoundName,
     required this.vibrationEnabled,
     this.tapVibrationEnabled = false,
+    this.feedbackVolumePercent = AppConstants.feedbackLevelDefaultPercent,
+    this.vibrationStrengthPercent = AppConstants.feedbackLevelDefaultPercent,
     this.languageCode,
     this.dndEnabled = false,
     this.dimmedChantingMode = false,
@@ -80,6 +88,8 @@ class AppSettings {
     bool clearLifetimeSound = false,
     bool? vibrationEnabled,
     bool? tapVibrationEnabled,
+    int? feedbackVolumePercent,
+    int? vibrationStrengthPercent,
     String? languageCode,
     bool clearLanguageCode = false,
     bool? dndEnabled,
@@ -116,6 +126,10 @@ class AppSettings {
           : (lifetimeSoundName ?? this.lifetimeSoundName),
       vibrationEnabled: vibrationEnabled ?? this.vibrationEnabled,
       tapVibrationEnabled: tapVibrationEnabled ?? this.tapVibrationEnabled,
+      feedbackVolumePercent:
+          feedbackVolumePercent ?? this.feedbackVolumePercent,
+      vibrationStrengthPercent:
+          vibrationStrengthPercent ?? this.vibrationStrengthPercent,
       languageCode: clearLanguageCode
           ? null
           : (languageCode ?? this.languageCode),
@@ -166,6 +180,8 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
            lifetimeSoundName: _repo.lifetimeSoundName,
            vibrationEnabled: _repo.vibrationEnabled,
            tapVibrationEnabled: _repo.tapVibrationEnabled,
+           feedbackVolumePercent: _repo.feedbackVolumePercent,
+           vibrationStrengthPercent: _repo.vibrationStrengthPercent,
            languageCode: _repo.languageCode,
            dndEnabled: _repo.dndEnabled,
            dimmedChantingMode: _repo.dimmedChantingMode,
@@ -245,6 +261,18 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
   Future<void> setTapVibrationEnabled(bool value) async {
     await _repo.setTapVibrationEnabled(value);
     state = state.copyWith(tapVibrationEnabled: value);
+  }
+
+  Future<void> setFeedbackVolumePercent(int value) async {
+    await _repo.setFeedbackVolumePercent(value);
+    state = state.copyWith(feedbackVolumePercent: _repo.feedbackVolumePercent);
+  }
+
+  Future<void> setVibrationStrengthPercent(int value) async {
+    await _repo.setVibrationStrengthPercent(value);
+    state = state.copyWith(
+      vibrationStrengthPercent: _repo.vibrationStrengthPercent,
+    );
   }
 
   Future<void> setLanguageCode(String? code) async {

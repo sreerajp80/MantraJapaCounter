@@ -69,6 +69,24 @@ void main() {
     });
   });
 
+  group('SettingsNotifier - sound and vibration levels', () {
+    test('start at defaults and the setters save the values', () async {
+      SharedPreferences.setMockInitialValues({});
+      final repo = SettingsRepository(await SharedPreferences.getInstance());
+      final notifier = SettingsNotifier(repo);
+      expect(notifier.state.feedbackVolumePercent, 100);
+      expect(notifier.state.vibrationStrengthPercent, 100);
+
+      await notifier.setFeedbackVolumePercent(50);
+      await notifier.setVibrationStrengthPercent(5); // kept at least 10
+
+      expect(notifier.state.feedbackVolumePercent, 50);
+      expect(notifier.state.vibrationStrengthPercent, 10);
+      expect(repo.feedbackVolumePercent, 50);
+      expect(repo.vibrationStrengthPercent, 10);
+    });
+  });
+
   group('SettingsNotifier - daily reminder', () {
     late FakeNotificationService notifications;
     late SettingsRepository repo;

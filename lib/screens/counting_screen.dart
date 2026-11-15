@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:material_ui/material_ui.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
@@ -537,11 +536,13 @@ class _CountingScreenState extends ConsumerState<CountingScreen>
 
     _swipeDecrementFired = true;
     ref.read(countingNotifierProvider(widget.counterId).notifier).decrement();
-    final vibrationEnabled = ref
-        .read(settingsNotifierProvider)
-        .vibrationEnabled;
-    if (vibrationEnabled) {
-      HapticFeedback.mediumImpact();
+    final settings = ref.read(settingsNotifierProvider);
+    if (settings.vibrationEnabled) {
+      unawaited(
+        ref
+            .read(hapticFeedbackServiceProvider)
+            .undoPulse(strength: settings.vibrationStrengthPercent / 100),
+      );
     }
   }
 

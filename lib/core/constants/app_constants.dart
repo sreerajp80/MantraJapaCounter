@@ -21,6 +21,13 @@ class AppConstants {
   static const int meruPauseMaxTaps = 19;
   static const int meruPauseDefaultTaps = 2;
 
+  // In-app sound volume and vibration strength, in percent. The minimum is
+  // above 0 so a level can never silently turn feedback off; the switches do
+  // that. 100 = full level, the behaviour before these settings existed.
+  static const int feedbackLevelMinPercent = 10;
+  static const int feedbackLevelMaxPercent = 100;
+  static const int feedbackLevelDefaultPercent = 100;
+
   // Pacing hint: taps faster than this rate (averaged over the last
   // [pacingWindowTaps] taps) count as rushing. The hint clears
   // [pacingHintHoldMs] after the last fast tap.
@@ -78,6 +85,8 @@ class AppConstants {
   static const String prefsLifetimeSoundNameKey = 'lifetime_sound_name';
   static const String prefsVibrationKey = 'notification_vibration';
   static const String prefsTapVibrationKey = 'tap_vibration';
+  static const String prefsFeedbackVolumeKey = 'feedback_volume_percent';
+  static const String prefsVibrationStrengthKey = 'vibration_strength_percent';
   static const String prefsLanguageCodeKey = 'app_language_code';
   static const String prefsDndKey = 'dnd_enabled';
   static const String prefsNotifPermissionAskedKey =

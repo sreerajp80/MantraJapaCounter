@@ -16,6 +16,8 @@ Future<void> showMalaSoundPicker(
 ) async {
   final l = AppLocalizations.of(context);
   final soundService = ref.read(soundServiceProvider);
+  // Previews play at the same in-app volume as a real mala chime.
+  final volume = settings.feedbackVolumePercent / 100;
 
   await showModalBottomSheet<void>(
     context: context,
@@ -50,11 +52,16 @@ Future<void> showMalaSoundPicker(
                       title: l.soundTempleBell,
                       subtitle: l.soundTempleBellSub,
                       selected: selectedSound == MalaSound.templeBell,
-                      onPreview: () =>
-                          soundService.playMalaSound(MalaSound.templeBell),
+                      onPreview: () => soundService.playMalaSound(
+                        MalaSound.templeBell,
+                        volume: volume,
+                      ),
                       onTap: () async {
                         await notifier.setMalaSound(MalaSound.templeBell);
-                        await soundService.playMalaSound(MalaSound.templeBell);
+                        await soundService.playMalaSound(
+                          MalaSound.templeBell,
+                          volume: volume,
+                        );
                         if (sheetContext.mounted) {
                           Navigator.pop(sheetContext);
                         }
@@ -65,11 +72,16 @@ Future<void> showMalaSoundPicker(
                       title: l.soundSingingBowl,
                       subtitle: l.soundSingingBowlSub,
                       selected: selectedSound == MalaSound.singingBowl,
-                      onPreview: () =>
-                          soundService.playMalaSound(MalaSound.singingBowl),
+                      onPreview: () => soundService.playMalaSound(
+                        MalaSound.singingBowl,
+                        volume: volume,
+                      ),
                       onTap: () async {
                         await notifier.setMalaSound(MalaSound.singingBowl);
-                        await soundService.playMalaSound(MalaSound.singingBowl);
+                        await soundService.playMalaSound(
+                          MalaSound.singingBowl,
+                          volume: volume,
+                        );
                         if (sheetContext.mounted) {
                           Navigator.pop(sheetContext);
                         }
@@ -80,12 +92,15 @@ Future<void> showMalaSoundPicker(
                       title: l.soundSynthesizedTone,
                       subtitle: l.soundSynthesizedToneSub,
                       selected: selectedSound == MalaSound.synthesizedTone,
-                      onPreview: () =>
-                          soundService.playMalaSound(MalaSound.synthesizedTone),
+                      onPreview: () => soundService.playMalaSound(
+                        MalaSound.synthesizedTone,
+                        volume: volume,
+                      ),
                       onTap: () async {
                         await notifier.setMalaSound(MalaSound.synthesizedTone);
                         await soundService.playMalaSound(
                           MalaSound.synthesizedTone,
+                          volume: volume,
                         );
                         if (sheetContext.mounted) {
                           Navigator.pop(sheetContext);

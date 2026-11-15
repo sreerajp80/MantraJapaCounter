@@ -567,6 +567,59 @@ class AppLocalizationsEn extends AppLocalizations {
       'Uses extra battery in long sessions, because the phone vibrates on every tap.';
 
   @override
+  String get sectionFeedbackLevels => 'Levels';
+
+  @override
+  String get sectionFeedbackLevelsSub =>
+      'How loud the sounds are and how strong the vibrations feel';
+
+  @override
+  String get feedbackVolume => 'Sound volume';
+
+  @override
+  String get feedbackVolumeSub =>
+      'Mala chime and goal tones. They play even in silent mode.';
+
+  @override
+  String get vibrationStrength => 'Vibration strength';
+
+  @override
+  String get vibrationStrengthSub =>
+      'Mala, goal and undo vibrations, and the tap pulse.';
+
+  @override
+  String get vibrationStrengthPhoneLimit =>
+      'The phone\'s own vibration settings set the maximum. If you feel nothing, check them.';
+
+  @override
+  String get vibrationTestTitle => 'Did you feel a vibration?';
+
+  @override
+  String get vibrationTestBody => 'The phone just vibrated once to test it.';
+
+  @override
+  String get vibrationTestYes => 'Yes';
+
+  @override
+  String get vibrationTestNo => 'No';
+
+  @override
+  String get vibrationTestAgain => 'Test again';
+
+  @override
+  String get vibrationOffTitle => 'Phone vibration is off or low';
+
+  @override
+  String get vibrationOffBody =>
+      'Every app\'s vibration is limited by the phone\'s own settings. In the phone\'s settings, turn vibration on and raise the Alarm vibration level (under Vibration & haptics on most phones).';
+
+  @override
+  String get openPhoneSettings => 'Open phone settings';
+
+  @override
+  String get vibrationTestClose => 'Close';
+
+  @override
   String get notificationSound => 'Notification sound';
 
   @override
@@ -1000,7 +1053,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpCountingTapBullet3 =>
-      'Taps do not vibrate. You feel a vibration on each full mala, on goals and on undo, if vibration is on.';
+      'Taps do not vibrate unless you turn on Vibrate on each tap. You feel a vibration on each full mala, on goals and on undo, if vibration is on.';
 
   @override
   String get helpCountingUndoSection => 'Undoing a count';
@@ -1118,7 +1171,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpAudioIntro =>
-      'Sounds and vibration mark the moments that matter: each full mala and each goal. Set them in Settings → Sound & Haptics.';
+      'Sounds and vibration mark the moments that matter: each full mala and each goal. Set them in Settings → Sound & Haptics. There you can also set the sound volume and vibration strength.';
 
   @override
   String get helpAudioVibrationSection => 'Vibration';
@@ -1128,14 +1181,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpAudioVibrationBullet1 =>
-      'One pulse on each full mala, three pulses when a goal is reached, and a short tap when you undo. You can also turn on a light pulse for every tap (Vibrate on each tap); it uses extra battery.';
+      'One pulse on each full mala, three pulses when a goal is reached, and a short double click when you undo. You can also turn on a light click for every tap (Vibrate on each tap); it uses extra battery. They work in silent mode, but the phone\'s own vibration settings set how strong they can be.';
 
   @override
   String get helpAudioVibrationBold2 => 'Turn off:';
 
   @override
   String get helpAudioVibrationBullet2 =>
-      'Switch off Vibration in Settings → Sound & Haptics for fully silent practice.';
+      'Switch off Vibration in Settings → Sound & Haptics for fully silent practice. To make vibrations softer instead, lower Vibration strength.';
 
   @override
   String get helpBackupIntro =>

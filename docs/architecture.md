@@ -305,9 +305,31 @@ Migration history:
   - In both modes undo and leaving the screen end the pause at once.
 - **Tap vibration** (Settings → Sound & Haptics → *Vibrate on each tap*, saved as
   `tapVibrationEnabled`, off by default): `CountingNotifier.tap()` calls
-  `HapticFeedbackService.tapPulse()` (a light system haptic) only for a counted tap, not during
-  the Meru pause. It is separate from the main Vibration switch (mala / goal / undo). The setting
+  `HapticFeedbackService.tapPulse(strength:)` only for a counted tap, not during the Meru
+  pause. It is separate from the main Vibration switch (mala / goal / undo). The setting
   shows a battery warning, because a pulse on every tap adds up in long sessions.
+- **Tap and undo pulses** are always sent by the app (native `vibrateTap` / `vibrateUndo`, with
+  `USAGE_ALARM` like the mala and goal vibrations), never by the system haptics. On Android 11+
+  phones that support `PRIMITIVE_CLICK` they are a tuned click (undo = two clicks, 70 ms apart)
+  scaled by the strength; otherwise a plain pulse (tap 35 ms, undo 60 ms). The undo swipe in
+  `counting_screen.dart` calls `HapticFeedbackService.undoPulse(...)`.
+- **Phone vibration limits:** silent mode, DND and the phone's touch vibration setting do not
+  stop these vibrations, but the phone's own vibration settings still apply: the main vibration
+  switch turns all of them off, and the Alarm vibration level (Android 13+) sets the maximum
+  strength. Android gives apps no reliable way to read these settings. So turning on Vibration or
+  Vibrate on each tap plays one test vibration and asks "Did you feel a vibration?"
+  (`vibration_test_dialog.dart`). On No, it explains the phone setting and offers
+  *Open phone settings* (native `openPhoneVibrationSettings` → `ACTION_SOUND_SETTINGS`, falling
+  back to `ACTION_SETTINGS`). The app setting stays on either way.
+- **Sound volume / vibration strength** (Settings → Sound & Haptics → Levels, saved as
+  `feedback_volume_percent` / `vibration_strength_percent`, 10–100, default 100; bad saved
+  values fall back to 100). Callers pass them to the services as 0.1–1.0 (`volume:` /
+  `strength:`); the services never read settings. Native code sets `STREAM_ALARM` to
+  `volume × max` (at least 1) instead of max, and uses amplitude `strength × 255`. Mala and goal
+  sounds still play in silent / DND mode at any level. The strength slider is hidden when
+  `hasAmplitudeControl` is false, and its note says the phone's own vibration settings set the
+  maximum. Letting go of a slider plays one sample (mala sound / mala
+  vibration). Previews in the sound pickers use the same volume.
 - If the mala count is edited while a session is paused, the session uses the new mala count when
   it is resumed (prefs and its DB row's malas / chants split are updated). Finished history rows
   keep their old split.

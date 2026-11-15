@@ -53,9 +53,13 @@ class _FakeSound implements SoundService {
 /// Counts the per-tap pulses; every other feedback call is silent.
 class _FakeHaptic implements HapticFeedbackService {
   int tapPulses = 0;
+  double? lastStrength;
 
   @override
-  Future<void> tapPulse() async => tapPulses++;
+  Future<void> tapPulse({double strength = 1.0}) async {
+    tapPulses++;
+    lastStrength = strength;
+  }
 
   @override
   dynamic noSuchMethod(Invocation invocation) => Future<void>.value();
@@ -820,6 +824,24 @@ void main() {
       await notifier.tap();
 
       expect(haptic.tapPulses, 3);
+      // Default: full strength.
+      expect(haptic.lastStrength, 1.0);
+      await notifier.onPause(); // wait for pending DB writes
+      container.dispose();
+    });
+
+    test('passes the strength to the pulse', () async {
+      await prefs.setBool(AppConstants.prefsTapVibrationKey, true);
+      await prefs.setInt(AppConstants.prefsVibrationStrengthKey, 40);
+      final haptic = _FakeHaptic();
+      final container = newContainer(haptic: haptic);
+      final notifier = container.read(countingNotifierProvider('c1').notifier);
+      await notifier.init();
+
+      await notifier.tap();
+
+      expect(haptic.tapPulses, 1);
+      expect(haptic.lastStrength, 0.4);
       await notifier.onPause(); // wait for pending DB writes
       container.dispose();
     });

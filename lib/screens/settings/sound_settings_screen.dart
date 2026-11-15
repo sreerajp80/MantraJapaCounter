@@ -10,6 +10,8 @@ import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
 import 'package:mantra_japa_counter/screens/settings/settings_tiles.dart';
 import 'package:mantra_japa_counter/screens/settings/mala_sound_picker.dart';
 import 'package:mantra_japa_counter/screens/settings/notification_sound_picker.dart';
+import 'package:mantra_japa_counter/screens/settings/settings_level_slider.dart';
+import 'package:mantra_japa_counter/screens/settings/vibration_test_dialog.dart';
 
 /// Dedicated Sound & Haptics settings screen.
 class SoundSettingsScreen extends ConsumerWidget {
@@ -21,6 +23,30 @@ class SoundSettingsScreen extends ConsumerWidget {
     final settings = ref.watch(settingsNotifierProvider);
     final notifier = ref.read(settingsNotifierProvider.notifier);
     final soundService = ref.read(soundServiceProvider);
+    final haptic = ref.read(hapticFeedbackServiceProvider);
+    // Hidden while unknown or on phones that cannot change the strength.
+    final canSetStrength =
+        ref.watch(vibratorHasAmplitudeControlProvider).value ?? false;
+
+    // Turning a vibration setting on plays a test vibration and asks if it
+    // was felt, because the phone's own settings can block or weaken it.
+    Future<void> Function(bool) withVibrationTest(
+      Future<void> Function(bool) save,
+    ) {
+      return (value) async {
+        await save(value);
+        if (!value || !context.mounted) return;
+        await showVibrationTestDialog(
+          context,
+          playTest: () => haptic.vibrateMala(
+            strength:
+                ref.read(settingsNotifierProvider).vibrationStrengthPercent /
+                100,
+          ),
+          openPhoneSettings: haptic.openPhoneVibrationSettings,
+        );
+      };
+    }
 
     return Scaffold(
       backgroundColor: TempleColors.bg,
@@ -116,6 +142,7 @@ class SoundSettingsScreen extends ConsumerWidget {
                         right: l.play,
                         onTap: () => soundService.playTone(
                           settings.notificationSoundUri,
+                          volume: settings.feedbackVolumePercent / 100,
                         ),
                       ),
                     ],
@@ -167,8 +194,10 @@ class SoundSettingsScreen extends ConsumerWidget {
                         title: l.previewTone,
                         sub: l.previewToneSub,
                         right: l.play,
-                        onTap: () =>
-                            soundService.playTone(settings.lifetimeSoundUri),
+                        onTap: () => soundService.playTone(
+                          settings.lifetimeSoundUri,
+                          volume: settings.feedbackVolumePercent / 100,
+                        ),
                       ),
                     ],
                   ),
@@ -242,7 +271,9 @@ class SoundSettingsScreen extends ConsumerWidget {
                         title: l.vibration,
                         sub: l.permVibrationDesc,
                         toggle: settings.vibrationEnabled,
-                        onToggle: notifier.setVibrationEnabled,
+                        onToggle: withVibrationTest(
+                          notifier.setVibrationEnabled,
+                        ),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -256,7 +287,9 @@ class SoundSettingsScreen extends ConsumerWidget {
                             title: l.tapVibration,
                             sub: l.tapVibrationSub,
                             toggle: settings.tapVibrationEnabled,
-                            onToggle: notifier.setTapVibrationEnabled,
+                            onToggle: withVibrationTest(
+                              notifier.setTapVibrationEnabled,
+                            ),
                           ),
                           // Battery warning stays visible, on or off.
                           Padding(
@@ -285,6 +318,42 @@ class SoundSettingsScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
+                    ],
+                  ),
+
+                  // Levels Section: in-app sound volume and vibration
+                  // strength. Letting go of a slider plays one sample.
+                  SettingsSection(
+                    title: l.sectionFeedbackLevels,
+                    sub: l.sectionFeedbackLevelsSub,
+                    iconBuilder: (s, c) =>
+                        Icon(Icons.tune_outlined, size: s, color: c),
+                    children: [
+                      SettingsLevelSlider(
+                        icon: Icons.volume_up_outlined,
+                        title: l.feedbackVolume,
+                        sub: l.feedbackVolumeSub,
+                        percent: settings.feedbackVolumePercent,
+                        onChangeEnd: (percent) async {
+                          await notifier.setFeedbackVolumePercent(percent);
+                          await soundService.playMalaSound(
+                            settings.malaSound,
+                            volume: percent / 100,
+                          );
+                        },
+                      ),
+                      if (canSetStrength)
+                        SettingsLevelSlider(
+                          icon: Icons.vibration,
+                          title: l.vibrationStrength,
+                          sub: l.vibrationStrengthSub,
+                          note: l.vibrationStrengthPhoneLimit,
+                          percent: settings.vibrationStrengthPercent,
+                          onChangeEnd: (percent) async {
+                            await notifier.setVibrationStrengthPercent(percent);
+                            await haptic.vibrateMala(strength: percent / 100);
+                          },
+                        ),
                     ],
                   ),
 

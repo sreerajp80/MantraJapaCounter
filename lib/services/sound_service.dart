@@ -16,8 +16,9 @@ class RingtoneOption {
 /// adapt to user-picked tones. Playing audio directly side-steps that.
 ///
 /// All paths route through `USAGE_ALARM` / `STREAM_ALARM` and ask the native
-/// side to temporarily boost the alarm volume so completion tones remain
-/// audible in silent / DND / very-low-volume modes:
+/// side to temporarily set the alarm volume to the in-app level (`volume`,
+/// 0.1–1.0, passed in by the caller) so completion tones remain audible in
+/// silent / DND / very-low-volume modes:
 ///   * `null` URI → native `RingtoneManager` plays the system default
 ///     notification tone (the alias `content://settings/system/notification_sound`
 ///     does not resolve through ExoPlayer); native side applies USAGE_ALARM
@@ -51,15 +52,13 @@ class SoundService {
   /// Plays the configured mala soundscape.
   /// For [MalaSound.synthesizedTone], invokes native ToneGenerator.
   /// For acoustic soundscapes, plays the bundled asset with volume boost.
-  Future<void> playMalaSound(MalaSound sound) async {
+  Future<void> playMalaSound(MalaSound sound, {double volume = 1.0}) async {
     try {
       await _player.stop();
       if (sound == MalaSound.synthesizedTone) {
-        await _channel.invokeMethod<void>('playMalaTone');
+        await _channel.invokeMethod<void>('playMalaTone', {'volume': volume});
       } else {
-        try {
-          await _channel.invokeMethod<void>('boostAlarmVolume');
-        } catch (_) {}
+        await _boost(volume);
         await _player.play(AssetSource(sound.assetPath));
       }
     } catch (_) {
@@ -68,16 +67,21 @@ class SoundService {
   }
 
   /// Plays a bundled sacred audio asset with volume boost.
-  Future<void> playSacredAsset(String assetPath) async {
+  Future<void> playSacredAsset(String assetPath, {double volume = 1.0}) async {
     try {
       await _player.stop();
-      try {
-        await _channel.invokeMethod<void>('boostAlarmVolume');
-      } catch (_) {}
+      await _boost(volume);
       await _player.play(AssetSource(assetPath));
     } catch (_) {
       // Best-effort.
     }
+  }
+
+  /// Sets the alarm volume to the in-app level before a file plays.
+  Future<void> _boost(double volume) async {
+    try {
+      await _channel.invokeMethod<void>('boostAlarmVolume', {'volume': volume});
+    } catch (_) {}
   }
 
   /// Stops any currently playing audio tone or ringtone preview.
@@ -90,27 +94,30 @@ class SoundService {
 
   /// Plays the user's configured tone, or the device default when [uri] is null.
   /// Errors are swallowed — a failed tone must never break a counting session.
-  Future<void> playTone(String? uri) async {
+  Future<void> playTone(String? uri, {double volume = 1.0}) async {
     try {
       await _player.stop();
       if (uri == null) {
-        await _channel.invokeMethod<void>('previewDefaultNotificationTone');
+        await _channel.invokeMethod<void>('previewDefaultNotificationTone', {
+          'volume': volume,
+        });
       } else if (uri == 'sacred:synthesized_tone') {
-        await _channel.invokeMethod<void>('playMalaTone');
+        await _channel.invokeMethod<void>('playMalaTone', {'volume': volume});
       } else if (uri == 'sacred:temple_bell') {
-        await playSacredAsset('audio/temple_bell.wav');
+        await playSacredAsset('audio/temple_bell.wav', volume: volume);
       } else if (uri == 'sacred:singing_bowl') {
-        await playSacredAsset('audio/singing_bowl.wav');
+        await playSacredAsset('audio/singing_bowl.wav', volume: volume);
       } else if (uri == 'sacred:shankha') {
-        await playSacredAsset('audio/shankha.wav');
+        await playSacredAsset('audio/shankha.wav', volume: volume);
       } else if (uri.startsWith('asset://')) {
-        await playSacredAsset(uri.replaceFirst('asset://', ''));
+        await playSacredAsset(uri.replaceFirst('asset://', ''), volume: volume);
       } else if (uri.startsWith('content://')) {
-        await _channel.invokeMethod<void>('playRingtoneUri', {'uri': uri});
+        await _channel.invokeMethod<void>('playRingtoneUri', {
+          'uri': uri,
+          'volume': volume,
+        });
       } else {
-        try {
-          await _channel.invokeMethod<void>('boostAlarmVolume');
-        } catch (_) {}
+        await _boost(volume);
         await _player.play(DeviceFileSource(uri));
       }
     } catch (_) {

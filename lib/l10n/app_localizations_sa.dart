@@ -558,6 +558,58 @@ class AppLocalizationsSa extends AppLocalizations {
       'प्रतिस्पर्शं कम्पनात् दीर्घजपे अधिकं विद्युत्कोशबलं (battery) व्ययीभवति।';
 
   @override
+  String get sectionFeedbackLevels => 'स्तराः';
+
+  @override
+  String get sectionFeedbackLevelsSub => 'ध्वनेः उच्चता कम्पनस्य बलं च';
+
+  @override
+  String get feedbackVolume => 'ध्वनिमात्रा';
+
+  @override
+  String get feedbackVolumeSub =>
+      'मालाध्वनिः लक्ष्यध्वनयः च। मौनप्रणाल्याम् अपि श्रूयन्ते।';
+
+  @override
+  String get vibrationStrength => 'कम्पनबलम्';
+
+  @override
+  String get vibrationStrengthSub =>
+      'मालायाः लक्ष्यस्य निवर्तनस्य च कम्पनं, स्पर्शस्पन्दनं च।';
+
+  @override
+  String get vibrationStrengthPhoneLimit =>
+      'दूरभाषस्य स्वकम्पनसंयोजनानि अधिकतमबलं निश्चिन्वन्ति। किमपि न अनुभूयते चेत् तानि परीक्षताम्।';
+
+  @override
+  String get vibrationTestTitle => 'कम्पनम् अनुभूतं वा?';
+
+  @override
+  String get vibrationTestBody => 'परीक्षार्थं दूरभाषः इदानीम् एकवारं कम्पितः।';
+
+  @override
+  String get vibrationTestYes => 'आम्';
+
+  @override
+  String get vibrationTestNo => 'न';
+
+  @override
+  String get vibrationTestAgain => 'पुनः परीक्षताम्';
+
+  @override
+  String get vibrationOffTitle => 'दूरभाषस्य कम्पनं निष्क्रियं मन्दं वा';
+
+  @override
+  String get vibrationOffBody =>
+      'सर्वेषाम् अनुप्रयोगाणां कम्पनं दूरभाषस्य स्वसंयोजनैः सीमितं भवति। दूरभाषसंयोजनेषु कम्पनं सक्रियं कृत्वा अलार्म्-कम्पनस्तरं वर्धयतु (बहुषु दूरभाषेषु Vibration & haptics इत्यत्र)।';
+
+  @override
+  String get openPhoneSettings => 'दूरभाषसंयोजनानि उद्घाटयतु';
+
+  @override
+  String get vibrationTestClose => 'पिधत्ताम्';
+
+  @override
   String get notificationSound => 'सूचनाध्वनिः';
 
   @override
@@ -974,7 +1026,7 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get helpCountingTapBullet3 =>
-      'स्पर्शेषु कम्पनं नास्ति। कम्पने सक्रिये प्रत्येकमालासमाप्तौ, लक्ष्ये, निवर्तने च कम्पनं भवति।';
+      '“प्रतिस्पर्शं कम्पनम्” सक्रियं न चेत् स्पर्शेषु कम्पनं नास्ति। कम्पने सक्रिये प्रत्येकमालासमाप्तौ, लक्ष्ये, निवर्तने च कम्पनं भवति।';
 
   @override
   String get helpCountingUndoSection => 'गणनानिवर्तनम्';
@@ -1091,7 +1143,7 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get helpAudioIntro =>
-      'ध्वनिः स्पन्दनं च मुख्यक्षणान् सूचयतः: प्रत्येकमालां प्रत्येकलक्ष्यं च। संयोजनानि → ध्वनिः स्पन्दनं च इत्यत्र तानि निर्धारयतु।';
+      'ध्वनिः स्पन्दनं च मुख्यक्षणान् सूचयतः: प्रत्येकमालां प्रत्येकलक्ष्यं च। संयोजनानि → ध्वनिः स्पन्दनं च इत्यत्र तानि निर्धारयतु। तत्र ध्वनिमात्रां कम्पनबलं च अपि स्थापयितुं शक्यते।';
 
   @override
   String get helpAudioVibrationSection => 'कम्पनम्';
@@ -1101,14 +1153,14 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get helpAudioVibrationBullet1 =>
-      'प्रत्येकमालायाम् एकं स्पन्दनं, लक्ष्यसिद्धौ त्रीणि, निवर्तने लघु एकम्। प्रतिस्पर्शं लघुस्पन्दनम् अपि चालयितुं शक्यते (प्रतिस्पर्शं कम्पनम्); तेन अधिकं battery व्ययीभवति।';
+      'प्रत्येकमालायाम् एकं स्पन्दनं, लक्ष्यसिद्धौ त्रीणि, निवर्तने लघु द्विवारं क्लिक्। प्रतिस्पर्शं लघुक्लिक् अपि चालयितुं शक्यते (प्रतिस्पर्शं कम्पनम्); तेन अधिकं battery व्ययीभवति। मौनप्रणाल्याम् अपि एतानि भवन्ति, किन्तु कियत् बलवन्ति इति दूरभाषस्य स्वकम्पनसंयोजनानि निश्चिन्वन्ति।';
 
   @override
   String get helpAudioVibrationBold2 => 'निष्क्रियीकरणम्:';
 
   @override
   String get helpAudioVibrationBullet2 =>
-      'पूर्णमौनसाधनायै संयोजनानि → ध्वनिः स्पन्दनं च इत्यत्र कम्पनं निष्क्रियं करोतु।';
+      'पूर्णमौनसाधनायै संयोजनानि → ध्वनिः स्पन्दनं च इत्यत्र कम्पनं निष्क्रियं करोतु। केवलं मृदुतरं कर्तुं कम्पनबलं न्यूनीकरोतु।';
 
   @override
   String get helpBackupIntro =>

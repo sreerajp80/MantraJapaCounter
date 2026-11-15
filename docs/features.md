@@ -139,12 +139,12 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
 
 ### 5. Audio, Haptic & Notification System
 - **Mala Round Completion (108 Beads)**:
-  - **Mala Soft Beep**: Synthesized native 100ms DTMF tone via Android `ToneGenerator` (requires no external audio assets; plays on `STREAM_ALARM` at boosted volume to bypass silent/DND modes).
-  - **Mala Vibration**: Native single-pulse vibration (250ms at max amplitude using `USAGE_ALARM` attributes to bypass silent/DND modes).
+  - **Mala Soft Beep**: Synthesized native 100ms DTMF tone via Android `ToneGenerator` (requires no external audio assets; plays on `STREAM_ALARM` at the in-app volume to bypass silent/DND modes).
+  - **Mala Vibration**: Native single-pulse vibration (250ms at the in-app strength using `USAGE_ALARM` attributes to bypass silent/DND modes).
   - Configurable toggle in Settings ("Enable mala sound").
 - **Daily Goal Completion**:
   - **Goal Ringtone Playback**: Plays configured notification sound on reaching the daily goal.
-  - **Goal Vibration**: Native triple-pulse vibration pattern (`220ms / 90ms / 220ms / 90ms / 220ms` at max amplitude using `USAGE_ALARM`).
+  - **Goal Vibration**: Native triple-pulse vibration pattern (`220ms / 90ms / 220ms / 90ms / 220ms` at the in-app strength using `USAGE_ALARM`).
   - **Status-Bar Notification Toast**: Displays a system status-bar notification ("Daily Goal Achieved").
   - Configurable notification & vibration toggles in Settings.
 - **Smart Audio Suppression**: When the 108th bead in a mala also completes the daily goal, the mala sound is automatically omitted to avoid audio overlap with the daily goal completion tone.
@@ -152,7 +152,12 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
   - **System Default Tone**: Use device default notification ringtone.
   - **System Ringtone Picker**: Browse and select from native Android system notification ringtones via `RingtoneManager`.
   - **Custom Audio File Picker**: Select custom MP3/WAV/AAC audio files from local storage using `file_picker`.
-  - **Native Volume Boost**: Native MethodChannel boosts `STREAM_ALARM` volume during playback so completion tones remain audible in low-volume modes, with a 6-second auto-restore timeout and automatic restoration in `onPause`/`onDestroy`.
+  - **Native Volume Boost**: Native MethodChannel sets `STREAM_ALARM` to the in-app volume during playback so completion tones remain audible in low-volume modes, with a 6-second auto-restore timeout and automatic restoration in `onPause`/`onDestroy`.
+- **In-App Levels** (Settings → Sound & Haptics → Levels):
+  - **Sound volume** (10–100 %, default 100 %) for the mala chime and goal tones.
+  - **Vibration strength** (10–100 %, default 100 %) for mala, goal and undo vibrations and the tap pulse; hidden on phones that cannot change vibration strength. The phone's own vibration settings set the maximum.
+- **Tap and Undo Pulses**: Sent by the app as a short tuned click (undo: two clicks) on Android 11+ phones that support it, otherwise a short pulse. They work in silent mode and with the phone's touch vibration off.
+- **Vibration Test**: Turning on Vibration or Vibrate on each tap plays one test vibration and asks "Did you feel a vibration?". On No, the app explains that the phone's vibration is off or low and offers a button that opens the phone's Sound & vibration settings.
   - **Preview Tone**: In-settings button to preview the selected notification tone immediately.
 - **Daily Practice Reminder**:
   - Off by default. Turn on in Settings → Sound & Haptics → Practice reminder and pick a time (default 06:00).

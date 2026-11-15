@@ -84,6 +84,12 @@ final hapticFeedbackServiceProvider = Provider<HapticFeedbackService>((ref) {
   return HapticFeedbackService();
 });
 
+/// True when the phone can vibrate at different strengths. Used to hide the
+/// vibration strength setting on phones that cannot change it.
+final vibratorHasAmplitudeControlProvider = FutureProvider<bool>((ref) {
+  return ref.watch(hapticFeedbackServiceProvider).hasAmplitudeControl();
+});
+
 final sessionRecoveryServiceProvider = Provider<SessionRecoveryService>((ref) {
   return SessionRecoveryService(
     ref.watch(japaCounterRepositoryProvider),

@@ -18,8 +18,12 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   late FakeJapaCounterRepository repo;
   late FakeNotificationService notifications;
+  var hasAmplitude = true;
+  final hapticCalls = <String>[];
 
   setUp(() {
+    hasAmplitude = true;
+    hapticCalls.clear();
     SharedPreferences.setMockInitialValues({});
     repo = FakeJapaCounterRepository();
     notifications = FakeNotificationService();
@@ -38,6 +42,8 @@ void main() {
         .setMockMethodCallHandler(
           const MethodChannel('com.sreerajp.mantrajapacounter/haptic'),
           (call) async {
+            hapticCalls.add(call.method);
+            if (call.method == 'hasAmplitudeControl') return hasAmplitude;
             if (call.method == 'listNotificationRingtones') {
               return [
                 {'title': 'System Bell', 'uri': 'content://media/1'},
@@ -138,6 +144,137 @@ void main() {
     await tester.tap(find.text('Vibrate on each tap'));
     await tester.pumpAndSettle();
     expect(container.read(settingsNotifierProvider).tapVibrationEnabled, true);
+  });
+
+  group('sound and vibration levels', () {
+    Future<void> scrollTo(WidgetTester tester, String text) async {
+      await tester.scrollUntilVisible(
+        find.text(text),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('shows both sliders at 100 % and the phone-limit note', (
+      tester,
+    ) async {
+      await pumpSoundSettings(tester);
+      await scrollTo(tester, 'Vibration strength');
+
+      expect(find.text('Sound volume'), findsOneWidget);
+      expect(find.text('Vibration strength'), findsOneWidget);
+      expect(find.text('100'), findsNWidgets(2));
+      expect(
+        find.textContaining(
+          "The phone's own vibration settings set the maximum",
+        ),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('strength slider is hidden without amplitude control', (
+      tester,
+    ) async {
+      hasAmplitude = false;
+      await pumpSoundSettings(tester);
+      await scrollTo(tester, 'Sound volume');
+
+      expect(find.text('Sound volume'), findsOneWidget);
+      expect(find.text('Vibration strength'), findsNothing);
+    });
+
+    testWidgets('moving the volume slider saves the new level', (tester) async {
+      await pumpSoundSettings(tester);
+      await scrollTo(tester, 'Sound volume');
+
+      final slider = find.byType(Slider).first;
+      // Drag from the far right (100 %) to the far left (10 %).
+      await tester.drag(slider, const Offset(-2000, 0));
+      await tester.pumpAndSettle();
+
+      final container = ProviderScope.containerOf(
+        tester.element(find.byType(SoundSettingsScreen)),
+      );
+      expect(
+        container.read(settingsNotifierProvider).feedbackVolumePercent,
+        10,
+      );
+    });
+  });
+
+  group('vibration test dialog', () {
+    Future<void> turnOnTapVibration(WidgetTester tester) async {
+      await tester.scrollUntilVisible(
+        find.text('Vibrate on each tap'),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Vibrate on each tap'));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('turning a vibration switch on plays a test and asks', (
+      tester,
+    ) async {
+      await pumpSoundSettings(tester);
+      await turnOnTapVibration(tester);
+
+      expect(find.text('Did you feel a vibration?'), findsOneWidget);
+      expect(hapticCalls, contains('vibrateMala'));
+
+      await tester.tap(find.text('Yes'));
+      await tester.pumpAndSettle();
+      expect(find.text('Did you feel a vibration?'), findsNothing);
+    });
+
+    testWidgets('turning a vibration switch off does not ask', (tester) async {
+      await pumpSoundSettings(tester);
+      await turnOnTapVibration(tester);
+      await tester.tap(find.text('Yes'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Vibrate on each tap')); // now off
+      await tester.pumpAndSettle();
+
+      expect(find.text('Did you feel a vibration?'), findsNothing);
+      expect(hapticCalls.where((m) => m == 'vibrateMala'), hasLength(1));
+    });
+
+    testWidgets('Test again plays the test vibration again', (tester) async {
+      await pumpSoundSettings(tester);
+      await turnOnTapVibration(tester);
+
+      await tester.tap(find.text('Test again'));
+      await tester.pumpAndSettle();
+      expect(hapticCalls.where((m) => m == 'vibrateMala'), hasLength(2));
+    });
+
+    testWidgets('No explains the phone setting and can open it', (
+      tester,
+    ) async {
+      await pumpSoundSettings(tester);
+      await turnOnTapVibration(tester);
+
+      await tester.tap(find.text('No'));
+      await tester.pumpAndSettle();
+      expect(find.text('Phone vibration is off or low'), findsOneWidget);
+
+      await tester.tap(find.text('Open phone settings'));
+      await tester.pumpAndSettle();
+      expect(hapticCalls, contains('openPhoneVibrationSettings'));
+      expect(find.text('Phone vibration is off or low'), findsNothing);
+
+      // The app setting stays on.
+      final container = ProviderScope.containerOf(
+        tester.element(find.byType(SoundSettingsScreen)),
+      );
+      expect(
+        container.read(settingsNotifierProvider).tapVibrationEnabled,
+        isTrue,
+      );
+    });
   });
 
   group('daily reminder', () {

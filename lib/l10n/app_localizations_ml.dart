@@ -570,6 +570,60 @@ class AppLocalizationsMl extends AppLocalizations {
       'ഓരോ ടാപ്പിലും ഫോൺ വൈബ്രേറ്റ് ചെയ്യുന്നതിനാൽ, നീണ്ട ജപത്തിൽ കൂടുതൽ ബാറ്ററി ഉപയോഗിക്കും.';
 
   @override
+  String get sectionFeedbackLevels => 'നിലകൾ';
+
+  @override
+  String get sectionFeedbackLevelsSub =>
+      'ശബ്ദം എത്ര ഉച്ചത്തിൽ, സ്പന്ദനം എത്ര ശക്തിയിൽ';
+
+  @override
+  String get feedbackVolume => 'ശബ്ദത്തിന്റെ അളവ്';
+
+  @override
+  String get feedbackVolumeSub =>
+      'മാല ശബ്ദവും ലക്ഷ്യ ടോണുകളും. സൈലന്റിലും ഇവ കേൾക്കും.';
+
+  @override
+  String get vibrationStrength => 'വൈബ്രേഷൻ ശക്തി';
+
+  @override
+  String get vibrationStrengthSub =>
+      'മാല, ലക്ഷ്യം, തിരുത്തൽ എന്നിവയുടെ വൈബ്രേഷനും ടാപ്പ് സ്പന്ദനവും.';
+
+  @override
+  String get vibrationStrengthPhoneLimit =>
+      'പരമാവധി ശക്തി ഫോണിന്റെ വൈബ്രേഷൻ ക്രമീകരണങ്ങളാണ് നിശ്ചയിക്കുന്നത്. ഒന്നും അനുഭവപ്പെടുന്നില്ലെങ്കിൽ അവ പരിശോധിക്കുക.';
+
+  @override
+  String get vibrationTestTitle => 'വൈബ്രേഷൻ അനുഭവപ്പെട്ടോ?';
+
+  @override
+  String get vibrationTestBody =>
+      'പരിശോധിക്കാനായി ഫോൺ ഇപ്പോൾ ഒരു തവണ വൈബ്രേറ്റ് ചെയ്തു.';
+
+  @override
+  String get vibrationTestYes => 'അതെ';
+
+  @override
+  String get vibrationTestNo => 'ഇല്ല';
+
+  @override
+  String get vibrationTestAgain => 'വീണ്ടും പരിശോധിക്കുക';
+
+  @override
+  String get vibrationOffTitle => 'ഫോണിലെ വൈബ്രേഷൻ ഓഫ് ആണ് അല്ലെങ്കിൽ കുറവാണ്';
+
+  @override
+  String get vibrationOffBody =>
+      'എല്ലാ ആപ്പുകളുടെയും വൈബ്രേഷൻ ഫോണിന്റെ സ്വന്തം ക്രമീകരണങ്ങൾ പരിമിതപ്പെടുത്തുന്നു. ഫോണിന്റെ ക്രമീകരണങ്ങളിൽ വൈബ്രേഷൻ ഓണാക്കി അലാറം വൈബ്രേഷൻ നില കൂട്ടുക (മിക്ക ഫോണുകളിലും Vibration & haptics എന്നതിൽ).';
+
+  @override
+  String get openPhoneSettings => 'ഫോൺ ക്രമീകരണങ്ങൾ തുറക്കുക';
+
+  @override
+  String get vibrationTestClose => 'അടയ്ക്കുക';
+
+  @override
   String get notificationSound => 'അറിയിപ്പ് ശബ്ദം';
 
   @override
@@ -1001,7 +1055,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpCountingTapBullet3 =>
-      'തട്ടലിന് വൈബ്രേഷൻ ഇല്ല. വൈബ്രേഷൻ ഓൺ ആണെങ്കിൽ ഓരോ മാല തീരുമ്പോഴും ലക്ഷ്യത്തിലും തിരുത്തലിലും വൈബ്രേഷൻ ഉണ്ടാകും.';
+      '“ഓരോ ടാപ്പിലും വൈബ്രേറ്റ് ചെയ്യുക” ഓണാക്കിയില്ലെങ്കിൽ തട്ടലിന് വൈബ്രേഷൻ ഇല്ല. വൈബ്രേഷൻ ഓൺ ആണെങ്കിൽ ഓരോ മാല തീരുമ്പോഴും ലക്ഷ്യത്തിലും തിരുത്തലിലും വൈബ്രേഷൻ ഉണ്ടാകും.';
 
   @override
   String get helpCountingUndoSection => 'എണ്ണം തിരുത്തൽ';
@@ -1119,7 +1173,7 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpAudioIntro =>
-      'ശബ്ദവും സ്പന്ദനവും പ്രധാന നിമിഷങ്ങൾ അറിയിക്കുന്നു: ഓരോ മാലയും ഓരോ ലക്ഷ്യവും. ക്രമീകരണങ്ങൾ → ശബ്ദവും സ്പന്ദനവും എന്നതിൽ ഇവ സജ്ജമാക്കാം.';
+      'ശബ്ദവും സ്പന്ദനവും പ്രധാന നിമിഷങ്ങൾ അറിയിക്കുന്നു: ഓരോ മാലയും ഓരോ ലക്ഷ്യവും. ക്രമീകരണങ്ങൾ → ശബ്ദവും സ്പന്ദനവും എന്നതിൽ ഇവ സജ്ജമാക്കാം. അവിടെ ശബ്ദത്തിന്റെ അളവും വൈബ്രേഷൻ ശക്തിയും ക്രമീകരിക്കാം.';
 
   @override
   String get helpAudioVibrationSection => 'വൈബ്രേഷൻ';
@@ -1129,14 +1183,14 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get helpAudioVibrationBullet1 =>
-      'ഓരോ മാലയിലും ഒരു സ്പന്ദനം, ലക്ഷ്യം എത്തുമ്പോൾ മൂന്ന് സ്പന്ദനം, തിരുത്തുമ്പോൾ ചെറിയ ഒന്ന്. ഓരോ ടാപ്പിനും ഒരു ചെറിയ സ്പന്ദനവും ഓണാക്കാം (ഓരോ ടാപ്പിലും വൈബ്രേറ്റ് ചെയ്യുക); ഇത് കൂടുതൽ ബാറ്ററി ഉപയോഗിക്കും.';
+      'ഓരോ മാലയിലും ഒരു സ്പന്ദനം, ലക്ഷ്യം എത്തുമ്പോൾ മൂന്ന് സ്പന്ദനം, തിരുത്തുമ്പോൾ ചെറിയ രണ്ട് ക്ലിക്ക്. ഓരോ ടാപ്പിനും ഒരു ചെറിയ ക്ലിക്കും ഓണാക്കാം (ഓരോ ടാപ്പിലും വൈബ്രേറ്റ് ചെയ്യുക); ഇത് കൂടുതൽ ബാറ്ററി ഉപയോഗിക്കും. സൈലന്റിലും ഇവ പ്രവർത്തിക്കും, പക്ഷേ എത്ര ശക്തിയാകാം എന്ന് ഫോണിന്റെ സ്വന്തം വൈബ്രേഷൻ ക്രമീകരണങ്ങൾ നിശ്ചയിക്കുന്നു.';
 
   @override
   String get helpAudioVibrationBold2 => 'ഓഫ് ചെയ്യാൻ:';
 
   @override
   String get helpAudioVibrationBullet2 =>
-      'പൂർണ്ണ നിശബ്ദ സാധനയ്ക്ക് ക്രമീകരണങ്ങൾ → ശബ്ദവും സ്പന്ദനവും എന്നതിൽ വൈബ്രേഷൻ ഓഫ് ചെയ്യുക.';
+      'പൂർണ്ണ നിശബ്ദ സാധനയ്ക്ക് ക്രമീകരണങ്ങൾ → ശബ്ദവും സ്പന്ദനവും എന്നതിൽ വൈബ്രേഷൻ ഓഫ് ചെയ്യുക. മൃദുവാക്കാൻ മാത്രമെങ്കിൽ വൈബ്രേഷൻ ശക്തി കുറയ്ക്കുക.';
 
   @override
   String get helpBackupIntro =>

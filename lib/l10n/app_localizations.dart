@@ -1078,6 +1078,102 @@ abstract class AppLocalizations {
   /// **'Uses extra battery in long sessions, because the phone vibrates on every tap.'**
   String get tapVibrationBatteryWarning;
 
+  /// Settings section title for the in-app sound volume and vibration strength
+  ///
+  /// In en, this message translates to:
+  /// **'Levels'**
+  String get sectionFeedbackLevels;
+
+  /// Subtitle of the sound volume and vibration strength section
+  ///
+  /// In en, this message translates to:
+  /// **'How loud the sounds are and how strong the vibrations feel'**
+  String get sectionFeedbackLevelsSub;
+
+  /// Setting label for the in-app sound volume slider
+  ///
+  /// In en, this message translates to:
+  /// **'Sound volume'**
+  String get feedbackVolume;
+
+  /// Subtitle of the in-app sound volume slider
+  ///
+  /// In en, this message translates to:
+  /// **'Mala chime and goal tones. They play even in silent mode.'**
+  String get feedbackVolumeSub;
+
+  /// Setting label for the in-app vibration strength slider
+  ///
+  /// In en, this message translates to:
+  /// **'Vibration strength'**
+  String get vibrationStrength;
+
+  /// Subtitle of the in-app vibration strength slider
+  ///
+  /// In en, this message translates to:
+  /// **'Mala, goal and undo vibrations, and the tap pulse.'**
+  String get vibrationStrengthSub;
+
+  /// Note under the vibration strength slider: the phone vibration settings limit the strength
+  ///
+  /// In en, this message translates to:
+  /// **'The phone\'s own vibration settings set the maximum. If you feel nothing, check them.'**
+  String get vibrationStrengthPhoneLimit;
+
+  /// Title of the dialog that tests vibration after a vibration setting is turned on
+  ///
+  /// In en, this message translates to:
+  /// **'Did you feel a vibration?'**
+  String get vibrationTestTitle;
+
+  /// Body of the vibration test dialog
+  ///
+  /// In en, this message translates to:
+  /// **'The phone just vibrated once to test it.'**
+  String get vibrationTestBody;
+
+  /// Vibration test dialog: the user felt the vibration
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get vibrationTestYes;
+
+  /// Vibration test dialog: the user did not feel the vibration
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get vibrationTestNo;
+
+  /// Vibration test dialog: play the test vibration again
+  ///
+  /// In en, this message translates to:
+  /// **'Test again'**
+  String get vibrationTestAgain;
+
+  /// Title shown when the user did not feel the test vibration
+  ///
+  /// In en, this message translates to:
+  /// **'Phone vibration is off or low'**
+  String get vibrationOffTitle;
+
+  /// Explains how to turn on vibration in the phone settings
+  ///
+  /// In en, this message translates to:
+  /// **'Every app\'s vibration is limited by the phone\'s own settings. In the phone\'s settings, turn vibration on and raise the Alarm vibration level (under Vibration & haptics on most phones).'**
+  String get vibrationOffBody;
+
+  /// Button that opens the phone's sound and vibration settings
+  ///
+  /// In en, this message translates to:
+  /// **'Open phone settings'**
+  String get openPhoneSettings;
+
+  /// Closes the vibration help dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get vibrationTestClose;
+
   /// Setting label for daily goal completion sound
   ///
   /// In en, this message translates to:
@@ -1843,7 +1939,7 @@ abstract class AppLocalizations {
   /// Help counting guide: Tap bullet 3 text
   ///
   /// In en, this message translates to:
-  /// **'Taps do not vibrate. You feel a vibration on each full mala, on goals and on undo, if vibration is on.'**
+  /// **'Taps do not vibrate unless you turn on Vibrate on each tap. You feel a vibration on each full mala, on goals and on undo, if vibration is on.'**
   String get helpCountingTapBullet3;
 
   /// Help counting guide: Undo section title
@@ -2047,7 +2143,7 @@ abstract class AppLocalizations {
   /// Help sound and vibration guide: intro text
   ///
   /// In en, this message translates to:
-  /// **'Sounds and vibration mark the moments that matter: each full mala and each goal. Set them in Settings → Sound & Haptics.'**
+  /// **'Sounds and vibration mark the moments that matter: each full mala and each goal. Set them in Settings → Sound & Haptics. There you can also set the sound volume and vibration strength.'**
   String get helpAudioIntro;
 
   /// Help sound and vibration guide: Vibration section title
@@ -2065,7 +2161,7 @@ abstract class AppLocalizations {
   /// Help sound and vibration guide: Vibration bullet 1 text
   ///
   /// In en, this message translates to:
-  /// **'One pulse on each full mala, three pulses when a goal is reached, and a short tap when you undo. You can also turn on a light pulse for every tap (Vibrate on each tap); it uses extra battery.'**
+  /// **'One pulse on each full mala, three pulses when a goal is reached, and a short double click when you undo. You can also turn on a light click for every tap (Vibrate on each tap); it uses extra battery. They work in silent mode, but the phone\'s own vibration settings set how strong they can be.'**
   String get helpAudioVibrationBullet1;
 
   /// Help sound and vibration guide: Vibration bullet 2 bold label
@@ -2077,7 +2173,7 @@ abstract class AppLocalizations {
   /// Help sound and vibration guide: Vibration bullet 2 text
   ///
   /// In en, this message translates to:
-  /// **'Switch off Vibration in Settings → Sound & Haptics for fully silent practice.'**
+  /// **'Switch off Vibration in Settings → Sound & Haptics for fully silent practice. To make vibrations softer instead, lower Vibration strength.'**
   String get helpAudioVibrationBullet2;
 
   /// Help backup and restore guide: intro text

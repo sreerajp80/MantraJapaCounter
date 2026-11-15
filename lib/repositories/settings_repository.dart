@@ -195,6 +195,42 @@ class SettingsRepository {
     await _prefs.setBool(AppConstants.prefsTapVibrationKey, value);
   }
 
+  /// In-app sound volume in percent (10–100). Missing or out-of-range
+  /// values fall back to 100.
+  int get feedbackVolumePercent =>
+      _levelPercent(AppConstants.prefsFeedbackVolumeKey);
+
+  Future<void> setFeedbackVolumePercent(int value) =>
+      _setLevelPercent(AppConstants.prefsFeedbackVolumeKey, value);
+
+  /// In-app vibration strength in percent (10–100). Missing or out-of-range
+  /// values fall back to 100.
+  int get vibrationStrengthPercent =>
+      _levelPercent(AppConstants.prefsVibrationStrengthKey);
+
+  Future<void> setVibrationStrengthPercent(int value) =>
+      _setLevelPercent(AppConstants.prefsVibrationStrengthKey, value);
+
+  int _levelPercent(String key) {
+    final saved = _prefs.getInt(key);
+    if (saved == null ||
+        saved < AppConstants.feedbackLevelMinPercent ||
+        saved > AppConstants.feedbackLevelMaxPercent) {
+      return AppConstants.feedbackLevelDefaultPercent;
+    }
+    return saved;
+  }
+
+  Future<void> _setLevelPercent(String key, int value) async {
+    await _prefs.setInt(
+      key,
+      value.clamp(
+        AppConstants.feedbackLevelMinPercent,
+        AppConstants.feedbackLevelMaxPercent,
+      ),
+    );
+  }
+
   String? get languageCode =>
       _prefs.getString(AppConstants.prefsLanguageCodeKey);
 

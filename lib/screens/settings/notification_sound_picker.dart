@@ -29,6 +29,8 @@ Future<void> showCustomSoundPicker({
 }) async {
   final l = AppLocalizations.of(context);
   final soundService = ref.read(soundServiceProvider);
+  // Previews play at the same in-app volume as a real goal tone.
+  final volume = ref.read(settingsNotifierProvider).feedbackVolumePercent / 100;
   final ringtones = await soundService.listNotificationRingtones();
   if (!context.mounted) return;
 
@@ -83,10 +85,11 @@ Future<void> showCustomSoundPicker({
                       title: l.soundSystemDefault,
                       subtitle: l.soundSystemDefaultTapToChange,
                       selected: selectedUri == null,
-                      onPreview: () => soundService.playTone(null),
+                      onPreview: () =>
+                          soundService.playTone(null, volume: volume),
                       onTap: () async {
                         await onSelect(null, null);
-                        await soundService.playTone(null);
+                        await soundService.playTone(null, volume: volume);
                         if (sheetContext.mounted) {
                           Navigator.pop(sheetContext);
                         }
@@ -114,10 +117,11 @@ Future<void> showCustomSoundPicker({
                         title: s.title,
                         subtitle: s.subtitle,
                         selected: selectedUri == s.uri,
-                        onPreview: () => soundService.playTone(s.uri),
+                        onPreview: () =>
+                            soundService.playTone(s.uri, volume: volume),
                         onTap: () async {
                           await onSelect(s.uri, s.title);
-                          await soundService.playTone(s.uri);
+                          await soundService.playTone(s.uri, volume: volume);
                           if (sheetContext.mounted) {
                             Navigator.pop(sheetContext);
                           }
@@ -143,10 +147,11 @@ Future<void> showCustomSoundPicker({
                         _RingtoneTile(
                           title: r.title,
                           selected: selectedUri == r.uri,
-                          onPreview: () => soundService.playTone(r.uri),
+                          onPreview: () =>
+                              soundService.playTone(r.uri, volume: volume),
                           onTap: () async {
                             await onSelect(r.uri, r.title);
-                            await soundService.playTone(r.uri);
+                            await soundService.playTone(r.uri, volume: volume);
                             if (sheetContext.mounted) {
                               Navigator.pop(sheetContext);
                             }

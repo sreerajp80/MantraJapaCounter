@@ -745,6 +745,70 @@
   "@tapVibrationBatteryWarning": {
     "description": "Warning shown under the vibrate-on-each-tap setting that it uses more battery"
   },
+  "sectionFeedbackLevels": "Levels",
+  "@sectionFeedbackLevels": {
+    "description": "Settings section title for the in-app sound volume and vibration strength"
+  },
+  "sectionFeedbackLevelsSub": "How loud the sounds are and how strong the vibrations feel",
+  "@sectionFeedbackLevelsSub": {
+    "description": "Subtitle of the sound volume and vibration strength section"
+  },
+  "feedbackVolume": "Sound volume",
+  "@feedbackVolume": {
+    "description": "Setting label for the in-app sound volume slider"
+  },
+  "feedbackVolumeSub": "Mala chime and goal tones. They play even in silent mode.",
+  "@feedbackVolumeSub": {
+    "description": "Subtitle of the in-app sound volume slider"
+  },
+  "vibrationStrength": "Vibration strength",
+  "@vibrationStrength": {
+    "description": "Setting label for the in-app vibration strength slider"
+  },
+  "vibrationStrengthSub": "Mala, goal and undo vibrations, and the tap pulse.",
+  "@vibrationStrengthSub": {
+    "description": "Subtitle of the in-app vibration strength slider"
+  },
+  "vibrationStrengthPhoneLimit": "The phone's own vibration settings set the maximum. If you feel nothing, check them.",
+  "@vibrationStrengthPhoneLimit": {
+    "description": "Note under the vibration strength slider: the phone vibration settings limit the strength"
+  },
+  "vibrationTestTitle": "Did you feel a vibration?",
+  "@vibrationTestTitle": {
+    "description": "Title of the dialog that tests vibration after a vibration setting is turned on"
+  },
+  "vibrationTestBody": "The phone just vibrated once to test it.",
+  "@vibrationTestBody": {
+    "description": "Body of the vibration test dialog"
+  },
+  "vibrationTestYes": "Yes",
+  "@vibrationTestYes": {
+    "description": "Vibration test dialog: the user felt the vibration"
+  },
+  "vibrationTestNo": "No",
+  "@vibrationTestNo": {
+    "description": "Vibration test dialog: the user did not feel the vibration"
+  },
+  "vibrationTestAgain": "Test again",
+  "@vibrationTestAgain": {
+    "description": "Vibration test dialog: play the test vibration again"
+  },
+  "vibrationOffTitle": "Phone vibration is off or low",
+  "@vibrationOffTitle": {
+    "description": "Title shown when the user did not feel the test vibration"
+  },
+  "vibrationOffBody": "Every app's vibration is limited by the phone's own settings. In the phone's settings, turn vibration on and raise the Alarm vibration level (under Vibration & haptics on most phones).",
+  "@vibrationOffBody": {
+    "description": "Explains how to turn on vibration in the phone settings"
+  },
+  "openPhoneSettings": "Open phone settings",
+  "@openPhoneSettings": {
+    "description": "Button that opens the phone's sound and vibration settings"
+  },
+  "vibrationTestClose": "Close",
+  "@vibrationTestClose": {
+    "description": "Closes the vibration help dialog"
+  },
   "notificationSound": "Notification sound",
   "@notificationSound": {
     "description": "Setting label for daily goal completion sound"
@@ -1296,7 +1360,7 @@
   "@helpCountingTapBold3": {
     "description": "Help counting guide: Tap bullet 3 bold label"
   },
-  "helpCountingTapBullet3": "Taps do not vibrate. You feel a vibration on each full mala, on goals and on undo, if vibration is on.",
+  "helpCountingTapBullet3": "Taps do not vibrate unless you turn on Vibrate on each tap. You feel a vibration on each full mala, on goals and on undo, if vibration is on.",
   "@helpCountingTapBullet3": {
     "description": "Help counting guide: Tap bullet 3 text"
   },
@@ -1432,7 +1496,7 @@
   "@helpOpticalTipsBullet3": {
     "description": "Help optical sync guide: Tips bullet 3 text"
   },
-  "helpAudioIntro": "Sounds and vibration mark the moments that matter: each full mala and each goal. Set them in Settings → Sound & Haptics.",
+  "helpAudioIntro": "Sounds and vibration mark the moments that matter: each full mala and each goal. Set them in Settings → Sound & Haptics. There you can also set the sound volume and vibration strength.",
   "@helpAudioIntro": {
     "description": "Help sound and vibration guide: intro text"
   },
@@ -1444,7 +1508,7 @@
   "@helpAudioVibrationBold1": {
     "description": "Help sound and vibration guide: Vibration bullet 1 bold label"
   },
-  "helpAudioVibrationBullet1": "One pulse on each full mala, three pulses when a goal is reached, and a short tap when you undo. You can also turn on a light pulse for every tap (Vibrate on each tap); it uses extra battery.",
+  "helpAudioVibrationBullet1": "One pulse on each full mala, three pulses when a goal is reached, and a short double click when you undo. You can also turn on a light click for every tap (Vibrate on each tap); it uses extra battery. They work in silent mode, but the phone's own vibration settings set how strong they can be.",
   "@helpAudioVibrationBullet1": {
     "description": "Help sound and vibration guide: Vibration bullet 1 text"
   },
@@ -1452,7 +1516,7 @@
   "@helpAudioVibrationBold2": {
     "description": "Help sound and vibration guide: Vibration bullet 2 bold label"
   },
-  "helpAudioVibrationBullet2": "Switch off Vibration in Settings → Sound & Haptics for fully silent practice.",
+  "helpAudioVibrationBullet2": "Switch off Vibration in Settings → Sound & Haptics for fully silent practice. To make vibrations softer instead, lower Vibration strength.",
   "@helpAudioVibrationBullet2": {
     "description": "Help sound and vibration guide: Vibration bullet 2 text"
   },

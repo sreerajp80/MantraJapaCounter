@@ -138,6 +138,24 @@ void main() {
     },
   );
 
+  test(
+    'playMalaSound and playTone pass the volume to the native side',
+    () async {
+      await soundService.playMalaSound(MalaSound.synthesizedTone, volume: 0.3);
+      await soundService.playMalaSound(MalaSound.templeBell, volume: 0.4);
+      await soundService.playTone('content://media/1', volume: 0.5);
+      await soundService.playTone(null, volume: 0.6);
+
+      final byMethod = {
+        for (final c in methodCalls) c.method: c.arguments as Map?,
+      };
+      expect(byMethod['playMalaTone']?['volume'], 0.3);
+      expect(byMethod['boostAlarmVolume']?['volume'], 0.4);
+      expect(byMethod['playRingtoneUri']?['volume'], 0.5);
+      expect(byMethod['previewDefaultNotificationTone']?['volume'], 0.6);
+    },
+  );
+
   test('playSacredAsset plays given asset path', () async {
     await soundService.playSacredAsset('audio/shankha.wav');
     expect(

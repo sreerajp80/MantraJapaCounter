@@ -72,6 +72,49 @@ void main() {
     });
   });
 
+  group('SettingsRepository - sound and vibration levels', () {
+    test('defaults keep the old behaviour: 100 %', () async {
+      SharedPreferences.setMockInitialValues({});
+      final repo = SettingsRepository(await SharedPreferences.getInstance());
+      expect(repo.feedbackVolumePercent, 100);
+      expect(repo.vibrationStrengthPercent, 100);
+    });
+
+    test('saves and reads the values', () async {
+      SharedPreferences.setMockInitialValues({});
+      final prefs = await SharedPreferences.getInstance();
+      final repo = SettingsRepository(prefs);
+
+      await repo.setFeedbackVolumePercent(30);
+      await repo.setVibrationStrengthPercent(70);
+
+      expect(repo.feedbackVolumePercent, 30);
+      expect(repo.vibrationStrengthPercent, 70);
+      expect(prefs.getInt(AppConstants.prefsFeedbackVolumeKey), 30);
+      expect(prefs.getInt(AppConstants.prefsVibrationStrengthKey), 70);
+    });
+
+    test('a value outside 10–100 is kept inside the range on save', () async {
+      SharedPreferences.setMockInitialValues({});
+      final repo = SettingsRepository(await SharedPreferences.getInstance());
+
+      await repo.setFeedbackVolumePercent(0);
+      expect(repo.feedbackVolumePercent, 10);
+      await repo.setVibrationStrengthPercent(250);
+      expect(repo.vibrationStrengthPercent, 100);
+    });
+
+    test('a bad saved value falls back to 100', () async {
+      SharedPreferences.setMockInitialValues({
+        AppConstants.prefsFeedbackVolumeKey: 5,
+        AppConstants.prefsVibrationStrengthKey: 101,
+      });
+      final repo = SettingsRepository(await SharedPreferences.getInstance());
+      expect(repo.feedbackVolumePercent, 100);
+      expect(repo.vibrationStrengthPercent, 100);
+    });
+  });
+
   group('SettingsNotifier - languageCode', () {
     late SharedPreferences prefs;
     late SettingsRepository repo;

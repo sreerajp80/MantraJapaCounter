@@ -94,7 +94,7 @@ outside the app").
 |-----------|---------|-----------------|---------------------|
 | Counter names | "Om Namah Shivaya" | sqflite DB, JSON export | Never logged (§9) |
 | Session counts and timestamps | 432 taps, 2024-01-15 08:30 | sqflite DB, JSON export | Never logged (§9) |
-| Notification preferences | vibration enabled, custom tone path | SharedPreferences | None — not sensitive |
+| Notification preferences | vibration enabled, custom tone path, sound volume and vibration strength levels | SharedPreferences | None — not sensitive |
 | Screen brightness setting | 70% | SharedPreferences | None — not sensitive |
 | Active session crash-recovery state | In-progress tap count and session ID | SharedPreferences | None — ephemeral; cleared on session complete or recovery |
 
@@ -279,7 +279,7 @@ Not in scope for this release.
 
 | Permission | Why It Is Needed | Requested When | Denial Handling |
 |------------|------------------|----------------|-----------------|
-| `VIBRATE` | Vibration feedback on mala completion and daily goal achievement, and an optional light pulse on each counting tap (off by default) | Declared in manifest; no runtime request | Notifications sent without vibration |
+| `VIBRATE` | Vibration feedback on mala completion and daily goal achievement, and an optional light pulse on each counting tap (off by default). The strength is set in the app, within the limit the phone's own vibration settings allow. Opening the phone's settings from the vibration test uses a standard intent and needs no permission | Declared in manifest; no runtime request | Notifications sent without vibration |
 | `POST_NOTIFICATIONS` | Show local notifications on Android 13+ (API 33+) | First time user enables notifications in Settings screen | Notifications silently disabled; user informed in Settings |
 | `CAMERA` | Optical Sync receive: read QR codes from live camera frames. Frames are decoded on the device by ZXing and thrown away; nothing is saved or sent | When the user starts a camera receive in Optical Sync | Camera receive shows a "permission denied" message; the rest of the app works normally |
 | `RECEIVE_BOOT_COMPLETED` | Lets the notification plugin set the optional daily practice reminder again after the phone restarts or the app updates. Nothing else runs at boot, and nothing is sent | Declared in manifest; normal install-time permission, no runtime prompt | Not applicable (no prompt). If the reminder is off, the boot receiver has nothing to schedule |

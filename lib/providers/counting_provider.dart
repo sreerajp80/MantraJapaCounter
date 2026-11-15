@@ -383,8 +383,13 @@ class CountingNotifier extends StateNotifier<CountingState> {
 
   /// A short vibration for a counted tap, when the user turned it on.
   void _pulseOnTap() {
-    if (!_ref.read(settingsRepositoryProvider).tapVibrationEnabled) return;
-    unawaited(_ref.read(hapticFeedbackServiceProvider).tapPulse());
+    final settings = _ref.read(settingsRepositoryProvider);
+    if (!settings.tapVibrationEnabled) return;
+    unawaited(
+      _ref
+          .read(hapticFeedbackServiceProvider)
+          .tapPulse(strength: settings.vibrationStrengthPercent / 100),
+    );
   }
 
   // ───────────────────────────── Meru pause / pacing ──────────────────────
@@ -976,6 +981,8 @@ class CountingNotifier extends StateNotifier<CountingState> {
     final notif = _ref.read(notificationServiceProvider);
     final sound = _ref.read(soundServiceProvider);
     final haptic = _ref.read(hapticFeedbackServiceProvider);
+    final volume = settings.feedbackVolumePercent / 100;
+    final strength = settings.vibrationStrengthPercent / 100;
 
     // Lifetime-goal threshold: fire only on the tap that crosses the goal.
     if (_lifetimeGoal > 0 && settings.lifetimeGoalNotificationsEnabled) {
@@ -984,8 +991,10 @@ class CountingNotifier extends StateNotifier<CountingState> {
       if (prevLifetimeTotal < _lifetimeGoal &&
           newLifetimeTotal >= _lifetimeGoal) {
         notif.notifyLifetimeGoalReached();
-        if (settings.vibrationEnabled) haptic.vibrateDailyGoal();
-        sound.playTone(settings.lifetimeSoundUri);
+        if (settings.vibrationEnabled) {
+          haptic.vibrateDailyGoal(strength: strength);
+        }
+        sound.playTone(settings.lifetimeSoundUri, volume: volume);
         return; // Skip daily goal and mala chime — lifetime milestone supersedes.
       }
     }
@@ -999,8 +1008,10 @@ class CountingNotifier extends StateNotifier<CountingState> {
       final prevTodayTotal = newTodayTotal - session.incrementStep;
       if (prevTodayTotal < _dailyGoal && newTodayTotal >= _dailyGoal) {
         notif.notifyDailyGoalReached();
-        if (settings.vibrationEnabled) haptic.vibrateDailyGoal();
-        sound.playTone(settings.notificationSoundUri);
+        if (settings.vibrationEnabled) {
+          haptic.vibrateDailyGoal(strength: strength);
+        }
+        sound.playTone(settings.notificationSoundUri, volume: volume);
         return; // Skip mala chime on the same tap — daily goal supersedes it.
       }
     }
@@ -1012,8 +1023,8 @@ class CountingNotifier extends StateNotifier<CountingState> {
       );
       final newMalas = session.malas;
       if (newMalas > prevMalas) {
-        sound.playMalaSound(settings.malaSound);
-        if (settings.vibrationEnabled) haptic.vibrateMala();
+        sound.playMalaSound(settings.malaSound, volume: volume);
+        if (settings.vibrationEnabled) haptic.vibrateMala(strength: strength);
       }
     }
   }
