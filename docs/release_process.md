@@ -211,6 +211,8 @@ Complete these items before every release.
 - [ ] `--obfuscate` and `--split-debug-info` flags present in all prod release build commands.
 - [ ] No `--analyze-size` build was shipped or archived as the release artifact (section 6.3).
 - [ ] Debug symbols archived at `releases/v<version>/symbols/android-prod-<version>/`.
+- [ ] Split APK versionCode equals the `pubspec.yaml` build number — no 1000/2000/4000
+      added (check each APK with `aapt2 dump badging <apk>`; section 9).
 - [ ] ProGuard rules verified — release build launches; counting flow and import/export work end-to-end.
 - [ ] `android:debuggable=false` confirmed in merged release manifest.
 - [ ] INTERNET permission confirmed absent from merged release manifest.
@@ -281,6 +283,10 @@ VERSION=$(grep '^version:' pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1 | tr -d 
 
 # Split APKs for direct sideload distribution (arm64-v8a covers most modern devices)
 # Output: build/app/outputs/flutter-apk/app-<abi>-prod-release.apk
+# All split APKs get the same versionCode as the App Bundle (the pubspec.yaml build
+# number, no 1000/2000/4000 ABI offset) because android/gradle.properties sets
+# force-version-code-ignoring-abi=true. Check each APK with (Android SDK build-tools):
+#   aapt2 dump badging <apk>     # first line shows versionCode and versionName
 flutter build apk \
   --flavor prod \
   --release \
@@ -325,6 +331,16 @@ Not applicable — Windows is not a supported platform for this release.
 | Google Play Store (production) | AAB | All public users | Promoted from internal testing track after validation |
 | Google Play Internal Testing | AAB | sreerajp (developer self-testing) | First submission target before promoting to production |
 | Direct APK | arm64-v8a split APK | Beta testers / sideload users | Signed with the release keystore; Android developer verification checked before each release (store gate §2.5A); arm64-v8a covers most modern Android devices |
+
+**Direct APKs and Play must share one versionCode.** Android installs an update only when
+its versionCode is higher than the installed one. By default `--split-per-abi` adds 1000
+(armeabi-v7a), 2000 (arm64-v8a) or 4000 (x86_64) to the build number, but the App Bundle
+gets no offset. A phone with a sideloaded split APK (for example 2050) would then see every
+Play build below 2050 as older, Play would never update it, and the only way out would be
+to uninstall — which deletes the app's private data. `force-version-code-ignoring-abi=true`
+in `android/gradle.properties` turns the offset off, so all split APKs and the AAB use the
+plain `pubspec.yaml` build number. Play can also update a sideloaded install only when both
+are signed with the same key, so the Play app signing key must match the release keystore.
 
 ---
 

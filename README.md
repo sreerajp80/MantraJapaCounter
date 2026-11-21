@@ -175,6 +175,8 @@ flutter build apk --flavor prod --release \
 ```
 
 Output: `build/app/outputs/flutter-apk/app-arm64-v8a-prod-release.apk` and friends (the build log prints the exact names).
+Every split APK keeps the plain `pubspec.yaml` build number as its versionCode, the same as the
+App Bundle (`force-version-code-ignoring-abi=true` in `android/gradle.properties`).
 
 ### App Bundle (Google Play)
 
