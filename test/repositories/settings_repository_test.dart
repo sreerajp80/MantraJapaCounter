@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mantra_japa_counter/models/backup_settings.dart';
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/models/active_session.dart';
@@ -403,6 +404,111 @@ void main() {
       expect(repo.dailyReminderMinutes, 360);
       await prefs.setInt(AppConstants.prefsDailyReminderMinutesKey, -5);
       expect(repo.dailyReminderMinutes, 360);
+    });
+  });
+
+  group('SettingsRepository - backup', () {
+    late SharedPreferences prefs;
+    late SettingsRepository repo;
+
+    setUp(() async {
+      SharedPreferences.setMockInitialValues({});
+      prefs = await SharedPreferences.getInstance();
+      repo = SettingsRepository(prefs);
+    });
+
+    ActiveSession running(String counterId, int taps) => ActiveSession(
+      sessionId: 's-$counterId',
+      counterId: counterId,
+      counterName: counterId,
+      startTime: 1000,
+      tapCount: taps,
+      incrementStep: 1,
+      lastResumeTimeMs: 1000,
+      isPaused: true,
+    );
+
+    test('export then import gives the same settings on a new phone', () async {
+      await repo.setMeruPauseEnabled(true);
+      await repo.setMeruPauseMode(MeruPauseMode.values.last);
+      await repo.setMeruPauseTaps(4);
+      await repo.setMalaSound(MalaSound.values.last);
+      await repo.setLanguageCode('sa');
+      await repo.setFeedbackVolumePercent(30);
+      await repo.setDailyReminderEnabled(true);
+      await repo.setDailyReminderMinutes(500);
+      final exported = repo.exportSettings();
+
+      SharedPreferences.setMockInitialValues({});
+      final other = SettingsRepository(await SharedPreferences.getInstance());
+      await other.importSettings(exported);
+
+      expect(other.exportSettings().toJson(), exported.toJson());
+      expect(other.meruPauseTaps, 4);
+      expect(other.languageCode, 'sa');
+    });
+
+    test(
+      '"follow the phone" language is exported as empty and restored',
+      () async {
+        expect(repo.exportSettings().languageCode, '');
+        await repo.setLanguageCode('ml');
+        await repo.importSettings(const BackupSettings(languageCode: ''));
+        expect(repo.languageCode, isNull);
+      },
+    );
+
+    test('custom sound links are not exported', () async {
+      await repo.setNotificationSound('content://a', 'A');
+      await repo.setLifetimeSound('content://b', 'B');
+      final json = repo.exportSettings().toJson().toString();
+      expect(json, isNot(contains('content://')));
+    });
+
+    test('fields missing from the backup keep the phone value', () async {
+      await repo.setPacingHintEnabled(false);
+      await repo.importSettings(BackupSettings.fromJson(const {}));
+      expect(repo.pacingHintEnabled, isFalse);
+    });
+
+    test('out-of-range numbers fall back to the default', () async {
+      await repo.importSettings(
+        BackupSettings.fromJson(const {
+          'meruPauseSeconds': 9999,
+          'dailyReminderMinutes': 99999,
+          'feedbackVolumePercent': 500,
+        }),
+      );
+      expect(repo.meruPauseSeconds, AppConstants.meruPauseDefaultSeconds);
+      expect(
+        repo.dailyReminderMinutes,
+        AppConstants.dailyReminderDefaultMinutes,
+      );
+      expect(repo.feedbackVolumePercent, AppConstants.feedbackLevelMaxPercent);
+    });
+
+    test('full replace removes every old running count', () async {
+      await repo.saveActiveSession(running('a', 5));
+      await repo.saveActiveSession(running('b', 6));
+
+      await repo.replaceActiveSessions([running('c', 7)]);
+
+      expect(repo.getActiveSession('a'), isNull);
+      expect(repo.getActiveSession('b'), isNull);
+      expect(repo.getActiveSession('c')!.tapCount, 7);
+    });
+
+    test('selected replace touches only the chosen counters', () async {
+      await repo.saveActiveSession(running('a', 5));
+      await repo.saveActiveSession(running('b', 6));
+
+      await repo.replaceActiveSessions(
+        [running('a', 50), running('b', 60)],
+        counterIds: {'a'},
+      );
+
+      expect(repo.getActiveSession('a')!.tapCount, 50);
+      expect(repo.getActiveSession('b')!.tapCount, 6);
     });
   });
 }

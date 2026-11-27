@@ -1,0 +1,67 @@
+{
+  "exportVersion": 1,
+  "exportDate": 1795000000000,
+  "counters": [
+    {
+      "id": "66666666-6666-4666-8666-666666666666",
+      "name": "Test Counter Running",
+      "initialCount": 0,
+      "incrementStep": 1,
+      "goal": 10800,
+      "dailyGoal": 108,
+      "startDate": 1790000000000,
+      "createdAt": 1790000000500,
+      "status": "ACTIVE",
+      "malaSize": 108
+    }
+  ],
+  "sessions": [
+    {
+      "id": "77777777-7777-4777-8777-777777777777",
+      "counterId": "66666666-6666-4666-8666-666666666666",
+      "counterName": "Test Counter Running",
+      "count": 45,
+      "malas": 0,
+      "chants": 45,
+      "timestamp": 1794990000000,
+      "duration": 300000
+    }
+  ],
+  "settings": {
+    "screenBrightness": 0.6,
+    "dailyGoalNotificationsEnabled": false,
+    "lifetimeGoalNotificationsEnabled": true,
+    "malaNotificationsEnabled": true,
+    "malaSound": "singing_bowl",
+    "vibrationEnabled": false,
+    "tapVibrationEnabled": true,
+    "feedbackVolumePercent": 60,
+    "vibrationStrengthPercent": 80,
+    "languageCode": "ml",
+    "dndEnabled": false,
+    "dimmedChantingMode": true,
+    "meruPauseEnabled": true,
+    "meruPauseSeconds": 10,
+    "meruPauseMode": "time",
+    "meruPauseTaps": 3,
+    "pacingHintEnabled": false,
+    "dailyReminderEnabled": true,
+    "dailyReminderMinutes": 330
+  },
+  "activeSessions": [
+    {
+      "sessionId": "77777777-7777-4777-8777-777777777777",
+      "counterId": "66666666-6666-4666-8666-666666666666",
+      "counterName": "Test Counter Running",
+      "startTime": 1794990000000,
+      "tapCount": 45,
+      "incrementStep": 1,
+      "accumulatedMs": 300000,
+      "lastResumeTimeMs": 1794990000000,
+      "isPaused": true,
+      "carriedCount": 0,
+      "carriedDurationMs": 0,
+      "malaSize": 108
+    }
+  ]
+}

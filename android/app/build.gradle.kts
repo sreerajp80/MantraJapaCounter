@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     id("com.android.application")
     // Kotlin is applied by the Flutter Gradle plugin while android.builtInKotlin=false
-    // (matches the Flutter 3.47 app template).
+    // (matches the Flutter 3.50 app template).
     id("dev.flutter.flutter-gradle-plugin")
 }
 

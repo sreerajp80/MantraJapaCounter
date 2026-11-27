@@ -335,7 +335,8 @@ Migration history:
   keep their old split.
 - The history screen uses the counter's mala count when filtered to one counter; the unfiltered
   view (many counters) uses the default of 108 for its per-day mala figure.
-| `ExportData` | Top-level wrapper for JSON import/export (list of counters + sessions) | No | Must stay readable by every later app version; fields are never renamed or removed |
+| `ExportData` | Top-level wrapper for JSON import/export: counters + sessions, plus optional `settings` (`BackupSettings`) and `activeSessions` (running counts, saved paused) | No | Must stay readable by every later app version; fields are never renamed or removed. Older files have no `settings` / `activeSessions` |
+| `BackupSettings` | The user settings inside a backup; every field optional (null = keep the phone value). Device-only values (custom sound links, permission flag) are never included | No | Read with strict types; a wrong type refuses the whole file |
 
 ### Serialization Strategy
 
@@ -416,7 +417,7 @@ Migration history:
   - Debug APK (dev flavor) — daily development and QA
   - Release APK split-per-ABI (prod flavor) — direct sideload distribution
   - App Bundle / AAB (prod flavor) — Google Play submission
-- Obfuscation: enabled for all prod release builds — symbols stored at `build/symbols/android-prod-<version>/`
+- Obfuscation: enabled for all prod release builds — symbols stored at `build/symbols/android-prod-<version>/` (AAB) and `build/symbols/android-prod-<version>-apk/` (APKs); built with `tool/build_release.ps1`, which also writes a `.sha256` for each file
 - App name: `appName` in `assets/config/app_config.json` (per language) is the source. The Android launcher name in `android/app/src/<flavor>/res/values*/strings.xml` must match it (dev adds a suffix); `test/core/config/app_name_consistency_test.dart` checks this. In Dart the flavor adds `AppFlavorConfig.nameSuffix` (`guideline.md` §1.8).
 
 ---
@@ -487,7 +488,8 @@ test/
 - Daily goal progress: sessions within the same calendar date aggregated correctly across midnight boundaries
 - Database migration from v1 → v2 → v3 → v4 → v5
 - Import parsing: malformed JSON rejected without corrupting existing database state
-- Import compatibility: backups in the current format (`test/fixtures/backup_format_v1.json`) import and re-export unchanged
+- Import compatibility: backups in the current format (`test/fixtures/backup_format_v1.json`) import and re-export unchanged; a backup with settings and running counts (`test/fixtures/backup_format_v1_settings.json`) restores them
+- Backup extras: a full import replaces settings and all running counts (old running counts are cleared even when the file has none); a selected import replaces only the chosen counters' running counts and never changes settings
 - Error boundary: sqflite open failure handled gracefully at startup
 
 ---

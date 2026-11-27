@@ -5,8 +5,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart' show SharePlus, ShareParams, XFile;
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/core/locale/locale_config.dart';
+import 'package:mantra_japa_counter/models/active_session.dart';
 import 'package:mantra_japa_counter/models/export_data.dart';
 import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
+import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/services/encryption_service.dart';
 
 class ValidationException implements Exception {
@@ -43,11 +45,67 @@ class BackupTooLargeException implements Exception {
 /// JSON import / export for data backup and restore.
 ///
 /// Backups from any earlier app version must always import.
+///
+/// Every export also holds the user settings and the running counts
+/// (part-done malas) of the exported counters. Only a full import applies
+/// the settings; a selected import keeps the phone's own settings.
 class ExportService {
   final JapaCounterRepository _repo;
   final EncryptionService _encryption;
+  final SettingsRepository _settings;
 
-  ExportService(this._repo, this._encryption);
+  ExportService(this._repo, this._encryption, this._settings);
+
+  // ──────────────────────────── Building the export ──────────────────────────
+
+  /// Builds the data for a backup: counters and sessions from the database,
+  /// plus the settings and running counts.
+  ///
+  /// When [counterIds] is null or empty, all counters are exported.
+  /// Running counts are saved paused, with their active time up to now, so
+  /// the gap until the next import is not counted as chanting time.
+  Future<ExportData> buildExportData({List<String>? counterIds}) async {
+    final base = (counterIds == null || counterIds.isEmpty)
+        ? await _repo.exportData()
+        : await _repo.exportSelectedData(counterIds);
+    final exportedIds = {for (final c in base.counters) c.id};
+
+    final active = <ActiveSession>[];
+    for (final s in _settings.getAllActiveSessions()) {
+      if (!exportedIds.contains(s.counterId)) continue;
+      if (s.tapCount <= 0 || s.sessionId.isEmpty) continue;
+      active.add(
+        s.isPaused ? s : s.copyWith(isPaused: true, accumulatedMs: s.duration),
+      );
+    }
+
+    return base.copyWith(
+      settings: _settings.exportSettings(),
+      activeSessions: active,
+    );
+  }
+
+  /// Writes the parts of a full import that live outside the database.
+  /// Old running counts are always cleared, even when the file has none,
+  /// because the database sessions they point at were just replaced.
+  Future<void> _applyFullImportExtras(ExportData data) async {
+    await _settings.replaceActiveSessions(data.activeSessions);
+    final settings = data.settings;
+    if (settings != null) await _settings.importSettings(settings);
+  }
+
+  /// Writes the running counts of the chosen counters. Settings are not
+  /// touched on a selected import.
+  Future<void> _applySelectedImportExtras(
+    ExportData data,
+    List<String> counterIds,
+  ) async {
+    if (counterIds.isEmpty) return;
+    await _settings.replaceActiveSessions(
+      data.activeSessions,
+      counterIds: counterIds.toSet(),
+    );
+  }
 
   // ──────────────────────────── Full Export ──────────────────────────────────
 
@@ -56,7 +114,7 @@ class ExportService {
   /// If [passphrase] is provided, the JSON is encrypted with AES-256-GCM
   /// before writing. The file extension is `.json.enc` for encrypted files.
   Future<void> exportAndShare({String? passphrase}) async {
-    final data = await _repo.exportData();
+    final data = await buildExportData();
     final json = data.toJsonString();
 
     final dir = await getApplicationDocumentsDirectory();
@@ -91,7 +149,7 @@ class ExportService {
     List<String> counterIds, {
     String? passphrase,
   }) async {
-    final data = await _repo.exportSelectedData(counterIds);
+    final data = await buildExportData(counterIds: counterIds);
     final json = data.toJsonString();
 
     final dir = await getApplicationDocumentsDirectory();
@@ -147,6 +205,7 @@ class ExportService {
 
     final data = _parseAndValidate(jsonString);
     await _repo.importData(data);
+    await _applyFullImportExtras(data);
   }
 
   /// Decrypts an encrypted export file, then imports all data.
@@ -157,6 +216,7 @@ class ExportService {
     final json = await _encryption.decrypt(encryptedContent, passphrase);
     final data = _parseAndValidate(json);
     await _repo.importData(data);
+    await _applyFullImportExtras(data);
   }
 
   // ──────────────────────────── Selective Import ─────────────────────────────
@@ -175,6 +235,7 @@ class ExportService {
 
     final data = _parseAndValidate(jsonString);
     await _repo.importSelectedData(data, counterIds);
+    await _applySelectedImportExtras(data, counterIds);
   }
 
   /// Decrypts, then imports only the selected counters.
@@ -186,6 +247,7 @@ class ExportService {
     final json = await _encryption.decrypt(encryptedContent, passphrase);
     final data = _parseAndValidate(json);
     await _repo.importSelectedData(data, counterIds);
+    await _applySelectedImportExtras(data, counterIds);
   }
 
   // ──────────────────────────── Parsing helpers ─────────────────────────────
@@ -266,6 +328,47 @@ class ExportService {
       if (s.count < 0 || s.duration < 0) {
         throw ValidationException('Session ${s.id} has a negative value');
       }
+    }
+
+    final activeCounterIds = <String>{};
+    for (final a in data.activeSessions) {
+      if (!counterIds.contains(a.counterId)) {
+        throw const ValidationException(
+          'A running count belongs to a counter not in the file',
+        );
+      }
+      if (!activeCounterIds.add(a.counterId)) {
+        throw ValidationException(
+          'Counter ${a.counterId} has more than one running count',
+        );
+      }
+      if (a.sessionId.isEmpty) {
+        throw const ValidationException('A running count has an empty id');
+      }
+      if (a.incrementStep < 1) {
+        throw ValidationException(
+          'Running count ${a.sessionId} has an increment step below 1',
+        );
+      }
+      if (a.startTime < 0 ||
+          a.tapCount < 0 ||
+          a.accumulatedMs < 0 ||
+          a.lastResumeTimeMs < 0 ||
+          a.carriedCount < 0 ||
+          a.carriedCount > a.tapCount ||
+          a.carriedDurationMs < 0 ||
+          a.malaSize < 0) {
+        throw ValidationException(
+          'Running count ${a.sessionId} has a bad value',
+        );
+      }
+    }
+
+    final language = data.settings?.languageCode;
+    if (language != null &&
+        language.isNotEmpty &&
+        !LocaleConfig.supportedLocales.any((l) => l.languageCode == language)) {
+      throw const ValidationException('Settings have an unknown language');
     }
   }
 }

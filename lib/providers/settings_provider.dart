@@ -166,36 +166,49 @@ class SettingsNotifier extends StateNotifier<AppSettings> {
     this._notifications,
     this._screen,
     this._timeZone,
-  ]) : super(
-         AppSettings(
-           screenBrightness: _repo.screenBrightness,
-           dailyGoalNotificationsEnabled: _repo.dailyGoalNotificationsEnabled,
-           lifetimeGoalNotificationsEnabled:
-               _repo.lifetimeGoalNotificationsEnabled,
-           malaNotificationsEnabled: _repo.malaNotificationsEnabled,
-           malaSound: _repo.malaSound,
-           notificationSoundUri: _repo.notificationSoundUri,
-           notificationSoundName: _repo.notificationSoundName,
-           lifetimeSoundUri: _repo.lifetimeSoundUri,
-           lifetimeSoundName: _repo.lifetimeSoundName,
-           vibrationEnabled: _repo.vibrationEnabled,
-           tapVibrationEnabled: _repo.tapVibrationEnabled,
-           feedbackVolumePercent: _repo.feedbackVolumePercent,
-           vibrationStrengthPercent: _repo.vibrationStrengthPercent,
-           languageCode: _repo.languageCode,
-           dndEnabled: _repo.dndEnabled,
-           dimmedChantingMode: _repo.dimmedChantingMode,
-           meruPauseEnabled: _repo.meruPauseEnabled,
-           meruPauseSeconds: _repo.meruPauseSeconds,
-           meruPauseMode: _repo.meruPauseMode,
-           meruPauseTaps: _repo.meruPauseTaps,
-           pacingHintEnabled: _repo.pacingHintEnabled,
-           dailyReminderEnabled: _repo.dailyReminderEnabled,
-           dailyReminderMinutes: _repo.dailyReminderMinutes,
-         ),
-       ) {
+  ]) : super(_readSettings(_repo)) {
     // Apply the saved brightness from app start.
     unawaited(_screen?.setAppBrightness(state.screenBrightness));
+  }
+
+  static AppSettings _readSettings(SettingsRepository repo) => AppSettings(
+    screenBrightness: repo.screenBrightness,
+    dailyGoalNotificationsEnabled: repo.dailyGoalNotificationsEnabled,
+    lifetimeGoalNotificationsEnabled: repo.lifetimeGoalNotificationsEnabled,
+    malaNotificationsEnabled: repo.malaNotificationsEnabled,
+    malaSound: repo.malaSound,
+    notificationSoundUri: repo.notificationSoundUri,
+    notificationSoundName: repo.notificationSoundName,
+    lifetimeSoundUri: repo.lifetimeSoundUri,
+    lifetimeSoundName: repo.lifetimeSoundName,
+    vibrationEnabled: repo.vibrationEnabled,
+    tapVibrationEnabled: repo.tapVibrationEnabled,
+    feedbackVolumePercent: repo.feedbackVolumePercent,
+    vibrationStrengthPercent: repo.vibrationStrengthPercent,
+    languageCode: repo.languageCode,
+    dndEnabled: repo.dndEnabled,
+    dimmedChantingMode: repo.dimmedChantingMode,
+    meruPauseEnabled: repo.meruPauseEnabled,
+    meruPauseSeconds: repo.meruPauseSeconds,
+    meruPauseMode: repo.meruPauseMode,
+    meruPauseTaps: repo.meruPauseTaps,
+    pacingHintEnabled: repo.pacingHintEnabled,
+    dailyReminderEnabled: repo.dailyReminderEnabled,
+    dailyReminderMinutes: repo.dailyReminderMinutes,
+  );
+
+  /// Reads every setting again from storage and applies it. Called after a
+  /// full backup import wrote new settings: brightness is applied, the
+  /// language follows from the new state, and the daily reminder is
+  /// scheduled again (or cancelled).
+  Future<void> reloadFromRepository() async {
+    state = _readSettings(_repo);
+    await _screen?.setAppBrightness(state.screenBrightness);
+    if (state.dailyReminderEnabled) {
+      await syncDailyReminder();
+    } else {
+      await _cancelDailyReminder();
+    }
   }
 
   /// Saves and applies the brightness. A negative value follows the system.

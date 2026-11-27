@@ -8,6 +8,7 @@ import 'package:mantra_japa_counter/models/optical_sync_frame.dart';
 import 'package:mantra_japa_counter/services/optical_sync_service.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/counters_provider.dart';
+import 'package:mantra_japa_counter/providers/settings_provider.dart';
 
 // ────────────────────────── Transmit State & Notifier ──────────────────────────
 
@@ -78,13 +79,11 @@ class OpticalSyncTransmitNotifier extends Notifier<OpticalSyncTransmitState> {
   Future<void> initializeWithSelectedCounters(List<String> counterIds) async {
     state = state.copyWith(isLoading: true, selectedCounterIds: counterIds);
     try {
-      final repo = ref.read(japaCounterRepositoryProvider);
-      final ExportData exportData;
-      if (counterIds.isEmpty) {
-        exportData = await repo.exportData();
-      } else {
-        exportData = await repo.exportSelectedData(counterIds);
-      }
+      // Same content as a backup file: counters, sessions, settings and
+      // running counts.
+      final ExportData exportData = await ref
+          .read(exportServiceProvider)
+          .buildExportData(counterIds: counterIds);
       final jsonPayload = exportData.toJsonString();
 
       final sessionId = const Uuid().v4().substring(0, 8);
@@ -244,6 +243,10 @@ class OpticalSyncReceiveNotifier extends Notifier<OpticalSyncReceiveState> {
         );
       } else {
         await exportSvc.importFromJson(state.progress.decodedJsonPayload!);
+        // A full import also wrote new settings — apply them now.
+        await ref
+            .read(settingsNotifierProvider.notifier)
+            .reloadFromRepository();
       }
       ref.invalidate(countersNotifierProvider);
       return true;

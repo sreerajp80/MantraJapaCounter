@@ -6,6 +6,7 @@ import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/providers/counters_provider.dart';
+import 'package:mantra_japa_counter/providers/settings_provider.dart';
 import 'package:mantra_japa_counter/widgets/temple_decorations.dart';
 import 'package:mantra_japa_counter/screens/settings/settings_tiles.dart';
 import 'package:mantra_japa_counter/services/export_service.dart';
@@ -221,6 +222,8 @@ class BackupSettingsScreen extends ConsumerWidget {
       }
 
       ref.invalidate(countersNotifierProvider);
+      // A full import also wrote new settings — apply them now.
+      await ref.read(settingsNotifierProvider.notifier).reloadFromRepository();
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

@@ -16,7 +16,7 @@ Read [AGENTS.md](../AGENTS.md) and [security.md](security.md) before modifying `
 | Navigation | `go_router` | `^18.1.0` | Declarative route management |
 | Database | `sqflite`, `path` | `^2.4.2` / `^1.9.1` | Local SQLite database storage (schema v5) |
 | Key-Value Storage | `shared_preferences` | `^2.5.3` | Session crash recovery and user preferences |
-| Notifications | `flutter_local_notifications`, `timezone` | `^23.0.0-dev.3` / `^0.11.1` | Local notifications and the daily practice reminder |
+| Notifications | `flutter_local_notifications`, `timezone` | `^23.0.4` / `^0.11.1` | Local notifications and the daily practice reminder |
 | File Selection | `file_picker` | `^13.1.0` | Backup import and custom notification tone selection |
 | Audio Playback | `audioplayers` | `^6.1.0` | Mala and tone playback |
 | Data Sharing & Optical Sync | `path_provider`, `share_plus`, `qr_flutter`, `camera` | `^2.1.5` / `^13.3.1` / `^4.1.0` / `^0.12.1` | Exporting & sharing JSON backup files and air-gapped QR sync (QR decoding by ZXing core on the Android side; no ML Kit) |

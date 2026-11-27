@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mantra_japa_counter/theme/theme.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/providers/counters_provider.dart';
+import 'package:mantra_japa_counter/providers/settings_provider.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
 import 'package:mantra_japa_counter/services/export_service.dart';
 import 'package:mantra_japa_counter/widgets/passphrase_dialog.dart';
@@ -131,6 +132,10 @@ class _ImportExportDialogState extends State<ImportExportDialog> {
       }
 
       widget.ref.invalidate(countersNotifierProvider);
+      // A full import also wrote new settings — apply them now.
+      await widget.ref
+          .read(settingsNotifierProvider.notifier)
+          .reloadFromRepository();
       if (mounted) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context)

@@ -6,7 +6,11 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/models/counter_status.dart';
+import 'package:mantra_japa_counter/models/mala_sound.dart';
+import 'package:mantra_japa_counter/models/meru_pause_mode.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mantra_japa_counter/repositories/japa_counter_repository.dart';
+import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/services/encryption_service.dart';
 import 'package:mantra_japa_counter/services/export_service.dart';
 
@@ -20,6 +24,7 @@ void main() {
   late Database db;
   late JapaCounterRepository repo;
   late ExportService exportService;
+  late SettingsRepository settings;
 
   final fixtureText = File('test/fixtures/backup_format_v1.json')
       .readAsStringSync();
@@ -46,7 +51,9 @@ void main() {
       ),
     );
     repo = JapaCounterRepository(db);
-    exportService = ExportService(repo, EncryptionService());
+    SharedPreferences.setMockInitialValues({});
+    settings = SettingsRepository(await SharedPreferences.getInstance());
+    exportService = ExportService(repo, EncryptionService(), settings);
   });
 
   tearDown(() async {
@@ -154,4 +161,63 @@ void main() {
       expect(c.malaSize, AppConstants.defaultMalaSize);
     },
   );
+
+  group('format with settings and running counts', () {
+    final text = File('test/fixtures/backup_format_v1_settings.json')
+        .readAsStringSync();
+
+    test('the fixture is still format version 1', () {
+      final json = jsonDecode(text) as Map<String, dynamic>;
+      expect(json['exportVersion'], 1);
+    });
+
+    test('a full import restores the settings and the running count', () async {
+      await settings.setLanguageCode('sa');
+
+      await exportService.importFromJson(text);
+
+      expect(settings.screenBrightness, 0.6);
+      expect(settings.dailyGoalNotificationsEnabled, isFalse);
+      expect(settings.malaSound, MalaSound.singingBowl);
+      expect(settings.vibrationEnabled, isFalse);
+      expect(settings.tapVibrationEnabled, isTrue);
+      expect(settings.feedbackVolumePercent, 60);
+      expect(settings.vibrationStrengthPercent, 80);
+      expect(settings.languageCode, 'ml');
+      expect(settings.dimmedChantingMode, isTrue);
+      expect(settings.meruPauseEnabled, isTrue);
+      expect(settings.meruPauseSeconds, 10);
+      expect(settings.meruPauseMode, MeruPauseMode.time);
+      expect(settings.meruPauseTaps, 3);
+      expect(settings.pacingHintEnabled, isFalse);
+      expect(settings.dailyReminderEnabled, isTrue);
+      expect(settings.dailyReminderMinutes, 330);
+
+      final running = settings.getActiveSession(
+        '66666666-6666-4666-8666-666666666666',
+      )!;
+      expect(running.sessionId, '77777777-7777-4777-8777-777777777777');
+      expect(running.tapCount, 45);
+      expect(running.accumulatedMs, 300000);
+      expect(running.isPaused, isTrue);
+      expect(running.malaSize, 108);
+    });
+
+    test('a selected import keeps the phone settings', () async {
+      await settings.setLanguageCode('sa');
+
+      await exportService.importSelectedFromJson(text, [
+        '66666666-6666-4666-8666-666666666666',
+      ]);
+
+      expect(settings.languageCode, 'sa');
+      expect(settings.meruPauseEnabled, isFalse);
+      expect(
+        settings
+            .getActiveSession('66666666-6666-4666-8666-666666666666')!
+            .tapCount,
+        45,
+      );
+    });
+  });
 }

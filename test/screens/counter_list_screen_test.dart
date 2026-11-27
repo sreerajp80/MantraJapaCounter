@@ -222,13 +222,13 @@ void main() {
     await tester.tap(find.text('Import / Export'));
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('Export backs up'), findsOneWidget);
+    expect(find.textContaining('Export saves'), findsOneWidget);
     expect(find.widgetWithText(TextButton, 'Export'), findsOneWidget);
     expect(find.widgetWithText(TextButton, 'Import'), findsOneWidget);
 
     await tester.tap(find.text('Cancel'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('Export backs up'), findsNothing);
+    expect(find.textContaining('Export saves'), findsNothing);
   });
 
   testWidgets('long-press opens the options sheet', (tester) async {

@@ -46,7 +46,7 @@ guidelines.
 
 | Tool | Version |
 |------|---------|
-| Flutter SDK | 3.47.6 or higher (stable channel) |
+| Flutter SDK | 3.50.1 or higher (stable channel) |
 | Dart SDK | `^3.13.0` (ships with the Flutter version above) |
 | Android SDK | compile SDK 37, target SDK 36, min SDK 29 |
 | JDK | 17 |
@@ -164,14 +164,34 @@ build date.
 Production builds **must** use `--release`, `--obfuscate`, and `--split-debug-info`. Leaving
 any of them out ships an unhardened, easily reverse-engineered artifact.
 
+### Release build script (recommended)
+
+`tool/build_release.ps1` (Windows PowerShell 5.1 or 7) runs the commands below with all the
+hardening flags, renames each output to
+`<Name>-[<abi>-]v<version>_<build>-<flavor>-<mode>.<apk|aab>` (for example
+`Japam-arm64-v6.13.21_52-prod-release.apk`), deletes Flutter's `.sha1` files and writes a
+`<file>.sha256` checksum next to each file.
+
+```powershell
+.\tool\build_release.ps1 -Name Japam -Target aab   # Google Play upload
+.\tool\build_release.ps1 -Name Japam -Target apk   # split APKs for direct install
+```
+
+Check a file with `Get-FileHash <file> -Algorithm SHA256` (PowerShell) or
+`sha256sum -c <file>.sha256` (Linux / Git Bash). All options are in
+[docs/release_process.md](docs/release_process.md) §9.1.
+
+The raw `flutter build` commands below are what the script runs with its defaults.
+
 ### Split APKs (direct install / sideloading)
 
 Replace `<version>` with the version in `pubspec.yaml`, without the build number (for example
-`6.13.6`).
+`6.13.6`). APK symbols go in their own `-apk` folder: the APK and the App Bundle are separate
+compiles, and each needs its own symbols to decode crash traces.
 
 ```bash
 flutter build apk --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-<version>/ --split-per-abi
+  --obfuscate --split-debug-info=build/symbols/android-prod-<version>-apk/ --split-per-abi
 ```
 
 Output: `build/app/outputs/flutter-apk/app-arm64-v8a-prod-release.apk` and friends (the build log prints the exact names).

@@ -7,6 +7,7 @@ Made-up backup files used to lock the backup (JSON export) format.
 | File | Used by | What it is |
 |------|---------|------------|
 | `backup_format_v1.json` | `test/repositories/backup_format_test.dart` | A small made-up backup in format `exportVersion` 1: a default counter, a locked counter with a Malayalam name, a counter with no mala count (`malaSize` 0), a finished (disabled) counter, a counter with custom step / initial count / mala size, and their sessions. |
+| `backup_format_v1_settings.json` | `test/repositories/backup_format_test.dart` | A made-up backup in format `exportVersion` 1 that also has the optional `settings` object and one paused running count in `activeSessions` (45 of 108 counts). |
 
 ## Rules
 

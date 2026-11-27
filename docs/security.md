@@ -94,9 +94,9 @@ outside the app").
 |-----------|---------|-----------------|---------------------|
 | Counter names | "Om Namah Shivaya" | sqflite DB, JSON export | Never logged (§9) |
 | Session counts and timestamps | 432 taps, 2024-01-15 08:30 | sqflite DB, JSON export | Never logged (§9) |
-| Notification preferences | vibration enabled, custom tone path, sound volume and vibration strength levels | SharedPreferences | None — not sensitive |
+| Notification preferences | vibration enabled, custom tone path, sound volume and vibration strength levels | SharedPreferences; JSON export (without the custom tone path) | None — not sensitive |
 | Screen brightness setting | 70% | SharedPreferences | None — not sensitive |
-| Active session crash-recovery state | In-progress tap count and session ID | SharedPreferences | None — ephemeral; cleared on session complete or recovery |
+| Active session crash-recovery state | In-progress tap count and session ID | SharedPreferences; JSON export (saved paused, so a backup restores the part-done mala) | None — ephemeral; cleared on session complete or recovery. Imported running counts are validated (counter must be in the file, no negative values) |
 
 No secrets, tokens, health records, financial data, or personally identifiable information are
 stored or transmitted by this app.
@@ -189,8 +189,12 @@ Security must not make the app hard to use or slow (engineering standard §15.6)
 All production release builds MUST be compiled with:
 
 ```bash
---obfuscate --split-debug-info=build/symbols/android-prod-<version>/
+--obfuscate --split-debug-info=build/symbols/android-prod-<version>/       # App Bundle
+--obfuscate --split-debug-info=build/symbols/android-prod-<version>-apk/   # APKs
 ```
+
+The APK and the App Bundle are separate compiles, so each has its own symbols folder.
+`tool/build_release.ps1` uses these folders by default and refuses an unobfuscated prod release.
 
 Obfuscation is applied even for a low-sensitivity app because it is a build-time no-cost control
 that raises the bar for casual reverse engineering of app logic.

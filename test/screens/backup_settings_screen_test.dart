@@ -106,7 +106,7 @@ void main() {
           ),
           japaCounterRepositoryProvider.overrideWithValue(repo),
           exportServiceProvider.overrideWithValue(
-            ExportService(repo, EncryptionService()),
+            ExportService(repo, EncryptionService(), SettingsRepository(prefs)),
           ),
         ],
         child: const MaterialApp(

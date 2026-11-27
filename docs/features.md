@@ -177,7 +177,8 @@ The application welcomes practitioners across all spiritual paths—Hindu *japa*
   - **Loss-Tolerant Scanning**: Camera frame drops do not block decoding; missing fragments are automatically reconstructed out-of-order via belief propagation / Gaussian elimination over GF(2).
   - **Interactive Import Preview**: Scanned streams trigger an interactive preview sheet detailing counter and session counts before merging atomically into local SQLite storage.
 - **JSON Import / Export Backup System**:
-  - **Export Data**: Backup all counters and session history into a single JSON file (`mantra_japa_counter_backup.json`) and open the native system share sheet (`share_plus`).
+  - **Export Data**: Backup all counters, session history, app settings and the running count of each counter (the part-done mala on the counting screen) into a single JSON file (`mantra_japa_counter_backup.json`) and open the native system share sheet (`share_plus`). Custom notification sounds are not included, because they are links to files on one phone.
+  - **What import restores**: a full import also restores the settings and running counts. A selected import (chosen counters only, from a file or by QR) restores those counters' running counts but keeps this phone's settings.
   - **Import Data**: Restore data from a JSON backup file. Replaces database contents atomically inside a single SQLite transaction to guarantee zero data corruption on invalid/corrupted files.
   - **Backward-Compatible Backups**: Backup files made by any earlier version of this app always import. JSON fields are never renamed or removed; new fields are optional.
 - **Dual-Tier Zero Data Loss Protection**:

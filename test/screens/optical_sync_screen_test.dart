@@ -2,11 +2,13 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mantra_japa_counter/core/locale/locale_config.dart';
 import 'package:mantra_japa_counter/l10n/app_localizations.dart';
 import 'package:mantra_japa_counter/models/counter.dart';
 import 'package:mantra_japa_counter/providers/app_providers.dart';
+import 'package:mantra_japa_counter/repositories/settings_repository.dart';
 import 'package:mantra_japa_counter/screens/optical_sync_screen.dart';
 import 'package:mantra_japa_counter/widgets/counter_selection_sheet.dart';
 import 'package:mantra_japa_counter/widgets/qr_camera_view.dart';
@@ -33,11 +35,18 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           japaCounterRepositoryProvider.overrideWithValue(
             FakeJapaCounterRepository(counters: counters),
+          ),
+          // The QR payload is built like a backup, with settings.
+          settingsRepositoryProvider.overrideWithValue(
+            SettingsRepository(prefs),
           ),
         ],
         child: MaterialApp(

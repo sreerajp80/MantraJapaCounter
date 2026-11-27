@@ -1,4 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mantra_japa_counter/models/active_session.dart';
+import 'package:mantra_japa_counter/models/backup_settings.dart';
 import 'package:mantra_japa_counter/models/counter.dart';
 import 'package:mantra_japa_counter/models/export_data.dart';
 import 'package:mantra_japa_counter/models/japa_session.dart';
@@ -46,6 +48,53 @@ void main() {
         () => ExportData.fromJsonString('{bad json'),
         throwsA(isA<FormatException>()),
       );
+    });
+  });
+
+  group('ExportData settings and running counts', () {
+    const running = ActiveSession(
+      sessionId: 's1',
+      counterId: 'c1',
+      counterName: 'Gayatri',
+      startTime: 1000,
+      tapCount: 50,
+      incrementStep: 1,
+      accumulatedMs: 9000,
+      lastResumeTimeMs: 1000,
+      isPaused: true,
+    );
+
+    test('a file without them reads as no settings, no running counts', () {
+      final d = ExportData.fromJsonString('{"counters":[],"sessions":[]}');
+      expect(d.settings, isNull);
+      expect(d.activeSessions, isEmpty);
+    });
+
+    test('they are left out of the JSON when empty', () {
+      const d = ExportData(exportDate: 1, counters: [], sessions: []);
+      final json = d.toJson();
+      expect(json.containsKey('settings'), isFalse);
+      expect(json.containsKey('activeSessions'), isFalse);
+    });
+
+    test('round-trip keeps settings and running counts', () {
+      const d = ExportData(
+        exportDate: 1,
+        counters: [],
+        sessions: [],
+        settings: BackupSettings(meruPauseEnabled: true, languageCode: ''),
+        activeSessions: [running],
+      );
+
+      final r = ExportData.fromJsonString(d.toJsonString());
+
+      expect(r.exportVersion, 1);
+      expect(r.settings!.meruPauseEnabled, isTrue);
+      expect(r.settings!.languageCode, '');
+      expect(r.activeSessions, hasLength(1));
+      expect(r.activeSessions.first.tapCount, 50);
+      expect(r.activeSessions.first.accumulatedMs, 9000);
+      expect(r.activeSessions.first.isPaused, isTrue);
     });
   });
 }

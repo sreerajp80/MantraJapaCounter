@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mantra_japa_counter/core/constants/app_constants.dart';
 import 'package:mantra_japa_counter/models/active_session.dart';
+import 'package:mantra_japa_counter/models/backup_settings.dart';
 import 'package:mantra_japa_counter/models/mala_sound.dart';
 import 'package:mantra_japa_counter/models/meru_pause_mode.dart';
 
@@ -72,6 +73,28 @@ class SettingsRepository {
       }
     }
     return result;
+  }
+
+  /// Writes the running counts from a backup.
+  ///
+  /// When [counterIds] is null (full import) every saved running count on
+  /// the phone is removed first, so none can point at deleted sessions.
+  /// Otherwise only the slots of those counters are replaced; a counter in
+  /// [counterIds] with no running count in [sessions] keeps its own.
+  Future<void> replaceActiveSessions(
+    List<ActiveSession> sessions, {
+    Set<String>? counterIds,
+  }) async {
+    if (counterIds == null) {
+      await clearAllActiveSessions();
+      for (final s in sessions) {
+        await saveActiveSession(s);
+      }
+      return;
+    }
+    for (final s in sessions) {
+      if (counterIds.contains(s.counterId)) await saveActiveSession(s);
+    }
   }
 
   /// One-shot migration of the pre-pause-feature single-slot key into the
@@ -329,5 +352,72 @@ class SettingsRepository {
 
   Future<void> setDailyReminderMinutes(int value) async {
     await _prefs.setInt(AppConstants.prefsDailyReminderMinutesKey, value);
+  }
+
+  // ──────────────────────────── Backup ────────────────────────────────────────
+
+  /// The settings that go into a backup file. Device-only settings (custom
+  /// sound links, the permission flag) are left out on purpose.
+  BackupSettings exportSettings() => BackupSettings(
+    screenBrightness: screenBrightness,
+    dailyGoalNotificationsEnabled: dailyGoalNotificationsEnabled,
+    lifetimeGoalNotificationsEnabled: lifetimeGoalNotificationsEnabled,
+    malaNotificationsEnabled: malaNotificationsEnabled,
+    malaSound: malaSound.id,
+    vibrationEnabled: vibrationEnabled,
+    tapVibrationEnabled: tapVibrationEnabled,
+    feedbackVolumePercent: feedbackVolumePercent,
+    vibrationStrengthPercent: vibrationStrengthPercent,
+    languageCode: languageCode ?? '',
+    dndEnabled: dndEnabled,
+    dimmedChantingMode: dimmedChantingMode,
+    meruPauseEnabled: meruPauseEnabled,
+    meruPauseSeconds: meruPauseSeconds,
+    meruPauseMode: meruPauseMode.id,
+    meruPauseTaps: meruPauseTaps,
+    pacingHintEnabled: pacingHintEnabled,
+    dailyReminderEnabled: dailyReminderEnabled,
+    dailyReminderMinutes: dailyReminderMinutes,
+  );
+
+  /// Saves the settings from a backup. Fields that are null keep the
+  /// phone's value. Values out of range are handled by the getters, which
+  /// fall back to the default.
+  Future<void> importSettings(BackupSettings s) async {
+    if (s.screenBrightness case final v?) await setScreenBrightness(v);
+    if (s.dailyGoalNotificationsEnabled case final v?) {
+      await setDailyGoalNotificationsEnabled(v);
+    }
+    if (s.lifetimeGoalNotificationsEnabled case final v?) {
+      await setLifetimeGoalNotificationsEnabled(v);
+    }
+    if (s.malaNotificationsEnabled case final v?) {
+      await setMalaNotificationsEnabled(v);
+    }
+    if (s.malaSound case final v?) await setMalaSound(MalaSound.fromId(v));
+    if (s.vibrationEnabled case final v?) await setVibrationEnabled(v);
+    if (s.tapVibrationEnabled case final v?) await setTapVibrationEnabled(v);
+    if (s.feedbackVolumePercent case final v?) {
+      await setFeedbackVolumePercent(v);
+    }
+    if (s.vibrationStrengthPercent case final v?) {
+      await setVibrationStrengthPercent(v);
+    }
+    if (s.languageCode case final v?) {
+      await setLanguageCode(v.isEmpty ? null : v);
+    }
+    if (s.dndEnabled case final v?) await setDndEnabled(v);
+    if (s.dimmedChantingMode case final v?) await setDimmedChantingMode(v);
+    if (s.meruPauseEnabled case final v?) await setMeruPauseEnabled(v);
+    if (s.meruPauseSeconds case final v?) await setMeruPauseSeconds(v);
+    if (s.meruPauseMode case final v?) {
+      await setMeruPauseMode(MeruPauseMode.fromId(v));
+    }
+    if (s.meruPauseTaps case final v?) await setMeruPauseTaps(v);
+    if (s.pacingHintEnabled case final v?) await setPacingHintEnabled(v);
+    if (s.dailyReminderEnabled case final v?) await setDailyReminderEnabled(v);
+    if (s.dailyReminderMinutes case final v?) {
+      await setDailyReminderMinutes(v);
+    }
   }
 }

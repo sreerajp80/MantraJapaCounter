@@ -6,6 +6,9 @@
     <!-- Camera permission for optional offline Optical Air-Gap Sync (Receive via camera) -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <!-- Portrait lock stays; this only stops Play from hiding the app on devices
+         that do not report a portrait screen (some tablets, desktops, XR). -->
+    <uses-feature android:name="android.hardware.screen.portrait" android:required="false" />
     <!-- Do Not Disturb access to silence notifications during chanting sessions -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <!-- Lets the notification plugin set the daily practice reminder again

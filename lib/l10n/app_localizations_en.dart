@@ -168,7 +168,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get importExportBody =>
-      'Export backs up all counters and sessions to a JSON file.\n\nImport replaces ALL current data with the selected file.';
+      'Export saves all counters, session history, app settings and each counter\'s unfinished mala to a JSON file.\n\nImport replaces ALL current data, settings included, with the selected file.';
 
   @override
   String exportFailed(String message) {
@@ -1202,7 +1202,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpBackupExportBullet1 =>
-      'All counters, goals and session history go into one backup file.';
+      'All counters, goals, session history, app settings and the unfinished mala of each counter go into one backup file. Custom notification sounds stay on this phone.';
 
   @override
   String get helpBackupExportBold2 => 'Encrypt (optional):';
@@ -1233,7 +1233,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpBackupImportBullet2 =>
-      'Import replaces ALL current counters and history with the data in the file. Export first if you want to keep what is on the phone.';
+      'Import replaces ALL current counters, history, settings and unfinished malas with the data in the file. Export first if you want to keep what is on the phone.';
 
   @override
   String get helpBackupImportBold3 => 'Encrypted files:';
@@ -2374,7 +2374,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tutorialStep25Desc =>
-      'Use Settings → Data Backup & Optical Sync → Export, or Import / Export in the home menu. All counters and history are saved to one file, and the share sheet opens.';
+      'Use Settings → Data Backup & Optical Sync → Export, or Import / Export in the home menu. All counters, history, settings and unfinished malas are saved to one file, and the share sheet opens.';
 
   @override
   String get tutorialStep25Tip =>

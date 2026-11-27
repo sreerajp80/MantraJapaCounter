@@ -67,6 +67,7 @@ final exportServiceProvider = Provider<ExportService>((ref) {
   return ExportService(
     ref.watch(japaCounterRepositoryProvider),
     ref.watch(encryptionServiceProvider),
+    ref.watch(settingsRepositoryProvider),
   );
 });
 

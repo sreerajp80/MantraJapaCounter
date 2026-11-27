@@ -87,6 +87,51 @@ void main() {
     });
   });
 
+  group('SettingsNotifier - reloadFromRepository', () {
+    test(
+      'picks up settings written behind its back and applies them',
+      () async {
+        SharedPreferences.setMockInitialValues({});
+        final repo = SettingsRepository(await SharedPreferences.getInstance());
+        final screen = _FakeScreenService();
+        final notifications = FakeNotificationService();
+        final notifier = SettingsNotifier(
+          repo,
+          () => notifications,
+          screen,
+          const FakeTimeZoneService(),
+        );
+
+        // What a full backup import does: write straight to storage.
+        await repo.setMeruPauseEnabled(true);
+        await repo.setLanguageCode('ml');
+        await repo.setScreenBrightness(0.4);
+        await repo.setDailyReminderEnabled(true);
+        await repo.setDailyReminderMinutes(420);
+        expect(notifier.state.meruPauseEnabled, isFalse);
+
+        await notifier.reloadFromRepository();
+
+        expect(notifier.state.meruPauseEnabled, isTrue);
+        expect(notifier.state.languageCode, 'ml');
+        expect(screen.applied.last, 0.4);
+        expect(notifications.scheduled.single.minutes, 420);
+      },
+    );
+
+    test('cancels the reminder when the new settings turn it off', () async {
+      SharedPreferences.setMockInitialValues({});
+      final repo = SettingsRepository(await SharedPreferences.getInstance());
+      final notifications = FakeNotificationService();
+      final notifier = SettingsNotifier(repo, () => notifications);
+
+      await notifier.reloadFromRepository();
+
+      expect(notifications.scheduled, isEmpty);
+      expect(notifications.cancelReminderCalls, 1);
+    });
+  });
+
   group('SettingsNotifier - daily reminder', () {
     late FakeNotificationService notifications;
     late SettingsRepository repo;

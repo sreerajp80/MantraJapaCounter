@@ -68,8 +68,14 @@ flags. Omitting any of them is a release-blocking issue.
 
 ```bash
 --obfuscate
---split-debug-info=build/symbols/android-prod-<version>/
+--split-debug-info=build/symbols/android-prod-<version>/       # App Bundle (AAB)
+--split-debug-info=build/symbols/android-prod-<version>-apk/   # APKs
 ```
+
+The APK and the AAB of the same version are **separate compiles**. Each one has its own symbols,
+and only its own symbols can decode its crash stack traces. So they MUST use different folders;
+if they shared one, the second build would overwrite the first build's symbols.
+`tool/build_release.ps1` (section 9.1) uses these two folders by default.
 
 `--obfuscate` renames Dart class and method names in the compiled binary to meaningless
 identifiers, raising the cost of reverse engineering application logic.
@@ -79,8 +85,9 @@ Without it, stack traces from that release are permanently unreadable.
 
 **Symbol archive policy:**
 
-- Archive `build/symbols/android-prod-<version>/` to `releases/v<version>/symbols/` after every
-  prod release build.
+- Archive **both** `build/symbols/android-prod-<version>/` (AAB) and
+  `build/symbols/android-prod-<version>-apk/` (APKs) to `releases/v<version>/symbols/` after
+  every prod release build.
 - Never commit symbols to source control (add `build/symbols/` to `.gitignore`).
 - Retain for the lifetime of the released version.
 
@@ -210,7 +217,8 @@ Complete these items before every release.
 - [ ] Only `MainActivity` is exported in the merged release manifest (section 6.7).
 - [ ] `--obfuscate` and `--split-debug-info` flags present in all prod release build commands.
 - [ ] No `--analyze-size` build was shipped or archived as the release artifact (section 6.3).
-- [ ] Debug symbols archived at `releases/v<version>/symbols/android-prod-<version>/`.
+- [ ] Debug symbols archived at `releases/v<version>/symbols/android-prod-<version>/` (AAB) and
+      `releases/v<version>/symbols/android-prod-<version>-apk/` (APKs).
 - [ ] Split APK versionCode equals the `pubspec.yaml` build number — no 1000/2000/4000
       added (check each APK with `aapt2 dump badging <apk>`; section 9).
 - [ ] ProGuard rules verified — release build launches; counting flow and import/export work end-to-end.
@@ -239,6 +247,8 @@ Complete these items before every release.
 ### Artifact Validation
 
 - [ ] Release APK builds successfully with all hardening flags.
+- [ ] Every APK / AAB to be published has a `.sha256` file next to it, and no `.sha1` file is
+      left (`tool/build_release.ps1` does this; check one with `sha256sum -c <file>.sha256`).
 - [ ] APK installs on a clean Android 10 (API 29) device or emulator.
 - [ ] APK installs on a recent Android (API 34+) device.
 - [ ] Launcher and About screen show the prod app name from `app_config.json` in each language (English: "Japam", not "... Dev").
@@ -259,15 +269,96 @@ Complete these items before every release.
 6. `flutter analyze`
 7. `flutter test`
 8. Optional: run the size-analysis build (section 6.3) **now, before** the hardened build; record output in `releases/v<version>/size-analysis.txt`.
-9. Build release artifacts with all hardening flags (commands below).
+9. Build release artifacts with all hardening flags: run `tool/build_release.ps1` (section 9.1)
+   once with `-Target aab` and once with `-Target apk`.
 10. Verify `android:debuggable=false`, cleartext off and exported components in the merged manifest (sections 6.4–6.7).
 11. Install APK on a clean Android 10 device; run the end-to-end counting flow.
-12. Archive debug symbols from `build/symbols/` to `releases/v<version>/symbols/`.
+12. Archive **both** debug symbols folders (`build/symbols/android-prod-<version>/` and
+    `build/symbols/android-prod-<version>-apk/`) to `releases/v<version>/symbols/`.
 13. Complete the Google Play gate (`docs/guidelines/platform_store_readiness.md` §2), then upload the AAB to Google Play (internal testing track first; promote to production after validation).
 14. Direct APK: before each direct-APK release, check Google's Android developer verification status and complete any developer or package / signing-key registration it asks for (`docs/guidelines/platform_store_readiness.md` §2.5A). Then publish the split APKs.
 15. Tag the release once: `git tag v<X.Y.Z> && git push origin v<X.Y.Z>` — `<X.Y.Z>` is the `pubspec.yaml` version without `+build` (section 3).
 
+### 9.1 Release Build Script (`tool/build_release.ps1`)
+
+The script runs `flutter build`, gives each output file a clear name, deletes Flutter's `.sha1`
+files and writes a SHA-256 checksum file for each output. It works in Windows PowerShell 5.1 and
+PowerShell 7, writes only inside `build/`, and never reads `android/key.properties` or the
+keystore (Gradle still does the signing).
+
+Why a script and not a Gradle task: the Flutter tool writes `<apk>.sha1` itself, **after** Gradle
+has finished, and it has no SHA-256 option. `flutter build appbundle` writes no checksum at all.
+So only a step that runs after `flutter build` can replace them.
+
+```powershell
+.\tool\build_release.ps1 -Name Japam -Target aab                       # Google Play upload
+.\tool\build_release.ps1 -Name Japam -Target apk                       # split APKs (prod release)
+.\tool\build_release.ps1 -Name Japam -Target apk -NoSplit              # one universal APK
+.\tool\build_release.ps1 -Name Japam -Target apk -Flavor dev -Mode debug
+.\tool\build_release.ps1 -Name Japam -Target apk -Flavor dev -NoObfuscate
+```
+
+If PowerShell blocks the script (execution policy), run it as
+`powershell -ExecutionPolicy Bypass -File .\tool\build_release.ps1 -Name Japam -Target aab`.
+
+**Options**
+
+| Option | Values | Default |
+|---|---|---|
+| `-Name` | base file name, letters / digits / `.` `_` `-` only | **required** (no default) |
+| `-Target` | `apk`, `aab` | **required** |
+| `-Flavor` | `dev`, `prod` | `prod` |
+| `-Mode` | `release`, `profile`, `debug` | `release` |
+| `-NoSplit` | switch: APK without `--split-per-abi` (one universal APK) | off |
+| `-NoObfuscate` | switch: leave out `--obfuscate` and `--split-debug-info` | off |
+| `-SymbolsDir` | folder for `--split-debug-info`, must be inside `build/` | aab: `build/symbols/android-<flavor>-<version>/`; apk: `build/symbols/android-<flavor>-<version>-apk/` |
+
+**Rules** (all checked before Flutter runs)
+
+- `pubspec.yaml` must have `version: x.y.z+n`; the script stops if `+n` is missing.
+- `-NoObfuscate` is **refused** for a `prod` release build. Production releases are always obfuscated.
+- `-SymbolsDir` is **refused** when the build is not obfuscated, or when it points outside `build/`.
+- `-Mode debug` leaves out `--obfuscate` and `--split-debug-info` automatically, with a message.
+- `-NoSplit` with `-Target aab` is ignored, with a message.
+- Old Flutter-named outputs (and their `.sha1`) for the same flavor and mode are deleted first,
+  so a stale file from an earlier build can never be renamed as this build.
+- If `flutter build` fails, the script stops: nothing is renamed or hashed.
+- At the end (also after a failure) it runs `android\gradlew.bat --stop`.
+
+**File names**
+
+`<Name>-[<abi>-]v<version>_<build>-<flavor>-<mode>.<apk|aab>`, with short ABI names `armeabi`
+(armeabi-v7a), `arm64` (arm64-v8a) and `x86_64`. An existing file with the same name is replaced,
+with a message. Example for `version: 6.13.21+52`:
+
+| Flutter output | Renamed to |
+|---|---|
+| `build/app/outputs/flutter-apk/app-armeabi-v7a-prod-release.apk` | `Japam-armeabi-v6.13.21_52-prod-release.apk` |
+| `build/app/outputs/flutter-apk/app-arm64-v8a-prod-release.apk` | `Japam-arm64-v6.13.21_52-prod-release.apk` |
+| `build/app/outputs/flutter-apk/app-x86_64-prod-release.apk` | `Japam-x86_64-v6.13.21_52-prod-release.apk` |
+| `build/app/outputs/flutter-apk/app-prod-release.apk` (`-NoSplit`) | `Japam-v6.13.21_52-prod-release.apk` |
+| `build/app/outputs/bundle/prodRelease/app-prod-release.aab` | `Japam-v6.13.21_52-prod-release.aab` |
+
+Files stay in the same folder. Next to each one the script writes `<file>.sha256`, in
+`sha256sum` format: `<lower-case hash>  <file name>` (two spaces) and a newline, UTF-8 without
+BOM. The script prints each file with its size and SHA-256, and the symbols folder to archive.
+
+**Checking a file**
+
+```powershell
+Get-FileHash .\Japam-arm64-v6.13.21_52-prod-release.apk -Algorithm SHA256   # compare with the .sha256
+```
+
+```bash
+sha256sum -c Japam-arm64-v6.13.21_52-prod-release.apk.sha256               # Linux / Git Bash; prints "OK"
+```
+
+Archive **both** symbols folders after building the AAB and the APKs (section 6.1).
+
 ### Android Build Commands
+
+The raw `flutter build` commands below are what `tool/build_release.ps1` runs with its defaults.
+Use them only if you cannot use the script; they leave Flutter's names and its `.sha1` files.
 
 ```bash
 flutter pub get
@@ -291,7 +382,7 @@ flutter build apk \
   --flavor prod \
   --release \
   --obfuscate \
-  --split-debug-info=build/symbols/android-prod-$VERSION/ \
+  --split-debug-info=build/symbols/android-prod-$VERSION-apk/ \
   --split-per-abi
 
 # App Bundle for Google Play
@@ -302,8 +393,8 @@ flutter build appbundle \
   --split-debug-info=build/symbols/android-prod-$VERSION/
 ```
 
-**App Bundle for Google Play on Windows (PowerShell) — this is the command used for Play
-uploads.** It gives the same result as the bash App Bundle command above:
+**App Bundle for Google Play on Windows (PowerShell).** It gives the same result as the bash App
+Bundle command above (and as `tool/build_release.ps1 -Target aab`, before renaming and hashing):
 
 ```powershell
 $version = ((Select-String -Path pubspec.yaml -Pattern '^version:\s*(.+)$').Matches[0].Groups[1].Value -split '\+')[0]
@@ -362,8 +453,11 @@ Record links or references to release evidence after each release.
 - CI run: link to the green GitHub CI run for the release commit (checks only — section 17)
 - Test report: `flutter test` output; save as `releases/v<version>/test-report.txt`
 - Size analysis output: `releases/v<version>/size-analysis.txt`
-- Debug symbols archive: `releases/v<version>/symbols/android-prod-<version>/`
-- Built artifact: `build/app/outputs/bundle/prodRelease/app-prod-release.aab`
+- Debug symbols archive: `releases/v<version>/symbols/android-prod-<version>/` (AAB) and
+  `releases/v<version>/symbols/android-prod-<version>-apk/` (APKs)
+- Built artifacts: `build/app/outputs/bundle/prodRelease/Japam-v<version>_<build>-prod-release.aab`
+  and `build/app/outputs/flutter-apk/Japam-<abi>-v<version>_<build>-prod-release.apk`, each with
+  its `.sha256` file (section 9.1)
 - Release notes: `CHANGELOG.md` entry for `v<version>`
 - Store submission: Google Play Console → release track → build record
 - Security checklist sign-off: completed locally by sreerajp before each submission

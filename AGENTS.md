@@ -13,9 +13,9 @@ This file is read by AI agents and LLM coding assistants (Codex, Cursor, Windsur
 | Package / org id (prod) | `com.sreerajp.mantrajapacounter` |
 | Package / org id (dev) | `com.sreerajp.mantrajapacounter.dev` |
 | Platform(s) | Android (minSdk 29, targetSdk 36, compileSdk 37) |
-| Flutter SDK | 3.47.6 or higher (pinned — check with `flutter --version`) |
-| Dart SDK | `^3.13.0` (Dart 3.13.5 ships with Flutter 3.47.6) |
-| Android toolchain | Java 17, AGP 9.4.1, Gradle 9.8.0, Kotlin 2.4.10 (`android.builtInKotlin=false` until all plugins support built-in Kotlin) |
+| Flutter SDK | 3.50.1 or higher (pinned — check with `flutter --version`) |
+| Dart SDK | `^3.13.0` (Dart 3.14.0 ships with Flutter 3.50.1) |
+| Android toolchain | Java 17, AGP 9.4.1, Gradle 9.8.0, Kotlin 2.4.20 (`android.builtInKotlin=false` until all plugins support built-in Kotlin) |
 | State management | `flutter_riverpod` |
 | Navigation | `go_router` |
 | Database | `sqflite` (schema v5) |
@@ -72,14 +72,25 @@ flutter test                           # run all unit tests
 dart format .                          # format code
 
 # Production release APK (split per ABI). Replace <version> with the
-# pubspec.yaml version without the build number (e.g. 6.13.6).
+# pubspec.yaml version without the build number (e.g. 6.13.6). APK symbols use their
+# own "-apk" folder: the APK and the AAB are separate compiles with separate symbols.
 flutter build apk --flavor prod --release \
-  --obfuscate --split-debug-info=build/symbols/android-prod-<version>/ --split-per-abi
+  --obfuscate --split-debug-info=build/symbols/android-prod-<version>-apk/ --split-per-abi
 ```
 
-Production Play Store bundle — **use this command for Google Play uploads** (Windows
-PowerShell). It reads the version from `pubspec.yaml`, so each release keeps its own debug
-symbols folder (e.g. `build/symbols/android-prod-6.13.6/`):
+**Release builds — use `tool/build_release.ps1`** (Windows PowerShell 5.1 or 7). It runs the
+`flutter build` commands shown here, renames each file to
+`<Name>-[<abi>-]v<version>_<build>-<flavor>-<mode>.<apk|aab>`, deletes Flutter's `.sha1` files
+and writes a `<file>.sha256` for each one. Options and rules: `docs/release_process.md` §9.1.
+
+```powershell
+.\tool\build_release.ps1 -Name Japam -Target aab   # Google Play upload
+.\tool\build_release.ps1 -Name Japam -Target apk   # split APKs for direct install
+```
+
+The raw Play Store bundle command (what the script runs with defaults; Windows PowerShell). It
+reads the version from `pubspec.yaml`, so each release keeps its own debug symbols folder
+(e.g. `build/symbols/android-prod-6.13.6/`):
 
 ```powershell
 $version = ((Select-String -Path pubspec.yaml -Pattern '^version:\s*(.+)$').Matches[0].Groups[1].Value -split '\+')[0]
